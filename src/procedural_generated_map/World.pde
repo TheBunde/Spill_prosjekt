@@ -5,10 +5,11 @@ class World{
     private float offY = 100;
     private float zoom = 0.01;
     private ArrayList<Terrain> terrains = new ArrayList<Terrain>();
+    private River river;
     
     public World(){
-        terrains.add(new Forest());
-
+        this.terrains.add(new Forest());
+        this.river = new River(new PVector(0, (int)(Math.floor(Math.random()*800))), new PVector(800, (int)Math.floor(Math.random()*800)));
     }
     
     public void draw(){
@@ -17,7 +18,7 @@ class World{
         for (int x = 0; x < width; x++){
             for (int y = 0; y < height; y++){
                 int index = x + y * width;
-                noiseDetail(26, 0.6);
+                //noiseDetail(26, 0.6);
                 float terrainHeight = noise((float)x*zoom + offX, (float)y*zoom + offY);
                 color c = this.getColorFromTerrain(terrainHeight);
                 pixels[index] = c;
@@ -25,6 +26,7 @@ class World{
             }
         }
         updatePixels();
+        this.river.draw();
         //textSize(32);
         //text(floor(mouseY*0.1) + "  " + mouseX*0.1, 0, height-40);
     }
