@@ -5,7 +5,7 @@ CREATE TABLE chat(
 
 CREATE TABLE chatter(
     chatter_id INTEGER NOT NULL AUTO_INCREMENT,
-    chat_id INTEGER
+    chat_id INTEGER,
     name VARCHAR(30) NOT NULL,
     CONSTRAINT chatter_pk PRIMARY KEY(chatter_id)
 );
