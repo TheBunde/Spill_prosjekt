@@ -10,7 +10,7 @@ CREATE TABLE chatter(
 
 CREATE TABLE chat_message(
     chat_id INTEGER NOT NULL,
-    message_id INTEGER NOT NULL,
+    message_id INTEGER NOT NULL AUTO_INCREMENT,
     chatter_id INTEGER NOT NULL,
     message VARCHAR(30) NOT NULL,
     time_stamp DATE NOT NULL,
@@ -24,3 +24,7 @@ ALTER TABLE chat_message
   
 ALTER TABLE chat_message
   ADD CONSTRAINT chat_message_fk2 FOREIGN KEY(chatter_id) REFERENCES chatter(chatter_id);
+  
+  
+INSERT INTO chat VALUES(1);
+INSERT INTO chatter VALUES(DEFAULT, NULL, 'William');
