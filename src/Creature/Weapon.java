@@ -1,12 +1,12 @@
 class Weapon {
     private String name;
-    private int attackbonus;
+    private int damageBonus;
     private int damageDice;
     private String description;
 
-    public Weapon(String name, int attackbonus, int dammageDice, String description){
+    public Weapon(String name, int damageBonus, int dammageDice, String description){
         this.name = name;
-        this.attackbonus = attackbonus;
+        this.damageBonus = damageBonus;
         this.damageDice = dammageDice;
         this.description = description;
     }
@@ -15,8 +15,8 @@ class Weapon {
         return name;
     }
 
-    public int getAttackbonus() {
-        return attackbonus;
+    public int getdamageBonus() {
+        return damageBonus;
     }
 
     public int getDamageDice() {
