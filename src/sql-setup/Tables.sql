@@ -48,7 +48,8 @@ create table user(
     username varchar(30),
     rank integer default 0,
     email varchar(30),
-    password char(40),
+    password char(40), 
+    // depends on hashing algoritm
     constraint user_pk primary key(user_id));
 
 create table player(
