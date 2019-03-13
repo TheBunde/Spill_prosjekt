@@ -1,4 +1,4 @@
-package chat;
+package GUI;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -69,7 +69,7 @@ public class MainMenuController {
     private Button signOut;
 
     public void buttonPressed6() throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("start.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../start.fxml"));
         Scene scene = new Scene(root);
         Stage stage = (Stage)signOut.getScene().getWindow();
         stage.setScene(scene);
