@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.RegistrerController">
+   <children>
+      <Label layoutX="240.0" layoutY="20.0" text="Register" underline="true">
+         <font>
+            <Font name="Tahoma" size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="150.0" layoutY="90.0" text="Username">
+         <font>
+            <Font name="Tahoma" size="18.0" />
+         </font>
+      </Label>
+      <TextField layoutX="150.0" layoutY="120.0" prefHeight="27.0" prefWidth="307.0" promptText="Username" />
+      <Label layoutX="150.0" layoutY="150.0" text="Type your e-mail">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField layoutX="150.0" layoutY="180.0" prefHeight="27.0" prefWidth="307.0" promptText="e-mail" />
+      <Label layoutX="150.0" layoutY="215.0" text="Type your password">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <PasswordField layoutX="150.0" layoutY="240.0" prefHeight="27.0" prefWidth="307.0" promptText="Password" />
+      <Label layoutX="150.0" layoutY="270.0" text="Re-write your passwor">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <PasswordField layoutX="150.0" layoutY="300.0" prefHeight="27.0" prefWidth="307.0" promptText="Re-write your password" />
+      <Button fx:id="registrerButton" layoutX="160.0" layoutY="340.0" mnemonicParsing="false" onAction="#registrer" text="Register" />
+      <Button fx:id="cancelButton" layoutX="260.0" layoutY="340.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
+   </children>
+</AnchorPane>
