@@ -1,35 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bceba4d5-7c35-4235-b7da-55f2c5e1eaa0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/chat/InterfaceMain.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/chat/LoginController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/chat/MainMenuController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/chat/RegistrerController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/chat/SceneSwitcher.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/chat/StartController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/interface/.gitkeep" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/interface/sample/LoginScreen.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/interface/sample/MainMenu.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/interface/sample/Registrer.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/interface/sample/sample.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/interface/sample/start.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/interface/sample/yobammarere.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/interface/.gitkeep" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/.gitkeep" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/interface/sample/InterfaceMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/InterfaceMain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/interface/sample/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/interface/sample/LoginScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/LoginScreen.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/interface/sample/MainMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/MainMenu.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/interface/sample/MainMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/MainMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/interface/sample/Registrer.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Registrer.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/interface/sample/RegistrerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/RegistrerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/interface/sample/SceneSwitcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/SceneSwitcher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/interface/sample/StartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/StartController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/interface/sample/sample.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/sample.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/interface/sample/start.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/start.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/interface/sample/yobammarere.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/yobammarere.jpg" afterDir="false" />
-    </list>
+    <list default="true" id="bceba4d5-7c35-4235-b7da-55f2c5e1eaa0" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,20 +10,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/GUI/LoginController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/GUI/InterfaceMain.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="136">
               <caret line="12" column="76" lean-forward="true" selection-start-line="12" selection-start-column="76" selection-end-line="12" selection-end-column="76" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret line="7" column="46" selection-start-line="7" selection-start-column="46" selection-end-line="7" selection-end-column="46" />
             </state>
           </provider>
         </entry>
@@ -179,6 +151,12 @@
       </list>
     </option>
   </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1386" />
+    <option name="height" value="788" />
+  </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -198,6 +176,12 @@
               <item name="Game-development-project" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="Game-development-project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Game-development-project" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="GUI" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -205,7 +189,10 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552497940608" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -308,23 +295,22 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="664000" />
+    <option name="totallyTimeSpent" value="920000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2708018" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2708018" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Database Changes" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3289689" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32733223" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32733223" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -333,7 +319,8 @@
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="bottom" id="Messages" order="10" weight="0.32733223" />
-      <window_info anchor="right" id="Database" />
+      <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -342,7 +329,12 @@
       <window_info anchor="right" id="Theme Preview" order="5" />
       <window_info anchor="right" id="Maven" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="right" id="Database" order="8" />
     </layout>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Merge branch 'master' of https://gitlab.stud.iie.ntnu.no/heleneyj/Game-development-project&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'master' of https://gitlab.stud.iie.ntnu.no/heleneyj/Game-development-project&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/chat/ChatMain.java">
@@ -422,6 +414,13 @@
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="7" column="46" selection-start-line="7" selection-start-column="46" selection-end-line="7" selection-end-column="46" />
         </state>
       </provider>
     </entry>
