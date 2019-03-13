@@ -12,14 +12,12 @@ public class Database {
     private Connection con;
     private String url;
     private String password;
-    private int lastSeenChatMessage;
 
     //Setup for database
     public Database(String url, String password){
         this.con = null;
         this.url = url;
         this.password = password;
-        this.lastSeenChatMessage = 0;
     }
 
     //Fetches messages from chat
@@ -29,7 +27,7 @@ public class Database {
         ResultSet res = null;
         ArrayList<String> messages = new ArrayList<String>();
         try{
-            String prepString = "SELECT message_id, chat_message.chatter_id, message, name, time_stamp FROM chat_message LEFT OUTER JOIN chatter ON (chat_message.chatter_id = chatter.chatter_id) WHERE chat_message.chat_id = ? ORDER BY message_id ASC LIMIT 10";
+            String prepString = "SELECT message_id, chat_message.chatter_id, message, name, time_stamp FROM chat_message LEFT OUTER JOIN chatter ON (chat_message.chatter_id = chatter.chatter_id) WHERE chat_message.chat_id = ? ORDER BY message_id DESC LIMIT 30";
             prepStmt = this.con.prepareStatement(prepString);
             prepStmt.setInt(1, chatter.getChatID());
             res = prepStmt.executeQuery();

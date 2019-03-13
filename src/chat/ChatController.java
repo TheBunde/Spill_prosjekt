@@ -54,7 +54,7 @@ public class ChatController{
     public void updateChat(){
         ArrayList<String> messages = db.getMessagesFromChat(chatter);
         ObservableList<String> items = FXCollections.observableArrayList();
-        for (int i = 0; i < messages.size(); i++){
+        for (int i = messages.size() - 1; i >= 0; i--){
             items.add(messages.get(i));
         }
         list.setItems(items);
