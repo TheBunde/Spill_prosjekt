@@ -2,29 +2,30 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bceba4d5-7c35-4235-b7da-55f2c5e1eaa0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/out/production/Game-development-project/Character.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Game-development-project/Creature.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Game-development-project/Monster.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Game-development-project/Password.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Game-development-project/sample/SceneSwitcher.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/chat/.gitkeep" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/chat/sample/Chat - JavaFX.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/chat/sample/chat.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/chat/sample/sample.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/sample/Controller.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chat/.gitkeep" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/.gitkeep" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chat/Chat - JavaFX.jar" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Chat - JavaFX.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chat/Chat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Chat.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chat/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/ChatController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chat/Chatter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Chatter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chat/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chat/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chat/GUI.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chat/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chat/chat.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/chat.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chat/sample.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/sample.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/sample/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/sample/SceneSwitcher.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/interface/SceneSwitcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/interface/SceneSwitcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/interface/sample/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/interface/sample/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/interface/sample/LoginScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/interface/sample/LoginScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/interface/sample/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/interface/sample/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/interface/sample/MainMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/interface/sample/MainMenu.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/interface/sample/MainMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/interface/sample/MainMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/interface/sample/Registrer.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/interface/sample/Registrer.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/interface/sample/RegistrerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/interface/sample/RegistrerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/interface/sample/SceneSwitcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/interface/sample/SceneSwitcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/interface/sample/StartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/interface/sample/StartController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/interface/sample/start.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/interface/sample/start.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/.gitkeep" beforeDir="false" afterPath="$PROJECT_DIR$/src/chat/.gitkeep" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/Chat - JavaFX.jar" beforeDir="false" afterPath="$PROJECT_DIR$/src/chat/Chat - JavaFX.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/Chat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chat/Chat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chat/ChatController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/Chatter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chat/Chatter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chat/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chat/Database.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chat/ChatMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/chat.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/chat/chat.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/sample.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/chat/sample.fxml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -34,26 +35,65 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/sample/Main.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="14" column="18" selection-start-line="14" selection-start-column="18" selection-end-line="14" selection-end-column="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/sample/Chat.java">
+        <entry file="file://$PROJECT_DIR$/src/chat/ChatMain.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="68">
-              <caret line="4" column="19" selection-start-line="4" selection-start-column="19" selection-end-line="4" selection-end-column="19" />
+              <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/interface/SceneSwitcher.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="19" column="7" selection-start-line="19" selection-start-column="7" selection-end-line="19" selection-end-column="7" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/sample/ChatController.java">
+        <entry file="file://$PROJECT_DIR$/src/interface/sample/SceneSwitcher.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="29" selection-start-line="29" selection-end-line="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/chat/sample.fxml">
+          <provider editor-type-id="JavaFX-Scene-Builder" />
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/chat/chat.fxml">
+          <provider editor-type-id="JavaFX-Scene-Builder" />
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/chat/Chat.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/chat/ChatController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/chat/Chatter.java">
           <provider selected="true" editor-type-id="text-editor">
             <state>
               <caret column="8" selection-start-column="8" selection-end-column="8" />
@@ -62,7 +102,7 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/sample/Chatter.java">
+        <entry file="file://$PROJECT_DIR$/src/chat/Database.java">
           <provider selected="true" editor-type-id="text-editor">
             <state>
               <caret column="8" selection-start-column="8" selection-end-column="8" />
@@ -71,16 +111,7 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/sample/Database.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="8" selection-start-column="8" selection-end-column="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/sample/Controller.java">
+        <entry file="file://$PROJECT_DIR$/src/chat/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
             <state>
               <caret column="8" selection-start-column="8" selection-end-column="8" />
@@ -112,6 +143,8 @@
         <option value="$PROJECT_DIR$/src/sample/ChatController.java" />
         <option value="$PROJECT_DIR$/src/sample/Chat.java" />
         <option value="$PROJECT_DIR$/src/sample/Chatter.java" />
+        <option value="$PROJECT_DIR$/src/interface/sample/SceneSwitcher.java" />
+        <option value="$PROJECT_DIR$/src/chat/ChatMain.java" />
       </list>
     </option>
   </component>
@@ -141,18 +174,24 @@
               <item name="Game-development-project" type="b2602c69:ProjectViewProjectNode" />
               <item name="Game-development-project" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="sample" type="462c0819:PsiDirectoryNode" />
+              <item name="chat" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Game-development-project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Game-development-project" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="interface" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552494472620" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552496130294" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
@@ -192,11 +231,11 @@
       </method>
     </configuration>
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="sample.Main" />
+      <option name="MAIN_CLASS_NAME" value="chat.Main" />
       <module name="Game-development-project" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="sample.*" />
+          <option name="PATTERN" value="chat.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -236,7 +275,7 @@
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26639676" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.27125505" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -244,8 +283,8 @@
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3285968" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3285968" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3285968" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -253,7 +292,7 @@
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info anchor="bottom" id="Messages" order="10" weight="0.3285968" />
+      <window_info active="true" anchor="bottom" id="Messages" order="10" visible="true" weight="0.3285968" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -269,12 +308,11 @@
     <option name="LAST_COMMIT_MESSAGE" value="Testing" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/chat/Main.java" />
+    <entry file="file://$PROJECT_DIR$/src/chat/ChatMain.java" />
     <entry file="file://$PROJECT_DIR$/src/chat/Database.java" />
     <entry file="file://$PROJECT_DIR$/src/chat/GUI.java" />
     <entry file="file://$PROJECT_DIR$/src/chat/Chatter.java" />
     <entry file="file://$PROJECT_DIR$/src/chat/Controller.java" />
-    <entry file="file://$PROJECT_DIR$/src/chat/sample.fxml" />
     <entry file="file://$PROJECT_DIR$/src/chat/sample/GUI.java" />
     <entry file="file://$PROJECT_DIR$/src/chat/sample/Controller.java" />
     <entry file="file://$PROJECT_DIR$/src/chat/sample/Chatter.java" />
@@ -282,56 +320,68 @@
     <entry file="file://$PROJECT_DIR$/src/chat/sample/Chat.java" />
     <entry file="file://$PROJECT_DIR$/src/chat/sample/Database.java" />
     <entry file="file://$PROJECT_DIR$/src/chat/sample/Main.java" />
-    <entry file="file://$PROJECT_DIR$/src/sample/chat.fxml">
+    <entry file="file://$PROJECT_DIR$/src/sample/GUI.java" />
+    <entry file="file://$PROJECT_DIR$/src/chat/Chat.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/chat/Chatter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="8" selection-start-column="8" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/chat/Database.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="8" selection-start-column="8" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/chat/Controller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="8" selection-start-column="8" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/interface/sample/SceneSwitcher.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="29" selection-start-line="29" selection-end-line="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/chat/chat.fxml">
+      <provider selected="true" editor-type-id="text-editor" />
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/chat/ChatController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/chat/sample.fxml">
       <provider editor-type-id="JavaFX-Scene-Builder" />
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/GUI.java">
+    <entry file="file://$PROJECT_DIR$/src/chat/ChatMain.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/Database.java">
+    <entry file="file://$PROJECT_DIR$/src/interface/SceneSwitcher.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="8" selection-start-column="8" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="8" selection-start-column="8" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/Chat.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="19" selection-start-line="4" selection-start-column="19" selection-end-line="4" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/ChatController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="8" selection-start-column="8" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/Chatter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="8" selection-start-column="8" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="14" column="18" selection-start-line="14" selection-start-column="18" selection-end-line="14" selection-end-column="18" />
+        <state relative-caret-position="85">
+          <caret line="19" column="7" selection-start-line="19" selection-start-column="7" selection-end-line="19" selection-end-column="7" />
         </state>
       </provider>
     </entry>

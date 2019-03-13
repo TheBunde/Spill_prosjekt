@@ -1,13 +1,12 @@
-package sample;
+package chat;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import java.util.ArrayList;
 
-public class Main extends Application {
+public class ChatMain extends Application {
     static Database db;
     static Chatter chatter;
     @Override

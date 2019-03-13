@@ -1,11 +1,9 @@
-package sample;
-
-import java.util.ArrayList;
+package chat;
 
 public class Chat {
     public static void main(String[] args){
         //Database db = new Database("jdbc:mysql://mysql.stud.idi.ntnu.no:3306/williad?user=williad&password=", "69bJDh4G");
-        //Chatter chatter = new sample.Chatter("William");
+        //Chatter chatter = new chat.Chatter("William");
         //db.addChatter(chatter);
         //db.connectChatterToChat(chatter, chatter.getChatID());
         //db.addChatMessage(chatter, "Hei jeg trenger hjelp");

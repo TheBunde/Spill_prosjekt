@@ -9,7 +9,7 @@ Also give your Controller classes this constructor:
 
 SceneSwitcher need Button and the name of a fxml-file in a String as input
 */
-package sample; // switch to the name of your package
+package chat; // switch to the name of your package
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
