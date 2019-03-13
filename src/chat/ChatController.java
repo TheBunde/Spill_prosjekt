@@ -1,4 +1,4 @@
-package sample;
+package chat;
 
 import javafx.fxml.FXML;
 import javafx.collections.FXCollections;
@@ -23,8 +23,10 @@ public class ChatController{
     @FXML
     private TextField messageInput;
 
-    private Database db = InterfaceMain.db;
-    private Chatter chatter = InterfaceMain.chatter;
+
+    private Database db = ChatMain.db;
+    private Chatter chatter = ChatMain.chatter;
+
 
     public void initialize(){
         new Timer().scheduleAtFixedRate(new TimerTask() {

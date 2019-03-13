@@ -1,4 +1,4 @@
-package sample;
+package chat;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

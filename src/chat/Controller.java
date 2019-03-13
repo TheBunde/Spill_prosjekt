@@ -1,4 +1,4 @@
-package sample;
+package chat;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,13 +15,16 @@ public class Controller {
     @FXML
     private Button signInBtn;
 
-    private Database db = InterfaceMain.db;
+    private Database db = ChatMain.db;
+
     private Chatter chatter;
 
     public void joinChatPressed() throws Exception{
         //db = new Database("jdbc:mysql://mysql.stud.idi.ntnu.no:3306/williad?user=williad&password=", "69bJDh4G");
-        InterfaceMain.chatter = new Chatter(usernameInput.getText());
-        chatter = InterfaceMain.chatter;
+
+        ChatMain.chatter = new Chatter(usernameInput.getText());
+        chatter = ChatMain.chatter;
+
         db.addChatter(chatter);
         db.connectChatterToChat(chatter, chatter.getChatID());
 
