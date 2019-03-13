@@ -23,8 +23,13 @@ public class ChatController{
     @FXML
     private TextField messageInput;
 
+<<<<<<< HEAD:src/chat/ChatController.java
     private Database db = ChatMain.db;
     private Chatter chatter = ChatMain.chatter;
+=======
+    private Database db = InterfaceMain.db;
+    private Chatter chatter = InterfaceMain.chatter;
+>>>>>>> 6b4e8038ffe98f0de9bbf60ba50086c6159e06d2:src/sample/ChatController.java
 
     public void initialize(){
         new Timer().scheduleAtFixedRate(new TimerTask() {
