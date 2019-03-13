@@ -33,9 +33,9 @@ public class Database {
             res = prepStmt.executeQuery();
             while (res.next()) {
                 messages.add(res.getString("name") + ": " + res.getString("message") + " | " + res.getString("time_stamp"));
-                if (res.isLast()) {
-                    this.setLastSeenChatMessage(res.getInt("message_id"));
-                }
+                //if (res.isLast()) {
+                //    this.setLastSeenChatMessage(res.getInt("message_id"));
+                //}
             }
         }
         catch (SQLException sq){
@@ -204,9 +204,5 @@ public class Database {
         catch(SQLException sq){
             System.out.println("SQL-feil: " + sq);
         }
-    }
-
-    public void setLastSeenChatMessage(int lastSeenChatMessage){
-        this.lastSeenChatMessage = lastSeenChatMessage;
     }
 }
