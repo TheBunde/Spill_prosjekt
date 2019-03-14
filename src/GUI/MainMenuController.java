@@ -14,7 +14,7 @@ public class MainMenuController {
     private Button startNewGame;
 
     public void buttonPressed1() throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("createCarachter.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("createcharacter.fxml"));
         Scene scene = new Scene(root);
         Stage stage = (Stage)startNewGame.getScene().getWindow();
         stage.setScene(scene);
