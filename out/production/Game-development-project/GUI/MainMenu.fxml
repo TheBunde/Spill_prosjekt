@@ -14,7 +14,11 @@
          <children>
             <AnchorPane layoutX="148.0" layoutY="91.0" prefHeight="237.0" prefWidth="271.0">
                <children>
+<<<<<<< HEAD
                   <Button fx:id="startNewGame" contentDisplay="CENTER" layoutY="59.0" mnemonicParsing="false" onAction="#buttonPressed1" prefHeight="25.0" prefWidth="120.0" text="Start new game" textAlignment="CENTER" />
+=======
+                  <Button fx:id="staratNewGame" contentDisplay="CENTER" layoutY="59.0" mnemonicParsing="false" onAction="#buttonPressed1" prefHeight="25.0" prefWidth="120.0" text="Start new game" textAlignment="CENTER" />
+>>>>>>> 8899cae9f462abe1c0cb195399ca12a7f4fb04b3
                   <Button fx:id="joinLobby" contentDisplay="CENTER" layoutX="144.0" layoutY="59.0" mnemonicParsing="false" onAction="#buttonPressed2" prefHeight="25.0" prefWidth="120.0" text="Join lobby" textAlignment="CENTER" />
                   <Button fx:id="viewAccount" contentDisplay="CENTER" layoutY="100.0" mnemonicParsing="false" onAction="#buttonPressed3" prefHeight="25.0" prefWidth="120.0" text="View account" textAlignment="CENTER" />
                   <Button fx:id="settings" contentDisplay="CENTER" layoutX="144.0" layoutY="100.0" mnemonicParsing="false" onAction="#buttonPressed4" prefHeight="25.0" prefWidth="120.0" text="Settings" textAlignment="CENTER" />
