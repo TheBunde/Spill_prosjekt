@@ -1,11 +1,12 @@
+package Creature;
 import java.util.ArrayList;
 
 class Character extends Creature{
 
     private String backstory;
 
-    public Character(int hp, int ac, int level, String character, String name, String backstory, ArrayList weapon){
-        super(hp, ac, level, character, weapon);
+    public Character(int hp, int ac, int level, String character, int attackTurn, int damageBonus, ArrayList weapon, String backstory){
+        super(hp, ac, level, character, attackTurn, damageBonus, weapon);
         this.backstory = backstory;
     }
 
@@ -15,7 +16,7 @@ class Character extends Creature{
 
     public String toString(){
         String res = super.toString();
-        res += "\nBackstory:"+ backstory;
+        res += "\nBackstory:"+ getBackstory();
         return res;
     }
 }

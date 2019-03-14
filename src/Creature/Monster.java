@@ -1,9 +1,10 @@
+package Creature;
 import java.util.ArrayList;
 
 class Monster extends Creature {
 
-    public Monster(int hp, int ac, int level, String character, ArrayList weapon){
-        super(hp, ac, level, character, weapon);
+    public Monster(int hp, int ac, int level, String character, int attackTurn, int damageBonus, ArrayList weapon){
+        super(hp, ac, level, character, attackTurn, damageBonus, weapon);
     }
 
     public String toString() {
