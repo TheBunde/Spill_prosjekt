@@ -152,7 +152,7 @@
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="675" />
-    <option name="width" value="700" />
+    <option name="width" value="701" />
     <option name="height" value="735" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -199,7 +199,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552557485335" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552557997118" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
@@ -225,7 +225,7 @@
     </option>
   </component>
   <component name="RunManager" selected="Application.InterfaceMain">
-    <configuration name="InterfaceMain" type="Applet" factoryName="Applet">
+    <configuration name="InterfaceMain" type="Applet">
       <module name="Game-development-project" />
       <method v="2">
         <option name="Make" enabled="true" />
