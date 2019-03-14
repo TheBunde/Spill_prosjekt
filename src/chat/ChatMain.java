@@ -15,7 +15,7 @@ public class ChatMain extends Application {
         //chatter = new Chatter(usernameInput.getText());
         //db.addChatter(chatter);
         //db.connectChatterToChat(chatter, chatter.getChatID());
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("chatlogin.fxml"));
         primaryStage.setTitle("Chat");
         primaryStage.setScene(new Scene(root, 500, 275));
         primaryStage.show();

@@ -20,6 +20,13 @@ create table creature(
     pos_y integer,
     movement integer,
     attack_bonus integer,
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+    attack_turn integer,
+>>>>>>> ee8bf23cbe8c222c210711cbd62adfd94dc2da4d
+>>>>>>> 8899cae9f462abe1c0cb195399ca12a7f4fb04b3
     weapon_id not null,
     constraint creature_pk primary key(creature_id));
 

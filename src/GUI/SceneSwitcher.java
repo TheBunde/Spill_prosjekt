@@ -1,9 +1,9 @@
 /*
-Give all your Controller classes the following object variable:
+Give all your menuController classes the following object variable:
 private SceneSwitcher sceneSwitcher
 
-Also give your Controller classes this constructor:
-    public *Controller name*(){
+Also give your menuController classes this constructor:
+    public *menuController name*(){
         sceneSwitcher = new SceneSwitcher();
     }
 
