@@ -11,7 +11,11 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
+<<<<<<< HEAD
 <AnchorPane prefHeight="435.0" prefWidth="288.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chat.ChatController">
+=======
+<AnchorPane prefHeight="435.0" prefWidth="288.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chat.chatController">
+>>>>>>> ee8bf23cbe8c222c210711cbd62adfd94dc2da4d
    <children>
       <GridPane alignment="CENTER" layoutY="16.0" prefHeight="495.0" prefWidth="302.0">
         <columnConstraints>

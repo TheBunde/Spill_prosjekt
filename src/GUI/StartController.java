@@ -20,4 +20,5 @@ public class StartController {
     public void registrer() throws Exception{
         sceneSwitcher.switchScene(registrerButton, "Registrer.fxml");
     }
+
 }

@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
-public class Controller {
+public class menuController {
 
 
     @FXML
@@ -58,7 +58,7 @@ public class Controller {
     private Button help;
 
     public void buttonPressed5() throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("https://gitlab.stud.iie.ntnu.no/heleneyj/game-development-project/wikis/System/User-manual"));
+        Parent root = FXMLLoader.load(getClass().getResource("https://gitlab.stud.iie.ntnu.no/heleneyj/game-development-project/wikis/User%20manual"));
         Scene scene = new Scene(root);
         Stage stage = (Stage)help.getScene().getWindow();
         stage.setScene(scene);
