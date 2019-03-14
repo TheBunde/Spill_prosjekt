@@ -1,4 +1,4 @@
-package sample;
+package login;
 
 import javafx.fxml.FXML;
 
