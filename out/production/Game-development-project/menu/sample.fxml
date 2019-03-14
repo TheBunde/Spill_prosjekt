@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <children>
+      <AnchorPane prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <AnchorPane layoutX="148.0" layoutY="91.0" prefHeight="237.0" prefWidth="271.0">
+               <children>
+                  <Button fx:id="staratNewGame" contentDisplay="CENTER" layoutY="59.0" mnemonicParsing="false" onAction="#buttonPressed1" prefHeight="25.0" prefWidth="120.0" text="Start new game" textAlignment="CENTER" />
+                  <Button fx:id="joinLobby" contentDisplay="CENTER" layoutX="144.0" layoutY="59.0" mnemonicParsing="false" onAction="#buttonPressed2" prefHeight="25.0" prefWidth="120.0" text="Join lobby" textAlignment="CENTER" />
+                  <Button fx:id="viewAccount" contentDisplay="CENTER" layoutY="100.0" mnemonicParsing="false" onAction="#buttonPressed3" prefHeight="25.0" prefWidth="120.0" text="View account" textAlignment="CENTER" />
+                  <Button fx:id="settings" contentDisplay="CENTER" layoutX="144.0" layoutY="100.0" mnemonicParsing="false" onAction="#buttonPressed4" prefHeight="25.0" prefWidth="120.0" text="Settings" textAlignment="CENTER" />
+                  <Button fx:id="help" contentDisplay="CENTER" layoutX="76.0" layoutY="149.0" mnemonicParsing="false" onAction="#buttonPressed5" prefHeight="25.0" prefWidth="120.0" text="Help" textAlignment="CENTER" />
+                  <Button fx:id="signOut" contentDisplay="CENTER" layoutX="76.0" layoutY="186.0" mnemonicParsing="false" onAction="#buttonPressed6" prefHeight="25.0" prefWidth="120.0" text="Sign out" textAlignment="CENTER" />
+                  <Text fill="#c11532" layoutX="76.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Combat" textAlignment="CENTER" underline="true" wrappingWidth="119.99999731779099">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </children>
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+   </rowConstraints>
+</GridPane>
