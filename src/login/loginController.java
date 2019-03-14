@@ -11,7 +11,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
 
-public class Controller {
+public class loginController {
     private Connection con;
     private String username;
     private String password;
