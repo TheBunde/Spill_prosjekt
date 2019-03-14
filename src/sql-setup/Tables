@@ -2,6 +2,7 @@ drop table creature;
 drop table classes;
 drop table monster;
 drop table weapon;
+drop table creature_weapon;
 drop table users;
 drop table player;
 drop table initiative;
@@ -51,7 +52,7 @@ create table creature_weapon(
     creature_id integer not null,
     constraint creature_weapon_pk primary key(weapon_id, creature_id));
 
-    
+
 create table user(
     user_id integer not null,
     username varchar(30),
