@@ -39,11 +39,19 @@ create table monster(
 create table weapon(
     weapon_id integer not null,
     weapon_name varchar(20),
+    dice_amount integer,
     damage_dice smallint,
     damage_bonus integer,
     description varchar(50),
     constraint weapon_pk primary key(weapon_id));
 
+
+create table creature_weapon(
+    weapon_id integer not null,
+    creature_id integer not null,
+    constraint creature_weapon_pk primary key(weapon_id, creature_id));
+
+    
 create table user(
     user_id integer not null,
     username varchar(30),
