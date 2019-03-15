@@ -1,17 +1,17 @@
-package AccountDetails;
-
 public class User {
     private int user_id;
     private String username;
     private int rank;
+    private int level;
     private String email;
     private char password;
 
 
-    public User(int user_id, String username, int rank, String email, char password){
+    public User(int user_id, String username, int rank, int level, String email, char password){
         this.user_id = user_id;
         this.username = username;
         this.rank = rank;
+        this.level = level;
         this.email = email;
         this.password = password;
     }
@@ -38,6 +38,14 @@ public class User {
 
     public void setRank(int newRank){
         rank = newRank;
+    }
+
+    public int getLevel(){
+        return level;
+    }
+
+    public void setLevel(int newLevel){
+        level = newLevel;
     }
 
     public String getEmail(){

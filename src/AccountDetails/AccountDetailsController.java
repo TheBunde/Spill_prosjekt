@@ -1,38 +1,37 @@
-package AccountDetails;
-
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Pane;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class AccountDetailsController {
-
-    private Text username, email, level;
-    private Button changeUsername, changePassword, back;
-
     private AccountDetailsDatabase db = AccountDetailsMain.db;
-    private User user;
-    private Player player;
-    private Pane pane;
 
 
-    public void setInfo() throws Exception{
+    @FXML
+    private AnchorPane anchorPane;
 
-        String un = db.fetchUsername();
-        username.setText(un);
+    @FXML
+    private Text username, email, level;
 
-        String eml = db.fetchEmail();
-        username.setText(eml);
-
-        int lv = db.fetchLevel();
-        level.setText(Integer.toString(lv));
-
-        pane.getChildren().addAll(username, email, level);
+    public void getInfo()throws Exception{
+        username.setText(db.fetchUsername());
+        email.setText(db.fetchEmail());
+        level.setText(Integer.toString(db.fetchLevel()));
+        anchorPane.getChildren().addAll(username, email, level);
+        Parent root = FXMLLoader.load(getClass().getResource("viewAccount.fxml"));
+        Scene scene = new Scene(root);
+        Stage stage = (Stage)anchorPane.getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
 
+    @FXML
+    private Button changeUsername, changePassword, back;
 
     public void changeUsername() throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("changeUsername.fxml"));
@@ -50,7 +49,7 @@ public class AccountDetailsController {
         stage.show();
     }
 
-    public void back() throws Exception{
+    public void menu() throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("menu.fxml"));
         Scene scene = new Scene(root);
         Stage stage = (Stage)back.getScene().getWindow();
