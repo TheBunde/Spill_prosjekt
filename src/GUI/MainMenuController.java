@@ -26,7 +26,7 @@ public class MainMenuController {
 
     public void buttonPressed2() throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("FindLobby.fxml"));
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(root, 800, 500);
         Stage stage = (Stage)joinLobby.getScene().getWindow();
         stage.setScene(scene);
         stage.show();
