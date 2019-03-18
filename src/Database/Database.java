@@ -12,12 +12,17 @@ public class Database {
     private Connection con;
     private String url;
     private String password;
+    public User user;
+    private ManageConnection manager;
 
     //Setup for database
     public Database(String url, String password){
         this.con = null;
         this.url = url;
         this.password = password;
+        this.manager = new ManageConnection();
+        this.user = new User(3, "william", 2, "gmail@gmail.com");
+
     }
 
     //Fetches messages from chat
@@ -151,6 +156,128 @@ public class Database {
             return true;
         }
     }
+
+    public String fetchUsername() {
+        String username = "";
+        openConnection();
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        try {
+            String prepString = "select distinct username from usr where user_id = ?";
+            prepStmt = con.prepareStatement(prepString);
+            prepStmt.setInt(1, user.getUser_id());
+            res = prepStmt.executeQuery();
+            while(res.next()){
+                username  += res.getString("username");
+            }
+        }
+        catch (SQLException sq){
+            manager.writeMessage(sq, "fetchUsername");
+        }
+        finally {
+            manager.closeRes(res);
+            manager.closePrepStmt(prepStmt);
+            manager.closeConnection(this.con);
+        }
+        return username;
+    }
+
+    public String fetchEmail() {
+        String email = "";
+        openConnection();
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        try {
+
+            String prepString = "select distinct email from usr where user_id = ?";
+            prepStmt = this.con.prepareStatement(prepString);
+            prepStmt.setInt(1, user.getUser_id());
+            res = prepStmt.executeQuery();
+            while (res.next()){
+                email  += res.getString("email");
+            }
+        } catch (SQLException sq) {
+            manager.writeMessage(sq, "fetchEmail");
+        } finally {
+            manager.closeRes(res);
+            manager.closePrepStmt(prepStmt);
+            manager.closeConnection(this.con);
+        }
+        return email;
+    }
+
+    public int fetchRank() {
+        int rank = 0;
+        openConnection();
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        try {
+
+            String prepString = "select distinct rank from usr where user_id = ?";
+            prepStmt = this.con.prepareStatement(prepString);
+            prepStmt.setInt(1, user.getUser_id());
+            res = prepStmt.executeQuery();
+            while(res.next()){
+                rank += res.getInt("level");
+            }
+        } catch (SQLException e) {
+            manager.writeMessage(e, "fetchLevel");
+        } finally {
+            manager.closeRes(res);
+            manager.closePrepStmt(prepStmt);
+            manager.closeConnection(con);
+        }
+        return rank;
+    }
+
+    public boolean registerUser(User user) {
+        if(userExist(user.getUsername()))
+            return false;
+        openConnection();
+        PreparedStatement prepStmt = null;
+        try {
+            String prepString = "INSERT INTO usr VALUES(?, ?, DEFAULT, DEFAULT, ?, ?)";
+            prepStmt = con.prepareStatement(prepString);
+            prepStmt.setInt(1, user.getUser_id());
+            prepStmt.setString(2, user.getUsername());
+            prepStmt.setString(3, user.getEmail());
+            prepStmt.setString(4, "test");
+            prepStmt.executeUpdate();
+        } catch (SQLException e) {
+            manager.writeMessage(e, "registerUser");
+            return false;
+        } finally {
+            manager.closePrepStmt(prepStmt);
+            manager.closeConnection(con);
+            return true;
+        }
+    }
+
+    public boolean userExist(String username){
+        this.openConnection();
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        boolean userExists = false;
+        try{
+            String prepString = "SELECT user_id FROM usr WHERE username = ?";
+            prepStmt = this.con.prepareStatement(prepString);
+            prepStmt.setString(1, username);
+            res = prepStmt.executeQuery();
+            userExists = res.next();
+
+        }
+        catch (SQLException e){
+            manager.writeMessage(e, "userExist");
+            return false;
+        } finally {
+            manager.closeRes(res);
+            manager.closePrepStmt(prepStmt);
+            manager.closeConnection(con);
+            return userExists;
+        }
+    }
+
+
 
     public boolean closeRes(ResultSet res){
         try{

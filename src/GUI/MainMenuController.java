@@ -13,13 +13,8 @@ public class MainMenuController {
     @FXML
     private Button startNewGameButton;
 
-<<<<<<< HEAD
     public void startNewGameButtonPressed() throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("createCharacter.fxml"));
-=======
-    public void buttonPressed1() throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("createcharacter.fxml"));
->>>>>>> 926a1fe07c84b9a04d67526f856572fa47582d79
         Scene scene = new Scene(root);
         Stage stage = (Stage)startNewGameButton.getScene().getWindow();
         stage.setScene(scene);

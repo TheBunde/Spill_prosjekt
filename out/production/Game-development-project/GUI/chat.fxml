@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
+<<<<<<< HEAD
 <<<<<<< HEAD:out/production/Game-development-project/chat/chat.fxml
 <AnchorPane prefHeight="435.0" prefWidth="288.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chat.chatController">
 =======
@@ -33,6 +34,9 @@
 >>>>>>> 56ac35e9a3699f6b3d8a3dbaf65fa8a97e4af992
 >>>>>>> 926a1fe07c84b9a04d67526f856572fa47582d79:out/production/Game-development-project/chat/chat.fxml
 >>>>>>> 26a297b9348301dc06af15853e1971fd7f954e10:out/production/Game-development-project/GUI/chat.fxml
+=======
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="353.0" prefWidth="253.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.chatController">
+>>>>>>> 02a18ff1149eccae70c466a10b316b1920464345
    <children>
       <GridPane alignment="CENTER" prefHeight="353.0" prefWidth="253.0">
         <columnConstraints>
