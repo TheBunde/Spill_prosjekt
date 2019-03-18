@@ -1,6 +1,7 @@
 package GUI;
 
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 
 public class GameLobbyController {
@@ -9,11 +10,13 @@ public class GameLobbyController {
     @FXML
     private Button backToMenuButton;
 
-    public void travelButtonPressed(){
+    private SceneSwitcher sceneSwitcher = new SceneSwitcher();
 
+    public void travelButtonPressed() throws Exception{
+        this.sceneSwitcher.switchScene(travelButton, "battlefield.fxml");
     }
 
-    public void backToMenuButtonPressed(){
-        
+    public void backToMenuButtonPressed() throws Exception{
+        this.sceneSwitcher.switchScene(backToMenuButton, "MainMenu.fxml");
     }
 }
