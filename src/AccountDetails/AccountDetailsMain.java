@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class AccountDetailsMain extends Application {
-    static AccountDetailsDatabase db;
+    public static AccountDetailsDatabase db;
 
 
     @Override
@@ -17,6 +17,7 @@ public class AccountDetailsMain extends Application {
         primaryStage.setTitle("Account Details");
         primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.show();
+
     }
 
 

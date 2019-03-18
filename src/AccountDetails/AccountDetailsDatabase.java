@@ -37,7 +37,7 @@ public class AccountDetailsDatabase {
     }
 
 
-    public String fetchUsername() {
+    public String fetchUsername(User usr) {
         String username = "";
         openConnection();
         PreparedStatement prepStmt = null;
@@ -45,7 +45,7 @@ public class AccountDetailsDatabase {
         try {
             String prepString = "select distinct username from usr where username = ?";
             prepStmt = con.prepareStatement(prepString);
-            prepStmt.setString(1, user.getUsername());
+            prepStmt.setString(1, usr.getUsername());
             res = prepStmt.executeQuery();
             while(res.next()){
                 username  += res.getString("username");
@@ -61,7 +61,7 @@ public class AccountDetailsDatabase {
     }
 
 
-    public String fetchEmail() {
+    public String fetchEmail(User usr) {
         String email = "";
         openConnection();
         PreparedStatement prepStmt = null;
@@ -70,7 +70,7 @@ public class AccountDetailsDatabase {
 
             String prepString = "select distinct email from usr where email = ?";
             prepStmt = this.con.prepareStatement(prepString);
-            prepStmt.setString(1, user.getEmail());
+            prepStmt.setString(1, usr.getEmail());
             res = prepStmt.executeQuery();
             while (res.next()){
                 email  += res.getString("email");
@@ -85,7 +85,7 @@ public class AccountDetailsDatabase {
         return email;
     }
 
-    public int fetchLevel() {
+    public int fetchLevel(User usr) {
         int level = 0;
         openConnection();
         PreparedStatement prepStmt = null;
@@ -94,7 +94,7 @@ public class AccountDetailsDatabase {
 
             String prepString = "select distinct [level] from usr where [level] = ?";
             prepStmt = this.con.prepareStatement(prepString);
-            prepStmt.setInt(1, user.getLevel());
+            prepStmt.setInt(1, usr.getLevel());
             res = prepStmt.executeQuery();
             while(res.next()){
                 level  += res.getInt("level");
@@ -109,7 +109,7 @@ public class AccountDetailsDatabase {
         return level;
     }
 
-    public boolean registerUser(User user) {
+    public boolean registerUser(User usr) {
         if(userExist(user.getUser_id()))
             return false;
         openConnection();
@@ -117,10 +117,10 @@ public class AccountDetailsDatabase {
         try {
             String prepString = "INSERT INTO usr VALUES(?, ?, DEFAULT, DEFAULT, ?, ?)";
             prepStmt = con.prepareStatement(prepString);
-            prepStmt.setInt(1, user.getUser_id());
-            prepStmt.setString(2, user.getUsername());
-            prepStmt.setString(3, user.getEmail());
-            prepStmt.setString(4, String.valueOf(user.getPassword()));
+            prepStmt.setInt(1, usr.getUser_id());
+            prepStmt.setString(2, usr.getUsername());
+            prepStmt.setString(3, usr.getEmail());
+            prepStmt.setString(4, String.valueOf(usr.getPassword()));
             prepStmt.executeUpdate();
         } catch (SQLException e) {
             manager.writeMessage(e, "registerUser");

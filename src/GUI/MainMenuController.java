@@ -33,12 +33,12 @@ public class MainMenuController {
     }
 
     @FXML
-    private Button viewAccoun;
+    private Button viewAccount;
 
     public void buttonPressed3() throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("AccountDetails.fxml"));
         Scene scene = new Scene(root);
-        Stage stage = (Stage)viewAccoun.getScene().getWindow();
+        Stage stage = (Stage)viewAccount.getScene().getWindow();
         stage.setScene(scene);
         stage.show();
     }
@@ -58,7 +58,7 @@ public class MainMenuController {
     private Button help;
 
     public void buttonPressed5() throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("https://gitlab.stud.iie.ntnu.no/heleneyj/game-development-project/wikis/System/User-manual"));
+        Parent root = FXMLLoader.load(getClass().getResource("https://gitlab.stud.iie.ntnu.no/heleneyj/game-development-project/wikis/User%20manual"));
         Scene scene = new Scene(root);
         Stage stage = (Stage)help.getScene().getWindow();
         stage.setScene(scene);

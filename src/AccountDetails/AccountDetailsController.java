@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 
 public class AccountDetailsController {
     private AccountDetailsDatabase db = AccountDetailsMain.db;
+    User user;
 
 
     @FXML
@@ -25,9 +26,9 @@ public class AccountDetailsController {
     }
 
     public void getInfo()throws Exception{
-        username.setText(db.fetchUsername());
-        email.setText(db.fetchEmail());
-        level.setText(Integer.toString(db.fetchLevel()));
+        username.setText(db.fetchUsername(user));
+        email.setText(db.fetchEmail(user));
+        level.setText(Integer.toString(db.fetchLevel(user)));
         anchorPane.getChildren().addAll(username, email, level);
         Parent root = FXMLLoader.load(getClass().getResource("viewAccount.fxml"));
         Scene scene = new Scene(root);

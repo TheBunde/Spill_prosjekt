@@ -2,6 +2,7 @@ drop table creature;
 drop table classes;
 drop table monster;
 drop table weapon;
+drop table creature_weapon;
 drop table users;
 drop table player;
 drop table initiative;
@@ -19,18 +20,9 @@ create table creature(
     pos_x integer,
     pos_y integer,
     movement integer,
+     damage_bonus integer,
     attack_bonus integer,
-<<<<<<< HEAD
     attack_turn integer,
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-    attack_turn integer,
->>>>>>> ee8bf23cbe8c222c210711cbd62adfd94dc2da4d
->>>>>>> 8899cae9f462abe1c0cb195399ca12a7f4fb04b3
->>>>>>> 56ac35e9a3699f6b3d8a3dbaf65fa8a97e4af992
     weapon_id not null,
     constraint creature_pk primary key(creature_id));
 
@@ -49,10 +41,17 @@ create table monster(
 create table weapon(
     weapon_id integer not null,
     weapon_name varchar(20),
+    dice_amount integer,
     damage_dice smallint,
-    damage_bonus integer,
     description varchar(50),
     constraint weapon_pk primary key(weapon_id));
+
+
+create table creature_weapon(
+    weapon_id integer not null,
+    creature_id integer not null,
+    constraint creature_weapon_pk primary key(weapon_id, creature_id));
+
 
 create table user(
     user_id integer not null,
