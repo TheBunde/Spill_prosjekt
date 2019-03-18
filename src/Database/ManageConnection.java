@@ -1,9 +1,9 @@
-package AccountDetails;
+package Database;
 import java.sql.*;
 
 public class ManageConnection {
 
-    public static void closeResSet(ResultSet res) {
+    public static void closeRes(ResultSet res) {
         try {
             if (res != null) {
                 res.close();
@@ -13,10 +13,10 @@ public class ManageConnection {
         }
     }
 
-    public static void closeStatement(Statement stm) {
+    public static void closePrepStmt(PreparedStatement prepStmt) {
         try {
-            if (stm != null) {
-                stm.close();
+            if (prepStmt != null) {
+                prepStmt.close();
             }
         } catch (SQLException e) {
             writeMessage(e, "closeStatement()");
