@@ -28,7 +28,7 @@
                   </HBox>
                   <ImageView fitHeight="374.0" fitWidth="798.0" pickOnBounds="true">
                      <image>
-                        <Image url="@yobammarere.jpg" />
+                        <Image url="@images/yobammarere.jpg" />
                      </image>
                   </ImageView>
                </children>

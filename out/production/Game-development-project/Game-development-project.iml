@@ -3,8 +3,12 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
+<<<<<<< HEAD:out/production/Game-development-project/Game-development-project.iml
       <sourceFolder url="file://$MODULE_DIR$/Creature" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/login" isTestSource="false" />
+=======
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+>>>>>>> Sara:.idea/Game-development project.iml
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

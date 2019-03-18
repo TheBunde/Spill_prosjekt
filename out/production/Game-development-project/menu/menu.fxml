@@ -26,7 +26,6 @@
                      </font>
                   </Text>
                </children>
-            </AnchorPane>
          </children>
       </AnchorPane>
    </children>
@@ -37,3 +36,4 @@
       <RowConstraints />
    </rowConstraints>
 </GridPane>
+        </AnchorPane>
