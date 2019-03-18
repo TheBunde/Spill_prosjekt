@@ -11,67 +11,85 @@ public class MainMenuController {
 
 
     @FXML
-    private Button startNewGame;
+    private Button startNewGameButton;
 
+<<<<<<< HEAD
+    public void startNewGameButtonPressed() throws Exception{
+        Parent root = FXMLLoader.load(getClass().getResource("createCharacter.fxml"));
+=======
     public void buttonPressed1() throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("createcharacter.fxml"));
+>>>>>>> 926a1fe07c84b9a04d67526f856572fa47582d79
         Scene scene = new Scene(root);
-        Stage stage = (Stage)startNewGame.getScene().getWindow();
+        Stage stage = (Stage)startNewGameButton.getScene().getWindow();
         stage.setScene(scene);
         stage.show();
     }
 
     @FXML
-    private Button joinLobby;
+    private Button joinLobbyButton;
 
-    public void buttonPressed2() throws Exception{
+    public void joinLobbyButtonPressed() throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("FindLobby.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = (Stage)joinLobby.getScene().getWindow();
+        Scene scene = new Scene(root, 800, 500);
+        Stage stage = (Stage)joinLobbyButton.getScene().getWindow();
         stage.setScene(scene);
         stage.show();
     }
 
     @FXML
+<<<<<<< HEAD
     private Button viewAccount;
+=======
+    private Button viewAccountButton;
+>>>>>>> 26a297b9348301dc06af15853e1971fd7f954e10
 
-    public void buttonPressed3() throws Exception{
+    public void viewAccountButtonPressed() throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("AccountDetails.fxml"));
         Scene scene = new Scene(root);
+<<<<<<< HEAD
         Stage stage = (Stage)viewAccount.getScene().getWindow();
+=======
+        Stage stage = (Stage)viewAccountButton.getScene().getWindow();
+>>>>>>> 26a297b9348301dc06af15853e1971fd7f954e10
         stage.setScene(scene);
         stage.show();
     }
 
     @FXML
-    private Button settings;
+    private Button settingsButton;
 
-    public void buttonPressed4() throws Exception{
+    public void settingsButtonPressed() throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("settings.fxml"));
         Scene scene = new Scene(root);
-        Stage stage = (Stage)settings.getScene().getWindow();
+        Stage stage = (Stage)settingsButton.getScene().getWindow();
         stage.setScene(scene);
         stage.show();
     }
 
     @FXML
-    private Button help;
+    private Button helpButton;
 
+<<<<<<< HEAD
     public void buttonPressed5() throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("https://gitlab.stud.iie.ntnu.no/heleneyj/game-development-project/wikis/User%20manual"));
+=======
+    public void helpButtonPressed() throws Exception{
+        Parent root = FXMLLoader.load(getClass().getResource("https://gitlab.stud.iie.ntnu.no/heleneyj/game-development-project/wikis/System/User-manual"));
+>>>>>>> 26a297b9348301dc06af15853e1971fd7f954e10
         Scene scene = new Scene(root);
-        Stage stage = (Stage)help.getScene().getWindow();
+        Stage stage = (Stage)helpButton.getScene().getWindow();
         stage.setScene(scene);
         stage.show();
     }
 
     @FXML
-    private Button signOut;
+    private Button signOutButton;
 
-    public void buttonPressed6() throws Exception{
+    public void signOutButtonPressed() throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("start.fxml"));
         Scene scene = new Scene(root);
-        Stage stage = (Stage)signOut.getScene().getWindow();
+        Stage stage = (Stage)signOutButton.getScene().getWindow();
         stage.setScene(scene);
         stage.show();
     }
