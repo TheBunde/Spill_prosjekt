@@ -1,7 +1,11 @@
 <component name="ProjectCodeStyleConfiguration">
   <code_scheme name="Project" version="173">
     <DBN-PSQL>
+<<<<<<< HEAD
       <case-options enabled="false">
+=======
+      <case-options enabled="true">
+>>>>>>> Sara
         <option name="KEYWORD_CASE" value="lower" />
         <option name="FUNCTION_CASE" value="lower" />
         <option name="PARAMETER_CASE" value="lower" />
@@ -11,7 +15,11 @@
       <formatting-settings enabled="false" />
     </DBN-PSQL>
     <DBN-SQL>
+<<<<<<< HEAD
       <case-options enabled="false">
+=======
+      <case-options enabled="true">
+>>>>>>> Sara
         <option name="KEYWORD_CASE" value="lower" />
         <option name="FUNCTION_CASE" value="lower" />
         <option name="PARAMETER_CASE" value="lower" />
@@ -25,7 +33,11 @@
       </formatting-settings>
     </DBN-SQL>
     <DBN-PSQL>
+<<<<<<< HEAD
       <case-options enabled="false">
+=======
+      <case-options enabled="true">
+>>>>>>> Sara
         <option name="KEYWORD_CASE" value="lower" />
         <option name="FUNCTION_CASE" value="lower" />
         <option name="PARAMETER_CASE" value="lower" />
@@ -35,7 +47,11 @@
       <formatting-settings enabled="false" />
     </DBN-PSQL>
     <DBN-SQL>
+<<<<<<< HEAD
       <case-options enabled="false">
+=======
+      <case-options enabled="true">
+>>>>>>> Sara
         <option name="KEYWORD_CASE" value="lower" />
         <option name="FUNCTION_CASE" value="lower" />
         <option name="PARAMETER_CASE" value="lower" />
