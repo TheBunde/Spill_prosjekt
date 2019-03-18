@@ -1,3 +1,5 @@
+package AccountDetails;
+import AccountDetails.AccountDetailsMain;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,6 +19,10 @@ public class AccountDetailsController {
 
     @FXML
     private Text username, email, level;
+
+    public void initialize() throws Exception{
+        getInfo();
+    }
 
     public void getInfo()throws Exception{
         username.setText(db.fetchUsername());

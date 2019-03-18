@@ -1,3 +1,4 @@
+package AccountDetails;
 public class User {
     private int user_id;
     private String username;

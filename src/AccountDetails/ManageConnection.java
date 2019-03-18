@@ -1,3 +1,4 @@
+package AccountDetails;
 import java.sql.*;
 
 public class ManageConnection {
