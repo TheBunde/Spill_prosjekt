@@ -1,4 +1,4 @@
-package chat;
+package Database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-//test
+
 public class Database {
     private Connection con;
     private String url;

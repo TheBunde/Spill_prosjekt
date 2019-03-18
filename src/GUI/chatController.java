@@ -1,23 +1,15 @@
-package chat;
+package GUI;
+import Database.*;
 
 import javafx.fxml.FXML;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-import jdk.internal.org.objectweb.asm.tree.IntInsnNode;
 
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 public class chatController {
@@ -30,16 +22,16 @@ public class chatController {
     @FXML
     private TextField messageInput;
 
-    private Database db = ChatMain.db;
-    private Chatter chatter = ChatMain.chatter;
+    private Database db;
+    private Chatter chatter;
 
     public void initialize(){
-        new Timer().scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                updateChat();
-            }
-        },0 ,1500);
+//        new Timer().scheduleAtFixedRate(new TimerTask() {
+//            @Override
+//            public void run() {
+//                updateChat();
+//            }
+//        },0 ,1500);
     }
 
     public void sendMessage(){

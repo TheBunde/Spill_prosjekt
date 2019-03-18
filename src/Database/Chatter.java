@@ -1,4 +1,4 @@
-package chat;
+package Database;
 
 public class Chatter {
     private String name;

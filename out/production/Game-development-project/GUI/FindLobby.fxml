@@ -6,7 +6,6 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.FindLobbyController">
    <children>
       <Label layoutX="244.0" layoutY="48.0" text="Find Lobby">
@@ -24,12 +23,12 @@
             <Font size="26.0" />
          </font>
       </TextField>
-      <Button fx:id="joinLobbyButton" layoutX="288.0" layoutY="342.0" mnemonicParsing="false" onAction="#joinLobby" prefHeight="63.0" prefWidth="221.0" styleClass="prosjektknapp" stylesheets="@style.css" text="Join" textOverrun="CLIP">
+      <Button fx:id="joinLobbyButton" layoutX="288.0" layoutY="342.0" mnemonicParsing="false" onAction="#joinLobbyButtonPressed" prefHeight="63.0" prefWidth="221.0" text="Join" textOverrun="CLIP">
          <font>
             <Font size="29.0" />
          </font>
       </Button>
-      <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="309.0" layoutY="438.0" textAlignment="CENTER" textFill="#c30505">
+      <Label fx:id="errorLabel" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="248.0" layoutY="430.0" prefWidth="300.0" textAlignment="CENTER" textFill="#c30505">
          <font>
             <Font size="17.0" />
          </font>
