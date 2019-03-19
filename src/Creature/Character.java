@@ -1,3 +1,5 @@
+package Creature;
+
 import java.util.ArrayList;
 
 class Character extends Creature{
