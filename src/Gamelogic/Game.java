@@ -86,7 +86,23 @@ class Game {
                 break;
             }
             gameRound++;
-            //set new HP and everything
+            for(int i = 0; i < turn.size(); i++){
+                if(turn.get(i) instanceof Character){
+                    int newHp = 0;
+                    if(turn.get(i).getCharacter().equalsIgnoreCase("Wizard")){
+                        newHp = 22 + gameRound*4;
+                    }
+                    if(turn.get(i).getCharacter().equalsIgnoreCase("Rouge")){
+                        newHp = 23 + gameRound*5;
+                    }
+                    if(turn.get(i).getCharacter().equalsIgnoreCase("Ranger")){
+                        newHp = 32 + gameRound*8;
+                    }
+                    if(turn.get(i).getCharacter().equalsIgnoreCase("Fighter")){
+                        newHp = 36 + gameRound*8;
+                    }
+                }
+            }
         }
         System.out.println(story.get(story.size()-2));
         //set every new value for users

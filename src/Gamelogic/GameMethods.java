@@ -60,6 +60,8 @@ public class GameMethods {
 
     }
 
+
+
     public boolean nearMonster(int index, int gameRound, ArrayList<Creature> turn, ArrayList<Creature> monsters){
         boolean near = false;
         int xCordinate = turn.get(index).getxCordinate();
@@ -84,7 +86,7 @@ public class GameMethods {
         return near;
     }
 
+    public void monsterAttack(){
 
-
-
+    }
 }
