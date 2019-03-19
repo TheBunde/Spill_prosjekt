@@ -132,6 +132,28 @@ public class Database {
         return status;
     }
 
+    public boolean disconnectUserFromGameLobby(){
+        this.openConnection();
+        PreparedStatement prepStmt = null;
+        boolean status = true;
+        try{
+            String prepString = "UPDATE usr SET lobby_key = NULL WHERE user_id = ?";
+            prepStmt = this.con.prepareStatement(prepString);
+            prepStmt.setInt(1, this.user.getUser_id());
+            prepStmt.executeUpdate();
+            this.user.setLobbyKey(-1);
+        }
+        catch (SQLException sq){
+            sq.printStackTrace();
+            status = false;
+        }
+        finally {
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(this.con);
+            return status;
+        }
+    }
+
     public boolean addUser(User user){
         this.openConnection();
         PreparedStatement prepStmt = null;

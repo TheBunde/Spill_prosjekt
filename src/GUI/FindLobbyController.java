@@ -36,6 +36,9 @@ public class FindLobbyController {
                 Stage stage = (Stage)joinLobbyButton.getScene().getWindow();
                 stage.setScene(scene);
             }
+            else {
+                errorLabel.setText("Not a valid lobby key");
+            }
 
         }
         else{
