@@ -26,6 +26,7 @@ public class LoginController {
     private Button cancelButton, loginButton;
     private SceneSwitcher sceneSwitcher;
 
+    private Database db = InterfaceMain.db;
     public LoginController(){
         sceneSwitcher = new SceneSwitcher();
     }
@@ -49,7 +50,6 @@ public class LoginController {
         if(username.getText().isEmpty()){
             return;
         }*/
-        Database db = new Database("jdbc:mysql://mysql-ait.stud.idi.ntnu.no:3306/g_tdat1006_01?user=g_tdat1006_01&password=","q8CeXgyy");
 
         String usernameInput = username.getText().trim().toLowerCase();
         String passwordInput = password.getText().trim();
