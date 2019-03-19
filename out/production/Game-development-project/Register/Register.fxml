@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" fx:controller="Register.RegisterController" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="240.0" layoutY="20.0" text="Register" underline="true">
          <font>
@@ -38,7 +38,7 @@
          </font>
       </Label>
       <PasswordField fx:id="re_pass" layoutX="150.0" layoutY="300.0" prefHeight="27.0" prefWidth="307.0" promptText="Re-write your password" />
-      <Button layoutX="160.0" layoutY="340.0" mnemonicParsing="false" text="Register" />
-      <Button layoutX="260.0" layoutY="340.0" mnemonicParsing="false" text="Cancel" />
+      <Button fx:id="pressRegister" layoutX="160.0" layoutY="340.0" mnemonicParsing="false" onAction="#onRegister" text="Register" />
+      <Button layoutX="260.0" layoutY="340.0" mnemonicParsing="false" onAction="#onCancel_Register" text="Cancel" />
    </children>
 </AnchorPane>
