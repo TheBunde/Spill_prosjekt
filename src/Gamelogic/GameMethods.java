@@ -43,7 +43,14 @@ public class GameMethods {
         return turn;
     }
 
-    public void rangedAttack()
+    public void rangedAttack(){}
 
 
 }
+
+
+
+
+
+
+
