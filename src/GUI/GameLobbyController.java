@@ -26,7 +26,7 @@ public class GameLobbyController {
     }
 
     public void travelButtonPressed() throws Exception{
-        this.sceneSwitcher.switchScene(travelButton, "battlefield.fxml");
+        this.sceneSwitcher.switchScene(travelButton, "Battlefield.fxml");
     }
 
     public void backToMenuButtonPressed() throws Exception{

@@ -53,13 +53,8 @@ create table creature_weapon(
     constraint creature_weapon_pk primary key(weapon_id, creature_id));
 
 
-<<<<<<< HEAD
 create table usr(
     user_id integer not null AUTO_INCREMENT,
-=======
-create table user(
-    user_id integer not null,
->>>>>>> magnus
     username varchar(30),
     rank integer default 0,
     email varchar(30),
