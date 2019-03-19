@@ -71,6 +71,8 @@ class Game {
                     if(playerNow instanceof Monster){
                         int roll = dice.roll(players.size());
                         int playerHp = players.get(roll).getHp();
+                        Creature monster = turn.get(index);
+                        method.monsterMovement(monster);
                         //attack if close
                         //move if not close, then attack
                         if(playerHp <= 0){

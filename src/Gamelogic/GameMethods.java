@@ -1,11 +1,11 @@
 package Gamelogic;
 
-<<<<<<< HEAD
+
 import creature.*;
-=======
+
 import creature.Creature;
 import creature.Monster;
->>>>>>> 1f7e1f856b48d9ce85eee0278d041d8a4277b026
+
 
 import java.util.ArrayList;
 import java.lang.Math.*;
@@ -49,7 +49,7 @@ public class GameMethods {
         return turn;
     }
 
-<<<<<<< HEAD
+
     public void attack(int index, int gameRound, ArrayList<Creature> turn, ArrayList<Creature> monsters, Weapon weapon){
         int roll = dice.roll(20) + turn.get(index).getAttackBonus();
         int acMonster = monsters.get(gameRound).getAc();
@@ -62,17 +62,15 @@ public class GameMethods {
             System.out.println("Miss");
         }
     }
-=======
+
     public void rangedAttack(){}
->>>>>>> 1f7e1f856b48d9ce85eee0278d041d8a4277b026
+
 
     public void movePlayer(){
 
     }
 
 
-
-<<<<<<< HEAD
     public boolean nearMonster(int index, int gameRound, ArrayList<Creature> turn, ArrayList<Creature> monsters){
         boolean near = false;
         int xCordinate = turn.get(index).getxCordinate();
@@ -99,10 +97,10 @@ public class GameMethods {
 
     public void monsterAttack(){
 
-=======
 
 
-    public void monsterMovement(Monster monster){
+
+    public void monsterMovement(Creature monster){
 
         ArrayList<Creature> creatures = new ArrayList<>();
         boolean first = true;
