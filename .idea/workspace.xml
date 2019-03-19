@@ -2,32 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="48988a6d-2afb-424e-8935-1b22fc954b5a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/out/production/Game-development-project/Creature/Character.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Game-development-project/Creature/Creature.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Game-development-project/Creature/Monster.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Game-development-project/Creature/Weapon.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Game-development-project/Gamelogic/Attack.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Game-development-project/Gamelogic/Dice.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Game-development-project/Gamelogic/Game.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Game-development-project/Gamelogic/GameMethods.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/Character.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/Creature.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/GUI/CreateCharacterController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Game-development-project/GUI/CreateCharacterController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/Monster.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/Weapon.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Creature/.gitkeep" beforeDir="false" afterPath="$PROJECT_DIR$/src/creature/.gitkeep" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Creature/Character.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/creature/Character.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Creature/Character.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/creature/Character.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Creature/Creature.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/creature/Creature.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Creature/Creature.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/creature/Creature.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Creature/Monster.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/creature/Monster.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Creature/Monster.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/creature/Monster.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Creature/Weapon.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/creature/Weapon.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Creature/Weapon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/creature/Weapon.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Gamelogic/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Gamelogic/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Gamelogic/GameMethods.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Gamelogic/GameMethods.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -40,8 +15,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Gamelogic/GameMethods.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1806">
-              <caret line="86" column="5" lean-forward="true" selection-start-line="86" selection-start-column="5" selection-end-line="86" selection-end-column="5" />
+            <state relative-caret-position="1638">
+              <caret line="78" column="9" lean-forward="true" selection-start-line="78" selection-start-column="9" selection-end-line="78" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -269,7 +244,7 @@
       <updated>1552492295754</updated>
       <workItem from="1552495724633" duration="2176000" />
       <workItem from="1552692664361" duration="17538000" />
-      <workItem from="1553000670266" duration="1335000" />
+      <workItem from="1553000670266" duration="1785000" />
     </task>
     <task id="LOCAL-00001" summary="Testing">
       <created>1552492743893</created>
@@ -281,10 +256,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3448000" />
+    <option name="totallyTimeSpent" value="3898000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19772728" />
@@ -483,8 +458,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Gamelogic/GameMethods.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1806">
-          <caret line="86" column="5" lean-forward="true" selection-start-line="86" selection-start-column="5" selection-end-line="86" selection-end-column="5" />
+        <state relative-caret-position="1638">
+          <caret line="78" column="9" lean-forward="true" selection-start-line="78" selection-start-column="9" selection-end-line="78" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
