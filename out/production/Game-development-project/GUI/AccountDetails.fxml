@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<<<<<<< HEAD
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AccountDetailsController">
-  <items>
-    <AnchorPane fx:id="anchorPane" minHeight="0.0" minWidth="0.0" prefHeight="214.0" prefWidth="598.0">
-         <children>
-            <Text layoutX="160.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Account dtails" textAlignment="CENTER" underline="true">
-=======
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -24,49 +13,27 @@
       <VBox alignment="CENTER" prefHeight="500.0" prefWidth="800.0" spacing="25.0">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Account dtails" textAlignment="CENTER" underline="true">
->>>>>>> 02a18ff1149eccae70c466a10b316b1920464345
                <font>
                   <Font size="42.0" />
                </font>
             </Text>
-<<<<<<< HEAD
             <Text fx:id="username" layoutX="218.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" textAlignment="CENTER">
-=======
-            <Text fx:id="username" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" textAlignment="CENTER">
->>>>>>> 02a18ff1149eccae70c466a10b316b1920464345
                <font>
                   <Font size="25.0" />
                </font>
             </Text>
-<<<<<<< HEAD
             <Text fx:id="email" layoutX="192.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email@example.com" textAlignment="CENTER">
-=======
-            <Text fx:id="email" strokeType="OUTSIDE" strokeWidth="0.0" text="Email@example.com" textAlignment="CENTER">
->>>>>>> 02a18ff1149eccae70c466a10b316b1920464345
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
-<<<<<<< HEAD
+
             <Text fx:id="level" layoutX="250.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Level" textAlignment="CENTER">
-=======
-            <Text fx:id="rank" strokeType="OUTSIDE" strokeWidth="0.0" text="Rank" textAlignment="CENTER">
->>>>>>> 02a18ff1149eccae70c466a10b316b1920464345
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
-<<<<<<< HEAD
-         </children></AnchorPane>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-         <children>
-            <Button fx:id="changeUsername" layoutX="227.0" layoutY="32.0" mnemonicParsing="false" onAction="#changeUsername" text="Change Username" />
-            <Button fx:id="changePassword" layoutX="229.0" layoutY="73.0" mnemonicParsing="false" onAction="#changePassword" text="Change Password" />
-            <Button fx:id="back" layoutX="264.0" layoutY="125.0" mnemonicParsing="false" onAction="#menu" text="Back" />
-         </children></AnchorPane>
-  </items>
-</SplitPane>
-=======
+
             <Button fx:id="changeUsername" mnemonicParsing="false" onAction="#changeUsername" text="Change Username" />
             <Button fx:id="changePassword" mnemonicParsing="false" onAction="#changePassword" text="Change Password" />
             <Button fx:id="back" mnemonicParsing="false" onAction="#menu" text="Back" />
@@ -74,4 +41,4 @@
       </VBox>
    </children>
 </Pane>
->>>>>>> 02a18ff1149eccae70c466a10b316b1920464345
+
