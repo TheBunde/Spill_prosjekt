@@ -1,8 +1,9 @@
-package Creature;
+
+package creature;
 
 import java.util.ArrayList;
 
-abstract class Creature {
+public abstract class Creature {
     private int hp;
     private int ac;
     private int level;
@@ -10,14 +11,23 @@ abstract class Creature {
     private int attackBonus;
     private int movement;
     private ArrayList<Weapon> weapon = new ArrayList<Weapon>();
+    private int attackTurn; // attacks per turn
+    private int damageBonus;
+    private int xCordinate;
+    private int yCordinate;
 
-    public Creature(int hp, int ac, int level, String character, ArrayList weapon){
+
+    public Creature(int hp, int ac, int level, String character, int attackTurn, int damageBonus, int xCordinate, int yCordinate, ArrayList weapon){
         this.hp = hp;
         this.ac = ac;
         this.level = level;
         this.character = character;
         this.attackBonus = attackBonus;
         this.movement = movement;
+        this.attackTurn = attackTurn;
+        this.damageBonus = damageBonus;
+        this.xCordinate = xCordinate;
+        this.yCordinate = yCordinate;
     }
 
     public int getHp() {
@@ -64,12 +74,36 @@ abstract class Creature {
         return movement;
     }
 
+    public int getAttackTurn() {
+        return attackTurn;
+    }
+
+    public int getDamageBonus(){
+        return damageBonus;
+    }
+
+    public int getxCordinate() {
+        return xCordinate;
+    }
+
+    public void setxCordinate(int xCordinate) {
+        this.xCordinate = xCordinate;
+    }
+
+    public int getyCordinate() {
+        return yCordinate;
+    }
+
+    public void setyCordinate(int yCordinate) {
+        this.yCordinate = yCordinate;
+    }
 
     public String toString() {
         String weapons = "";
         for(int i = 0; i < weapon.size(); i++){
             weapons = weapon.get(i).getName();
         }
-        return "Character: " + getCharacter() + "\nHP: " + getHp() + "\nAC: " + getAc() + "\nSpeed: " + getMovement() + "\nLevel:" + getLevel() + "\nWeapon: " + weapons + "\n Attack bonus: " + getAttackBonus();
+        return "Character: " + getCharacter() + "\nHP: " + getHp() + "\nAC: " + getAc() + "\nSpeed: " + getMovement() +
+                "\nLevel:" + getLevel() + "\nWeapon: " + weapons + "\nAttack bonus: " + getAttackBonus() +"\nAttacks per turn: " + getAttackTurn();
     }
 }
