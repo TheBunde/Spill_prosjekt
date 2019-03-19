@@ -1,5 +1,7 @@
 package Database;
 
+import javafx.scene.control.Alert;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -358,6 +360,143 @@ public class Database {
         }
         //If made it to here return -1, login failed.
         return -1;
+    }
+
+
+    public boolean emailExist(String email){
+        this.openConnection();
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        //Boolean variable to keep track of the existence of the specified email
+        boolean emailExists = false;
+        try{
+            //Checks if email with the specified user_id exists
+            String prepString = "SELECT user_id FROM usr WHERE email =? ";
+            prepStmt = this.con.prepareStatement(prepString);
+            prepStmt.setInt(1, user.getUser_id());
+            res = prepStmt.executeQuery();
+            emailExists = res.next();
+
+        }
+        catch (SQLException sq){
+            sq.printStackTrace();
+            return false;
+        }
+        finally {
+            this.closeRes(res);
+            this.closePrepStmt(prepStmt);
+            this.closeConnection();
+            return emailExists;
+        }
+    }
+
+
+
+    public int Button_Register_ActionPerformed(String username, String email, String password, String re_pass){
+        try {
+            if (!openConnection()) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning Dialog");
+                alert.setHeaderText(null);
+                alert.setContentText("Connection failed");
+                alert.showAndWait();
+                return -1;
+
+            } else if (username.equals("")) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning Dialog");
+                alert.setHeaderText(null);
+                alert.setContentText("Write the username");
+                alert.showAndWait();
+                return -1;
+
+            } else if (email.equals("") ) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning Dialog");
+                alert.setHeaderText(null);
+                alert.setContentText("Write your email");
+                alert.showAndWait();
+                return -1;
+
+
+
+            } else if (password.equals("")) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning Dialog");
+                alert.setHeaderText(null);
+                alert.setContentText("Write your password");
+                alert.showAndWait();
+                return -1;
+
+            } else if (re_pass.equals("")) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning Dialog");
+                alert.setHeaderText(null);
+                alert.setContentText("Re-enter your password please");
+                alert.showAndWait();
+                return -1;
+
+            } /*else if (fetchUsername().equals(user.getUsername())) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning Dialog");
+                alert.setHeaderText(null);
+                alert.setContentText("this username is already exist");
+                alert.showAndWait();
+                return -1;
+
+            }*/
+            else if(! emailExist(email)){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning Dialog");
+                alert.setHeaderText(null);
+                alert.setContentText("this email is already exist");
+                alert.showAndWait();
+                return -1;
+
+            }
+        }
+        catch (NullPointerException np1){
+            System.out.println(np1 +"np1");
+        }
+
+        PreparedStatement ps2 = null;
+        //ResultSet rs2;
+        String sql ="INSERT INTO usr(user_id, username, email, password) VALUES(?,?,?,?)";
+        this.user = new User(0, username+"", 1, email);
+        try{
+            ps2 = con.prepareStatement(sql);
+            ps2.setInt(1, user.getUser_id());
+            ps2.setString(2, username);
+            ps2.setString(3, email);
+            ps2.setString(4, password);
+            int added = ps2.executeUpdate();
+            if (added == 1){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information Dialog");
+                alert.setHeaderText(null);
+                alert.setContentText("User has been added");
+                alert.showAndWait();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning Dialog");
+            alert.setHeaderText(null);
+            alert.setContentText("adding failed");
+            alert.showAndWait();
+        }
+        catch (NullPointerException nlp){
+            System.out.println(nlp + "nlp");
+        }
+        finally {
+            this.closePrepStmt(ps2);
+            this.closeConnection();
+        }
+
+        return 1;
+
+
     }
 
 }
