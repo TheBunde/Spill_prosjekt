@@ -19,9 +19,9 @@ public class User {
         return user_id;
     }
 
-    public void setUser_id(int new_user_id){
-        user_id = new_user_id;
-    }
+    //public void setUser_id(int new_user_id){
+        //user_id = new_user_id;
+    //}
 
     public String getUsername(){
         return username;
