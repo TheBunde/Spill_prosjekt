@@ -1,7 +1,7 @@
-package Creature;
+package creature;
 import java.util.ArrayList;
 
-class Character extends Creature{
+public class Character extends Creature{
 
     private String backstory;
 

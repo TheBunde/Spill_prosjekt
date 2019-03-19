@@ -1,7 +1,7 @@
-package Creature;
+package creature;
 import java.util.ArrayList;
 
-abstract class Creature {
+public abstract class Creature {
     private int hp;
     private int ac;
     private int level;
