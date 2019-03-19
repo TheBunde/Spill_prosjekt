@@ -1,6 +1,8 @@
+
 package creature;
 
 public class Weapon {
+
     private String name;
     private int damageDice;
     private String description;

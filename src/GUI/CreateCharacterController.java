@@ -74,7 +74,7 @@ public class CreateCharacterController implements Initializable {
     }
     //method to create the character
     public void createCharacter() throws Exception{
-        sceneSwitcher.switchScene(createCharacterButton, "MainMenu.fxml");
+        sceneSwitcher.switchScene(createCharacterButton, "Battlefield.fxml");
 
     }
 

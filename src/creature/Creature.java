@@ -1,4 +1,6 @@
+
 package creature;
+
 import java.util.ArrayList;
 
 public abstract class Creature {
