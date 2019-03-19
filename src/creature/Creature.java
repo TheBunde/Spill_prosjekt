@@ -11,6 +11,8 @@ public abstract class Creature {
     private ArrayList<Weapon> weapon = new ArrayList<Weapon>();
     private int attackTurn;
     private int damageBonus;
+    private int xCoordinate;
+    private int yCoordinate;
 
     public Creature(int hp, int ac, int level, String character, int attackTurn, int damageBonus, ArrayList weapon){
         this.hp = hp;
