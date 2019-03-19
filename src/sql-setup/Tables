@@ -53,12 +53,13 @@ create table creature_weapon(
     constraint creature_weapon_pk primary key(weapon_id, creature_id));
 
 
-create table user(
-    user_id integer not null,
+create table usr(
+    user_id integer not null AUTO_INCREMENT,
     username varchar(30),
     rank integer default 0,
     email varchar(30),
     password char(64),
+    lobby_key INTEGER,
     constraint user_pk primary key(user_id));
 
 create table player(
@@ -73,20 +74,24 @@ create table initiative(
     constraint initiative_pk primary key(lobby_key, user_id));
 
 create table game_lobby(
-    lobby_key integer not null,
+    lobby_key integer not null AUTO_INCREMENT,
     player_turn integer,
     constraint game_lobby_pk primary key(lobby_key));
 
-create table chat(
-    chat_id integer not null,
-    constraint chat_pk primary key(chat_id));
-
 create table chat_message(
-    chat_id integer not null references chat(chat_id),
-    message_id integer not null,
-    message varchar(50),
-    constraint chat_message_pk primary key(chat_id, message_id));
+    lobby_key integer not null,
+    message_id integer not null AUTO_INCREMENT,
+    user_id INTEGER not null,
+    message TEXT,
+    time_stamp TIME NOT NULL,
+    constraint chat_message_pk primary key(message_id, lobby_key));
+
 
 
     //Foreign keys
+
+ALTER TABLE usr ADD CONSTRAINT usr_fk1 FOREIGN KEY(lobby_key) REFERENCES game_lobby(lobby_key);
+
+ALTER TABLE chat_message ADD CONSTRAINT chat_message_fk1 FOREIGN KEY(lobby_key) REFERENCES game_lobby(lobby_key);
+ALTER TABLE chat_message ADD CONSTRAINT chat_message_fk2 FOREIGN KEY(user_id) REFERENCES usr(user_id);
 

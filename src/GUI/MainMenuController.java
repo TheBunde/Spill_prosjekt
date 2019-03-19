@@ -1,5 +1,6 @@
 package GUI;
 
+import Database.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,8 +14,11 @@ public class MainMenuController {
     @FXML
     private Button startNewGameButton;
 
+    private Database db = InterfaceMain.db;
+
     public void startNewGameButtonPressed() throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("createCharacter.fxml"));
+        db.createNewLobby();
+        Parent root = FXMLLoader.load(getClass().getResource("createcharacter.fxml"));
         Scene scene = new Scene(root);
         Stage stage = (Stage)startNewGameButton.getScene().getWindow();
         stage.setScene(scene);

@@ -10,6 +10,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class chatController {
@@ -22,21 +24,20 @@ public class chatController {
     @FXML
     private TextField messageInput;
 
-    private Database db;
-    private Chatter chatter;
+    private Database db = InterfaceMain.db;
 
     public void initialize(){
-//        new Timer().scheduleAtFixedRate(new TimerTask() {
-//            @Override
-//            public void run() {
-//                updateChat();
-//            }
-//        },0 ,1500);
+        new Timer().scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                updateChat();
+            }
+        },0 ,1500);
     }
 
     public void sendMessage(){
         String text = messageInput.getText();
-        if(db.addChatMessage(chatter, text)){
+        if(db.addChatMessage(text)){
             System.out.println("Message sent");
         }
         messageInput.setText("");
@@ -44,7 +45,7 @@ public class chatController {
     }
 
     public void updateChat(){
-        ArrayList<String> messages = db.getMessagesFromChat(chatter);
+        ArrayList<String> messages = db.getMessagesFromChat();
         ObservableList<String> items = FXCollections.observableArrayList();
         for (int i = messages.size() - 1; i >= 0; i--){
             items.add(messages.get(i));
