@@ -13,24 +13,24 @@ import java.lang.Math.*;
 public class GameMethods {
     private Dice dice;
 
-    public GameMethods(){
+    public GameMethods() {
 
     }
 
-    public ArrayList initative(){
+    public ArrayList initative() {
         ArrayList<Creature> creatures = new ArrayList<>();
         int[][] initiativeOrder = new int[creatures.size()][creatures.size()];
         ArrayList<Creature> turn = new ArrayList<>();
-        for(int i = 0; i < creatures.size(); i++){
+        for (int i = 0; i < creatures.size(); i++) {
             int roll = dice.roll(20);
             initiativeOrder[0][i] = i;
             initiativeOrder[1][i] = roll;
             //print witch user got witch value?
         }
-        for(int start = 0; start < initiativeOrder[1].length; start++){
+        for (int start = 0; start < initiativeOrder[1].length; start++) {
             int highest = start;
-            for(int j = start; j < initiativeOrder[1].length; j++){
-                if(initiativeOrder[1][j] > initiativeOrder[1][highest]){
+            for (int j = start; j < initiativeOrder[1].length; j++) {
+                if (initiativeOrder[1][j] > initiativeOrder[1][highest]) {
                     highest = j;
                 }
             }
@@ -41,7 +41,7 @@ public class GameMethods {
             initiativeOrder[0][start] = helperIndex;
             initiativeOrder[1][start] = helperRoll;
         }
-        for(int i = 0; i < creatures.size(); i++){
+        for (int i = 0; i < creatures.size(); i++) {
             int playerNr = initiativeOrder[0][i];
             Creature getFrom = creatures.get(playerNr);
             turn.add(getFrom);
@@ -50,105 +50,150 @@ public class GameMethods {
     }
 
 
-    public void attack(int index, int gameRound, ArrayList<Creature> turn, ArrayList<Creature> monsters, Weapon weapon){
-        int roll = dice.roll(20) + turn.get(index).getAttackBonus();
-        int acMonster = monsters.get(gameRound).getAc();
-        if(roll >= acMonster){
-            int damage = weapon.getDiceAmount() * dice.roll(weapon.getDamageDice());
-            int monsterHP = monsters.get(gameRound).getHp() - damage;
-            monsters.get(gameRound).setHp(monsterHP);
+    public void attack(Creature playerNow, Creature monster, Weapon weapon) {
+        int roll = dice.roll(20) + playerNow.getAttackBonus();
+        int acMonster = monster.getAc();
+        if (roll >= acMonster) {
+            int damage = 0;
+            for(int i = 0; i < weapon.getDiceAmount(); i++){
+                damage = damage + dice.roll(weapon.getDamageDice());
+            }
+            int monsterHP = monster.getHp() - damage;
+            monster.setHp(monsterHP);
             System.out.println("Hit");
-        }else{
+        } else {
             System.out.println("Miss");
         }
     }
 
-    public void rangedAttack(){}
-
-
-    public void movePlayer(){
-
+    public boolean movePlayer(Creature palyerNow) {
+        int xCoordinate = palyerNow.getxCordinate();
+        int yCoordinate = palyerNow.getyCordinate();
+        int XMax = xCoordinate + palyerNow.getMovement();
+        int XMix = xCoordinate - palyerNow.getMovement();
+        int YMax = yCoordinate + palyerNow.getMovement();
+        int YMix = yCoordinate - palyerNow.getMovement();
+        int wantedX;
+        int wantedY;
+        boolean X = false;
+        boolean Y = false;
+        if(wantedX <= XMax && wantedX >= XMix){
+            X = true;
+        }
+        if(wantedY <= YMax && wantedY >= YMix){
+            Y = true;
+        }
+        if(X && Y){
+            palyerNow.setxCordinate(wantedX);
+            palyerNow.setyCordinate(wantedY);
+            System.out.println("You moved");
+            return true;
+        }else{
+            System.out.println("Out of range. Try again");
+            return false;
+        }
     }
 
 
-    public boolean nearMonster(int index, int gameRound, ArrayList<Creature> turn, ArrayList<Creature> monsters){
+    public boolean nearMonster(Creature playerNow, Creature monster) {
         boolean near = false;
-        int xCordinate = turn.get(index).getxCordinate();
-        int yCordinate = turn.get(index).getyCordinate();
+        int xCordinate = playerNow.getxCordinate();
+        int yCordinate = playerNow.getyCordinate();
         int maxX = xCordinate + 1;
         int maxY = yCordinate + 1;
         int minX = xCordinate - 1;
         int minY = yCordinate - 1;
-        int XForMonster = monsters.get(gameRound).getxCordinate();
-        int YForMonster = monsters.get(gameRound).getyCordinate();
+        int XForMonster = monster.getxCordinate();
+        int YForMonster = monster.getyCordinate();
         boolean X = false;
         boolean Y = false;
-        if(minX == XForMonster || xCordinate == XForMonster || maxX == XForMonster){
+        if (minX == XForMonster || xCordinate == XForMonster || maxX == XForMonster) {
             X = true;
         }
-        if(minY == YForMonster || yCordinate == YForMonster || maxY == YForMonster){
+        if (minY == YForMonster || yCordinate == YForMonster || maxY == YForMonster) {
             Y = true;
         }
-        if(X && Y){
-           near = true;
+        if (X && Y) {
+            near = true;
         }
         return near;
     }
 
-    public void monsterAttack(){
+    public int monsterAttack(Creature target, Creature monster) {
+        ArrayList <Weapon> monsterWeapon = new ArrayList<>();
+        int roll = dice.roll(20) + monster.getAttackBonus();
+        int targetAC = target.getAc();
+        int targetHP = target.getHp();
+        if(roll >= targetAC){
+            int weaponRoll = dice.roll(monsterWeapon.size());
+            int damage = 0;
+            for(int i = 0; i < monsterWeapon.get(weaponRoll).getDiceAmount(); i++){
+                damage = damage + dice.roll(monsterWeapon.get(weaponRoll).getDamageDice());
+            }
+            targetHP = target.getHp() - damage;
+            target.setHp(targetHP);
+            System.out.println("Hit");
+        }else{
+            System.out.println("Miss");
+        }
+        return targetHP;
+    }
 
+    public int monsterMovement (Creature monster){
 
-
-
-    public void monsterMovement(Creature monster){
 
         ArrayList<Creature> creatures = new ArrayList<>();
         boolean first = true;
         Creature target = null;
         int xDistance = monster.getMovement();
         int yDistance = monster.getMovement();
+        int targetHP = 0;
 
         for (Creature i : creatures) {
-            if ((i.getxcordinatte() >= (monster.getxcordinate() - monster.getMovement() - 1)) && (i.getxcordinate() <= (monster.getxcordinate() + monster.getMovement() + 1))
-                    && (i.getycordinatte() >= (monster.getycordinate() - monster.getMovement() - 1)) && (i.getycordinate() <= (monster.getycordinate() + monster.getMovement() + 1)) && i != monster) {
-                if (Math.abs(i.getycordinate() - monster.getycordinate()) <= xDistance && Math.abs(i.getycordinate() - monster.getycordinate()) <= yDistance) {
-                    xDistance = i.getxcordinate() - monster.getxcordinate();
-                    yDistance = i.getycordinate() - monster.getycordinate();
+            if ((i.getxCordinate() >= (monster.getxCordinate() - monster.getMovement() - 1)) && (i.getxCordinate() <= (monster.getxCordinate() + monster.getMovement() + 1))
+                    && (i.getyCordinate() >= (monster.getyCordinate() - monster.getMovement() - 1)) && (i.getyCordinate() <= (monster.getyCordinate() + monster.getMovement() + 1)) && i != monster) {
+                if (Math.abs(i.getyCordinate() - monster.getyCordinate()) <= xDistance && Math.abs(i.getyCordinate() - monster.getyCordinate()) <= yDistance) {
+                    xDistance = i.getxCordinate() - monster.getxCordinate();
+                    yDistance = i.getyCordinate() - monster.getyCordinate();
                     target = i;
-                    if(xDistance < 0 && Math.abs(xDistance) != monster.getMovement()){xDistance++;}
-                    else if(xDistance > 0 && Math.abs(xDistance) != monster.getMovement()){xDistance--;}
-                    if(yDistance < 0 && Math.abs(yDistance) != monster.getMovement()){yDistance++;}
-                    else if(yDistance > 0 && Math.abs(xDistance) != monster.getMovement()){yDistance++;}
+                    if (xDistance < 0 && Math.abs(xDistance) != monster.getMovement()) {
+                        xDistance++;
+                    } else if (xDistance > 0 && Math.abs(xDistance) != monster.getMovement()) {
+                        xDistance--;
+                    }
+                    if (yDistance < 0 && Math.abs(yDistance) != monster.getMovement()) {
+                        yDistance++;
+                    } else if (yDistance > 0 && Math.abs(xDistance) != monster.getMovement()) {
+                        yDistance++;
+                    }
                 }
             }
         }
-        if(target == null){
-            for(Creature i: creatures){
-                if(Math.abs(i.getxcordinate()- monster.getxcordinate()) < xDistance && Math.abs(i.getycordinate() - monster.getycordinate()) < yDistance || first){
-                    if(i.getxcordinate() > monster.getxcordinate() && (i.getxcordinate() - monster.getxcordinate()) > monster.getMovement()){
+        if (target == null) {
+            for (Creature i : creatures) {
+                if (Math.abs(i.getxCordinate() - monster.getxCordinate()) < xDistance && Math.abs(i.getyCordinate() - monster.getyCordinate()) < yDistance || first) {
+                    if (i.getxCordinate() > monster.getxCordinate() && (i.getxCordinate() - monster.getxCordinate()) > monster.getMovement()) {
                         xDistance = monster.getMovement();
+                    } else if (i.getxCordinate() > monster.getxCordinate()) {
+                        xDistance = i.getxCordinate() - monster.getxCordinate();
                     }
-                    else if(i.getxcordinate() > monster.getxcordinate()){
-                        xDistance = i.getxcordinate() - monster.getxcordinate();
-                    }
-                    if(i.getxcordinate() < monster.getxcordinate() && (monster.getxcordinate() - i.getxcordinate()) > monster.getMovement()){
+                    if (i.getxCordinate() < monster.getxCordinate() && (monster.getxCordinate() - i.getxCordinate()) > monster.getMovement()) {
                         yDistance = -monster.getMovement();
-                    }
-                    else if(i.getxcordinate() < monster.getxcordinate()){
-                        yDistance = -(monster.getycordinate() - i.getycordinate);
+                    } else if (i.getxCordinate() < monster.getxCordinate()) {
+                        yDistance = -(monster.getyCordinate() - i.getyCordinate());
                     }
                     first = false;
                 }
             }
-            monster.setxcordinate(monster.getxcordinate + xDistance);
-            monster.setycordinate(monster.getycordinate + yDistance);
+            monster.setxCordinate(monster.getxCordinate() + xDistance);
+            monster.setyCordinate(monster.getyCordinate() + yDistance);
+        } else if (target != null) {
+            monster.setxCordinate(monster.getxCordinate() + xDistance);
+            monster.setyCordinate(monster.getyCordinate() + yDistance);
+            targetHP = monsterAttack(target, monster);
         }
-        else if(target != null){
-            monster.setxcordinate(monster.getxcordinate + xDistance);
-            monster.setycordinate(monster.getycordinate + yDistance);
-            monster.monsterAttack(target);
-        }
->>>>>>> 1f7e1f856b48d9ce85eee0278d041d8a4277b026
+        return targetHP;
     }
+
 }
 

@@ -23,13 +23,20 @@ class Game {
             while(dead < playable && monsterAlive == true){
                 for(int index = 0; index < turn.size(); index++){
                     Creature playerNow = turn.get(index);
-                    //figure out how to get just the i players turn
-                    if(turn.get(index).getHp() <= 0){
+                    if(playerNow.getHp() <= 0){
                         break;
                     }
+
                     if(playerNow instanceof Character){
+                        int monsterI = 0;
+                        for(int i = 0; i < creatures.size(); i++){
+                            if(creatures.get(i) instanceof Monster){
+                                monsterI = i;
+                            }
+                        }
+                        Creature monster = creatures.get(monsterI);
                         boolean turnOver = false;
-                        int hpForMonster = monsters.get(gameRound).getHp();
+                        int hpForMonster = monster.getHp();
                         while(!turnOver){
                             ArrayList<Weapon> weaponsPlayer = new ArrayList<>();
                             Weapon melee = weaponsPlayer.get(0);
@@ -43,16 +50,19 @@ class Game {
                             }
                             int attackCounter = 0;
                             int moveCounter = 0;
-                            int realAttackCounter = turn.get(index).getAttackTurn();
+                            int realAttackCounter = playerNow.getAttackTurn();
                             if (/*Move button = pressed &&*/ moveCounter == 0){
-                                method.movePlayer();
+                                boolean move = false;
+                                while(!move){
+                                    move = method.movePlayer(playerNow);
+                                }
                                 moveCounter++;
                             }
                             if(/*Attack button = pressed &&*/ attackCounter < realAttackCounter){
-                                if(method.nearMonster(index, gameRound, turn, monsters)){
-                                    method.attack(index, gameRound, turn, monsters, melee);
+                                if(method.nearMonster(playerNow, monster)){
+                                    method.attack(playerNow, monster, melee);
                                 }else{
-                                    method.attack(index, gameRound, turn, monsters, range);
+                                    method.attack(playerNow, monster, range);
                                 }
                                 attackCounter++;
                             }
@@ -72,14 +82,10 @@ class Game {
                         int roll = dice.roll(players.size());
                         int playerHp = players.get(roll).getHp();
                         Creature monster = turn.get(index);
-                        method.monsterMovement(monster);
-                        //attack if close
-                        //move if not close, then attack
+                        int playerHP = method.monsterMovement(monster);
                         if(playerHp <= 0){
                             dead++;
                         }
-
-                        // monster turn
                     }
                 }
             }
