@@ -1,79 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bceba4d5-7c35-4235-b7da-55f2c5e1eaa0" name="Default Changelist" comment="">
+    <list default="true" id="3b1389ff-7895-455a-b5f3-27b7036754b6" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/out/production/Game-development-project/Database/Database.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Game-development-project/Database/ManageConnection.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Game-development-project/Database/User.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Game-development-project/GUI/AccountDetails.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Game-development-project/GUI/AccountDetailsController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Game-development-project/GUI/AccountDetailsController.class~02a18ff1149eccae70c466a10b316b1920464345" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Game-development-project/GUI/FindLobby.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Game-development-project/GUI/FindLobbyController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Game-development-project/GUI/GameLobby.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Game-development-project/GUI/GameLobbyController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Game-development-project/GUI/chat.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Game-development-project/GUI/chatController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Game-development-project/GUI/lobbykeyimage.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Game-development-project/sql-setup/User.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Database/ManageConnection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Database/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/GUI/AccountDetails.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/GUI/AccountDetailsController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/GUI/FindLobby.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/GUI/FindLobbyController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/GUI/GameLobby.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/GUI/GameLobbyController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/GUI/lobbykeyimage.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sql-setup/User.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/chat/ChatController$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/Database/ChatController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Game-development-project/Database/ChatController$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/GUI/InterfaceMain.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Game-development-project/GUI/InterfaceMain.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/GUI/LoginScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Game-development-project/GUI/LoginScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/GUI/MainMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Game-development-project/GUI/MainMenu.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/GUI/MainMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Game-development-project/GUI/MainMenuController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/GUI/RegistrerController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Game-development-project/GUI/RegistrerController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/chat/.gitkeep" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/chat/Chat - JavaFX.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/chat/Chat.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/chat/ChatController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/chat/ChatMain.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/chat/Chatter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Game-development-project/Database/Chatter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/chat/Database.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/chat/chat.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Game-development-project/chat/chat.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/chat/chatlogin.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/chat/chatloginController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/menu/menu.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/sample/menuController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/sample/menuMain.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Game-development-project/sql-setup/Tables" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Game-development-project/sql-setup/Tables" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/InterfaceMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/InterfaceMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/LoginScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/LoginScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/MainMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/MainMenu.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/RegistrerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/RegistrerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chat/.gitkeep" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chat/Chat - JavaFX.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chat/Chat.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chat/ChatMain.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chat/Chatter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Database/Chatter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chat/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Database/Database.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chat/chat.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/chat.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chat/chatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/chatController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chat/chatlogin.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chat/chatloginController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/menu/menu.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/menu/menuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/MainMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/menu/menuMain.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sql-setup/Tables" beforeDir="false" afterPath="$PROJECT_DIR$/src/sql-setup/Tables" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/chat/Database.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1095">
-              <caret line="73" column="5" selection-start-line="73" selection-start-column="5" selection-end-line="73" selection-end-column="5" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/chat/Chat.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/chat/ChatMain.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="19" column="57" selection-start-line="19" selection-start-column="57" selection-end-line="19" selection-end-column="57" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/chat/Chatter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" selection-start-line="6" selection-end-line="6" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/chat/chatController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="19">
-              <caret line="22" column="29" selection-start-line="22" selection-start-column="29" selection-end-line="22" selection-end-column="29" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
-  <component name="ProjectFrameBounds">
-    <option name="y" value="23" />
-    <option name="width" value="1440" />
-    <option name="height" value="806" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -96,13 +99,13 @@
             <path>
               <item name="Game-development-project" type="b2602c69:ProjectViewProjectNode" />
               <item name="Game-development-project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name=".idea" type="462c0819:PsiDirectoryNode" />
+              <item name="codeStyles" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Game-development-project" type="b2602c69:ProjectViewProjectNode" />
               <item name="Game-development-project" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="chat" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -146,7 +149,7 @@
       <workItem from="1552992667612" duration="54000" />
       <workItem from="1553001439443" duration="22000" />
       <workItem from="1553002324524" duration="120000" />
-      <workItem from="1553003253544" duration="329000" />
+      <workItem from="1553003253544" duration="551000" />
     </task>
     <task id="LOCAL-00001" summary="Testing">
       <created>1552492743893</created>
@@ -158,10 +161,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="34272000" />
+    <option name="totallyTimeSpent" value="32000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="806" extended-state="1" />
+    <frame x="0" y="23" width="1440" height="806" extended-state="0" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20028612" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />

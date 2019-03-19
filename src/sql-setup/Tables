@@ -20,6 +20,7 @@ create table creature(
     pos_x integer,
     pos_y integer,
     movement integer,
+     damage_bonus integer,
     attack_bonus integer,
     attack_turn integer,
     weapon_id not null,
@@ -42,7 +43,6 @@ create table weapon(
     weapon_name varchar(20),
     dice_amount integer,
     damage_dice smallint,
-    damage_bonus integer,
     description varchar(50),
     constraint weapon_pk primary key(weapon_id));
 

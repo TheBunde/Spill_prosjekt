@@ -20,7 +20,7 @@
             <Insets bottom="10.0" />
          </opaqueInsets>
       </TextField>
-      <TextField cache="true" promptText="password" />
+      <TextField cache="true" promptText="Password" />
       <HBox alignment="CENTER" prefHeight="36.0" prefWidth="200.0">
          <children>
             <Button fx:id="loginButton" mnemonicParsing="false" onAction="#login" text="Log in">

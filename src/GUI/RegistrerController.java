@@ -14,6 +14,7 @@ public class RegistrerController {
     }
 
     public void registrer() throws Exception{
+
         sceneSwitcher.switchScene(registrerButton, "MainMenu.fxml");
     }
 
