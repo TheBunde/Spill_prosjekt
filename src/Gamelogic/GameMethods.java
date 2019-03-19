@@ -1,8 +1,14 @@
 package Gamelogic;
 
+<<<<<<< HEAD
 import creature.*;
+=======
+import creature.Creature;
+import creature.Monster;
+>>>>>>> 1f7e1f856b48d9ce85eee0278d041d8a4277b026
 
 import java.util.ArrayList;
+import java.lang.Math.*;
 
 public class GameMethods {
     private Dice dice;
@@ -43,6 +49,7 @@ public class GameMethods {
         return turn;
     }
 
+<<<<<<< HEAD
     public void attack(int index, int gameRound, ArrayList<Creature> turn, ArrayList<Creature> monsters, Weapon weapon){
         int roll = dice.roll(20) + turn.get(index).getAttackBonus();
         int acMonster = monsters.get(gameRound).getAc();
@@ -55,6 +62,9 @@ public class GameMethods {
             System.out.println("Miss");
         }
     }
+=======
+    public void rangedAttack(){}
+>>>>>>> 1f7e1f856b48d9ce85eee0278d041d8a4277b026
 
     public void movePlayer(){
 
@@ -62,6 +72,7 @@ public class GameMethods {
 
 
 
+<<<<<<< HEAD
     public boolean nearMonster(int index, int gameRound, ArrayList<Creature> turn, ArrayList<Creature> monsters){
         boolean near = false;
         int xCordinate = turn.get(index).getxCordinate();
@@ -88,5 +99,58 @@ public class GameMethods {
 
     public void monsterAttack(){
 
+=======
+
+
+    public void monsterMovement(Monster monster){
+
+        ArrayList<Creature> creatures = new ArrayList<>();
+        boolean first = true;
+        Creature target = null;
+        int xDistance = monster.getMovement();
+        int yDistance = monster.getMovement();
+
+        for (Creature i : creatures) {
+            if ((i.getxcordinatte() >= (monster.getxcordinate() - monster.getMovement() - 1)) && (i.getxcordinate() <= (monster.getxcordinate() + monster.getMovement() + 1))
+                    && (i.getycordinatte() >= (monster.getycordinate() - monster.getMovement() - 1)) && (i.getycordinate() <= (monster.getycordinate() + monster.getMovement() + 1)) && i != monster) {
+                if (Math.abs(i.getycordinate() - monster.getycordinate()) <= xDistance && Math.abs(i.getycordinate() - monster.getycordinate()) <= yDistance) {
+                    xDistance = i.getxcordinate() - monster.getxcordinate();
+                    yDistance = i.getycordinate() - monster.getycordinate();
+                    target = i;
+                    if(xDistance < 0 && Math.abs(xDistance) != monster.getMovement()){xDistance++;}
+                    else if(xDistance > 0 && Math.abs(xDistance) != monster.getMovement()){xDistance--;}
+                    if(yDistance < 0 && Math.abs(yDistance) != monster.getMovement()){yDistance++;}
+                    else if(yDistance > 0 && Math.abs(xDistance) != monster.getMovement()){yDistance++;}
+                }
+            }
+        }
+        if(target == null){
+            for(Creature i: creatures){
+                if(Math.abs(i.getxcordinate()- monster.getxcordinate()) < xDistance && Math.abs(i.getycordinate() - monster.getycordinate()) < yDistance || first){
+                    if(i.getxcordinate() > monster.getxcordinate() && (i.getxcordinate() - monster.getxcordinate()) > monster.getMovement()){
+                        xDistance = monster.getMovement();
+                    }
+                    else if(i.getxcordinate() > monster.getxcordinate()){
+                        xDistance = i.getxcordinate() - monster.getxcordinate();
+                    }
+                    if(i.getxcordinate() < monster.getxcordinate() && (monster.getxcordinate() - i.getxcordinate()) > monster.getMovement()){
+                        yDistance = -monster.getMovement();
+                    }
+                    else if(i.getxcordinate() < monster.getxcordinate()){
+                        yDistance = -(monster.getycordinate() - i.getycordinate);
+                    }
+                    first = false;
+                }
+            }
+            monster.setxcordinate(monster.getxcordinate + xDistance);
+            monster.setycordinate(monster.getycordinate + yDistance);
+        }
+        else if(target != null){
+            monster.setxcordinate(monster.getxcordinate + xDistance);
+            monster.setycordinate(monster.getycordinate + yDistance);
+            monster.monsterAttack(target);
+        }
+>>>>>>> 1f7e1f856b48d9ce85eee0278d041d8a4277b026
     }
 }
+

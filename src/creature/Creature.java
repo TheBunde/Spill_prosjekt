@@ -11,8 +11,13 @@ public abstract class Creature {
     private ArrayList<Weapon> weapon = new ArrayList<Weapon>();
     private int attackTurn; // attacks per turn
     private int damageBonus;
+<<<<<<< HEAD:src/creature/Creature.java
     private int xCordinate;
     private int yCordinate;
+=======
+    private int xCoordinate;
+    private int yCoordinate;
+>>>>>>> 1f7e1f856b48d9ce85eee0278d041d8a4277b026:src/creature/Creature.java
 
     public Creature(int hp, int ac, int level, String character, int attackTurn, int damageBonus, int xCordinate, int yCordinate, ArrayList weapon){
         this.hp = hp;
