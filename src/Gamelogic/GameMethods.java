@@ -1,6 +1,6 @@
 package Gamelogic;
 
-import creature.Creature;
+import creature.*;
 
 import java.util.ArrayList;
 
@@ -43,7 +43,48 @@ public class GameMethods {
         return turn;
     }
 
-    public void rangedAttack()
+    public void attack(int index, int gameRound, ArrayList<Creature> turn, ArrayList<Creature> monsters, Weapon weapon){
+        int roll = dice.roll(20) + turn.get(index).getAttackBonus();
+        int acMonster = monsters.get(gameRound).getAc();
+        if(roll >= acMonster){
+            int damage = weapon.getDiceAmount() * dice.roll(weapon.getDamageDice());
+            int monsterHP = monsters.get(gameRound).getHp() - damage;
+            monsters.get(gameRound).setHp(monsterHP);
+            System.out.println("Hit");
+        }else{
+            System.out.println("Miss");
+        }
+    }
+
+    public void movePlayer(){
+
+    }
+
+    public boolean nearMonster(int index, int gameRound, ArrayList<Creature> turn, ArrayList<Creature> monsters){
+        boolean near = false;
+        int xCordinate = turn.get(index).getxCordinate();
+        int yCordinate = turn.get(index).getyCordinate();
+        int maxX = xCordinate + 1;
+        int maxY = yCordinate + 1;
+        int minX = xCordinate - 1;
+        int minY = yCordinate - 1;
+        int XForMonster = monsters.get(gameRound).getxCordinate();
+        int YForMonster = monsters.get(gameRound).getyCordinate();
+        boolean X = false;
+        boolean Y = false;
+        if(minX == XForMonster || xCordinate == XForMonster || maxX == XForMonster){
+            X = true;
+        }
+        if(minY == YForMonster || yCordinate == YForMonster || maxY == YForMonster){
+            Y = true;
+        }
+        if(X && Y){
+           near = true;
+        }
+        return near;
+    }
+
+
 
 
 }
