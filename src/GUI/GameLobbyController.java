@@ -26,7 +26,11 @@ public class GameLobbyController {
     }
 
     public void travelButtonPressed() throws Exception{
+        this.timer = chatController.timer;
+        this.timer.cancel();
+        this.timer.purge();
         this.sceneSwitcher.switchScene(travelButton, "Battlefield.fxml");
+
     }
 
     public void backToMenuButtonPressed() throws Exception{
