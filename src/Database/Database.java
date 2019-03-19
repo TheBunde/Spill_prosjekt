@@ -329,4 +329,35 @@ public class Database {
             System.out.println("SQL-feil: " + sq);
         }
     }
+   // check if the user exits.
+    public int checkLogin(String username, String password) {
+        boolean con = openConnection();
+        System.out.println(con);
+        if (!con) {
+            return -1;
+        }
+        PreparedStatement ps = null;
+        try {
+            String query = "SELECT * FROM usr WHERE username=? AND password =?";
+            ps = this.con.prepareStatement(query);
+            ps.setString(1, username);
+            ps.setString(2, password);
+            ResultSet resultSet = ps.executeQuery();
+
+            // if user found -> return 0 that indicates success login.
+            if(resultSet.next()){
+                return 0;
+            }
+
+
+        } catch (SQLException sq) {
+            sq.printStackTrace();
+        } finally {
+            this.closePrepStmt(ps);
+            this.closeConnection();
+        }
+        //If made it to here return -1, login failed.
+        return -1;
+    }
+
 }
