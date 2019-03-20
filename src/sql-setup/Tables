@@ -66,7 +66,7 @@ create table usr(
     constraint user_pk primary key(user_id));
 
 create table player(
-    player_id integer not null references usr(user_id),
+    player_id integer not null,
     player_lv integer,
     constraint player_pk primary key(player_id));
 
