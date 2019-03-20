@@ -73,8 +73,8 @@ public class GameMethods {
         int XMix = xCoordinate - palyerNow.getMovement();
         int YMax = yCoordinate + palyerNow.getMovement();
         int YMix = yCoordinate - palyerNow.getMovement();
-        int wantedX;
-        int wantedY;
+        int wantedX = 0;
+        int wantedY = 0;
         boolean X = false;
         boolean Y = false;
         if(wantedX <= XMax && wantedX >= XMix){
