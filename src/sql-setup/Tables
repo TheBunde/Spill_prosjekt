@@ -1,5 +1,5 @@
 drop table creature;
-drop table classes;
+drop table character;
 drop table monster;
 drop table weapon;
 drop table creature_weapon;
@@ -30,7 +30,7 @@ create table character(
     character_id integer not null references creature(creature_id),
     character_name varchar(20),
     back_story varchar(50),
-    constraint classes_pk primary key(class_id));
+    constraint classes_pk primary key(character_id));
 
 create table monster(
     monster_id integer not null references creature(creature_id),
@@ -53,7 +53,7 @@ create table creature_weapon(
     constraint creature_weapon_pk primary key(weapon_id, creature_id));
 
 
-create table usr(
+create table user(
     user_id integer not null AUTO_INCREMENT,
     username varchar(30),
     rank integer default 0,
