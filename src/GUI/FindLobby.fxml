@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.FindLobbyController">
+   <children>
+      <Label layoutX="244.0" layoutY="48.0" text="Find Lobby">
+         <font>
+            <Font name="System Bold" size="59.0" />
+         </font>
+      </Label>
+      <Label layoutX="280.0" layoutY="146.0" opacity="0.59" prefHeight="86.0" prefWidth="236.0" text="Enter the lobby key that you have received from a friend" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="lobbyKeyInput" alignment="CENTER" layoutX="284.0" layoutY="250.0" onKeyTyped="#clearErrorLabel" prefHeight="63.0" prefWidth="228.0" promptText="Lobby key">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </TextField>
+      <Button fx:id="joinLobbyButton" layoutX="288.0" layoutY="342.0" mnemonicParsing="false" onAction="#joinLobbyButtonPressed" prefHeight="63.0" prefWidth="221.0" text="Join" textOverrun="CLIP">
+         <font>
+            <Font size="29.0" />
+         </font>
+      </Button>
+      <Label fx:id="errorLabel" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="248.0" layoutY="430.0" prefWidth="300.0" textAlignment="CENTER" textFill="#c30505">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>
