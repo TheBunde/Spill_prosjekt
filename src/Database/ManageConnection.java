@@ -37,5 +37,23 @@ public class ManageConnection {
         System.err.println("*** Fail happened: " + message + ". ***");
         e.printStackTrace(System.err);
     }
+    
+    public void turnOnAutoCommit(Connection con){
+        try{
+            con.setAutoCommit(true);
+        }
+        catch(SQLException sq){
+            System.out.println("SQL-feil: " + sq);
+        }
+    }
+
+    public void rollback(Connection con){
+        try{
+            con.rollback();
+        }
+        catch(SQLException sq){
+            System.out.println("SQL-feil: " + sq);
+        }
+    }
 }
 
