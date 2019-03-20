@@ -14,7 +14,10 @@
          <children>
             <AnchorPane layoutX="148.0" layoutY="91.0" prefHeight="237.0" prefWidth="271.0">
                <children>
+<<<<<<< HEAD
 
+=======
+>>>>>>> william
                   <Button fx:id="startNewGameButton" contentDisplay="CENTER" layoutY="59.0" mnemonicParsing="false" onAction="#startNewGameButtonPressed" prefHeight="25.0" prefWidth="120.0" text="Start new game" textAlignment="CENTER" />
                   <Button fx:id="joinLobbyButton" contentDisplay="CENTER" layoutX="144.0" layoutY="59.0" mnemonicParsing="false" onAction="#joinLobbyButtonPressed" prefHeight="25.0" prefWidth="120.0" text="Join lobby" textAlignment="CENTER" />
                   <Button fx:id="viewAccountButton" contentDisplay="CENTER" layoutY="100.0" mnemonicParsing="false" onAction="#viewAccountButtonPressed" prefHeight="25.0" prefWidth="120.0" text="View account" textAlignment="CENTER" />

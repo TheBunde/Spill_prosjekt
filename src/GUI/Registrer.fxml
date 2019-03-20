@@ -19,25 +19,25 @@
             <Font name="Tahoma" size="18.0" />
          </font>
       </Label>
-      <TextField layoutX="150.0" layoutY="120.0" prefHeight="27.0" prefWidth="307.0" promptText="Username" />
+      <TextField fx:id="usernameInput" layoutX="150.0" layoutY="120.0" prefHeight="27.0" prefWidth="307.0" promptText="Username" />
       <Label layoutX="150.0" layoutY="150.0" text="Type your e-mail">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField layoutX="150.0" layoutY="180.0" prefHeight="27.0" prefWidth="307.0" promptText="e-mail" />
+      <TextField fx:id="emailInput" layoutX="150.0" layoutY="180.0" prefHeight="27.0" prefWidth="307.0" promptText="e-mail" />
       <Label layoutX="150.0" layoutY="215.0" text="Type your password">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <PasswordField layoutX="150.0" layoutY="240.0" prefHeight="27.0" prefWidth="307.0" promptText="Password" />
-      <Label layoutX="150.0" layoutY="270.0" text="Re-write your passwor">
+      <PasswordField fx:id="passwordInput" layoutX="150.0" layoutY="240.0" prefHeight="27.0" prefWidth="307.0" promptText="Password" />
+      <Label layoutX="150.0" layoutY="270.0" text="Re-write your password">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <PasswordField layoutX="150.0" layoutY="300.0" prefHeight="27.0" prefWidth="307.0" promptText="Re-write your password" />
+      <PasswordField fx:id="rePasswordInput" layoutX="150.0" layoutY="300.0" prefHeight="27.0" prefWidth="307.0" promptText="Re-write your password" />
       <Button fx:id="registrerButton" layoutX="160.0" layoutY="340.0" mnemonicParsing="false" onAction="#registrer" text="Register" />
       <Button fx:id="cancelButton" layoutX="260.0" layoutY="340.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
    </children>

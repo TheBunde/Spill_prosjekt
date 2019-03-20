@@ -1,5 +1,6 @@
 package GUI;
 
+import Database.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,16 +22,24 @@ public class FindLobbyController {
     @FXML
     private Label errorLabel;
 
+    private Database db = InterfaceMain.db;
+
 
     public void joinLobbyButtonPressed() throws IOException {
         String key = lobbyKeyInput.getText();
         //Checking if the input is valid
         if (key.length() > 0){
-            //Loads new scene
-            Parent root = FXMLLoader.load(getClass().getResource("GameLobby.fxml"));
-            Scene scene = new Scene(root);
-            Stage stage = (Stage)joinLobbyButton.getScene().getWindow();
-            stage.setScene(scene);
+            if (db.connectUserToGameLobby(Integer.parseInt(key))){
+                //Loads new scene
+                Parent root = FXMLLoader.load(getClass().getResource("createcharacter.fxml"));
+                Scene scene = new Scene(root);
+                Stage stage = (Stage)joinLobbyButton.getScene().getWindow();
+                stage.setScene(scene);
+            }
+            else {
+                errorLabel.setText("Not a valid lobby key");
+            }
+
         }
         else{
             errorLabel.setText("Please enter a lobby key");
