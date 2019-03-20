@@ -1,3 +1,4 @@
+package Creature;
 class Weapon {
     private String name;
     private int damageBonus;
