@@ -27,8 +27,10 @@ public class chatController implements Initializable {
     @FXML
     private TextField messageInput;
 
-    private Database db = InterfaceMain.db;
+    private Database dbChat = new Database("jdbc:mysql://mysql-ait.stud.idi.ntnu.no:3306/g_tdat1006_01?user=g_tdat1006_01&password=", "q8CeXgyy");
+
     public static Timer timer = new Timer();
+    private int count = 0;
 
     public void initialize(URL location, ResourceBundle resources){
         timer = new Timer();
@@ -36,14 +38,15 @@ public class chatController implements Initializable {
             @Override
             public void run() {
                 updateChat();
-                System.out.println("Hei");
+                count++;
+                System.out.println(count);
             }
         },0 ,1500);
     }
 
     public void sendMessage(){
         String text = messageInput.getText();
-        if(db.addChatMessage(text)){
+        if(this.dbChat.addChatMessage(text)){
             System.out.println("Message sent");
         }
         messageInput.setText("");
@@ -51,13 +54,15 @@ public class chatController implements Initializable {
     }
 
     public void updateChat(){
-        ArrayList<String> messages = db.getMessagesFromChat();
+        ArrayList<String> messages = this.dbChat.getMessagesFromChat();
         ObservableList<String> items = FXCollections.observableArrayList();
         for (int i = messages.size() - 1; i >= 0; i--){
             items.add(messages.get(i));
         }
         list.setItems(items);
     }
+
+
 
 
 }

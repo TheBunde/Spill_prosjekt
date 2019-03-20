@@ -1,4 +1,6 @@
 package GUI;
+
+import Main.*;
 import Database.*;
 
 import javafx.fxml.FXML;
@@ -15,16 +17,17 @@ public class AccountDetailsController {
     @FXML
     private Text username, email, rank;
 
-    private Database db = InterfaceMain.db;
+    private Database db = Main.db;
+    private User user = Main.user;
 
     public void initialize() throws Exception{
         getInfo();
     }
 
     public void getInfo()throws Exception{
-        username.setText(db.user.getUsername());
-        email.setText(db.user.getEmail());
-        rank.setText(Integer.toString(db.user.getRank()));
+        username.setText(user.getUsername());
+        email.setText(user.getEmail());
+        rank.setText(Integer.toString(user.getRank()));
     }
 
     @FXML

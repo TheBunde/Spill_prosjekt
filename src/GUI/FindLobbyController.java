@@ -1,5 +1,6 @@
 package GUI;
 
+import Main.*;
 import Database.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,7 +23,7 @@ public class FindLobbyController {
     @FXML
     private Label errorLabel;
 
-    private Database db = InterfaceMain.db;
+    private Database db = Main.db;
 
 
     public void joinLobbyButtonPressed() throws IOException {

@@ -1,5 +1,6 @@
 package Database;
 
+import Main.*;
 import javafx.scene.control.Alert;
 import sun.plugin2.message.ProxyReplyMessage;
 
@@ -16,7 +17,6 @@ public class Database {
     private Connection con;
     private String url;
     private String password;
-    public User user;
     private ManageConnection manager;
 
     //Setup for database
@@ -36,7 +36,7 @@ public class Database {
         try{
             String prepString = "SELECT message_id, chat_message.user_id, message, username, time_stamp FROM chat_message LEFT OUTER JOIN usr ON (chat_message.user_id = usr.user_id) WHERE chat_message.lobby_key = ? ORDER BY message_id DESC LIMIT 30";
             prepStmt = this.con.prepareStatement(prepString);
-            prepStmt.setInt(1, this.user.getLobbyKey());
+            prepStmt.setInt(1, Main.user.getLobbyKey());
             res = prepStmt.executeQuery();
             while (res.next()) {
                 messages.add(res.getString("username") + ": " + res.getString("message") + " | " + res.getString("time_stamp"));
@@ -61,19 +61,23 @@ public class Database {
         PreparedStatement prepStmt = null;
         boolean status = true;
         try {
+            this.con.setAutoCommit(false);
             //Using a prepared statement to execute an insert into the chat_message entity
             String prepString = "INSERT INTO chat_message VALUES(?, DEFAULT, ?, ?, NOW())";
             prepStmt = this.con.prepareStatement(prepString);
-            prepStmt.setInt(1, this.user.getLobbyKey());
-            prepStmt.setInt(2, this.user.getUser_id());
+            prepStmt.setInt(1, Main.user.getLobbyKey());
+            prepStmt.setInt(2, Main.user.getUser_id());
             prepStmt.setString(3, message);
             prepStmt.executeUpdate();
+            this.con.commit();
         }
         catch (SQLException sq){
+            this.manager.rollback(this.con);
             sq.printStackTrace();
             status = false;
         }
         finally {
+            this.manager.turnOnAutoCommit(this.con);
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(this.con);
             return status;
@@ -87,7 +91,7 @@ public class Database {
         //Boolean variable to keep track of the existence of the specified gamelobby
         boolean chatExists = false;
         try{
-            //Checks if chat with the specified lobbykey exists
+            //Checks if gamelobby with the specified lobbykey exists
             String prepString = "SELECT lobby_key FROM game_lobby WHERE lobby_key = ?";
             prepStmt = this.con.prepareStatement(prepString);
             prepStmt.setInt(1, lobbyKey);
@@ -109,21 +113,25 @@ public class Database {
     public boolean connectUserToGameLobby(int lobbyKey){
         PreparedStatement prepStmt = null;
         boolean status = true;
-        if (this.gameLobbyExists(lobbyKey) && this.user.getUser_id() != -1){
+        if (this.gameLobbyExists(lobbyKey) && Main.user.getUser_id() != -1){
             this.openConnection();
             try {
+                this.con.setAutoCommit(false);
                 String prepString = "UPDATE usr SET lobby_key = ? WHERE user_id = ?";
                 prepStmt = this.con.prepareStatement(prepString);
                 prepStmt.setInt(1, lobbyKey);
-                prepStmt.setInt(2, this.user.getUser_id());
+                prepStmt.setInt(2, Main.user.getUser_id());
                 prepStmt.executeUpdate();
-                this.user.setLobbyKey(lobbyKey);
+                this.con.commit();
+                Main.user.setLobbyKey(lobbyKey);
             }
             catch (SQLException sq){
+                this.manager.rollback(this.con);
                 sq.printStackTrace();
                 status = false;
             }
             finally {
+                this.manager.turnOnAutoCommit(this.con);
                 this.manager.closePrepStmt(prepStmt);
                 this.manager.closeConnection(this.con);
             }
@@ -139,17 +147,21 @@ public class Database {
         PreparedStatement prepStmt = null;
         boolean status = true;
         try{
+            this.con.setAutoCommit(false);
             String prepString = "UPDATE usr SET lobby_key = NULL WHERE user_id = ?";
             prepStmt = this.con.prepareStatement(prepString);
-            prepStmt.setInt(1, this.user.getUser_id());
+            prepStmt.setInt(1, Main.user.getUser_id());
             prepStmt.executeUpdate();
-            this.user.setLobbyKey(-1);
+            this.con.commit();
+            Main.user.setLobbyKey(-1);
         }
         catch (SQLException sq){
+            this.manager.rollback(this.con);
             sq.printStackTrace();
             status = false;
         }
         finally {
+            this.manager.turnOnAutoCommit(this.con);
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(this.con);
             return status;
@@ -163,22 +175,27 @@ public class Database {
         int user_id = -1;
         boolean status = true;
         try{
+            this.con.setAutoCommit(false);
             String prepString = "INSERT INTO usr VALUES(DEFAULT, ?, 0, ?, ?, DEFAULT)";
             prepStmt = this.con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
-            prepStmt.setString(1, this.user.getUsername());
-            prepStmt.setString(2, this.user.getEmail());
+            prepStmt.setString(1, Main.user.getUsername());
+            prepStmt.setString(2, Main.user.getEmail());
             prepStmt.setString(3, "hunter2");
+            System.out.println("done");
             prepStmt.executeUpdate();
             res = prepStmt.getGeneratedKeys();
             res.next();
             user_id = res.getInt(1);
-            this.user.setUser_id(user_id);
+            Main.user.setUser_id(user_id);
+            this.con.commit();
         }
         catch (SQLException sq){
+            this.manager.rollback(this.con);
             sq.printStackTrace();
             status = false;
         }
         finally {
+            this.manager.turnOnAutoCommit(this.con);
             this.manager.closeRes(res);
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(this.con);
@@ -190,25 +207,29 @@ public class Database {
         this.openConnection();
         PreparedStatement prepStmt = null;
         ResultSet res = null;
-        int lobbyKey;
+        int lobbyKey = -1;
         boolean status = true;
         try{
+            this.con.setAutoCommit(false);
             String prepString = "INSERT INTO game_lobby VALUES(DEFAULT, 0)";
             prepStmt = this.con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
             prepStmt.executeUpdate();
             res = prepStmt.getGeneratedKeys();
             res.next();
             lobbyKey = res.getInt(1);
-            this.connectUserToGameLobby(lobbyKey);
+            this.con.commit();
         }
         catch (SQLException sq){
+            this.manager.rollback(this.con);
             sq.printStackTrace();
             status = false;
         }
         finally {
+            this.manager.turnOnAutoCommit(this.con);
             this.manager.closeRes(res);
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(this.con);
+            this.connectUserToGameLobby(lobbyKey);
             return status;
         }
     }
@@ -221,7 +242,7 @@ public class Database {
         try {
             String prepString = "select distinct username from usr where user_id = ?";
             prepStmt = con.prepareStatement(prepString);
-            prepStmt.setInt(1, user.getUser_id());
+            prepStmt.setInt(1, Main.user.getUser_id());
             res = prepStmt.executeQuery();
             while(res.next()){
                 username  += res.getString("username");
@@ -247,7 +268,7 @@ public class Database {
 
             String prepString = "select distinct email from usr where user_id = ?";
             prepStmt = this.con.prepareStatement(prepString);
-            prepStmt.setInt(1, user.getUser_id());
+            prepStmt.setInt(1, Main.user.getUser_id());
             res = prepStmt.executeQuery();
             while (res.next()){
                 email  += res.getString("email");
@@ -271,7 +292,7 @@ public class Database {
 
             String prepString = "select distinct rank from usr where user_id = ?";
             prepStmt = this.con.prepareStatement(prepString);
-            prepStmt.setInt(1, user.getUser_id());
+            prepStmt.setInt(1, Main.user.getUser_id());
             res = prepStmt.executeQuery();
             while(res.next()){
                 rank += res.getInt("level");
@@ -427,7 +448,7 @@ public class Database {
             //Checks if email with the specified user_id exists
             String prepString = "SELECT user_id FROM usr WHERE email =? ";
             prepStmt = this.con.prepareStatement(prepString);
-            prepStmt.setInt(1, user.getUser_id());
+            prepStmt.setInt(1, Main.user.getUser_id());
             res = prepStmt.executeQuery();
             emailExists = res.next();
 
@@ -516,10 +537,10 @@ public class Database {
         PreparedStatement ps2 = null;
         //ResultSet rs2;
         String sql ="INSERT INTO usr(user_id, username, email, password) VALUES(?,?,?,?)";
-        this.user = new User(0, username+"", 1, email);
+        Main.user = new User(0, username+"", 1, email);
         try{
             ps2 = con.prepareStatement(sql);
-            ps2.setInt(1, user.getUser_id());
+            ps2.setInt(1, Main.user.getUser_id());
             ps2.setString(2, username);
             ps2.setString(3, email);
             ps2.setString(4, password);

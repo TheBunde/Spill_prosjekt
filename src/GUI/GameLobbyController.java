@@ -1,5 +1,6 @@
 package GUI;
 
+import Main.*;
 import Database.*;
 import audio.MusicPlayer;
 import javafx.fxml.FXML;
@@ -19,28 +20,26 @@ public class GameLobbyController {
 
     private SceneSwitcher sceneSwitcher = new SceneSwitcher();
 
-    private Database db = InterfaceMain.db;
-    private Timer timer = chatController.timer;
+    private Database db = Main.db;
+    private User user = Main.user;
 
     public void initialize(){
-        lobbyKeyLabel.setText("" + db.user.getLobbyKey());
+        lobbyKeyLabel.setText("" + user.getLobbyKey());
     }
 
     public void travelButtonPressed() throws Exception{
         audio.MusicPlayer.getInstance().stopSong();
         MusicPlayer.getInstance().changeSong(7);
-        this.timer = chatController.timer;
-        this.timer.cancel();
-        this.timer.purge();
+        chatController.timer.cancel();
+        chatController.timer.purge();
         this.sceneSwitcher.switchScene(travelButton, "Battlefield.fxml");
 
     }
 
     public void backToMenuButtonPressed() throws Exception{
         db.disconnectUserFromGameLobby();
-        this.timer = chatController.timer;
-        this.timer.cancel();
-        this.timer.purge();
+        chatController.timer.cancel();
+        chatController.timer.purge();
         this.sceneSwitcher.switchScene(backToMenuButton, "MainMenu.fxml");
     }
 }
