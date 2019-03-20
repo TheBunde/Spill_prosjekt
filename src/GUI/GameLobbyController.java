@@ -1,6 +1,7 @@
 package GUI;
 
 import Database.*;
+import audio.MusicPlayer;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -26,6 +27,8 @@ public class GameLobbyController {
     }
 
     public void travelButtonPressed() throws Exception{
+        audio.MusicPlayer.getInstance().stopSong();
+        MusicPlayer.getInstance().changeSong(7);
         this.timer = chatController.timer;
         this.timer.cancel();
         this.timer.purge();
