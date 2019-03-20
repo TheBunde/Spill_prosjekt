@@ -247,16 +247,21 @@ public class Database {
         PreparedStatement prepStmt = null;
         try {
             String prepString = "INSERT INTO usr VALUES(?, ?, DEFAULT, DEFAULT, ?, ?)";
+
+            this.con.setAutoCommit(false);
             prepStmt = con.prepareStatement(prepString);
             prepStmt.setInt(1, user.getUser_id());
             prepStmt.setString(2, user.getUsername());
             prepStmt.setString(3, user.getEmail());
             prepStmt.setString(4, "test");
             prepStmt.executeUpdate();
+            this.con.commit();
+
         } catch (SQLException sq) {
-            manager.writeMessage(sq, "registerUser");
+            manager.rollback(this.con);
             return false;
         } finally {
+            manager.turnOnAutoCommit(this.con);
             manager.closePrepStmt(prepStmt);
             manager.closeConnection(this.con);
             return true;
@@ -367,18 +372,22 @@ public class Database {
             this.openConnection();
             try {
                 String prepString = "UPDATE creature SET HP = ? WHERE creature_id = ?";
+                this.con.setAutoCommit(false);
                 prepStmt = this.con.prepareStatement(prepString);
                 prepStmt.setInt(1, newHP);
                 prepStmt.setInt(2, creature_id);
                 prepStmt.executeUpdate();
+                this.con.commit();
                 creature.setHp(newHP);
-                return true;
+
             } catch (SQLException sq) {
-                manager.writeMessage(sq, "setHP");
+                manager.rollback(this.con);
                 return false;
             } finally {
+                manager.turnOnAutoCommit(this.con);
                 manager.closePrepStmt(prepStmt);
                 manager.closeConnection(this.con);
+                return true;
             }
         }
         return false;
@@ -416,16 +425,19 @@ public class Database {
             this.openConnection();
             try {
                 String prepString = "UPDATE creature SET AC = ? WHERE creature_id = ?";
+                this.con.setAutoCommit(false);
                 prepStmt = this.con.prepareStatement(prepString);
                 prepStmt.setInt(1, newAC);
                 prepStmt.setInt(2, creature_id);
                 prepStmt.executeUpdate();
+                this.con.commit();
                 creature.setAc(newAC);
                 return true;
             } catch (SQLException sq) {
-                manager.writeMessage(sq, "setAC");
+                manager.rollback(this.con);
                 return false;
             } finally {
+                manager.turnOnAutoCommit(this.con);
                 manager.closePrepStmt(prepStmt);
                 manager.closeConnection(this.con);
             }
@@ -465,16 +477,19 @@ public class Database {
             this.openConnection();
             try {
                 String prepString = "UPDATE creature SET lv = ? WHERE creature_id = ?";
+                this.con.setAutoCommit(false);
                 prepStmt = this.con.prepareStatement(prepString);
                 prepStmt.setInt(1, newLevel);
                 prepStmt.setInt(2, creature_id);
                 prepStmt.executeUpdate();
+                this.con.commit();
                 creature.setLevel(newLevel);
                 return true;
             } catch (SQLException sq) {
-                manager.writeMessage(sq, "setLevel");
+                manager.rollback(this.con);
                 return false;
             } finally {
+                manager.turnOnAutoCommit(this.con);
                 manager.closePrepStmt(prepStmt);
                 manager.closeConnection(this.con);
             }
@@ -514,16 +529,19 @@ public class Database {
             this.openConnection();
             try {
                 String prepString = "UPDATE creature SET attack_bonus = ? WHERE creature_id = ?";
+                this.con.setAutoCommit(false);
                 prepStmt = this.con.prepareStatement(prepString);
                 prepStmt.setInt(1, newAttack_bonus);
                 prepStmt.setInt(2, creature_id);
                 prepStmt.executeUpdate();
+                this.con.commit();
                 creature.setAttackBonus(newAttack_bonus);
                 return true;
             } catch (SQLException sq) {
-                manager.writeMessage(sq, "setAttack_bonus");
+                manager.rollback(this.con);
                 return false;
             } finally {
+                manager.turnOnAutoCommit(this.con);
                 manager.closePrepStmt(prepStmt);
                 manager.closeConnection(this.con);
             }
@@ -560,7 +578,4 @@ public class Database {
         //If made it to here return -1, login failed.
         return -1;
     }
-
-
-
 }
