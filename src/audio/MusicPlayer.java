@@ -15,7 +15,6 @@ public class MusicPlayer implements Runnable {
     private float volumeMusic;
 
     private static MusicPlayer thisInstance = new MusicPlayer("testintro","pause", "mainmenu", "battlesongone","warriorSong","rogueSong","wizardSong","desertwalk");
-
     public static MusicPlayer getInstance(){
         return thisInstance;
     }
