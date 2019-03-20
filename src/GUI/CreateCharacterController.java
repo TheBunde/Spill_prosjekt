@@ -1,5 +1,7 @@
 package GUI;
 
+import audio.MusicPlayer;
+import audio.SFXPlayer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -40,10 +42,10 @@ public class CreateCharacterController implements Initializable {
     Image warriorImage = new Image("GUI/images/warrior.jpg");
 
     @FXML
-    Image rogueImage = new Image("GUI/images/Default.jpg");
+    Image rogueImage = new Image("GUI/images/rogue.jpg");
 
     @FXML
-    Image wizardImage = new Image("GUI/images/Default.jpg");
+    Image wizardImage = new Image("GUI/images/wizard.jpg");
 
     @FXML
     Image defaultImage = new Image("GUI/images/Default.jpg");
@@ -60,20 +62,30 @@ public class CreateCharacterController implements Initializable {
         String a = chooseClassDropdown.getValue();
 
         if(a.equals("Warrior")) {
+            SFXPlayer.getInstance().setSFX(2);
             iv.setImage(warriorImage);
-            text.setText("Warrior.");
+            text.setText("Warrior. This mighty motherfather is one of the best classes for new players.");
+            MusicPlayer.getInstance().stopSong();
+            MusicPlayer.getInstance().changeSong(4);
         }
         if(a.equals("Rogue")) {
             iv.setImage(rogueImage);
             text.setText("Rogue.");
+            SFXPlayer.getInstance().setSFX(3);
+            MusicPlayer.getInstance().stopSong();
+            MusicPlayer.getInstance().changeSong(5);
         }
         if(a.equals("Wizard")) {
             iv.setImage(wizardImage);
             text.setText("Wizard is a class");
+            SFXPlayer.getInstance().setSFX(4);
+            MusicPlayer.getInstance().stopSong();
+            MusicPlayer.getInstance().changeSong(6);
         }
     }
     //method to create the character
     public void createCharacter() throws Exception{
+        SFXPlayer.getInstance().setSFX(0);
         sceneSwitcher.switchScene(createCharacterButton, "MainMenu.fxml");
 
     }

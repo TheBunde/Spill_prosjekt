@@ -1,5 +1,7 @@
 package GUI;
 
+import audio.MusicPlayer;
+import audio.SFXPlayer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,6 +16,9 @@ public class MainMenuController {
     private Button startNewGame;
 
     public void buttonPressed1() throws Exception{
+        new SFXPlayer("knockSFX").run();
+        MusicPlayer.getInstance().stopSong();
+        MusicPlayer.getInstance().changeSong(3);
         Parent root = FXMLLoader.load(getClass().getResource("createcharacter.fxml"));
         Scene scene = new Scene(root);
         Stage stage = (Stage)startNewGame.getScene().getWindow();
@@ -25,6 +30,7 @@ public class MainMenuController {
     private Button joinLobby;
 
     public void buttonPressed2() throws Exception{
+        SFXPlayer.getInstance().setSFX(0);
         Parent root = FXMLLoader.load(getClass().getResource("FindLobby.fxml"));
         Scene scene = new Scene(root);
         Stage stage = (Stage)joinLobby.getScene().getWindow();
@@ -36,6 +42,7 @@ public class MainMenuController {
     private Button viewAccoun;
 
     public void buttonPressed3() throws Exception{
+        SFXPlayer.getInstance().setSFX(0);
         Parent root = FXMLLoader.load(getClass().getResource("AccountDetails.fxml"));
         Scene scene = new Scene(root);
         Stage stage = (Stage)viewAccoun.getScene().getWindow();
@@ -47,6 +54,7 @@ public class MainMenuController {
     private Button settings;
 
     public void buttonPressed4() throws Exception{
+        SFXPlayer.getInstance().setSFX(0);
         Parent root = FXMLLoader.load(getClass().getResource("settings.fxml"));
         Scene scene = new Scene(root);
         Stage stage = (Stage)settings.getScene().getWindow();
@@ -58,6 +66,7 @@ public class MainMenuController {
     private Button help;
 
     public void buttonPressed5() throws Exception{
+        new SFXPlayer("knockSFX").run();
         Parent root = FXMLLoader.load(getClass().getResource("https://gitlab.stud.iie.ntnu.no/heleneyj/game-development-project/wikis/System/User-manual"));
         Scene scene = new Scene(root);
         Stage stage = (Stage)help.getScene().getWindow();
@@ -69,6 +78,9 @@ public class MainMenuController {
     private Button signOut;
 
     public void buttonPressed6() throws Exception{
+        SFXPlayer.getInstance().setSFX(0);
+        audio.MusicPlayer.getInstance().stopSong();
+        MusicPlayer.getInstance().changeSong(0);
         Parent root = FXMLLoader.load(getClass().getResource("start.fxml"));
         Scene scene = new Scene(root);
         Stage stage = (Stage)signOut.getScene().getWindow();

@@ -21,7 +21,7 @@ public class Password {
         }
         return false;
     }
-
+    //GetSalt()
     public byte[] getSalt(){
         byte[] salt = new byte[16];
         rand.nextBytes(salt);
