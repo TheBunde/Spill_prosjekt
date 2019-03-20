@@ -1,11 +1,8 @@
 package Database;
 
-<<<<<<< HEAD
 import javafx.scene.control.Alert;
-=======
-import sun.plugin2.message.ProxyReplyMessage;
->>>>>>> william
 
+import sun.plugin2.message.ProxyReplyMessage;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
