@@ -1,7 +1,9 @@
 package Database;
 
 import javafx.scene.control.Alert;
+import sun.plugin2.message.ProxyReplyMessage;
 
+import sun.plugin2.message.ProxyReplyMessage;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -23,139 +25,191 @@ public class Database {
         this.url = url;
         this.password = password;
         this.manager = new ManageConnection();
-        this.user = new User(3, "william", 2, "gmail@gmail.com");
-
     }
 
     //Fetches messages from chat
-    public ArrayList<String> getMessagesFromChat(Chatter chatter){
+    public ArrayList<String> getMessagesFromChat(){
         this.openConnection();
         PreparedStatement prepStmt = null;
         ResultSet res = null;
         ArrayList<String> messages = new ArrayList<String>();
         try{
-            String prepString = "SELECT message_id, chat_message.chatter_id, message, name, time_stamp FROM chat_message LEFT OUTER JOIN chatter ON (chat_message.chatter_id = chatter.chatter_id) WHERE chat_message.chat_id = ? ORDER BY message_id DESC LIMIT 30";
+            String prepString = "SELECT message_id, chat_message.user_id, message, username, time_stamp FROM chat_message LEFT OUTER JOIN usr ON (chat_message.user_id = usr.user_id) WHERE chat_message.lobby_key = ? ORDER BY message_id DESC LIMIT 30";
             prepStmt = this.con.prepareStatement(prepString);
-            prepStmt.setInt(1, chatter.getChatID());
+            prepStmt.setInt(1, this.user.getLobbyKey());
             res = prepStmt.executeQuery();
             while (res.next()) {
-                messages.add(res.getString("name") + ": " + res.getString("message") + " | " + res.getString("time_stamp"));
+                messages.add(res.getString("username") + ": " + res.getString("message") + " | " + res.getString("time_stamp"));
             }
         }
         catch (SQLException sq){
             sq.printStackTrace();
-            return null;
         }
         finally {
             if (res != null) {
-                this.closeRes(res);
+                this.manager.closeRes(res);
             }
-            this.closePrepStmt(prepStmt);
-            this.closeConnection();
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(this.con);
             return messages;
         }
     }
 
     //Sends new message to the chat that the user is connected to
-    public boolean addChatMessage(Chatter chatter, String message){
+    public boolean addChatMessage(String message){
         this.openConnection();
         PreparedStatement prepStmt = null;
+        boolean status = true;
         try {
             //Using a prepared statement to execute an insert into the chat_message entity
             String prepString = "INSERT INTO chat_message VALUES(?, DEFAULT, ?, ?, NOW())";
             prepStmt = this.con.prepareStatement(prepString);
-            prepStmt.setInt(1, chatter.getChatID());
-            prepStmt.setInt(2, chatter.getChatterID());
+            prepStmt.setInt(1, this.user.getLobbyKey());
+            prepStmt.setInt(2, this.user.getUser_id());
             prepStmt.setString(3, message);
             prepStmt.executeUpdate();
         }
         catch (SQLException sq){
             sq.printStackTrace();
-            return false;
+            status = false;
         }
         finally {
-            this.closePrepStmt(prepStmt);
-            this.closeConnection();
-            return true;
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(this.con);
+            return status;
         }
     }
 
-    public boolean chatExists(int chatID){
+    public boolean gameLobbyExists(int lobbyKey){
         this.openConnection();
         PreparedStatement prepStmt = null;
         ResultSet res = null;
-        //Boolean variable to keep track of the existence of the specified chat
+        //Boolean variable to keep track of the existence of the specified gamelobby
         boolean chatExists = false;
         try{
-            //Checks if chat with the specified chatID exists
-            String prepString = "SELECT chat_id FROM chat WHERE chat_id = ?";
+            //Checks if chat with the specified lobbykey exists
+            String prepString = "SELECT lobby_key FROM game_lobby WHERE lobby_key = ?";
             prepStmt = this.con.prepareStatement(prepString);
-            prepStmt.setInt(1, chatID);
+            prepStmt.setInt(1, lobbyKey);
             res = prepStmt.executeQuery();
             chatExists = res.next();
 
         }
         catch (SQLException sq){
             sq.printStackTrace();
-            return false;
         }
         finally {
-            this.closeRes(res);
-            this.closePrepStmt(prepStmt);
-            this.closeConnection();
+            this.manager.closeRes(res);
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(this.con);
             return chatExists;
         }
     }
 
-    public boolean connectChatterToChat(Chatter chatter, int chatID){
+    public boolean connectUserToGameLobby(int lobbyKey){
         PreparedStatement prepStmt = null;
-        if (chatExists(chatID) && chatter.getChatterID() != -1){
+        boolean status = true;
+        if (this.gameLobbyExists(lobbyKey) && this.user.getUser_id() != -1){
             this.openConnection();
             try {
-                String prepString = "UPDATE chatter SET chat_id = ? WHERE chatter_id = ?";
+                String prepString = "UPDATE usr SET lobby_key = ? WHERE user_id = ?";
                 prepStmt = this.con.prepareStatement(prepString);
-                prepStmt.setInt(1, chatID);
-                prepStmt.setInt(2, chatter.getChatterID());
+                prepStmt.setInt(1, lobbyKey);
+                prepStmt.setInt(2, this.user.getUser_id());
                 prepStmt.executeUpdate();
-                chatter.setChatID(chatID);
-                return true;
+                this.user.setLobbyKey(lobbyKey);
             }
             catch (SQLException sq){
                 sq.printStackTrace();
-                return false;
+                status = false;
             }
             finally {
-                closePrepStmt(prepStmt);
-                this.closeConnection();
+                this.manager.closePrepStmt(prepStmt);
+                this.manager.closeConnection(this.con);
             }
         }
-        return false;
+        else{
+            status = false;
+        }
+        return status;
     }
 
-    public boolean addChatter(Chatter chatter){
+    public boolean disconnectUserFromGameLobby(){
         this.openConnection();
         PreparedStatement prepStmt = null;
-        ResultSet res = null;
-        int chatterID = -1;
+        boolean status = true;
         try{
-            String prepString = "INSERT INTO chatter VALUES(DEFAULT, DEFAULT, ?)";
-            prepStmt = this.con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
-            prepStmt.setString(1, chatter.getName());
+            String prepString = "UPDATE usr SET lobby_key = NULL WHERE user_id = ?";
+            prepStmt = this.con.prepareStatement(prepString);
+            prepStmt.setInt(1, this.user.getUser_id());
             prepStmt.executeUpdate();
-            res = prepStmt.getGeneratedKeys();
-            res.next();
-            chatterID = res.getInt(1);
-            chatter.setChatterID(chatterID);
+            this.user.setLobbyKey(-1);
         }
         catch (SQLException sq){
             sq.printStackTrace();
-            return false;
+            status = false;
         }
         finally {
-            this.closeRes(res);
-            this.closePrepStmt(prepStmt);
-            this.closeConnection();
-            return true;
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(this.con);
+            return status;
+        }
+    }
+
+    public boolean addUser(User user){
+        this.openConnection();
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        int user_id = -1;
+        boolean status = true;
+        try{
+            String prepString = "INSERT INTO usr VALUES(DEFAULT, ?, 0, ?, ?, DEFAULT)";
+            prepStmt = this.con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
+            prepStmt.setString(1, this.user.getUsername());
+            prepStmt.setString(2, this.user.getEmail());
+            prepStmt.setString(3, "hunter2");
+            prepStmt.executeUpdate();
+            res = prepStmt.getGeneratedKeys();
+            res.next();
+            user_id = res.getInt(1);
+            this.user.setUser_id(user_id);
+        }
+        catch (SQLException sq){
+            sq.printStackTrace();
+            status = false;
+        }
+        finally {
+            this.manager.closeRes(res);
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(this.con);
+            return status;
+        }
+    }
+
+    public boolean createNewLobby(){
+        this.openConnection();
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        int lobbyKey;
+        boolean status = true;
+        try{
+            String prepString = "INSERT INTO game_lobby VALUES(DEFAULT, 0)";
+            prepStmt = this.con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
+            prepStmt.executeUpdate();
+            res = prepStmt.getGeneratedKeys();
+            res.next();
+            lobbyKey = res.getInt(1);
+            this.connectUserToGameLobby(lobbyKey);
+        }
+        catch (SQLException sq){
+            sq.printStackTrace();
+            status = false;
+        }
+        finally {
+            this.manager.closeRes(res);
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(this.con);
+            return status;
         }
     }
 

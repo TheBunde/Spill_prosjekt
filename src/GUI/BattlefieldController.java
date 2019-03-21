@@ -47,6 +47,25 @@ public class BattlefieldController {
         yobClicked = true;
     }
 
+    public void attackButtonPressed(){
+
+    }
+
+    public void moveButtonPressed(){
+
+    }
+    public void endTurnButtonPressed(){
+
+    }
+
+    public void helpButtonPressed(){
+
+    }
+
+    public void exitButtonPressed(){
+        
+    }
+
     private void selected(ImageView image){
         try{
             image.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {

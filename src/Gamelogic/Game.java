@@ -4,7 +4,8 @@ import creature.Character;
 
 import java.util.ArrayList;
 class Game {
-    public static void main(String[] args){
+    public void entireGame(){
+        // need to get all the data from the database in to the arrays bellow
         Dice dice = new Dice();
         GameMethods method = new GameMethods();
         ArrayList<Creature> players = new ArrayList<>(); // players in the game
@@ -15,14 +16,14 @@ class Game {
         int gameRound = 0;
         while(alive && gameRound < monsters.size()){
             //get the right monster
-            story.get(gameRound);
-            ArrayList<Creature> turn = method.initative();
-            int playable = players.size();
-            int dead = 0;
+            story.get(gameRound); // prints out the right story part
+            ArrayList<Creature> turn = method.initative(); // gets the initiative turn from randomizer
+            int playable = players.size(); // players that are in the game
+            int dead = 0; // amount of players that are dead
             boolean monsterAlive = true;
             while(dead < playable && monsterAlive == true){
                 for(int index = 0; index < turn.size(); index++){
-                    Creature playerNow = turn.get(index);
+                    Creature playerNow = turn.get(index); // holds info about the curent player
                     if(playerNow.getHp() <= 0){
                         break;
                     }
@@ -114,6 +115,7 @@ class Game {
         }
         System.out.println(story.get(story.size()-2));
         //set every new value for users
+        //reset everything about the characters and monster for another game
         //game over
     }
 }

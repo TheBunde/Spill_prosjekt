@@ -60,6 +60,7 @@ public class GameMethods {
             }
             int monsterHP = monster.getHp() - damage;
             monster.setHp(monsterHP);
+            //sending new monster hp to database 
             System.out.println("Hit");
         } else {
             System.out.println("Miss");
@@ -73,8 +74,8 @@ public class GameMethods {
         int XMix = xCoordinate - palyerNow.getMovement();
         int YMax = yCoordinate + palyerNow.getMovement();
         int YMix = yCoordinate - palyerNow.getMovement();
-        int wantedX;
-        int wantedY;
+        int wantedX = 0;
+        int wantedY = 0;
         boolean X = false;
         boolean Y = false;
         if(wantedX <= XMax && wantedX >= XMix){
@@ -87,6 +88,7 @@ public class GameMethods {
             palyerNow.setxCordinate(wantedX);
             palyerNow.setyCordinate(wantedY);
             System.out.println("You moved");
+            //sending new x y to database
             return true;
         }else{
             System.out.println("Out of range. Try again");
@@ -132,6 +134,7 @@ public class GameMethods {
             }
             targetHP = target.getHp() - damage;
             target.setHp(targetHP);
+            //sending new target hp to database
             System.out.println("Hit");
         }else{
             System.out.println("Miss");

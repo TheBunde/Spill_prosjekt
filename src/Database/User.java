@@ -47,6 +47,14 @@ public class User {
         email = newEmail;
     }
 
+    public int getLobbyKey(){
+        return this.lobbyKey;
+    }
+
+    public void setLobbyKey(int lobbyKey){
+        this.lobbyKey = lobbyKey;
+    }
+
     public String toString(){
         return "User info:\n" + user_id + "\n" + username + "\n" + rank + "\n" + email;
     }

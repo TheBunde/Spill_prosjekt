@@ -1,6 +1,9 @@
 package GUI;
 
+
 import Database.Database;
+import audio.MusicPlayer;
+import audio.SFXPlayer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -32,10 +35,16 @@ public class LoginController {
     }
 
     public void cancel() throws Exception{
+        SFXPlayer.getInstance().setSFX(0);
+        audio.MusicPlayer.getInstance().stopSong();
+        MusicPlayer.getInstance().changeSong(0);
         sceneSwitcher.switchScene(cancelButton, "start.fxml");
     }
 
     public void login() throws Exception{
+        SFXPlayer.getInstance().setSFX(0);
+        audio.MusicPlayer.getInstance().stopSong();
+        MusicPlayer.getInstance().changeSong(2);
         sceneSwitcher.switchScene(loginButton, "MainMenu.fxml");
     }
 
