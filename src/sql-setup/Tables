@@ -89,6 +89,9 @@ create table chat_message(
     constraint chat_message_pk primary key(message_id, lobby_key));
 
 
+    //alters
+    ALTER TABLE player ADD user_id integer;
+    ALTER table player MODIFY player_id integer not null AUTO_INCREMENT
 
     //Foreign keys
 
@@ -98,4 +101,10 @@ ALTER TABLE chat_message ADD CONSTRAINT chat_message_fk1 FOREIGN KEY(lobby_key) 
 ALTER TABLE chat_message ADD CONSTRAINT chat_message_fk2 FOREIGN KEY(user_id) REFERENCES user(user_id);
 
 ALTER TABLE player ADD CONSTRAINT player_fk1 FOREIGN KEY(character_id) REFERENCES character(character_id);
+
+
+
+   //Inserts
+   INSERT INTO chrctr VALUES(1, "Warior" , "He be legendary warior. Yeet that goblin");
+   INSERT INTO chrctr VALUES(2, "Rogee", "she be the sneaky girl. not the one from Rogue One");
 

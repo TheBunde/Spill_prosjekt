@@ -1,5 +1,6 @@
 package Database;
 
+import com.mysql.cj.protocol.Resultset;
 import javafx.scene.control.Alert;
 import sun.plugin2.message.ProxyReplyMessage;
 
@@ -551,6 +552,85 @@ public class Database {
         return 1;
 
 
+    }
+
+    public boolean createCharacter(String character){
+        this.openConnection();
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        boolean status = true;
+        int playerId;
+        try{
+            String prepString = "INSERT INTO player VALUES(DEFAULT, ?, ?, ?)";
+            prepStmt = this.con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
+            prepStmt.setInt(1, user.getLobbyKey());
+            prepStmt.setInt(2, fetchCharacterId(character));
+            prepStmt.setInt(3, user.getUser_id());
+            prepStmt.executeUpdate();
+            res = prepStmt.getGeneratedKeys();
+            res.next();
+            playerId = res.getInt(1);
+            //setPlayerId(playerId);
+        }
+        catch (SQLException sq){
+            sq.printStackTrace();
+            status = false;
+        }
+        finally {
+            this.manager.closeRes(res);
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(this.con);
+            return status;
+        }
+    }
+
+    public int fetchCharacterId(String character){
+        this.openConnection();
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        int characterId = -1;
+        try{
+            String prepString = "SELECT chrctr.character_id FROM chrctr WHERE character_name = ?";
+            prepStmt = this.con.prepareStatement(prepString);
+            prepStmt.setString(1, character);
+            res = prepStmt.executeQuery();
+            while (res.next()){
+                characterId = res.getInt(1);
+            }
+
+        }
+        catch (SQLException sq){
+            sq.printStackTrace();
+            characterId = -1;
+        }
+        finally {
+            this.manager.closeRes(res);
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(this.con);
+            return characterId;
+        }
+    }
+
+    public boolean setPlayerId(int playerId){
+        this.openConnection();
+        PreparedStatement prepStmt = null;
+        boolean status = true;
+        try {
+            String prepString = "UPDATE usr SET player_id = ? WHERE user_id = ?";
+            prepStmt = this.con.prepareStatement(prepString);
+            prepStmt.setInt(1, playerId);
+            prepStmt.setInt(2, user.getUser_id());
+            prepStmt.executeUpdate();
+        }
+        catch (SQLException sq){
+            sq.printStackTrace();
+            status = false;
+        }
+        finally {
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(this.con);
+            return status;
+        }
     }
 
 }
