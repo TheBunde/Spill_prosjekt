@@ -26,7 +26,7 @@ create table creature(
     weapon_id not null,
     constraint creature_pk primary key(creature_id));
 
-create table character(
+create table chrctr(
     character_id integer not null references creature(creature_id),
     character_name varchar(20),
     back_story varchar(50),
@@ -64,14 +64,13 @@ create table user(
 
 create table player(
     player_id integer not null,
-    level integer,
     lobby_key integer not null references game_lobby(lobby_key),
     charcter_id integer not null,
-    constraint player_pk primary key(player_id));
+    constraint player_pk primary key(player_id, lobby_key));
 
 create table initiative(
-    lobby_key integer not null references game_lobby(lobby_key),
-    user_id integer not null references users(user_id),
+    lobby_key integer not null,
+    player_id integer not null,
     initiative_turn integer,
     constraint initiative_pk primary key(lobby_key, user_id));
 
@@ -97,5 +96,7 @@ ALTER TABLE user ADD CONSTRAINT user_fk1 FOREIGN KEY(lobby_key) REFERENCES game_
 ALTER TABLE chat_message ADD CONSTRAINT chat_message_fk1 FOREIGN KEY(lobby_key) REFERENCES game_lobby(lobby_key);
 ALTER TABLE chat_message ADD CONSTRAINT chat_message_fk2 FOREIGN KEY(user_id) REFERENCES user(user_id);
 
-ALTER TABLE player ADD CONSTRAINT player_fk1 FOREIGN KEY(character_id) REFERENCES character(character_id);
-
+ALTER TABLE player ADD CONSTRAINT player_fk1 FOREIGN KEY(character_id) REFERENCES chrctr(character_id);
+ALTER TABLE player ADD CONSTRAINT player_fk2 FOREIGN KEY(lobby_key) REFERENCES game_lobby(lobby_key);
+ALTER TABLE initiative ADD CONSTRAINT initiative_fk1 FOREIGN KEY(player_id, lobby_key) REFERENCES player(player_id, lobby_key);
+ALTER TABLE initiative ADD CONSTRAINT initiative_fk2 FOREIGN KEY(lobby_key) REFERENCES game_lobby(lobby_key);
