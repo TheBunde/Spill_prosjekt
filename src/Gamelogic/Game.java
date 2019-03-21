@@ -11,13 +11,17 @@ class Game {
         ArrayList<Creature> players = new ArrayList<>(); // players in the game
         ArrayList<Creature> monsters =  new ArrayList<>(); // list of every monster in the game
         ArrayList<Creature> creatures = new ArrayList<>(); //  all creatures in the game
-        ArrayList<String> story = new ArrayList<>();
+        ArrayList<String> story = new ArrayList<>(); // the story of the game
         boolean alive = true;
         int gameRound = 0;
         while(alive && gameRound < monsters.size()){
             //get the right monster
             story.get(gameRound); // prints out the right story part
             ArrayList<Creature> turn = method.initative(); // gets the initiative turn from randomizer
+            for(int i = 0; i < turn.size(); i++){
+
+                System.out.println();
+            }
             int playable = players.size(); // players that are in the game
             int dead = 0; // amount of players that are dead
             boolean monsterAlive = true;
