@@ -7,7 +7,6 @@ drop table users;
 drop table player;
 drop table initiative;
 drop table game_lobby;
-drop table chat;
 drop table chat_message;
 
 

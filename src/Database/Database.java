@@ -2,15 +2,9 @@ package Database;
 
 import Main.*;
 import javafx.scene.control.Alert;
-import sun.plugin2.message.ProxyReplyMessage;
+import org.apache.commons.dbcp2.BasicDataSource;
 
-import sun.plugin2.message.ProxyReplyMessage;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class Database {
@@ -29,16 +23,18 @@ public class Database {
 
     //Fetches messages from chat
     public ArrayList<String> getMessagesFromChat(){
-        this.openConnection();
+        Connection con1 = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
         ArrayList<String> messages = new ArrayList<String>();
         try{
+            con1 = DataSource.getConnection();
             String prepString = "SELECT message_id, chat_message.user_id, message, username, time_stamp FROM chat_message LEFT OUTER JOIN usr ON (chat_message.user_id = usr.user_id) WHERE chat_message.lobby_key = ? ORDER BY message_id DESC LIMIT 30";
-            prepStmt = this.con.prepareStatement(prepString);
+            prepStmt = con1.prepareStatement(prepString);
             prepStmt.setInt(1, Main.user.getLobbyKey());
             res = prepStmt.executeQuery();
             while (res.next()) {
+                System.out.println(res.getString("username"));
                 messages.add(res.getString("username") + ": " + res.getString("message") + " | " + res.getString("time_stamp"));
             }
         }
@@ -50,36 +46,49 @@ public class Database {
                 this.manager.closeRes(res);
             }
             this.manager.closePrepStmt(prepStmt);
-            this.manager.closeConnection(this.con);
+            this.manager.closeConnection(con1);
             return messages;
         }
     }
 
     //Sends new message to the chat that the user is connected to
     public boolean addChatMessage(String message){
-        this.openConnection();
+        Connection con1 = null;
         PreparedStatement prepStmt = null;
+        ResultSet res = null;
         boolean status = true;
+        int messageId = -1;
+        System.out.println(messageId);
         try {
-            this.con.setAutoCommit(false);
+            con1 = DataSource.getConnection();
+            //con1.setAutoCommit(false);
             //Using a prepared statement to execute an insert into the chat_message entity
             String prepString = "INSERT INTO chat_message VALUES(?, DEFAULT, ?, ?, NOW())";
-            prepStmt = this.con.prepareStatement(prepString);
+            prepStmt = con1.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
             prepStmt.setInt(1, Main.user.getLobbyKey());
             prepStmt.setInt(2, Main.user.getUser_id());
             prepStmt.setString(3, message);
             prepStmt.executeUpdate();
-            this.con.commit();
+            res = prepStmt.getGeneratedKeys();
+            res.next();
+            messageId = res.getInt(1);
+            System.out.println(messageId);
+            //con1.commit();
         }
         catch (SQLException sq){
-            this.manager.rollback(this.con);
+            System.out.println("Feil");
+            //this.manager.rollback(con1);
             sq.printStackTrace();
             status = false;
         }
         finally {
-            this.manager.turnOnAutoCommit(this.con);
+            //this.manager.turnOnAutoCommit(con1);
+            this.manager.closeRes(res);
             this.manager.closePrepStmt(prepStmt);
-            this.manager.closeConnection(this.con);
+            //this.manager.closeConnection(con1);
+            if (messageId <= 0){
+                status = false;
+            }
             return status;
         }
     }
