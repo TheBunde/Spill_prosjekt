@@ -3,6 +3,8 @@ package GUI;
 import Main.*;
 import Database.*;
 
+import audio.ThreadPool;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
+import javax.xml.crypto.Data;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -35,36 +38,37 @@ public class chatController implements Initializable {
     private int count = 0;
 
     public void initialize(URL location, ResourceBundle resources){
+        ObservableList<String> items = FXCollections.observableArrayList();
+        list.setItems(items);
+
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                //updateChat();
-                //count++;
-                //System.out.println(count);
+                Platform.runLater(() -> {
+                    updateChat();
+                });
             }
-        },0 ,1500);
+        },0 ,200);
     }
 
     public void sendMessage(){
-        String text = messageInput.getText();
-        if(Main.db.addChatMessage(text)){
-            System.out.println("Message sent");
-        }
-        messageInput.setText("");
-        updateChat();
+        new Thread(new Runnable(){
+            @Override public void run(){
+                String text = messageInput.getText();
+                if(Main.db.addChatMessage(text)){
+                    System.out.println("Message sent");
+                }
+                else {
+                    System.out.println("Message was not sent");
+                }
+                messageInput.setText("");
+            }
+        }).start();
     }
 
     public void updateChat(){
-        ArrayList<String> messages = this.db.getMessagesFromChat();
-        ObservableList<String> items = FXCollections.observableArrayList();
-        for (int i = messages.size() - 1; i >= 0; i--){
-            items.add(messages.get(i));
-        }
-        list.setItems(items);
+        this.db.getMessagesFromChat();
+        list.getItems().setAll(this.db.chat.getMessages());
     }
-
-
-
-
 }

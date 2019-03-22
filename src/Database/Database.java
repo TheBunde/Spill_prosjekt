@@ -12,6 +12,8 @@ public class Database {
     private String url;
     private String password;
     private ManageConnection manager;
+    private BasicDataSource bds;
+    public Chat chat;
 
     //Setup for database
     public Database(String url, String password){
@@ -19,24 +21,30 @@ public class Database {
         this.url = url;
         this.password = password;
         this.manager = new ManageConnection();
+        this.bds = DataSource.getInstance().getBds();
+        this.chat = new Chat();
     }
 
     //Fetches messages from chat
-    public ArrayList<String> getMessagesFromChat(){
+    public void getMessagesFromChat(){
+
         Connection con1 = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
-        ArrayList<String> messages = new ArrayList<String>();
         try{
-            con1 = DataSource.getConnection();
-            String prepString = "SELECT message_id, chat_message.user_id, message, username, time_stamp FROM chat_message LEFT OUTER JOIN usr ON (chat_message.user_id = usr.user_id) WHERE chat_message.lobby_key = ? ORDER BY message_id DESC LIMIT 30";
+            con1 = this.bds.getConnection();
+            String prepString = "SELECT chat_message.message_id, message, username, time_stamp FROM chat_message LEFT OUTER JOIN usr ON (chat_message.user_id = usr.user_id) WHERE chat_message.lobby_key = ? AND chat_message.message_id > ? ORDER BY message_id DESC LIMIT 30";
             prepStmt = con1.prepareStatement(prepString);
             prepStmt.setInt(1, Main.user.getLobbyKey());
+            prepStmt.setInt(2, chat.getLastSeenMessageId());
             res = prepStmt.executeQuery();
             while (res.next()) {
-                System.out.println(res.getString("username"));
-                messages.add(res.getString("username") + ": " + res.getString("message") + " | " + res.getString("time_stamp"));
+                chat.addMessage(res.getString("username") + ": " + res.getString("message") + " | " + res.getString("time_stamp"));
+                if (res.isFirst()){
+                    chat.setLastSeenMessageId(res.getInt("chat_message.message_id"));
+                }
             }
+            System.out.println(chat.getLastSeenMessageId());
         }
         catch (SQLException sq){
             sq.printStackTrace();
@@ -47,7 +55,7 @@ public class Database {
             }
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con1);
-            return messages;
+            this.manager.closeConnection(con1);
         }
     }
 
@@ -58,34 +66,35 @@ public class Database {
         ResultSet res = null;
         boolean status = true;
         int messageId = -1;
-        System.out.println(messageId);
         try {
-            con1 = DataSource.getConnection();
-            //con1.setAutoCommit(false);
+            con1 = this.bds.getConnection();
+            con1.setAutoCommit(false);
             //Using a prepared statement to execute an insert into the chat_message entity
             String prepString = "INSERT INTO chat_message VALUES(?, DEFAULT, ?, ?, NOW())";
             prepStmt = con1.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
             prepStmt.setInt(1, Main.user.getLobbyKey());
             prepStmt.setInt(2, Main.user.getUser_id());
             prepStmt.setString(3, message);
+            long time1 = System.currentTimeMillis();
             prepStmt.executeUpdate();
+            con1.commit();
+            time1 = System.currentTimeMillis() - time1;
+            System.out.println(time1);
             res = prepStmt.getGeneratedKeys();
             res.next();
             messageId = res.getInt(1);
-            System.out.println(messageId);
-            //con1.commit();
+
         }
-        catch (SQLException sq){
-            System.out.println("Feil");
-            //this.manager.rollback(con1);
+        catch (Exception sq){
+            this.manager.rollback(con1);
             sq.printStackTrace();
             status = false;
         }
         finally {
-            //this.manager.turnOnAutoCommit(con1);
+            this.manager.turnOnAutoCommit(con1);
             this.manager.closeRes(res);
             this.manager.closePrepStmt(prepStmt);
-            //this.manager.closeConnection(con1);
+            this.manager.closeConnection(con1);
             if (messageId <= 0){
                 status = false;
             }
