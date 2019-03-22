@@ -38,8 +38,7 @@ public class RegistrerController {
 
     public void cancel() throws Exception{
         SFXPlayer.getInstance().setSFX(0);
-        audio.MusicPlayer.getInstance().stopSong();
-        MusicPlayer.getInstance().changeSong(0);
+
         sceneSwitcher.switchScene(cancelButton, "start.fxml");
     }
 }

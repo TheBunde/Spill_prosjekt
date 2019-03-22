@@ -1,6 +1,8 @@
 package GUI;
 
 import Database.*;
+import audio.MusicPlayer;
+import audio.SFXPlayer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -31,19 +33,25 @@ public class FindLobbyController {
         if (key.length() > 0){
             if (db.connectUserToGameLobby(Integer.parseInt(key))){
                 //Loads new scene
+                SFXPlayer.getInstance().setSFX(7);
                 Parent root = FXMLLoader.load(getClass().getResource("createcharacter.fxml"));
                 Scene scene = new Scene(root);
                 Stage stage = (Stage)joinLobbyButton.getScene().getWindow();
                 stage.setScene(scene);
+                audio.MusicPlayer.getInstance().stopSong();
+                MusicPlayer.getInstance().changeSong(8);
             }
             else {
                 errorLabel.setText("Not a valid lobby key");
+                SFXPlayer.getInstance().setSFX(6);
             }
-
         }
         else{
             errorLabel.setText("Please enter a lobby key");
+            SFXPlayer.getInstance().setSFX(5);
         }
+
+
     }
 
     public void clearErrorLabel(){

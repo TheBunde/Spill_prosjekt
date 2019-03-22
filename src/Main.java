@@ -2,23 +2,48 @@ import GUI.InterfaceMain;
 import audio.MusicPlayer;
 import audio.SFXPlayer;
 import audio.ThreadPool;
-import Database.*;
-import GUI.*;
 
-public class Main {
+public class Main implements Runnable {
+
+    public void run(){
+        System.out.println("HEI");
+        System.out.println("HEI");
+        System.out.println("HEI");
+    }
+
+    private static Runnable hei() {
+        System.out.println("TEST");
+        return null;
+    }
+
+    private static Runnable to() {
+        System.out.println("TOERN FUNKER");
+        return null;
+    }
+
+    public void threadTest(){
+        new sun.nio.ch.ThreadPool()
+    }
+
 
     public static void main(String[] args){
-        ThreadPool pool = new ThreadPool(4);
-
-        //MusicPlayer player = new MusicPlayer("testintro");
+        ThreadPool pool = new ThreadPool(5);
 
         SFXPlayer sfx = new SFXPlayer("knockSFX");
+        //audio.MusicPlayer.getInstance().stopSong();
+        MusicPlayer.getInstance().changeSong(10);
 
-        //pool.runTask(player);
         pool.runTask(MusicPlayer.getInstance());
-        //sfx.playSound()
-        //pool.runTask(sfx);
+
+        pool.runTask(to());
+
         pool.runTask(new InterfaceMain());
+
+        pool.runTask(new Main());
+
+        pool.join();
+
+        pool.runTask(hei());
 
         pool.join();
     }
