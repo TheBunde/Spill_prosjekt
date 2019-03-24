@@ -30,7 +30,7 @@ public class AccountDetailsController {
     @FXML
     private Button changeUsername, changePassword, back;
 
-    public void changeUsername() throws Exception{
+    public void changeUsernameButtonPressed() throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("changeUsername.fxml"));
         Scene scene = new Scene(root);
         Stage stage = (Stage)changeUsername.getScene().getWindow();
@@ -38,7 +38,7 @@ public class AccountDetailsController {
         stage.show();
     }
 
-    public void changePassword() throws Exception{
+    public void changePasswordButtonPressed() throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("changePassword.fxml"));
         Scene scene = new Scene(root);
         Stage stage = (Stage)changePassword.getScene().getWindow();
@@ -46,8 +46,8 @@ public class AccountDetailsController {
         stage.show();
     }
 
-    public void menu() throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("menu.fxml"));
+    public void backButtonPressed() throws Exception{
+        Parent root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
         Scene scene = new Scene(root);
         Stage stage = (Stage)back.getScene().getWindow();
         stage.setScene(scene);

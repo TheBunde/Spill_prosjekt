@@ -28,15 +28,15 @@
                </font>
             </Text>
 
-            <Text fx:id="level" layoutX="250.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Level" textAlignment="CENTER">
+            <Text fx:id="rank" layoutX="250.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rank" textAlignment="CENTER">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
 
-            <Button fx:id="changeUsername" mnemonicParsing="false" onAction="#changeUsername" text="Change Username" />
-            <Button fx:id="changePassword" mnemonicParsing="false" onAction="#changePassword" text="Change Password" />
-            <Button fx:id="back" mnemonicParsing="false" onAction="#menu" text="Back" />
+            <Button fx:id="changeUsername" mnemonicParsing="false" onAction="#changeUsernameButtonPressed" text="Change Username" />
+            <Button fx:id="changePassword" mnemonicParsing="false" onAction="#changePasswordButtonPressed" text="Change Password" />
+            <Button fx:id="back" mnemonicParsing="false" onAction="#backButtonPressed" text="Back" />
          </children>
       </VBox>
    </children>
