@@ -19,6 +19,7 @@ public class LoginController {
     }
 
     public void login() throws Exception{
+
         sceneSwitcher.switchScene(loginButton, "MainMenu.fxml");
     }
 }
