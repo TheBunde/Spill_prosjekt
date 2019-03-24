@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox fx:id="hbox" alignment="CENTER" fillHeight="false" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="25.0" minWidth="-Infinity" prefWidth="253.0" spacing="5.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="messageCell" maxHeight="Infinity" prefWidth="216.0" text="Message" wrapText="true" />
+      <Label fx:id="timestampCell" maxHeight="Infinity" prefHeight="25.0" prefWidth="58.0" text="Timestamp">
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
+         <font>
+            <Font size="9.0" />
+         </font></Label>
+   </children>
+</HBox>

@@ -80,17 +80,39 @@ create table game_lobby(
 create table chat_message(
     lobby_key integer not null,
     message_id integer not null AUTO_INCREMENT,
-    user_id INTEGER not null,
+    user_id INTEGER,
     message TEXT,
     time_stamp TIME NOT NULL,
     constraint chat_message_pk primary key(message_id, lobby_key));
 
+CREATE VIEW user_message AS
+SELECT
+    lobby_key,
+    message_id,
+    user_id,
+    message,
+    time_stamp
+    FROM chat_message
+    WHERE user_id IS NOT NULL;
+
+CREATE VIEW event_message AS
+SELECT
+    lobby_key,
+    message_id,
+    message,
+    time_stamp
+    FROM chat_message
+    WHERE user_id IS NULL;
 
 
-    //Foreign keys
 
 ALTER TABLE usr ADD CONSTRAINT usr_fk1 FOREIGN KEY(lobby_key) REFERENCES game_lobby(lobby_key);
 
 ALTER TABLE chat_message ADD CONSTRAINT chat_message_fk1 FOREIGN KEY(lobby_key) REFERENCES game_lobby(lobby_key);
 ALTER TABLE chat_message ADD CONSTRAINT chat_message_fk2 FOREIGN KEY(user_id) REFERENCES usr(user_id);
+
+ALTER TABLE user_message ADD CONSTRAINT user_message_fk1 FOREIGN KEY(lobby_key) REFERENCES chat_message(lobby_key);
+ALTER TABLE user_message ADD CONSTRAINT user_message_fk2 FOREIGN KEY(user_id) REFERENCES chat_message(user_id);
+
+ALTER TABLE event_message ADD CONSTRAINT event_message_fk1 FOREIGN KEY(lobby_key) REFERENCES chat_message(lobby_key);
 

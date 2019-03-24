@@ -6,27 +6,25 @@ import javafx.collections.ObservableList;
 import java.util.ArrayList;
 
 public class Chat{
-    private ArrayList<String> messages = new ArrayList<String>();
+    public ObservableList<ChatMessage> messages;
     private int lastSeenMessageId = 0;
 
     public Chat(){
+        this.messages = FXCollections.observableArrayList();
         this.lastSeenMessageId = 0;
-        messages.add("Welcome to the Chat! Here you can communicate with your teammates");
+        messages.add(new ChatMessage("Event" ,"Welcome to the Chat! Here you can communicate with your teammates", "", true));
     }
 
     public void setLastSeenMessageId(int lastSeenMessageId){
         this.lastSeenMessageId = lastSeenMessageId;
     }
 
-    public void addMessage(String message){
+    public void addMessage(String username, String message, String timestamp, boolean event){
         if (this.messages.size() > 30){
             this.messages.remove(0);
         }
-        this.messages.add(message);
-    }
+        this.messages.add(new ChatMessage(username, message, timestamp, event));
 
-    public ArrayList<String> getMessages() {
-        return messages;
     }
 
     public int getLastSeenMessageId() {

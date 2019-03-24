@@ -27,24 +27,27 @@ public class Database {
 
     //Fetches messages from chat
     public void getMessagesFromChat(){
-
         Connection con1 = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
         try{
             con1 = this.bds.getConnection();
-            String prepString = "SELECT chat_message.message_id, message, username, time_stamp FROM chat_message LEFT OUTER JOIN usr ON (chat_message.user_id = usr.user_id) WHERE chat_message.lobby_key = ? AND chat_message.message_id > ? ORDER BY message_id DESC LIMIT 30";
+            String prepString = "SELECT chat_message.message_id, chat_message.user_id, message, username, time_stamp FROM chat_message LEFT OUTER JOIN usr ON (chat_message.user_id = usr.user_id) WHERE chat_message.lobby_key = ? AND chat_message.message_id > ? ORDER BY message_id DESC LIMIT 30";
             prepStmt = con1.prepareStatement(prepString);
             prepStmt.setInt(1, Main.user.getLobbyKey());
             prepStmt.setInt(2, chat.getLastSeenMessageId());
             res = prepStmt.executeQuery();
             while (res.next()) {
-                chat.addMessage(res.getString("username") + ": " + res.getString("message") + " | " + res.getString("time_stamp"));
+                if (res.getInt("user_id") == 0){
+                    chat.addMessage("Event", res.getString("message"), res.getString("time_stamp"), true);
+                }
+                else{
+                    chat.addMessage(res.getString("username"), res.getString("message"), res.getString("time_stamp"), false);
+                }
                 if (res.isFirst()){
                     chat.setLastSeenMessageId(res.getInt("chat_message.message_id"));
                 }
             }
-            System.out.println(chat.getLastSeenMessageId());
         }
         catch (SQLException sq){
             sq.printStackTrace();
@@ -55,12 +58,11 @@ public class Database {
             }
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con1);
-            this.manager.closeConnection(con1);
         }
     }
 
     //Sends new message to the chat that the user is connected to
-    public boolean addChatMessage(String message){
+    public boolean addChatMessage(String message, boolean event){
         Connection con1 = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
@@ -70,11 +72,20 @@ public class Database {
             con1 = this.bds.getConnection();
             con1.setAutoCommit(false);
             //Using a prepared statement to execute an insert into the chat_message entity
-            String prepString = "INSERT INTO chat_message VALUES(?, DEFAULT, ?, ?, NOW())";
-            prepStmt = con1.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
-            prepStmt.setInt(1, Main.user.getLobbyKey());
-            prepStmt.setInt(2, Main.user.getUser_id());
-            prepStmt.setString(3, message);
+            if (event){
+                String prepString = "INSERT INTO chat_message VALUES(?, DEFAULT, NULL, ?, NOW())";
+                prepStmt = con1.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
+                prepStmt.setInt(1, Main.user.getLobbyKey());
+                prepStmt.setString(2, message);
+            }
+            else{
+                String prepString = "INSERT INTO chat_message VALUES(?, DEFAULT, ?, ?, NOW())";
+                prepStmt = con1.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
+                prepStmt.setInt(1, Main.user.getLobbyKey());
+                prepStmt.setInt(2, Main.user.getUser_id());
+                prepStmt.setString(3, message);
+            }
+
             long time1 = System.currentTimeMillis();
             prepStmt.executeUpdate();
             con1.commit();
@@ -83,7 +94,6 @@ public class Database {
             res = prepStmt.getGeneratedKeys();
             res.next();
             messageId = res.getInt(1);
-
         }
         catch (Exception sq){
             this.manager.rollback(con1);
@@ -101,6 +111,7 @@ public class Database {
             return status;
         }
     }
+
 
     public boolean gameLobbyExists(int lobbyKey){
         this.openConnection();
@@ -194,7 +205,7 @@ public class Database {
         boolean status = true;
         try{
             this.con.setAutoCommit(false);
-            String prepString = "INSERT INTO usr VALUES(DEFAULT, ?, 0, ?, ?, DEFAULT)";
+            String prepString = "INSERT INTO usr VALUES(DEFAULT, ?, 0, ?, ?, DEFAULT, DEFAULT)";
             prepStmt = this.con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
             prepStmt.setString(1, Main.user.getUsername());
             prepStmt.setString(2, Main.user.getEmail());

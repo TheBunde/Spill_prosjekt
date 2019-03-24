@@ -8,6 +8,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
@@ -23,14 +24,12 @@
       <RowConstraints maxHeight="63.33331298828125" minHeight="0.0" prefHeight="45.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <TextField fx:id="messageInput" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="179.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-      <Button fx:id="sendMessageButton" mnemonicParsing="false" onAction="#sendMessage" prefHeight="36.0" prefWidth="45.0" style="-fx-background-color: cccccc;" text="Send" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
       <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="38.0" prefWidth="167.0" text="Chat" GridPane.columnIndex="1">
          <font>
             <Font size="26.0" />
          </font>
       </Label>
-      <ListView fx:id="list" fixedCellSize="30.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="265.0" prefWidth="253.0" GridPane.columnSpan="3" GridPane.hgrow="NEVER" GridPane.rowIndex="1">
+      <ListView fx:id="list" fixedCellSize="30.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="269.0" prefWidth="253.0" stylesheets="@style.css" GridPane.columnSpan="3" GridPane.hgrow="NEVER" GridPane.rowIndex="1">
          <GridPane.margin>
             <Insets />
          </GridPane.margin>
@@ -41,5 +40,14 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </ListView>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnSpan="3" GridPane.rowIndex="2">
+         <children>
+            <TextField fx:id="messageInput" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="179.0" />
+            <Button fx:id="sendMessageButton" mnemonicParsing="false" onAction="#sendMessage" prefHeight="36.0" prefWidth="45.0" text="Send" />
+         </children>
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin>
+      </HBox>
    </children>
 </GridPane>
