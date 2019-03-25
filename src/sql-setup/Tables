@@ -7,7 +7,6 @@ drop table users;
 drop table player;
 drop table initiative;
 drop table game_lobby;
-drop table chat;
 drop table chat_message;
 
 
@@ -82,22 +81,40 @@ create table game_lobby(
 create table chat_message(
     lobby_key integer not null,
     message_id integer not null AUTO_INCREMENT,
-    user_id INTEGER not null,
+    user_id INTEGER,
     message TEXT,
     time_stamp TIME NOT NULL,
     constraint chat_message_pk primary key(message_id, lobby_key));
 
+CREATE VIEW user_message AS
+SELECT
+    lobby_key,
+    message_id,
+    user_id,
+    message,
+    time_stamp
+    FROM chat_message
+    WHERE user_id IS NOT NULL;
+
+CREATE VIEW event_message AS
+SELECT
+    lobby_key,
+    message_id,
+    message,
+    time_stamp
+    FROM chat_message
+    WHERE user_id IS NULL;
 
     //alters
     ALTER TABLE player ADD user_id integer;
     ALTER table player MODIFY player_id integer not null AUTO_INCREMENT
 
-    //Foreign keys
 
 ALTER TABLE user ADD CONSTRAINT user_fk1 FOREIGN KEY(lobby_key) REFERENCES game_lobby(lobby_key);
 
 ALTER TABLE chat_message ADD CONSTRAINT chat_message_fk1 FOREIGN KEY(lobby_key) REFERENCES game_lobby(lobby_key);
 ALTER TABLE chat_message ADD CONSTRAINT chat_message_fk2 FOREIGN KEY(user_id) REFERENCES user(user_id);
+
 
 ALTER TABLE player ADD CONSTRAINT player_fk1 FOREIGN KEY(character_id) REFERENCES chrctr(character_id);
 ALTER TABLE player ADD CONSTRAINT player_fk2 FOREIGN KEY(lobby_key) REFERENCES game_lobby(lobby_key);
@@ -109,4 +126,5 @@ ALTER TABLE initiative ADD CONSTRAINT initiative_fk2 FOREIGN KEY(lobby_key) REFE
    //Inserts
    INSERT INTO chrctr VALUES(1, "Warior" , "He be legendary warior. Yeet that goblin");
    INSERT INTO chrctr VALUES(2, "Rogee", "she be the sneaky girl. not the one from Rogue One");
+
 

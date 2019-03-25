@@ -4,19 +4,33 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.SettingsController">
+<VBox alignment="CENTER" prefHeight="500.0" prefWidth="800.0" spacing="50.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.SettingsController">
    <children>
-      <Button fx:id="backToMenuButton" layoutX="345.0" layoutY="384.0" mnemonicParsing="false" onAction="#backToMenu" text="Back to menu" />
-      <Slider fx:id="sfxSlider" blockIncrement="1.0" layoutX="337.0" layoutY="165.0" max="6.0" min="-34.0" minorTickCount="1" onMouseClicked="#changeVolumeSFX" value="-4.0" />
-      <Slider fx:id="musicSlider" blockIncrement="1.0" layoutX="337.0" layoutY="224.0" max="6.0" min="-34.0" minorTickCount="1" onMouseClicked="#changeVolumeMusic" value="-4.0">
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-      </Slider>
-      <Label layoutX="382.0" layoutY="124.0" text="Volume" />
-      <Label layoutX="275.0" layoutY="163.0" text="SFX" />
-      <Label layoutX="268.0" layoutY="222.0" text="Music" />
+      <Label alignment="CENTER" contentDisplay="CENTER" text="Settings">
+         <font>
+            <Font size="50.0" />
+         </font>
+      </Label>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+         <children>
+            <Label text="Volume">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label text="SFX" />
+            <Slider fx:id="sfxSlider" blockIncrement="1.0" max="6.0" maxHeight="-Infinity" maxWidth="-Infinity" min="-34.0" minHeight="-Infinity" minWidth="-Infinity" minorTickCount="1" onMouseClicked="#changeVolumeSFX" prefHeight="14.0" prefWidth="150.0" value="-4.0" />
+            <Label text="Music" />
+            <Slider fx:id="musicSlider" blockIncrement="1.0" max="6.0" maxHeight="-Infinity" maxWidth="-Infinity" min="-34.0" minHeight="-Infinity" minWidth="-Infinity" minorTickCount="1" onMouseClicked="#changeVolumeMusic" prefHeight="14.0" prefWidth="150.0" value="-4.0">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </Slider>
+         </children>
+      </VBox>
+      <Button fx:id="backToMenuButton" mnemonicParsing="false" onAction="#backToMenu" text="Back to menu" />
    </children>
-</Pane>
+</VBox>

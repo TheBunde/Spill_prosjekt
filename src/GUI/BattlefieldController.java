@@ -1,5 +1,8 @@
 package GUI;
 
+import Database.*;
+import Main.*;
+import audio.MusicPlayer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,17 +13,24 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+import javax.xml.crypto.Data;
+
 
 public class BattlefieldController {
 
     // https://stackoverflow.com/questions/41081905/javafx-getting-the-location-of-a-click-on-a-gridpane
-
+    @FXML
+    private Button exitButton;
     @FXML
     private GridPane mapGrid;
     @FXML
     private ImageView yobama, green;
     @FXML
     private Button moveButton;
+
+    private Database db = Main.db;
+    private User user = Main.user;
+    private SceneSwitcher sceneSwitcher = new SceneSwitcher();
     private double xPos;
     private double yPos;
     private boolean yobClicked;
@@ -47,24 +57,6 @@ public class BattlefieldController {
         yobClicked = true;
     }
 
-    public void attackButtonPressed(){
-
-    }
-
-    public void moveButtonPressed(){
-
-    }
-    public void endTurnButtonPressed(){
-
-    }
-
-    public void helpButtonPressed(){
-
-    }
-
-    public void exitButtonPressed(){
-        
-    }
 
     private void selected(ImageView image){
         try{
@@ -88,5 +80,13 @@ public class BattlefieldController {
         double yGrid = (double) toGrid(gridHeight, yPos);
         image.setX((xGrid - xOffset) * gridWidth / 16);
         image.setY((yGrid - yOffset) * gridHeight / 16);
+    }
+
+    public void exitButtonClicked() throws Exception{
+        System.out.println(db.addChatMessage(user.getUsername() + " has left the lobby", true));
+        db.disconnectUserFromGameLobby();
+        chatController.timer.cancel();
+        chatController.timer.purge();
+        this.sceneSwitcher.switchScene(exitButton, "MainMenu.fxml");
     }
 }

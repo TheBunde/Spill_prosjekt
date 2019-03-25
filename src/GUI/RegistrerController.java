@@ -1,5 +1,6 @@
 package GUI;
 
+import Main.*;
 import Database.*;
 import audio.MusicPlayer;
 import audio.SFXPlayer;
@@ -20,15 +21,16 @@ public class RegistrerController {
     private Button registrerButton, cancelButton;
     private SceneSwitcher sceneSwitcher;
 
-    private Database db = InterfaceMain.db;
+    private Database db = Main.db;
+    private User user = Main.user;
 
     public RegistrerController(){
         sceneSwitcher = new SceneSwitcher();
     }
 
     public void registrer() throws Exception{
-        db.user = new User(-1, usernameInput.getText(), 0, emailInput.getText());
-        db.addUser(db.user);
+        Main.user = new User(-1, usernameInput.getText(), 0, emailInput.getText());
+        db.addUser(Main.user);
         SFXPlayer.getInstance().setSFX(0);
         audio.MusicPlayer.getInstance().stopSong();
         MusicPlayer.getInstance().changeSong(2);
