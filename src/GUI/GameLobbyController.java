@@ -25,6 +25,8 @@ public class GameLobbyController {
     private User user = Main.user;
 
     public void initialize(){
+        db.setStartPos(db.fetchPlayerId());
+        //db.movePos(8, 8, db.fetchPlayerId());
         lobbyKeyLabel.setText("" + user.getLobbyKey());
         MusicPlayer.getInstance().stopSong();
         MusicPlayer.getInstance().changeSong(10);
@@ -42,6 +44,7 @@ public class GameLobbyController {
     public void backToMenuButtonPressed() throws Exception{
         db.addChatMessage(user.getUsername() + " has left the lobby", true);
         db.disconnectUserFromGameLobby();
+        db.setHost(false);
         chatController.timer.cancel();
         chatController.timer.purge();
         this.sceneSwitcher.switchScene(backToMenuButton, "MainMenu.fxml");
