@@ -1,3 +1,4 @@
+/*
 package Gamelogic;
 
 import game.*;
@@ -56,14 +57,18 @@ class Game {
                             int attackCounter = 0;
                             int moveCounter = 0;
                             int realAttackCounter = playerNow.getAttacksPerTurn();
-                            if (/*Move button = pressed &&*/ moveCounter == 0){
+                            if (*/
+/*Move button = pressed &&*//*
+ moveCounter == 0){
                                 boolean move = false;
                                 while(!move){
                                     move = method.movePlayer(playerNow);
                                 }
                                 moveCounter++;
                             }
-                            if(/*Attack button = pressed &&*/ attackCounter < realAttackCounter){
+                            if(*/
+/*Attack button = pressed &&*//*
+ attackCounter < realAttackCounter){
                                 if(method.nearMonster(playerNow, monster)){
                                     method.attack(playerNow, monster, melee);
                                 }else{
@@ -74,10 +79,12 @@ class Game {
                             if(attackCounter == realAttackCounter && moveCounter == 1){
                                 turnOver = true;
                             }
-                            /* if(endTurn button = pressed){
+                            */
+/* if(endTurn button = pressed){
                                   turnOver = true;
                                 }
-                             */
+                             *//*
+
                         }
                         if(hpForMonster <= 0){
                             monsterAlive = false;
@@ -99,7 +106,8 @@ class Game {
                 break;
             }
             gameRound++;
-            /*
+            */
+/*
             for(int i = 0; i < turn.size(); i++){
                 if(turn.get(i) instanceof Character){
                     int newHp = 0;
@@ -117,7 +125,8 @@ class Game {
                     }
                 }
             }
-            */
+            *//*
+
         }
         System.out.println(story.get(story.size()-2));
         //set every new value for users
@@ -125,3 +134,4 @@ class Game {
         //game over
     }
 }
+*/

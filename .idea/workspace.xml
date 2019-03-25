@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d8e20ae2-2a8a-42b4-a4b3-b94f55245031" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Database/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Database/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Battlefield.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Battlefield.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/BattlefieldController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/BattlefieldController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/CreateCharacterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/CreateCharacterController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Gamelogic/GameMethods.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Gamelogic/GameMethods.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Gamelogic/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Gamelogic/Game.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/../out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -19,19 +13,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Gamelogic/Game.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="6" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="6" />
+            <state relative-caret-position="146">
+              <caret line="133" column="19" lean-forward="true" selection-start-line="133" selection-start-column="19" selection-end-line="133" selection-end-column="19" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#0#5938#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Gamelogic/GameMethods.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-789">
@@ -148,8 +142,8 @@
         <option value="$PROJECT_DIR$/src/Database/Database.java" />
         <option value="$PROJECT_DIR$/src/game/Monster.java" />
         <option value="$PROJECT_DIR$/src/game/Character.java" />
-        <option value="$PROJECT_DIR$/src/Gamelogic/Game.java" />
         <option value="$PROJECT_DIR$/src/Gamelogic/GameMethods.java" />
+        <option value="$PROJECT_DIR$/src/Gamelogic/Game.java" />
       </list>
     </option>
   </component>
@@ -220,7 +214,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553526885221" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553527111923" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -290,12 +284,12 @@
       <window_info anchor="bottom" id="Database Changes" order="2" />
       <window_info anchor="bottom" id="Event Log" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="4" />
-      <window_info active="true" anchor="bottom" id="Messages" order="5" visible="true" weight="0.3285968" />
+      <window_info anchor="bottom" id="Messages" order="5" weight="0.3285968" />
       <window_info anchor="bottom" id="Console" order="6" />
       <window_info anchor="bottom" id="DB Execution Console" order="7" />
       <window_info anchor="bottom" id="Message" order="8" />
       <window_info anchor="bottom" id="Find" order="9" weight="0.3289689" />
-      <window_info anchor="bottom" id="Run" order="10" weight="0.3285968" />
+      <window_info active="true" anchor="bottom" id="Run" order="10" visible="true" weight="0.3285968" />
       <window_info anchor="bottom" id="Debug" order="11" weight="0.39934534" />
       <window_info anchor="bottom" id="Cvs" order="12" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="13" weight="0.4" />
@@ -404,22 +398,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Gamelogic/Game.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="6" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="6" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Gamelogic/GameMethods.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-789">
           <caret line="139" column="6" selection-start-line="139" selection-start-column="6" selection-end-line="139" selection-end-column="6" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Gamelogic/Game.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="146">
+          <caret line="133" column="19" lean-forward="true" selection-start-line="133" selection-start-column="19" selection-end-line="133" selection-end-column="19" />
+          <folding>
+            <element signature="e#0#5938#0" expanded="true" />
           </folding>
         </state>
       </provider>
