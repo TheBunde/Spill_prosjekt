@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d8e20ae2-2a8a-42b4-a4b3-b94f55245031" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Gamelogic/sudogamelogic" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Database/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Database/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Battlefield.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Battlefield.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/BattlefieldController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/BattlefieldController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/GameLobbyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/GameLobbyController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/MainMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/MainMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Gamelogic/Game2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Gamelogic/Game2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sql-setup/Tables" beforeDir="false" afterPath="$PROJECT_DIR$/src/sql-setup/Tables" afterDir="false" />
-    </list>
+    <list default="true" id="d8e20ae2-2a8a-42b4-a4b3-b94f55245031" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/../out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -37,8 +28,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Database/Database.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="600">
-              <caret line="757" column="36" selection-start-line="757" selection-start-column="36" selection-end-line="757" selection-end-column="36" />
+            <state relative-caret-position="175">
+              <caret line="750" column="30" lean-forward="true" selection-start-line="750" selection-start-column="30" selection-end-line="750" selection-end-column="30" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -73,8 +64,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/GUI/GameLobbyController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="309">
-              <caret line="28" column="8" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="8" />
+            <state relative-caret-position="122">
+              <caret line="27" column="8" selection-start-line="27" selection-start-column="8" selection-end-line="27" selection-end-column="8" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -85,8 +76,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GUI/CreateCharacterController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="52" column="35" lean-forward="true" selection-start-line="52" selection-start-column="35" selection-end-line="52" selection-end-column="56" />
+            <state relative-caret-position="266">
+              <caret line="95" selection-start-line="95" selection-end-line="95" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -244,7 +235,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553510856661" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553510977722" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -285,12 +276,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1552902095567</updated>
-      <workItem from="1553350507135" duration="43852000" />
+      <workItem from="1553350507135" duration="44296000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="71896000" />
+    <option name="totallyTimeSpent" value="72340000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -325,7 +316,7 @@
       <window_info anchor="bottom" id="DB Execution Console" order="7" />
       <window_info anchor="bottom" id="Message" order="8" />
       <window_info anchor="bottom" id="Find" order="9" weight="0.3289689" />
-      <window_info active="true" anchor="bottom" id="Run" order="10" visible="true" weight="0.097508125" />
+      <window_info active="true" anchor="bottom" id="Run" order="10" visible="true" weight="0.49404117" />
       <window_info anchor="bottom" id="Debug" order="11" weight="0.39934534" />
       <window_info anchor="bottom" id="Cvs" order="12" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="13" weight="0.4" />
@@ -561,16 +552,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/CreateCharacterController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="52" column="35" lean-forward="true" selection-start-line="52" selection-start-column="35" selection-end-line="52" selection-end-column="56" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/GUI/BattlefieldController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="275">
@@ -592,10 +573,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/GUI/CreateCharacterController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="95" selection-start-line="95" selection-end-line="95" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Database/Database.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="757" column="36" selection-start-line="757" selection-start-column="36" selection-end-line="757" selection-end-column="36" />
+        <state relative-caret-position="175">
+          <caret line="750" column="30" lean-forward="true" selection-start-line="750" selection-start-column="30" selection-end-line="750" selection-end-column="30" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -604,8 +595,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/GUI/GameLobbyController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="28" column="8" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="8" />
+        <state relative-caret-position="122">
+          <caret line="27" column="8" selection-start-line="27" selection-start-column="8" selection-end-line="27" selection-end-column="8" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
