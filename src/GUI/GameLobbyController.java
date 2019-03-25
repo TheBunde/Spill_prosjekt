@@ -23,7 +23,10 @@ public class GameLobbyController {
     private Timer timer = chatController.timer;
 
     public void initialize(){
+
         lobbyKeyLabel.setText("" + db.user.getLobbyKey());
+        db.setStartPos(db.fetchPlayerId());
+        //db.movePos(8, 8, db.fetchPlayerId());
     }
 
     public void travelButtonPressed() throws Exception{
@@ -38,6 +41,7 @@ public class GameLobbyController {
 
     public void backToMenuButtonPressed() throws Exception{
         db.disconnectUserFromGameLobby();
+        db.setHost(false);
         this.timer = chatController.timer;
         this.timer.cancel();
         this.timer.purge();

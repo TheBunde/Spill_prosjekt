@@ -1,5 +1,6 @@
-package Gamelogic;
+/*package Gamelogic;
 import Database.*;
+import GUI.*;
 import com.mysql.cj.protocol.Resultset;
 
 import java.sql.*;
@@ -7,6 +8,7 @@ import java.util.ArrayList;
 
 public class Game2 {
     private GameMethods2 methods2 = new GameMethods2();
+    private Database db = InterfaceMain.db;
 
 
 
@@ -16,7 +18,6 @@ public class Game2 {
         ResultSet res = null;
         ArrayList<Integer> initiative = new ArrayList<>();
         try{
-            connection = DriverManager.getConnection(dbname);
             String sql = "select player_id from game_lobby";
             sentence = connection.prepareStatement(sql);
             res = sentence.executeQuery();
@@ -81,4 +82,4 @@ public class Game2 {
 
         }
     }
-}
+} */

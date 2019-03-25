@@ -22,6 +22,7 @@ public class MainMenuController {
 
     public void startNewGameButtonPressed() throws Exception{
         db.createNewLobby();
+        db.setHost(true);
         new SFXPlayer("knockSFX").run();
         MusicPlayer.getInstance().stopSong();
         MusicPlayer.getInstance().changeSong(3);

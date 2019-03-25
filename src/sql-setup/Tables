@@ -15,6 +15,8 @@ drop table chat_message;
 
 create table creature(
     creature_id integer not null,
+    player_id integer not null,
+    lobby_key integer not null,
     HP smallint,
     AC smallint,
     pos_x integer,
@@ -23,8 +25,8 @@ create table creature(
      damage_bonus integer,
     attack_bonus integer,
     attack_turn integer,
-    weapon_id not null,
-    constraint creature_pk primary key(creature_id));
+    weapon_id integer not null,
+    constraint creature_pk primary key(creature_id, player_id, lobby_key));
 
 create table chrctr(
     character_id integer not null references creature(creature_id),
