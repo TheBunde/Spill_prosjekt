@@ -1,5 +1,6 @@
 package GUI;
 
+import audio.MusicPlayer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,13 +15,16 @@ import javafx.stage.Stage;
 public class BattlefieldController {
 
     // https://stackoverflow.com/questions/41081905/javafx-getting-the-location-of-a-click-on-a-gridpane
-
+    @FXML
+    private Button exitButton;
     @FXML
     private GridPane mapGrid;
     @FXML
     private ImageView yobama, green;
     @FXML
     private Button moveButton;
+
+    private SceneSwitcher sceneSwitcher = new SceneSwitcher();
     private double xPos;
     private double yPos;
     private boolean yobClicked;
@@ -69,5 +73,11 @@ public class BattlefieldController {
         double yGrid = (double) toGrid(gridHeight, yPos);
         image.setX((xGrid - xOffset) * gridWidth / 16);
         image.setY((yGrid - yOffset) * gridHeight / 16);
+    }
+
+    public void exitButtonClicked() throws Exception{
+        chatController.timer.cancel();
+        chatController.timer.purge();
+        this.sceneSwitcher.switchScene(exitButton, "MainMenu.fxml");
     }
 }

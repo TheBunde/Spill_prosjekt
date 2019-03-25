@@ -1,5 +1,8 @@
 package Database;
+import Main.*;
+
 public class User {
+    private Database db = Main.db;
     private int user_id;
     private String username;
     private int rank;
@@ -53,6 +56,13 @@ public class User {
 
     public void setLobbyKey(int lobbyKey){
         this.lobbyKey = lobbyKey;
+        if (lobbyKey > 0){
+            new Thread(new Runnable(){
+                @Override public void run(){
+                    db.addChatMessage(getUsername() + " has joined the lobby", true);
+                }
+            }).start();
+        }
     }
 
     public String toString(){

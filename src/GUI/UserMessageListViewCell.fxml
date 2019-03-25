@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <HBox fx:id="hbox" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="25.0" minWidth="-Infinity" prefWidth="253.0" spacing="10.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="usernameCell" maxHeight="Infinity" prefHeight="17.0" prefWidth="82.0" text="Username" wrapText="true" />
-      <Label fx:id="messageCell" maxHeight="Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="138.0" text="Message" wrapText="true" />
-      <Label fx:id="timestampCell" maxHeight="Infinity" prefHeight="25.0" prefWidth="73.0" text="Timestamp" wrapText="true">
+      <Text fx:id="usernameText" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" wrappingWidth="57.290985107421875" />
+      <Text fx:id="messageText" strokeType="OUTSIDE" strokeWidth="0.0" text="Messages" wrappingWidth="124.681640625" />
+      <Text fx:id="timestampText" strokeType="OUTSIDE" strokeWidth="0.0" text="Timestamp">
          <font>
             <Font size="9.0" />
-         </font></Label>
+         </font>
+      </Text>
    </children>
 </HBox>

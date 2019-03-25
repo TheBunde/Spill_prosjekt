@@ -19,7 +19,6 @@ public class DataSource {
         bds.setMaxIdle(10);
         bds.setMaxOpenPreparedStatements(100);
         bds.setInitialSize(10);
-        //bds.setConnectionProperties("sendStringParametersAsUnicode=false");
     }
 
     private static class DataSourceHolder{

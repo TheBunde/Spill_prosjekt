@@ -6,13 +6,14 @@ import Database.*;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
@@ -25,7 +26,7 @@ import java.util.TimerTask;
 public class chatController implements Initializable {
 
     @FXML
-    public ListView<ChatMessage> list;
+    private ListView<ChatMessage> list;
 
     private ObservableList<ChatMessage> chatMessageObservableList;
 
@@ -34,6 +35,7 @@ public class chatController implements Initializable {
 
     @FXML
     private TextField messageInput;
+    private AnchorPane anchorPane;
 
     private Database db = Main.db;
     private User user = Main.user;
@@ -50,13 +52,7 @@ public class chatController implements Initializable {
             return new ChatMessageCell();
         });
 
-        disableChat();
-        new Thread(new Runnable(){
-            @Override public void run(){
-                db.addChatMessage(user.getUsername() + " has joined the lobby", true);
-                enableChat();
-            }
-        }).start();
+
 
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
@@ -67,7 +63,13 @@ public class chatController implements Initializable {
                 });
             }
         },0 ,500);
+    }
 
+    @FXML
+    private void handleButtonAction(KeyEvent key){
+        if (key.getCode() == KeyCode.ENTER){
+            this.sendMessage();
+        }
     }
 
     public void sendMessage(){
@@ -84,13 +86,19 @@ public class chatController implements Initializable {
                 }
                 messageInput.setText("");
                 enableChat();
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        messageInput.requestFocus();
+                    }
+                });
             }
         }).start();
     }
 
     public void updateChat(){
         this.db.getMessagesFromChat();
-        //list.getItems().setAll(this.db.chat.getMessages());
+        list.scrollTo(list.getItems().size());
     }
 
     public void disableChat(){
@@ -102,4 +110,5 @@ public class chatController implements Initializable {
         messageInput.setDisable(false);
         sendMessageButton.setDisable(false);
     }
+
 }
