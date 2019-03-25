@@ -37,6 +37,8 @@ public class CreateCharacterController implements Initializable {
     //add class to chooseClassDropdown.getItems().addAll(... , "class")
     //add class to displayCharacter() method
     //images to display selected character
+    @FXML
+    Image RangerImage = new Image("GUI/images/Ranger.png");
 
     @FXML
     Image warriorImage = new Image("GUI/images/warrior.jpg");
@@ -53,7 +55,7 @@ public class CreateCharacterController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("View is now loaded!");
-        chooseClassDropdown.getItems().addAll("Warrior","Rogue","Wizard");
+        chooseClassDropdown.getItems().addAll("Warrior","Rogue","Wizard","Ranger");
         iv.setImage(defaultImage);
     }
 
@@ -70,14 +72,21 @@ public class CreateCharacterController implements Initializable {
         }
         if(a.equals("Rogue")) {
             iv.setImage(rogueImage);
-            text.setText("Rogue.");
+            text.setText("Roge-y stab stab");
             SFXPlayer.getInstance().setSFX(3);
             MusicPlayer.getInstance().stopSong();
             MusicPlayer.getInstance().changeSong(5);
         }
         if(a.equals("Wizard")) {
             iv.setImage(wizardImage);
-            text.setText("Wizard is a class");
+            text.setText("It's LeviOsa, not LeviosA");
+            SFXPlayer.getInstance().setSFX(4);
+            MusicPlayer.getInstance().stopSong();
+            MusicPlayer.getInstance().changeSong(6);
+        }
+        if(a.equals("Ranger")) {
+            iv.setImage(RangerImage);
+            text.setText("Legolas got nothing on this fella");
             SFXPlayer.getInstance().setSFX(4);
             MusicPlayer.getInstance().stopSong();
             MusicPlayer.getInstance().changeSong(6);
