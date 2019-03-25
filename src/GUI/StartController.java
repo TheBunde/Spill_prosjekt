@@ -18,15 +18,13 @@ public class StartController {
     public void login() throws Exception{
 
         SFXPlayer.getInstance().setSFX(1);
-        MusicPlayer.getInstance().stopSong();
-        MusicPlayer.getInstance().changeSong(1);
+
         sceneSwitcher.switchScene(loginButton, "LoginScreen.fxml");
     }
 
     public void registrer() throws Exception{
-        SFXPlayer.getInstance().setSFX(0);
-        MusicPlayer.getInstance().stopSong();
-        MusicPlayer.getInstance().changeSong(1);
+        SFXPlayer.getInstance().setSFX(1);
+
         sceneSwitcher.switchScene(registrerButton, "Registrer.fxml");
     }
 

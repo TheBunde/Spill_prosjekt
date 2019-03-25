@@ -3,6 +3,7 @@ package GUI;
 import Main.*;
 import Database.*;
 
+import audio.SFXPlayer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,7 +22,7 @@ public class AccountDetailsController {
     private User user = Main.user;
 
     public void initialize() throws Exception{
-        getInfo();
+        //getInfo();
     }
 
     public void getInfo()throws Exception{
@@ -42,6 +43,7 @@ public class AccountDetailsController {
     }
 
     public void changePassword() throws Exception{
+        SFXPlayer.getInstance().setSFX(0);
         Parent root = FXMLLoader.load(getClass().getResource("changePassword.fxml"));
         Scene scene = new Scene(root);
         Stage stage = (Stage)changePasswordButton.getScene().getWindow();
@@ -50,6 +52,7 @@ public class AccountDetailsController {
     }
 
     public void menu() throws Exception{
+        SFXPlayer.getInstance().setSFX(0);
         Parent root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
         Scene scene = new Scene(root);
         Stage stage = (Stage)backButton.getScene().getWindow();
