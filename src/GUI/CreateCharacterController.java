@@ -1,5 +1,6 @@
 package GUI;
 
+import Main.*;
 import Database.*;
 import audio.MusicPlayer;
 import audio.SFXPlayer;
@@ -30,7 +31,7 @@ public class CreateCharacterController implements Initializable {
     @FXML
     private SceneSwitcher sceneSwitcher;
 
-    private Database db = InterfaceMain.db;
+    private Database db = Main.db;
 
    // private String a = chooseClassDropdown.getValue();
 

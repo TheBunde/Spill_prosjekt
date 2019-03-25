@@ -10,6 +10,11 @@ public class ThreadPool extends ThreadGroup {
     private boolean alive;
     private List<Runnable> taskQueue;
     private int id;
+    private static ThreadPool thisInstance = new ThreadPool(10);
+
+    public static ThreadPool getInstance(){
+        return thisInstance;
+    }
 
     public ThreadPool(int numThreads) {
         super("ThreadPool");
@@ -39,7 +44,7 @@ public class ThreadPool extends ThreadGroup {
 
     public void join() {
         synchronized(this) {
-            alive = false;
+            //alive = false;
             notifyAll();
         }
 

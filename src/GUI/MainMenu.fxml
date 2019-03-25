@@ -8,21 +8,39 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MainMenuController">
+<GridPane alignment="center" hgap="10" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" vgap="10" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MainMenuController">
    <children>
-      <AnchorPane prefHeight="400.0" prefWidth="600.0">
+      <AnchorPane prefHeight="514.0" prefWidth="821.0">
          <children>
-            <AnchorPane layoutX="148.0" layoutY="91.0" prefHeight="237.0" prefWidth="271.0">
+            <AnchorPane layoutX="4.0" prefHeight="500.0" prefWidth="800.0">
                <children>
-                  <Button fx:id="startNewGameButton" contentDisplay="CENTER" layoutY="59.0" mnemonicParsing="false" onAction="#startNewGameButtonPressed" prefHeight="25.0" prefWidth="120.0" text="Start new game" textAlignment="CENTER" />
-                  <Button fx:id="joinLobbyButton" contentDisplay="CENTER" layoutX="144.0" layoutY="59.0" mnemonicParsing="false" onAction="#joinLobbyButtonPressed" prefHeight="25.0" prefWidth="120.0" text="Join lobby" textAlignment="CENTER" />
-                  <Button fx:id="viewAccountButton" contentDisplay="CENTER" layoutY="100.0" mnemonicParsing="false" onAction="#viewAccountButtonPressed" prefHeight="25.0" prefWidth="120.0" text="View account" textAlignment="CENTER" />
-                  <Button fx:id="settingsButton" contentDisplay="CENTER" layoutX="144.0" layoutY="100.0" mnemonicParsing="false" onAction="#settingsButtonPressed" prefHeight="25.0" prefWidth="120.0" text="Settings" textAlignment="CENTER" />
-                  <Button fx:id="helpButton" contentDisplay="CENTER" layoutX="76.0" layoutY="149.0" mnemonicParsing="false" onAction="#helpButtonPressed" prefHeight="25.0" prefWidth="120.0" text="Help" textAlignment="CENTER" />
-                  <Button fx:id="signOutButton" contentDisplay="CENTER" layoutX="76.0" layoutY="186.0" mnemonicParsing="false" onAction="#signOutButtonPressed" prefHeight="25.0" prefWidth="120.0" text="Sign out" textAlignment="CENTER" />
-                  <Text fill="#c11532" layoutX="76.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Combat" textAlignment="CENTER" underline="true" wrappingWidth="119.99999731779099">
+                  <Button fx:id="startNewGameButton" contentDisplay="CENTER" layoutX="183.0" layoutY="155.0" mnemonicParsing="false" onAction="#startNewGameButtonPressed" prefHeight="56.0" prefWidth="197.0" text="Start new game" textAlignment="CENTER">
                      <font>
-                        <Font size="24.0" />
+                        <Font name="System Bold" size="20.0" />
+                     </font></Button>
+                  <Button fx:id="joinLobbyButton" contentDisplay="CENTER" layoutX="421.0" layoutY="155.0" mnemonicParsing="false" onAction="#joinLobbyButtonPressed" prefHeight="56.0" prefWidth="197.0" text="Join lobby" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font></Button>
+                  <Button fx:id="viewAccountButton" contentDisplay="CENTER" layoutX="183.0" layoutY="241.0" mnemonicParsing="false" onAction="#viewAccountButtonPressed" prefHeight="56.0" prefWidth="197.0" text="Account" textAlignment="CENTER">
+                     <font>
+                        <Font size="20.0" />
+                     </font></Button>
+                  <Button fx:id="settingsButton" contentDisplay="CENTER" layoutX="421.0" layoutY="241.0" mnemonicParsing="false" onAction="#settingsButtonPressed" prefHeight="56.0" prefWidth="197.0" text="Settings" textAlignment="CENTER">
+                     <font>
+                        <Font size="20.0" />
+                     </font></Button>
+                  <Button fx:id="helpButton" contentDisplay="CENTER" layoutX="302.0" layoutY="341.0" mnemonicParsing="false" onAction="#helpButtonPressed" prefHeight="56.0" prefWidth="197.0" text="Help" textAlignment="CENTER">
+                     <font>
+                        <Font size="20.0" />
+                     </font></Button>
+                  <Button fx:id="signOutButton" contentDisplay="CENTER" layoutX="302.0" layoutY="416.0" mnemonicParsing="false" onAction="#signOutButtonPressed" prefHeight="35.0" prefWidth="197.0" style="-fx-background-color: darkred;" text="Sign out" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font></Button>
+                  <Text fill="#c11532" layoutX="256.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Combat" textAlignment="CENTER" underline="true" wrappingWidth="288.66668432950974">
+                     <font>
+                        <Font size="67.0" />
                      </font>
                   </Text>
                </children>

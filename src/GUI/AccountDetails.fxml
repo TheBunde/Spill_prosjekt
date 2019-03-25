@@ -10,31 +10,31 @@
    <children>
       <VBox alignment="CENTER" prefHeight="500.0" prefWidth="800.0" spacing="25.0">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Account dtails" textAlignment="CENTER" underline="true">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Account" textAlignment="CENTER" underline="true">
                <font>
                   <Font size="42.0" />
                </font>
             </Text>
-            <Text fx:id="username" layoutX="218.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" textAlignment="CENTER">
+            <Text fx:id="usernameOutput" layoutX="218.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" textAlignment="CENTER">
                <font>
                   <Font size="25.0" />
                </font>
             </Text>
-            <Text fx:id="email" layoutX="192.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email@example.com" textAlignment="CENTER">
+            <Text fx:id="emailOutput" layoutX="192.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email@example.com" textAlignment="CENTER">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
 
-            <Text fx:id="level" layoutX="250.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Level" textAlignment="CENTER">
+            <Text fx:id="rankOutput" layoutX="250.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rank" textAlignment="CENTER">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
 
-            <Button fx:id="changeUsername" mnemonicParsing="false" onAction="#changeUsername" text="Change Username" />
-            <Button fx:id="changePassword" mnemonicParsing="false" onAction="#changePassword" text="Change Password" />
-            <Button fx:id="back" mnemonicParsing="false" onAction="#menu" text="Back" />
+            <Button fx:id="changeUsernameButton" mnemonicParsing="false" onAction="#changeUsername" text="Change Username" />
+            <Button fx:id="changePasswordButton" mnemonicParsing="false" onAction="#changePassword" text="Change Password" />
+            <Button fx:id="backButton" mnemonicParsing="false" onAction="#menu" text="Back to menu" />
          </children>
       </VBox>
    </children>
