@@ -133,5 +133,7 @@ class Game {
         //reset everything about the characters and monster for another game
         //game over
     }
+<<<<<<< HEAD
 }
 */
+

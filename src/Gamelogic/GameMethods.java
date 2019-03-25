@@ -1,7 +1,13 @@
-package Gamelogic;
+/*package Gamelogic;
 
 
+<<<<<<< HEAD
+
+import game.Creature;
+import game.Weapon;
+=======
 import game.*;
+>>>>>>> c125bee8d82a16dd5c1b30646b06e2680460f9db
 
 
 import java.util.ArrayList;
@@ -63,6 +69,15 @@ public class GameMethods {
         }
     }
 
+<<<<<<< HEAD
+    public boolean movePlayer(Creature palyerNow) {
+        int xCoordinate = palyerNow.getxPos();
+        int yCoordinate = palyerNow.getyPos();
+        int XMax = xCoordinate + palyerNow.getMovement();
+        int XMix = xCoordinate - palyerNow.getMovement();
+        int YMax = yCoordinate + palyerNow.getMovement();
+        int YMix = yCoordinate - palyerNow.getMovement();
+=======
     public boolean movePlayer(Creature playerNow) {
         int xCoordinate = playerNow.getxPos();
         int yCoordinate = playerNow.getyPos();
@@ -70,6 +85,7 @@ public class GameMethods {
         int XMix = xCoordinate - playerNow.getMovement();
         int YMax = yCoordinate + playerNow.getMovement();
         int YMix = yCoordinate - playerNow.getMovement();
+>>>>>>> c125bee8d82a16dd5c1b30646b06e2680460f9db
         int wantedX = 0;
         int wantedY = 0;
         boolean X = false;
@@ -193,6 +209,4 @@ public class GameMethods {
         }
         return targetHP;
     }*/
-
-}
 
