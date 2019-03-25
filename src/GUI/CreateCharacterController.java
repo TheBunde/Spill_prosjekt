@@ -1,5 +1,6 @@
 package GUI;
 
+import Database.*;
 import audio.MusicPlayer;
 import audio.SFXPlayer;
 import javafx.fxml.FXML;
@@ -28,6 +29,10 @@ public class CreateCharacterController implements Initializable {
 
     @FXML
     private SceneSwitcher sceneSwitcher;
+
+    private Database db = InterfaceMain.db;
+
+   // private String a = chooseClassDropdown.getValue();
 
     public CreateCharacterController(){
         sceneSwitcher = new SceneSwitcher();
@@ -59,8 +64,8 @@ public class CreateCharacterController implements Initializable {
 
     //method to display selected character
     public void displayCharacter(){
-        String a = chooseClassDropdown.getValue();
 
+        String a = chooseClassDropdown.getValue();
         if(a.equals("Warrior")) {
             SFXPlayer.getInstance().setSFX(2);
             iv.setImage(warriorImage);
@@ -85,7 +90,9 @@ public class CreateCharacterController implements Initializable {
     }
     //method to create the character
     public void createCharacter() throws Exception{
+        String a = chooseClassDropdown.getValue();
         SFXPlayer.getInstance().setSFX(0);
+        db.createCharacter(a);
         sceneSwitcher.switchScene(createCharacterButton, "GameLobby.fxml");
     }
 
