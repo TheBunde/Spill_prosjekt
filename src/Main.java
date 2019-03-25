@@ -21,9 +21,6 @@ public class Main implements Runnable {
         return null;
     }
 
-    public void threadTest(){
-        new sun.nio.ch.ThreadPool()
-    }
 
 
     public static void main(String[] args){
