@@ -27,7 +27,7 @@ create table creature(
     weapon_id integer not null,
     constraint creature_pk primary key(creature_id, player_id, lobby_key));
 
-create table chrctr(
+create table characterTemplate(
     character_id integer not null references creature(creature_id),
     character_name varchar(20),
     back_story varchar(50),

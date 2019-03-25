@@ -1,5 +1,5 @@
 
-package creature;
+package game;
 
 public class Weapon {
 

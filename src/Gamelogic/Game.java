@@ -1,6 +1,6 @@
 package Gamelogic;
-import creature.*;
-import creature.Character;
+
+import game.*;
 
 import java.util.ArrayList;
 class Game {
