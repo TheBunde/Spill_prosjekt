@@ -37,13 +37,14 @@ create table monster(
     monster_name varchar(20),
     constraint monster_pk primary key(monster_id));
 
-create table weapon(
+
+DROP TABLE creature_weapon;
+create table creature_weapon(
     weapon_id integer not null,
-    weapon_name varchar(20),
-    dice_amount integer,
-    damage_dice smallint,
-    description varchar(50),
-    constraint weapon_pk primary key(weapon_id));
+    creature_id integer not null,
+    constraint creature_weapon_pk primary key(weapon_id, creature_id),
+CONSTRAINT creature_weapon_fk1 FOREIGN KEY(weapon_id)REFERENCES weapon(weapon_id),
+CONSTRAINT creature_weapon_fk2 FOREIGN KEY(creature_id)REFERENCES creature(creature_id));
 
 
 create table creature_weapon(
@@ -128,3 +129,30 @@ ALTER TABLE initiative ADD CONSTRAINT initiative_fk2 FOREIGN KEY(lobby_key) REFE
    INSERT INTO chrctr VALUES(2, "Rogee", "she be the sneaky girl. not the one from Rogue One");
 
 
+// insert into
+INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description) VALUES (1,"Longsword",1,8,"Melee");
+INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description) VALUES (2,"Javelin",1,6,"Ranged");
+INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description) VALUES (3,"Longbow",1,8,"Ranged");
+INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description) VALUES (4, "Short sword", 1,6,"Melee");
+INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description) VALUES (5,"Dagger",1,4,"Melee");
+INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description) VALUES (6,"Hand crossbow",1,6,"Ranged");
+INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description) VALUES (7,"Chromatic orb",3,8,"Ranged");
+INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description) VALUES (8,"Fireball",6,6,"Ranged");
+INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description) VALUES (9,"Slaad bite",2,6,"Melee");
+INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description) VALUES (10,"Slaad claw",1,6,"Melee");
+INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description) VALUES (11,"Slaad hurl flame",3,6,"Ranged");
+INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description) VALUES (12,"Elemental slam",2,8,"Melee");
+INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description) VALUES (13,"Grick tail",2,6,"Melee");
+INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description) VALUES (14,"Grick tentacles",4,8,"Melee");
+INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description) VALUES (15, "Grick break",2,8,"Melee");
+INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description) VALUES (16,"Hound bite", 1,8,"Melee");
+INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description) VALUES (17,"Dragon bite",2,10,"Melee");
+INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description) VALUES (18,"Dragon claw",2,6,"Melee");
+
+
+INSERT INTO creature_weapon (weapon_id,creature_id) VALUES (1,1);
+INSERT INTO creature_weapon (weapon_id,creature_id) VALUES (2,1);
+INSERT INTO creature_weapon (weapon_id,creature_id) VALUES (5,2);
+INSERT INTO creature_weapon (weapon_id,creature_id) VALUES (6,2);
+INSERT INTO creature_weapon (weapon_id,creature_id) VALUES (7,3);
+INSERT INTO creature_weapon (weapon_id,creature_id) VALUES (8,3);
