@@ -1,71 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d8e20ae2-2a8a-42b4-a4b3-b94f55245031" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/commons_dbcp2_2_6_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Documentation/Domain model.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Documentation/Meeting summon2.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Documentation/Sequence-diagram.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Documentation/Usecase_description.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Documentation/Usecase_diagram.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Documentation/User Case 2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Documentation/Vision Document 1.0 (1).pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Documentation/Vision Document.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/commons-dbcp2-2.6.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/commons-logging-1.2.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/commons-pool2-2.6.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Database/Chat.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Database/ChatMessage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Database/DataSource.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/GUI/ChangePasswordController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/GUI/ChatMessageCell.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/GUI/EventMessageListViewCell.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/GUI/UserMessageListViewCell.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/GUI/changePassword.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/GUI/style.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Main/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/audio/SFX/correctKeySFX.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/audio/SFX/noKeySFX.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/audio/SFX/wrongKeySFX.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/audio/music/pianosong.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/audio/music/pianosong2.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/audio/music/testintro3.wav" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Game-development-project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Game-development-project.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/mysql_connector_java_8_0_13.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/mysql_connector_java_8_0_13.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game-development-project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Game-development-project.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Database/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Database/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Database/ManageConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Database/ManageConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Database/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Database/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/AccountDetails.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/AccountDetails.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/AccountDetailsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/AccountDetailsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Battlefield.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Battlefield.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/BattlefieldController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/BattlefieldController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/CreateCharacterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/CreateCharacterController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/FindLobbyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/FindLobbyController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/GameLobbyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/GameLobbyController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/InterfaceMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/InterfaceMain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/LoginScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/LoginScreen.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/MainMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/MainMenu.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/MainMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/MainMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Registrer.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Registrer.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/RegistrerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/RegistrerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/StartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/StartController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/chat.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/chat.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/chatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/chatController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/createcharacter.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/createcharacter.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/sample.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/settings.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/settings.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/start.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/start.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Gamelogic/Game2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Gamelogic/Game2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/audio/MusicPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/audio/MusicPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/audio/SFXPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/audio/SFXPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/audio/ThreadPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/audio/ThreadPool.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sql-setup/Tables" beforeDir="false" afterPath="$PROJECT_DIR$/src/sql-setup/Tables" afterDir="false" />
-    </list>
+    <list default="true" id="d8e20ae2-2a8a-42b4-a4b3-b94f55245031" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/../out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -89,11 +25,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Database/Database.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="222">
-              <caret line="213" column="56" selection-start-line="213" selection-start-column="56" selection-end-line="213" selection-end-column="56" />
+            <state relative-caret-position="1080">
+              <caret line="889" column="49" lean-forward="true" selection-start-line="889" selection-start-column="49" selection-end-line="889" selection-end-column="49" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -131,11 +67,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GUI/chatController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="121">
-              <caret line="79" selection-start-line="79" selection-end-line="79" />
+            <state relative-caret-position="189">
+              <caret line="83" column="22" lean-forward="true" selection-start-line="83" selection-start-column="22" selection-end-line="83" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -301,7 +237,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553519452365" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553519998375" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -356,12 +292,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1552902095567</updated>
-      <workItem from="1553350507135" duration="48950000" />
+      <workItem from="1553350507135" duration="49521000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="76994000" />
+    <option name="totallyTimeSpent" value="77565000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -384,7 +320,7 @@
       <window_info id="Capture Tool" order="5" />
       <window_info id="Job Explorer" order="6" />
       <window_info id="Designer" order="7" />
-      <window_info content_ui="combo" id="Project" order="8" visible="true" weight="0.2934947" />
+      <window_info active="true" content_ui="combo" id="Project" order="8" visible="true" weight="0.2934947" />
       <window_info id="Structure" order="9" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Docker" order="0" show_stripe_button="false" />
       <window_info anchor="bottom" id="Terminal" order="1" weight="0.3289689" />
@@ -396,7 +332,7 @@
       <window_info anchor="bottom" id="DB Execution Console" order="7" />
       <window_info anchor="bottom" id="Message" order="8" />
       <window_info anchor="bottom" id="Find" order="9" weight="0.3289689" />
-      <window_info active="true" anchor="bottom" id="Run" order="10" visible="true" weight="0.32733223" />
+      <window_info anchor="bottom" id="Run" order="10" visible="true" weight="0.32733223" />
       <window_info anchor="bottom" id="Debug" order="11" weight="0.39934534" />
       <window_info anchor="bottom" id="Cvs" order="12" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="13" weight="0.4" />
@@ -619,16 +555,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Database/Database.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
-          <caret line="213" column="56" selection-start-line="213" selection-start-column="56" selection-end-line="213" selection-end-column="56" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.idea/vcs.xml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -692,8 +618,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/GUI/chatController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="121">
-          <caret line="79" selection-start-line="79" selection-end-line="79" />
+        <state relative-caret-position="189">
+          <caret line="83" column="22" lean-forward="true" selection-start-line="83" selection-start-column="22" selection-end-line="83" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Database/Database.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1080">
+          <caret line="889" column="49" lean-forward="true" selection-start-line="889" selection-start-column="49" selection-end-line="889" selection-end-column="49" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
