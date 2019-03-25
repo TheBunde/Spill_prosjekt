@@ -1,9 +1,13 @@
 /*package Gamelogic;
 
 
+<<<<<<< HEAD
 
 import game.Creature;
 import game.Weapon;
+=======
+import game.*;
+>>>>>>> c125bee8d82a16dd5c1b30646b06e2680460f9db
 
 
 import java.util.ArrayList;
@@ -65,6 +69,7 @@ public class GameMethods {
         }
     }
 
+<<<<<<< HEAD
     public boolean movePlayer(Creature palyerNow) {
         int xCoordinate = palyerNow.getxPos();
         int yCoordinate = palyerNow.getyPos();
@@ -72,6 +77,15 @@ public class GameMethods {
         int XMix = xCoordinate - palyerNow.getMovement();
         int YMax = yCoordinate + palyerNow.getMovement();
         int YMix = yCoordinate - palyerNow.getMovement();
+=======
+    public boolean movePlayer(Creature playerNow) {
+        int xCoordinate = playerNow.getxPos();
+        int yCoordinate = playerNow.getyPos();
+        int XMax = xCoordinate + playerNow.getMovement();
+        int XMix = xCoordinate - playerNow.getMovement();
+        int YMax = yCoordinate + playerNow.getMovement();
+        int YMix = yCoordinate - playerNow.getMovement();
+>>>>>>> c125bee8d82a16dd5c1b30646b06e2680460f9db
         int wantedX = 0;
         int wantedY = 0;
         boolean X = false;
@@ -83,8 +97,7 @@ public class GameMethods {
             Y = true;
         }
         if(X && Y){
-            palyerNow.setxCordinate(wantedX);
-            palyerNow.setyCordinate(wantedY);
+            playerNow.setNewPos(wantedX, wantedY);
             System.out.println("You moved");
             //sending new x y to database
             return true;
@@ -97,20 +110,20 @@ public class GameMethods {
 
     public boolean nearMonster(Creature playerNow, Creature monster) {
         boolean near = false;
-        int xCordinate = playerNow.getxCordinate();
-        int yCordinate = playerNow.getyCordinate();
-        int maxX = xCordinate + 1;
-        int maxY = yCordinate + 1;
-        int minX = xCordinate - 1;
-        int minY = yCordinate - 1;
-        int XForMonster = monster.getxCordinate();
-        int YForMonster = monster.getyCordinate();
+        int xPos = playerNow.getxPos();
+        int yPos = playerNow.getxPos();
+        int maxX = xPos + 1;
+        int maxY = yPos + 1;
+        int minX = xPos - 1;
+        int minY = yPos - 1;
+        int XForMonster = monster.getxPos();
+        int YForMonster = monster.getyPos();
         boolean X = false;
         boolean Y = false;
-        if (minX == XForMonster || xCordinate == XForMonster || maxX == XForMonster) {
+        if (minX == XForMonster || xPos == XForMonster || maxX == XForMonster) {
             X = true;
         }
-        if (minY == YForMonster || yCordinate == YForMonster || maxY == YForMonster) {
+        if (minY == YForMonster || yPos == YForMonster || maxY == YForMonster) {
             Y = true;
         }
         if (X && Y) {
@@ -140,6 +153,7 @@ public class GameMethods {
         return targetHP;
     }
 
+    /*
     public int monsterMovement (Creature monster){
 
 
@@ -194,7 +208,5 @@ public class GameMethods {
             targetHP = monsterAttack(target, monster);
         }
         return targetHP;
-    }
-
-} */
+    }*/
 

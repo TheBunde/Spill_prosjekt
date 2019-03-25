@@ -1,3 +1,4 @@
+/*
 package Gamelogic;
 
 import game.*;
@@ -32,7 +33,7 @@ class Game {
                         break;
                     }
 
-                    if(playerNow instanceof Character){
+                    if(playerNow instanceof game.Character){
                         int monsterI = 0;
                         for(int i = 0; i < creatures.size(); i++){
                             if(creatures.get(i) instanceof Monster){
@@ -55,15 +56,19 @@ class Game {
                             }
                             int attackCounter = 0;
                             int moveCounter = 0;
-                            int realAttackCounter = playerNow.getAttackTurn();
-                            if (/*Move button = pressed &&*/ moveCounter == 0){
+                            int realAttackCounter = playerNow.getAttacksPerTurn();
+                            if (*/
+/*Move button = pressed &&*//*
+ moveCounter == 0){
                                 boolean move = false;
                                 while(!move){
                                     move = method.movePlayer(playerNow);
                                 }
                                 moveCounter++;
                             }
-                            if(/*Attack button = pressed &&*/ attackCounter < realAttackCounter){
+                            if(*/
+/*Attack button = pressed &&*//*
+ attackCounter < realAttackCounter){
                                 if(method.nearMonster(playerNow, monster)){
                                     method.attack(playerNow, monster, melee);
                                 }else{
@@ -74,10 +79,12 @@ class Game {
                             if(attackCounter == realAttackCounter && moveCounter == 1){
                                 turnOver = true;
                             }
-                            /* if(endTurn button = pressed){
+                            */
+/* if(endTurn button = pressed){
                                   turnOver = true;
                                 }
-                             */
+                             *//*
+
                         }
                         if(hpForMonster <= 0){
                             monsterAlive = false;
@@ -87,7 +94,7 @@ class Game {
                         int roll = dice.roll(players.size());
                         int playerHp = players.get(roll).getHp();
                         Creature monster = turn.get(index);
-                        int playerHP = method.monsterMovement(monster);
+                        //int playerHP = method.monsterMovement(monster);
                         if(playerHp <= 0){
                             dead++;
                         }
@@ -99,6 +106,8 @@ class Game {
                 break;
             }
             gameRound++;
+            */
+/*
             for(int i = 0; i < turn.size(); i++){
                 if(turn.get(i) instanceof Character){
                     int newHp = 0;
@@ -116,10 +125,12 @@ class Game {
                     }
                 }
             }
+            *//*
+
         }
         System.out.println(story.get(story.size()-2));
         //set every new value for users
         //reset everything about the characters and monster for another game
         //game over
     }
-}
+}*/
