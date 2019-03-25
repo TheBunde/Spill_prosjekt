@@ -93,7 +93,11 @@ public class CreateCharacterController implements Initializable {
     public void createCharacter() throws Exception{
         String a = chooseClassDropdown.getValue();
         SFXPlayer.getInstance().setSFX(0);
-        db.createCharacter(a);
+        if(db.createPlayer(a)){
+            System.out.println("character created");
+        }else{
+            System.out.println("character not created");
+        }
         sceneSwitcher.switchScene(createCharacterButton, "GameLobby.fxml");
     }
 

@@ -54,13 +54,6 @@ public class BattlefieldController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        try{
-            mapGrid.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-                this.xPos = e.getX();
-                this.yPos = e.getY();
-            }); }catch (NullPointerException e){
-            System.out.println(e);
-        }
         double width = 36.6875;
         double height = 23.8125;
         ArrayList<Integer> x_pos = new ArrayList<>();
@@ -136,6 +129,21 @@ public class BattlefieldController implements Initializable {
     }
 
     public void moveButtonPressed(){
+        try{
+            mapGrid.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+                this.xPos = e.getX();
+                this.yPos = e.getY();
+            }); }catch (NullPointerException e){
+            System.out.println(e);
+        }
+
+        /*try{
+        mapGrid.removeEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+                this.xPos = e.getX();
+                this.yPos = e.getY();
+            }); }catch (NullPointerException e) {
+            System.out.println(e);
+        }*/
         System.out.println("X-pososjon: " + toGrid(431, xPos) + "\nY-posisjon: " + toGrid(310, yPos) + "\n");
         int x_pos = db.fetchPlayerPos(db.fetchPlayerId()).get(0);
         int y_pos = db.fetchPlayerPos(db.fetchPlayerId()).get(1);

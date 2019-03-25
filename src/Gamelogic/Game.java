@@ -32,7 +32,7 @@ class Game {
                         break;
                     }
 
-                    if(playerNow instanceof Character){
+                    if(playerNow instanceof game.Character){
                         int monsterI = 0;
                         for(int i = 0; i < creatures.size(); i++){
                             if(creatures.get(i) instanceof Monster){
@@ -55,7 +55,7 @@ class Game {
                             }
                             int attackCounter = 0;
                             int moveCounter = 0;
-                            int realAttackCounter = playerNow.getAttackTurn();
+                            int realAttackCounter = playerNow.getAttacksPerTurn();
                             if (/*Move button = pressed &&*/ moveCounter == 0){
                                 boolean move = false;
                                 while(!move){
@@ -87,7 +87,7 @@ class Game {
                         int roll = dice.roll(players.size());
                         int playerHp = players.get(roll).getHp();
                         Creature monster = turn.get(index);
-                        int playerHP = method.monsterMovement(monster);
+                        //int playerHP = method.monsterMovement(monster);
                         if(playerHp <= 0){
                             dead++;
                         }
@@ -99,6 +99,7 @@ class Game {
                 break;
             }
             gameRound++;
+            /*
             for(int i = 0; i < turn.size(); i++){
                 if(turn.get(i) instanceof Character){
                     int newHp = 0;
@@ -116,6 +117,7 @@ class Game {
                     }
                 }
             }
+            */
         }
         System.out.println(story.get(story.size()-2));
         //set every new value for users
