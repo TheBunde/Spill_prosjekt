@@ -14,11 +14,27 @@ public class MusicPlayer implements Runnable {
     private boolean stopSong;
     private float volumeMusic;
 
-    private static MusicPlayer thisInstance = new MusicPlayer("testintro","pause", "mainmenu", "battlesongone","warriorSong","rogueSong","wizardSong","desertwalk");
-
+    private static MusicPlayer thisInstance = new MusicPlayer("testintro","pause", "mainmenu", "battlesongone",
+            "warriorSong","rogueSong","wizardSong","desertwalk","pianosong","pianosong2","testintro3");
     public static MusicPlayer getInstance(){
         return thisInstance;
     }
+
+    /*
+    List of songs with index:
+    0: "testintro"
+    1: "pause"
+    2: "mainmenu"
+    3: "battlesongone"
+    4: "warriorSong"
+    5: "rogueSong"
+    6: "wizardSong"
+    7: "desertwalk"
+    8: "pianosong"
+    9: "pianosong2"
+    10: "testintro3"
+
+     */
 
     public MusicPlayer(String... files) {
         musicFiles = new ArrayList<AudioFile>();

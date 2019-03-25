@@ -26,6 +26,8 @@ public class GameLobbyController {
 
     public void initialize(){
         lobbyKeyLabel.setText("" + user.getLobbyKey());
+        MusicPlayer.getInstance().stopSong();
+        MusicPlayer.getInstance().changeSong(10);
     }
 
     public void travelButtonPressed() throws Exception{
