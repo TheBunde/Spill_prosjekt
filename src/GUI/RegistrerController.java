@@ -16,14 +16,7 @@ import java.util.regex.Pattern;
 
 public class RegistrerController {
 
-    @FXML
-    private TextField uname;
-    @FXML
-    private TextField email;
-    @FXML
-    private PasswordField password;
-    @FXML
-    private PasswordField re_pass;
+
 
     @FXML
     private TextField usernameInput, emailInput;
@@ -62,8 +55,8 @@ public class RegistrerController {
 
     public boolean UsernameValidation(){
         Pattern p = Pattern.compile("[a-zA-Z]+");
-        Matcher m = p.matcher(uname.getText());
-        if(m.find() && m.group().equals(uname.getText())){
+        Matcher m = p.matcher(usernameInput.getText());
+        if(m.find() && m.group().equals(usernameInput.getText())){
             return true;
         }
         else{
@@ -82,8 +75,8 @@ public class RegistrerController {
 
     public boolean EmailValidation(){
         Pattern p = Pattern.compile("[a-zA-Z0-9][a-zA-Z0-9._]*@[a-zA-Z0-9]+([.][a-zA-Z]+)+");
-        Matcher m = p.matcher(email.getText());
-        if(m.find() && m.group().equals(email.getText())){
+        Matcher m = p.matcher(emailInput.getText());
+        if(m.find() && m.group().equals(emailInput.getText())){
             return true;
         }
         else{
@@ -105,7 +98,7 @@ public class RegistrerController {
 
        // DBConnection db = new DBConnection("jdbc:mysql://mysql-ait.stud.idi.ntnu.no:3306/g_tdat1006_01?user=g_tdat1006_01&password=", "q8CeXgyy");
         if (UsernameValidation() && EmailValidation()) {
-            int status = (int) db.Button_Register_ActionPerformed(uname.getText().trim().toLowerCase(), email.getText(), password.getText(), re_pass.getText());
+            int status = (int) db.Button_Register_ActionPerformed(usernameInput.getText().trim().toLowerCase(), emailInput.getText(), passwordInput.getText(), rePasswordInput.getText());
             if (status == 1) {
 
                 SFXPlayer.getInstance().setSFX(0);
