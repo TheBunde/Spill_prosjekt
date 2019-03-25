@@ -1,6 +1,6 @@
 package GUI;
 
-
+import Main.*;
 import Database.Database;
 import audio.MusicPlayer;
 import audio.SFXPlayer;
@@ -29,7 +29,7 @@ public class LoginController {
     private Button cancelButton, loginButton;
     private SceneSwitcher sceneSwitcher;
 
-    private Database db = InterfaceMain.db;
+    private Database db = Main.db;
     public LoginController(){
         sceneSwitcher = new SceneSwitcher();
     }
