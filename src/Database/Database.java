@@ -485,15 +485,17 @@ public class Database {
             res = prepStmt.executeQuery();
             emailExists = res.next();
 
+            this.closeRes(res);
+            this.closePrepStmt(prepStmt);
+            this.closeConnection();
+
         }
         catch (SQLException sq){
             sq.printStackTrace();
             return false;
         }
         finally {
-            this.closeRes(res);
-            this.closePrepStmt(prepStmt);
-            this.closeConnection();
+
             return emailExists;
         }
     }
@@ -501,6 +503,7 @@ public class Database {
 
 
     public int Button_Register_ActionPerformed(String username, String email, String password, String re_pass){
+
         try {
             if (!openConnection()) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -510,25 +513,20 @@ public class Database {
                 alert.showAndWait();
                 return -1;
 
-            } else if (username.equals("")) {
+            }
+
+            if(emailExist(email)) {
+                System.out.println("here we are");
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Warning Dialog");
                 alert.setHeaderText(null);
-                alert.setContentText("Write the username");
+                alert.setContentText("this email is already exist");
                 alert.showAndWait();
                 return -1;
-
-            } else if (email.equals("") ) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Warning Dialog");
-                alert.setHeaderText(null);
-                alert.setContentText("Write your email");
-                alert.showAndWait();
-                return -1;
+            }
 
 
-
-            } else if (password.equals("")) {
+            else if (password.isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Warning Dialog");
                 alert.setHeaderText(null);
@@ -536,7 +534,7 @@ public class Database {
                 alert.showAndWait();
                 return -1;
 
-            } else if (re_pass.equals("")) {
+            }else if(re_pass.isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Warning Dialog");
                 alert.setHeaderText(null);
@@ -544,28 +542,19 @@ public class Database {
                 alert.showAndWait();
                 return -1;
 
-            } /*else if (fetchUsername().equals(user.getUsername())) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Warning Dialog");
-                alert.setHeaderText(null);
-                alert.setContentText("this username is already exist");
-                alert.showAndWait();
-                return -1;
 
-            }*/
-            else if(! emailExist(email)){
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Warning Dialog");
-                alert.setHeaderText(null);
-                alert.setContentText("this email is already exist");
-                alert.showAndWait();
-                return -1;
+
+
 
             }
+
+
         }
         catch (NullPointerException np1){
             System.out.println(np1 +"np1");
         }
+
+
 
         PreparedStatement ps2 = null;
         //ResultSet rs2;
@@ -594,13 +583,14 @@ public class Database {
             alert.setContentText("adding failed");
             alert.showAndWait();
         }
-        catch (NullPointerException nlp){
-            System.out.println(nlp + "nlp");
-        }
+
         finally {
             this.closePrepStmt(ps2);
             this.closeConnection();
         }
+
+
+
 
         return 1;
 

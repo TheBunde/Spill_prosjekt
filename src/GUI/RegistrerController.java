@@ -5,11 +5,25 @@ import Database.*;
 import audio.MusicPlayer;
 import audio.SFXPlayer;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
+import javax.swing.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class RegistrerController {
+
+    @FXML
+    private TextField uname;
+    @FXML
+    private TextField email;
+    @FXML
+    private PasswordField password;
+    @FXML
+    private PasswordField re_pass;
 
     @FXML
     private TextField usernameInput, emailInput;
@@ -42,5 +56,67 @@ public class RegistrerController {
         SFXPlayer.getInstance().setSFX(0);
 
         sceneSwitcher.switchScene(cancelButton, "start.fxml");
+    }
+
+    // Validation of username, Email, password
+
+    public boolean UsernameValidation(){
+        Pattern p = Pattern.compile("[a-zA-Z]+");
+        Matcher m = p.matcher(uname.getText());
+        if(m.find() && m.group().equals(uname.getText())){
+            return true;
+        }
+        else{
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Username validation");
+            alert.setHeaderText(null);
+            alert.setContentText("Please enter valid username");
+            alert.showAndWait();
+
+            return false;
+
+        }
+    }
+
+    // validate email
+
+    public boolean EmailValidation(){
+        Pattern p = Pattern.compile("[a-zA-Z0-9][a-zA-Z0-9._]*@[a-zA-Z0-9]+([.][a-zA-Z]+)+");
+        Matcher m = p.matcher(email.getText());
+        if(m.find() && m.group().equals(email.getText())){
+            return true;
+        }
+        else{
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Email validation");
+            alert.setHeaderText(null);
+            alert.setContentText("Please Enter a Valid Email");
+            alert.showAndWait();
+
+            return false;
+
+        }
+    }
+
+
+
+    public void onRegister() throws Exception {
+
+
+       // DBConnection db = new DBConnection("jdbc:mysql://mysql-ait.stud.idi.ntnu.no:3306/g_tdat1006_01?user=g_tdat1006_01&password=", "q8CeXgyy");
+        if (UsernameValidation() && EmailValidation()) {
+            int status = (int) db.Button_Register_ActionPerformed(uname.getText().trim().toLowerCase(), email.getText(), password.getText(), re_pass.getText());
+            if (status == 1) {
+
+                SFXPlayer.getInstance().setSFX(0);
+                audio.MusicPlayer.getInstance().stopSong();
+                MusicPlayer.getInstance().changeSong(2);
+                sceneSwitcher.switchScene(registrerButton, "MainMenu.fxml");
+
+            } else {
+                JOptionPane.showMessageDialog(null, "noe feil");
+
+            }
+        }
     }
 }
