@@ -91,7 +91,7 @@ public class BattlefieldController implements Initializable {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                db.movePos(10, 10, db.fetchPlayerId());
+                //db.movePos(10, 10, db.fetchPlayerId());
                 updatePos();
                 System.out.println("Hei");
             }
