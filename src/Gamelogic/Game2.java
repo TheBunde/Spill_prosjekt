@@ -59,7 +59,7 @@
 
 import java.sql.*;
 import java.util.ArrayList;
-
+/*
 public class Game2 {
     private GameMethods2 methods2 = new GameMethods2();
 
@@ -136,5 +136,6 @@ public class Game2 {
 
         }
     }
-}
 
+}
+*/
