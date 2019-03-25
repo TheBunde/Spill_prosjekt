@@ -1,9 +1,9 @@
-package Gamelogic;
+/*package Gamelogic;
 
 
-import creature.*;
 
 import game.Creature;
+import game.Weapon;
 
 
 import java.util.ArrayList;
@@ -66,8 +66,8 @@ public class GameMethods {
     }
 
     public boolean movePlayer(Creature palyerNow) {
-        int xCoordinate = palyerNow.getxCordinate();
-        int yCoordinate = palyerNow.getyCordinate();
+        int xCoordinate = palyerNow.getxPos();
+        int yCoordinate = palyerNow.getyPos();
         int XMax = xCoordinate + palyerNow.getMovement();
         int XMix = xCoordinate - palyerNow.getMovement();
         int YMax = yCoordinate + palyerNow.getMovement();
@@ -196,5 +196,5 @@ public class GameMethods {
         return targetHP;
     }
 
-}
+} */
 
