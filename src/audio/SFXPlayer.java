@@ -11,11 +11,24 @@ public class SFXPlayer implements Runnable{
     private int currentSFXIndex;
     private float volumeSFX;
     //TEST START
-    private static SFXPlayer thisInstance = new SFXPlayer("knockSFX", "splashSFX","warriorSFX","rogueSFX2","wizardSFX");
+    private static SFXPlayer thisInstance = new SFXPlayer("knockSFX", "splashSFX","warriorSFX","rogueSFX2","wizardSFX",
+        "noKeySFX","wrongKeySFX","correctKeySFX" );
 
     public static SFXPlayer getInstance(){
         return thisInstance;
     }
+
+    /*
+    List of SFX and index:
+    0: "knockSFX"
+    1: "splashSFX"
+    2: "warriorSFX"
+    3: "rogueSFX2"
+    4: "wizardSFX"
+    5: "noKeySFX"
+    6: "wrongKeySFX"
+    7: "correctKeySFX"
+     */
     ///TEST SLUTT
 
     /// TO GET MORE SFX TO PLAY AT THE SAME TIME USE: new SFXPlayer("knockSFX").run();

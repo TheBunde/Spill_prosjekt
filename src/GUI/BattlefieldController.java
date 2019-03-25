@@ -1,6 +1,9 @@
 package GUI;
 
-import Database.Database;
+
+import Database.*;
+import Main.*;
+import audio.MusicPlayer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -14,6 +17,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -21,10 +25,12 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
+
 public class BattlefieldController implements Initializable {
 
     // https://stackoverflow.com/questions/41081905/javafx-getting-the-location-of-a-click-on-a-gridpane
-
+    @FXML
+    private Button exitButton;
     @FXML
     private GridPane mapGrid;
     @FXML
@@ -33,13 +39,17 @@ public class BattlefieldController implements Initializable {
     private ImageView yobama, green;
     @FXML
     private Button moveButton;
-    private double xPos = 100;
-    private double yPos = 100;
+
+    private Database db = Main.db;
+    private User user = Main.user;
+    private SceneSwitcher sceneSwitcher = new SceneSwitcher();
+    private double xPos;
+    private double yPos;
+
     private boolean yobClicked;
     private ArrayList<ImageView> playerPawns = new ArrayList<>();
     private ArrayList<Integer> players = new ArrayList<>();
 
-    private Database db = InterfaceMain.db;
     public static Timer timer = new Timer();
 
     @Override
@@ -120,6 +130,7 @@ public class BattlefieldController implements Initializable {
         yobClicked = true;
     }
 
+
     public void attackButtonPressed(){
         System.out.println(Math.floor(mapGrid.getWidth() / 16));
     }
@@ -155,6 +166,7 @@ public class BattlefieldController implements Initializable {
         
     }
 
+
     private void selected(ImageView image){
         try{
             image.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
@@ -179,6 +191,7 @@ public class BattlefieldController implements Initializable {
         image.setY((yGrid - yOffset) * gridHeight / 16);
     }
 
+
     private void setStartPos(ImageView image, int player_id){
         double gridWidth = mapGrid.getWidth();
         double gridHeight = mapGrid.getHeight();
@@ -187,14 +200,22 @@ public class BattlefieldController implements Initializable {
         System.out.println(db.fetchPlayerPos(player_id).get(0));
     }
 
-    private void updatePos(){
-        for(int i = 0; i < players.size(); i++){
+    private void updatePos() {
+        for (int i = 0; i < players.size(); i++) {
             int x_pos = db.fetchPlayerPos(players.get(i)).get(0);
-            int y_pos =  db.fetchPlayerPos(players.get(i)).get(1);
-            if(x_pos != toGrid(mapGrid.getWidth() ,playerPawns.get(i).getX()) || y_pos != toGrid(mapGrid.getHeight() ,playerPawns.get(i).getY())){
+            int y_pos = db.fetchPlayerPos(players.get(i)).get(1);
+            if (x_pos != toGrid(mapGrid.getWidth(), playerPawns.get(i).getX()) || y_pos != toGrid(mapGrid.getHeight(), playerPawns.get(i).getY())) {
                 playerPawns.get(i).setX((double) x_pos * mapGrid.getWidth() / 16);
                 playerPawns.get(i).setY((double) y_pos * mapGrid.getHeight() / 16);
             }
         }
+    }
+
+    public void exitButtonClicked() throws Exception{
+        System.out.println(db.addChatMessage(user.getUsername() + " has left the lobby", true));
+        db.disconnectUserFromGameLobby();
+        chatController.timer.cancel();
+        chatController.timer.purge();
+        this.sceneSwitcher.switchScene(exitButton, "MainMenu.fxml");
     }
 }

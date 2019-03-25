@@ -1,6 +1,6 @@
 package GUI;
 
-
+import Main.*;
 import Database.*;
 import audio.MusicPlayer;
 import audio.SFXPlayer;
@@ -18,7 +18,7 @@ public class MainMenuController {
     private Button startNewGameButton;
 
 
-    private Database db = InterfaceMain.db;
+    private Database db = Main.db;
 
     public void startNewGameButtonPressed() throws Exception{
         db.createNewLobby();
@@ -88,7 +88,7 @@ public class MainMenuController {
     public void signOutButtonPressed() throws Exception{
         SFXPlayer.getInstance().setSFX(0);
         audio.MusicPlayer.getInstance().stopSong();
-        MusicPlayer.getInstance().changeSong(0);
+        MusicPlayer.getInstance().changeSong(10);
         Parent root = FXMLLoader.load(getClass().getResource("start.fxml"));
         Scene scene = new Scene(root);
         Stage stage = (Stage)signOutButton.getScene().getWindow();
