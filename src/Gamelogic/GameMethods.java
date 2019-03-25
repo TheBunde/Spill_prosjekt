@@ -3,12 +3,10 @@ package Gamelogic;
 
 import creature.*;
 
-import creature.Creature;
-import creature.Monster;
+import game.Creature;
 
 
 import java.util.ArrayList;
-import java.lang.Math.*;
 
 public class GameMethods {
     private Dice dice;

@@ -1,7 +1,5 @@
 package Gamelogic;
 
-import creature.Creature;
-
 import java.util.ArrayList;
 
 public class GameMethods2 {
