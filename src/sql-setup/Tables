@@ -8,15 +8,11 @@ drop table initiative;
 drop table chat_message;
 drop table usr;
 drop table game_lobby;
-drop table chatter;
-drop table chat;
 
 
-
-    -- create tables
+-- create tables
 
 create table creature(
-    title varchar(20) default '',
     creature_id integer not null,
     HP smallint,
     AC smallint,
@@ -32,7 +28,7 @@ create table creature(
 create table chrctr(
     character_id integer not null references creature(creature_id),
     character_name varchar(20),
-    back_story varchar(50) default '',
+    back_story text,
     constraint chrctr_pk primary key(character_id));
 
 create table monster(
@@ -46,15 +42,13 @@ create table weapon(
     weapon_name varchar(20),
     damage_dice smallint default 0,
     dice_amount smallint default 0,
-    description varchar(50) default '',
+    description varchar(20),
     constraint weapon_pk primary key(weapon_id));
-
 
 create table creature_weapon(
     weapon_id integer not null,
     creature_id integer not null default 0,
     constraint creature_weapon_pk primary key(weapon_id, creature_id));
-
 
 create table usr(
     user_id integer not null auto_increment,
@@ -81,16 +75,6 @@ create table game_lobby(
     player_turn smallint,
     constraint game_lobby_pk primary key(lobby_key));
 
-create table chat(
-    chat_id integer not null,
-    constraint chat_pk primary key(chat_id));
-
-create table chatter(
-    chatter_id integer not null auto_increment,
-    chat_id integer not null,
-    name VARCHAR(30) NOT NULL,
-    CONSTRAINT chatter_pk primary key(chatter_id));
-
 create table chat_message(
     lobby_key integer not null references game_lobby(lobby_key),
     message_id integer not null,
@@ -102,8 +86,6 @@ create table chat_message(
 
     -- Foreign keys
 
-    ALTER TABLE chatter ADD CONSTRAINT chatter_fk FOREIGN KEY(chat_id) REFERENCES chat(chat_id);
-
     ALTER TABLE chat_message ADD CONSTRAINT chat_message_fk1 FOREIGN KEY(lobby_key) REFERENCES game_lobby(lobby_key);
     ALTER TABLE chat_message ADD CONSTRAINT chat_message_fk2 FOREIGN KEY(user_id) REFERENCES usr(user_id);
 
@@ -112,20 +94,20 @@ create table chat_message(
 
     -- Insert data for characters, monsters and weapons
 
-    insert into creature values(default, 1, 32, 16, 9, 7, 2, 5, default, default, default);
-    insert into creature values(default, 2, 23, 16, 7, 6, 2, 7, default, default, default);
-    insert into creature values(default, 3, 36, 18, 8, 6, 2, 5, default, default, default);
-    insert into creature values(default, 4, 22, 15, 8, 6, 1, 0, default, default, default);
-    insert into creature values(default, 5, 45, 15, 5, 10, 1, 3, default, default, default);
-    insert into creature values(default, 6, 126, 17, 8, 6, 2, 5, default, default, default);
-    insert into creature values(default, 7, 75, 18, 7, 6, 2, 4, default, default, default);
-    insert into creature values(default, 8, 127, 16, 7, 6, 3, 4, default, default, default);
-    insert into creature values(default, 9, 178, 18, 10, 8, 3, 6, default, default, default);
+    insert into creature values(1, 32, 16, 9, 7, 2, 5, default, default, default);
+    insert into creature values(2, 23, 16, 7, 6, 2, 7, default, default, default);
+    insert into creature values(3, 36, 18, 8, 6, 2, 5, default, default, default);
+    insert into creature values(4, 22, 15, 8, 6, 1, 0, default, default, default);
+    insert into creature values(5, 45, 15, 5, 10, 1, 3, default, default, default);
+    insert into creature values(6, 126, 17, 8, 6, 2, 5, default, default, default);
+    insert into creature values(7, 75, 18, 7, 6, 2, 4, default, default, default);
+    insert into creature values(8, 127, 16, 7, 6, 3, 4, default, default, default);
+    insert into creature values(9, 178, 18, 10, 8, 3, 6, default, default, default);
 
-    insert into chrctr values(1, 'Ranger', default);
-    insert into chrctr values(2, 'Rouge', default);
-    insert into chrctr values(3, 'Fighter', default);
-    insert into chrctr values(4, 'Wizard', default);
+    insert into chrctr values(1, 'Ranger', '');
+    insert into chrctr values(2, 'Rouge', '');
+    insert into chrctr values(3, 'Fighter', '');
+    insert into chrctr values(4, 'Wizard', '');
 
     insert into monster values(5, 'Hell bound', default);
     insert into monster values(6, 'Earth elemental', default);

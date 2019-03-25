@@ -228,7 +228,7 @@ public class Database {
             prepStmt.setInt(1, user.getUser_id());
             res = prepStmt.executeQuery();
             while (res.next()) {
-                rank += res.getInt("level");
+                rank += res.getInt("rank");
             }
         } catch (SQLException sq) {
             manager.writeMessage(sq, "fetchRank");
@@ -246,9 +246,8 @@ public class Database {
         openConnection();
         PreparedStatement prepStmt = null;
         try {
-            String prepString = "INSERT INTO usr VALUES(?, ?, DEFAULT, DEFAULT, ?, ?)";
-
             this.con.setAutoCommit(false);
+            String prepString = "INSERT INTO usr VALUES(?, ?, DEFAULT, DEFAULT, ?, ?)";
             prepStmt = con.prepareStatement(prepString);
             prepStmt.setInt(1, user.getUser_id());
             prepStmt.setString(2, user.getUsername());
@@ -424,14 +423,14 @@ public class Database {
         if (creatureExist(creature_id) && creature.getAc() != -1) {
             this.openConnection();
             try {
-                String prepString = "UPDATE creature SET AC = ? WHERE creature_id = ?";
                 this.con.setAutoCommit(false);
+                String prepString = "UPDATE creature SET AC = ? WHERE creature_id = ?";
                 prepStmt = this.con.prepareStatement(prepString);
                 prepStmt.setInt(1, newAC);
                 prepStmt.setInt(2, creature_id);
                 prepStmt.executeUpdate();
-                this.con.commit();
                 creature.setAc(newAC);
+                this.con.commit();
                 return true;
             } catch (SQLException sq) {
                 manager.rollback(this.con);
@@ -452,7 +451,6 @@ public class Database {
         PreparedStatement prepStmt = null;
         ResultSet res = null;
         try {
-
             String prepString = "select lv from creature where creature_id = ?";
             prepStmt = this.con.prepareStatement(prepString);
             prepStmt.setInt(1, creature.getLevel());
@@ -476,14 +474,14 @@ public class Database {
         if (creatureExist(creature_id) && creature.getLevel() != -1) {
             this.openConnection();
             try {
-                String prepString = "UPDATE creature SET lv = ? WHERE creature_id = ?";
                 this.con.setAutoCommit(false);
+                String prepString = "UPDATE creature SET lv = ? WHERE creature_id = ?";
                 prepStmt = this.con.prepareStatement(prepString);
                 prepStmt.setInt(1, newLevel);
                 prepStmt.setInt(2, creature_id);
                 prepStmt.executeUpdate();
-                this.con.commit();
                 creature.setLevel(newLevel);
+                this.con.commit();
                 return true;
             } catch (SQLException sq) {
                 manager.rollback(this.con);
@@ -528,14 +526,14 @@ public class Database {
         if (creatureExist(creature_id) && creature.getAttackBonus() != -1) {
             this.openConnection();
             try {
-                String prepString = "UPDATE creature SET attack_bonus = ? WHERE creature_id = ?";
                 this.con.setAutoCommit(false);
+                String prepString = "UPDATE creature SET attack_bonus = ? WHERE creature_id = ?";
                 prepStmt = this.con.prepareStatement(prepString);
                 prepStmt.setInt(1, newAttack_bonus);
                 prepStmt.setInt(2, creature_id);
                 prepStmt.executeUpdate();
-                this.con.commit();
                 creature.setAttackBonus(newAttack_bonus);
+                this.con.commit();
                 return true;
             } catch (SQLException sq) {
                 manager.rollback(this.con);
