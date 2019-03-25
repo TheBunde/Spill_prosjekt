@@ -77,7 +77,7 @@ public class Game2 {
                 res = sentence.executeQuery();
                 turn = res.getInt("turn");
             }
-            sql = "Select "
+            sql = "Select ";
 
         }
     }
