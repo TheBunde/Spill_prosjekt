@@ -13,9 +13,10 @@ public abstract class Creature {
     private int damageBonus;
     private int xPos;
     private int yPos;
+    private int playerId;
 
 
-    public Creature(int hp, int ac, String characterName, int attacksPerTurn, int damageBonus, int xPos, int yPos, ArrayList weapons){
+    public Creature(int hp, int ac, String characterName, int attacksPerTurn, int damageBonus, int xPos, int yPos, ArrayList weapons, int playerId){
         this.hp = hp;
         this.ac = ac;
         this.characterName = characterName;
@@ -25,6 +26,7 @@ public abstract class Creature {
         this.damageBonus = damageBonus;
         this.xPos = xPos;
         this.yPos = yPos;
+        this.playerId = playerId;
     }
 
     public int getHp() {

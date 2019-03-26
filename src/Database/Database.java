@@ -724,7 +724,7 @@ public class Database {
         }
     }
 
-    public boolean setStartPos(int playerId){
+   /* public boolean setStartPos(int playerId){
         Connection con = null;
         PreparedStatement prepStmt = null;
         boolean status = true;
@@ -751,9 +751,9 @@ public class Database {
             this.manager.closeConnection(con);
             return status;
         }
-    }
+    }*/
 
-    public boolean movePos(int xPos, int yPos, int playerId){
+    public boolean setPos(int xPos, int yPos, int playerId){
         Connection con = null;
         PreparedStatement prepStmt = null;
         boolean status = true;
@@ -762,8 +762,8 @@ public class Database {
             con.setAutoCommit(false);
             String prepString = "UPDATE creature SET pos_x = ?, pos_y = ? WHERE player_id = ?";
             prepStmt = con.prepareStatement(prepString);
-            prepStmt.setInt(1, 8);
-            prepStmt.setInt(2, 8);
+            prepStmt.setInt(1, xPos);
+            prepStmt.setInt(2, yPos);
             prepStmt.setInt(3, playerId);
             prepStmt.executeUpdate();
             con.commit();
