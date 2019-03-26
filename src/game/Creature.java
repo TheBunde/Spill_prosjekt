@@ -113,6 +113,10 @@ public abstract class Creature {
         this.yPos = yPos;
     }
 
+    public int getPlayerId(){
+        return this.playerId;
+    }
+
     public String toString() {
         String weaponNames = "";
         for(int i = 0; i < this.weapons.size(); i++){
