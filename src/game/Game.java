@@ -1,6 +1,5 @@
 package game;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import Main.*;
 import Database.*;
@@ -46,6 +45,10 @@ public class Game {
         db.setPos(posX, posY, playerId);
         int hp = playerCharacter.getHp();
         db.setHp(hp, playerId);
+    }
+
+    public Creature getCreature(int index){
+        return this.creatures.get(index);
     }
 
     public int getAmountOfCreatures(){

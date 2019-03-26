@@ -8,8 +8,8 @@ public class Character extends Creature{
     private String backStory;
 
 
-    public Character(int hp, int ac, String creatureName, int attacksPerTurn, int damageBonus, int xPos, int yPos, ArrayList weapons, String backStory, int playerId){
-        super(hp, ac, creatureName, attacksPerTurn, damageBonus, xPos, yPos, weapons, backStory, playerId);
+    public Character(int hp, int ac, String creatureName, int attacksPerTurn, int damageBonus, int xPos, int yPos, ArrayList weapons, String backStory, int playerId, int creatureId){
+        super(hp, ac, creatureName, attacksPerTurn, damageBonus, xPos, yPos, weapons, backStory, playerId, creatureId);
     }
 
 

@@ -15,10 +15,11 @@ public abstract class Creature {
     private int xPos;
     private int yPos;
     private int playerId;
+    private int creatureId;
     private String backStory;
 
 
-    public Creature(int hp, int ac, String characterName, int attacksPerTurn, int damageBonus, int xPos, int yPos, ArrayList weapons, String backStory, int playerId){
+    public Creature(int hp, int ac, String characterName, int attacksPerTurn, int damageBonus, int xPos, int yPos, ArrayList weapons, String backStory, int playerId, int creatureId){
         this.hp = hp;
         this.ac = ac;
         this.creatureName = characterName;
@@ -31,6 +32,7 @@ public abstract class Creature {
         this.weapons = weapons;
         this.backStory = backStory;
         this.playerId = playerId;
+        this.creatureId = creatureId;
     }
 
     public boolean attackCreature(Creature target, int weaponIndex){
