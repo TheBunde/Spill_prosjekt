@@ -28,7 +28,7 @@ create table creatureTemplate(
 create table creature(
     player_id integer not null,
     creature_id integer not null,
-    creature_name VARCHAR(30) NOT NULL,
+    creature_name VARCHAR(30),
     HP smallint,
     AC smallint,
     movement integer,
