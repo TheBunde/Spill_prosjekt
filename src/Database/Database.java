@@ -699,7 +699,7 @@ public class Database {
         }
     }
 
-    public boolean setStartPos(int playerId){
+   /* public boolean setStartPos(int playerId){
         Connection con = null;
         PreparedStatement prepStmt = null;
         boolean status = true;
@@ -726,7 +726,7 @@ public class Database {
             this.manager.closeConnection(con);
             return status;
         }
-    }
+    }*/
 
     public boolean setPos(int xPos, int yPos, int playerId){
         Connection con = null;
