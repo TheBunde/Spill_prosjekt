@@ -912,10 +912,10 @@ public class Database {
             res = prepStmt.executeQuery();
             while (res.next()){
                 if(res.getInt("player.user_id") <= 0) {
-                    creatures.add(new Monster(res.getInt("hp"), res.getInt("ac"), res.getString("creature_name"), res.getInt("attacks_per_turn"), res.getInt("damage_bonus"), res.getInt("pos_x"), res.getInt("pos_y"), null,res.getString("backstory"), res.getInt("player_id")));
+                    creatures.add(new Monster(res.getInt("hp"), res.getInt("ac"), res.getString("creature_name"), res.getInt("attacks_per_turn"), res.getInt("damage_bonus"), res.getInt("pos_x"), res.getInt("pos_y"), null, res.getString("backstory"), res.getInt("player_id")));
                 }
                 else{
-                    creatures.add(new Character(res.getInt("hp"), res.getInt("ac"), res.getString("creature_name"), res.getInt("attacks_per_turn"), res.getInt("damage_bonus"), res.getInt("pos_x"), res.getInt("pos_y"), null,res.getString("backstory"), res.getInt("player_id")));
+                    creatures.add(new game.Character(res.getInt("hp"), res.getInt("ac"), res.getString("creature_name"), res.getInt("attacks_per_turn"), res.getInt("damage_bonus"), res.getInt("pos_x"), res.getInt("pos_y"), null, res.getString("backstory"), res.getInt("player_id")));
                 }
             }
         }
@@ -928,6 +928,59 @@ public class Database {
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con);
             return creatures;
+        }
+    }
+
+    public int fetchPlayerHp(int playerId){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        int hp = 0;
+        try{
+            con = this.bds.getConnection();
+            String prepString = "SELECT hp FROM creature WHERE player_id = ?";
+            prepStmt = con.prepareStatement(prepString);
+            prepStmt.setInt(1, playerId);
+            res = prepStmt.executeQuery();
+            res.next();
+            hp = res.getInt(1);
+        }
+        catch (SQLException sq){
+            sq.printStackTrace();
+            hp = -1;
+        }
+        finally {
+            this.manager.closeRes(res);
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(con);
+            return hp;
+        }
+    }
+
+    public boolean setHp(int hp, int playerId){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        boolean status = true;
+        try{
+            con = this.bds.getConnection();
+            con.setAutoCommit(false);
+            String prepString = "UPDATE creature SET hp = ? WHERE player_id = ?";
+            prepStmt = con.prepareStatement(prepString);
+            prepStmt.setInt(1, hp);
+            prepStmt.setInt(2, playerId);
+            prepStmt.executeUpdate();
+            con.commit();
+        }
+        catch (SQLException sq){
+            this.manager.rollback(con);
+            sq.printStackTrace();
+            status = false;
+        }
+        finally {
+            this.manager.turnOnAutoCommit(con);
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(con);
+            return status;
         }
     }
 }
