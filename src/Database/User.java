@@ -1,14 +1,16 @@
 package Database;
+import Main.*;
+
 public class User {
-    private int user_id;
+    private Database db = Main.db;
+    private int user_id = -1;
     private String username;
     private int rank;
     private String email;
     private int lobbyKey;
 
 
-    public User(int user_id, String username, int rank, String email){
-        this.user_id = user_id;
+    public User(String username, int rank, String email){
         this.username = username;
         this.rank = rank;
         this.email = email;
@@ -19,9 +21,9 @@ public class User {
         return user_id;
     }
 
-    //public void setUser_id(int new_user_id){
-        //user_id = new_user_id;
-    //}
+    public void setUser_id(int new_user_id){
+        user_id = new_user_id;
+    }
 
     public String getUsername(){
         return username;
@@ -45,6 +47,21 @@ public class User {
 
     public void setEmail(String newEmail){
         email = newEmail;
+    }
+
+    public int getLobbyKey(){
+        return this.lobbyKey;
+    }
+
+    public void setLobbyKey(int lobbyKey){
+        this.lobbyKey = lobbyKey;
+        if (lobbyKey > 0){
+            new Thread(new Runnable(){
+                @Override public void run(){
+                    db.addChatMessage(getUsername() + " has joined the lobby", true);
+                }
+            }).start();
+        }
     }
 
     public String toString(){
