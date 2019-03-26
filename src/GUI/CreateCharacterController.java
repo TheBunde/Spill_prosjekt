@@ -72,27 +72,36 @@ public class CreateCharacterController implements Initializable {
         if(a.equals("Warrior")) {
             SFXPlayer.getInstance().setSFX(2);
             iv.setImage(warriorImage);
-            text.setText("Warrior. This mighty motherfather is one of the best classes for new players.");
+            text.setText("Warrior. This mighty motherfather is one of the best classes for new players." +
+                    "\nYou like hitting things,and you like to hit it hard." +
+                    "\nIf your enemy runs away you can always throw your javelin at it.");
             MusicPlayer.getInstance().stopSong();
             MusicPlayer.getInstance().changeSong(4);
         }
         if(a.equals("Rogue")) {
             iv.setImage(rogueImage);
-            text.setText("Roge-y stab stab");
+            text.setText("Roge-y stab stab." +
+                    "\nSneaking and stabbing without getting hit is your speciality." +
+                    "\nOr assaulting it with your crossbow. your choice");
             SFXPlayer.getInstance().setSFX(3);
             MusicPlayer.getInstance().stopSong();
             MusicPlayer.getInstance().changeSong(5);
         }
         if(a.equals("Wizard")) {
             iv.setImage(wizardImage);
-            text.setText("It's LeviOsa, not LeviosA");
+            text.setText("It's LeviOsa, not LeviosA." +
+                    "\nAs a Wizzard you like to stay an arms distance away from you enemy," +
+                    "\nwhile asulting it with your array of spells.");
             SFXPlayer.getInstance().setSFX(4);
             MusicPlayer.getInstance().stopSong();
             MusicPlayer.getInstance().changeSong(6);
         }
         if(a.equals("Ranger")) {
             iv.setImage(RangerImage);
-            text.setText("Legolas got nothing on this fella");
+            text.setText("Legolas got nothing on this fella." +
+                    "\nRangers are one with nature." +
+                    "\nWith their longbow and short sword they are good with both ranged and melee attacks." +
+                    "\nA truly versatile character.");
             SFXPlayer.getInstance().setSFX(4);
             MusicPlayer.getInstance().stopSong();
             MusicPlayer.getInstance().changeSong(6);
