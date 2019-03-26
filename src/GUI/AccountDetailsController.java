@@ -59,5 +59,4 @@ public class AccountDetailsController {
         stage.setScene(scene);
         stage.show();
     }
-
 }
