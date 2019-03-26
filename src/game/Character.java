@@ -7,8 +7,8 @@ public class Character extends Creature{
 
     private String backStory;
 
-    public Character(int hp, int ac, int level, String characterName, int attacksPerTurn, int damageBonus, int xPos, int yPos, ArrayList weapons, String backstory){
-        super(hp, ac, characterName, attacksPerTurn, damageBonus, xPos, yPos, weapons);
+    public Character(int hp, int ac, int level, String characterName, int attacksPerTurn, int damageBonus, int xPos, int yPos, ArrayList weapons, String backstory, int playerId){
+        super(hp, ac, characterName, attacksPerTurn, damageBonus, xPos, yPos, weapons, playerId);
         this.backStory = backstory;
     }
 
