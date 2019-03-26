@@ -19,8 +19,7 @@ public class MainMenuController {
 
 
     private Database db = Main.db;
-
-    @Override
+    
     public void initialize(){
         Main.user.setPlayerId(-1);
     }
