@@ -32,6 +32,26 @@ public class Database {
         this.chat = new Chat();
     }
 
+
+    //Safely opens connection between the application and the database
+    public boolean openConnection(){
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            this.con = DriverManager.getConnection(this.url + this.password);
+        }
+        catch(SQLException sq){
+            System.out.println("SQL-Exception: " + sq);
+            return false;
+        }
+        catch (ClassNotFoundException e){
+            System.out.println("Class-Exception: " + e);
+            return false;
+        }
+        finally {
+            return true;
+        }
+    }
+
     //Fetches messages from chat
     public void getMessagesFromChat(){
         Connection con = null;
@@ -319,57 +339,6 @@ public class Database {
         }
     }
 
-
-    public boolean closeRes(ResultSet res){
-        try{
-            res.close();
-        }
-        catch (SQLException sq){
-            sq.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-
-    public boolean closePrepStmt(PreparedStatement prepStmt){
-        try{
-            prepStmt.close();
-        }
-        catch (SQLException sq){
-            sq.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-
-    //Safely opens connection between the application and the database
-    public boolean openConnection(){
-        try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            this.con = DriverManager.getConnection(this.url + this.password);
-        }
-        catch(SQLException sq){
-            System.out.println("SQL-Exception: " + sq);
-            return false;
-        }
-        catch (ClassNotFoundException e){
-            System.out.println("Class-Exception: " + e);
-            return false;
-        }
-        finally {
-            return true;
-        }
-    }
-
-    //Safely closes the connection between the application and the database
-    public void closeConnection(){
-        try {
-            this.con.close();
-        }
-        catch(SQLException sq){
-            System.out.println("SQL-feil: " + sq);
-        }
-    }
     // check if the user exits.
     public int checkLogin(String username, String password) {
         boolean con = openConnection();
@@ -377,13 +346,13 @@ public class Database {
         if (!con) {
             return -1;
         }
-        PreparedStatement ps = null;
+        PreparedStatement prepstmt = null;
         try {
             String query = "SELECT * FROM usr WHERE username=? AND password =?";
-            ps = this.con.prepareStatement(query);
-            ps.setString(1, username);
-            ps.setString(2, password);
-            ResultSet resultSet = ps.executeQuery();
+            prepstmt = this.con.prepareStatement(query);
+            prepstmt.setString(1, username);
+            prepstmt.setString(2, password);
+            ResultSet resultSet = prepstmt.executeQuery();
 
             // if user found -> return 0 that indicates success login.
             if(resultSet.next()){
@@ -394,8 +363,8 @@ public class Database {
         } catch (SQLException sq) {
             sq.printStackTrace();
         } finally {
-            this.closePrepStmt(ps);
-            this.closeConnection();
+            this.manager.closePrepStmt(prepstmt);
+            this.manager.closeConnection(this.con);
         }
         //If made it to here return -1, login failed.
         return -1;
@@ -403,31 +372,29 @@ public class Database {
 
 
     public boolean emailExist(String email){
-        this.openConnection();
+        openConnection();
         PreparedStatement prepStmt = null;
-        //ResultSet res = null;
-        //Boolean variable to keep track of the existence of the specified email
+        ResultSet res = null;
         boolean emailExists = true;
         try{
-            //Checks if email with the specified user_id exists
             String prepString = "SELECT user_id FROM usr WHERE email =? ";
             prepStmt = this.con.prepareStatement(prepString);
             prepStmt.setString(1, email);
-            ResultSet res = prepStmt.executeQuery();
-            //emailExists = res.next();
+            res = prepStmt.executeQuery();
             if(!res.next()){
                 emailExists = false;
             }
-            this.closeRes(res);
-            this.closePrepStmt(prepStmt);
-            this.closeConnection();
-
         }
         catch (SQLException sq){
             sq.printStackTrace();
             return false;
         }
         finally {
+            if(res != null){
+                this.manager.closeRes(res);
+            }
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(this.con);
             return emailExists;
         }
     }
@@ -814,5 +781,3 @@ public class Database {
         }
     }
 }
-
-
