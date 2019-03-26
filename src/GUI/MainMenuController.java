@@ -19,6 +19,10 @@ public class MainMenuController {
 
 
     private Database db = Main.db;
+    
+    public void initialize(){
+        Main.user.setPlayerId(-1);
+    }
 
     public void startNewGameButtonPressed() throws Exception{
         db.createNewLobby();

@@ -564,6 +564,7 @@ public class Database {
             res = prepStmt.getGeneratedKeys();
             res.next();
             playerId = res.getInt(1);
+            Main.user.setPlayerId(playerId);
 
         }
         catch (SQLException sq){
@@ -915,7 +916,9 @@ public class Database {
                     creatures.add(new Monster(res.getInt("hp"), res.getInt("ac"), res.getString("creature_name"), res.getInt("attacks_per_turn"), res.getInt("damage_bonus"), res.getInt("pos_x"), res.getInt("pos_y"), null, res.getString("backstory"), res.getInt("player_id")));
                 }
                 else{
+
                     creatures.add(new game.Character(res.getInt("hp"), res.getInt("ac"), res.getString("creature_name"), res.getInt("attacks_per_turn"), res.getInt("damage_bonus"), res.getInt("pos_x"), res.getInt("pos_y"), null, res.getString("backstory"), res.getInt("player_id")));
+
                 }
             }
         }

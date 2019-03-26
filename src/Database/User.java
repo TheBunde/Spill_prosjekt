@@ -8,6 +8,8 @@ public class User {
     private int rank;
     private String email;
     private int lobbyKey;
+    private int playerId = -1;
+    private boolean host = false;
 
 
     public User(int user_id, String username, int rank, String email){
@@ -63,6 +65,22 @@ public class User {
                 }
             }).start();
         }
+    }
+
+    public int getPlayerId(){
+        return this.playerId;
+    }
+
+    public void setPlayerId(int playerId){
+        this.playerId = playerId;
+    }
+
+    public boolean isHost(){
+        return this.host;
+    }
+
+    public void setHost(boolean host){
+        this.host = host;
     }
 
     public String toString(){
