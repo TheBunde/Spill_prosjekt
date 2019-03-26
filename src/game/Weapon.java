@@ -5,14 +5,15 @@ public class Weapon {
 
     private String name;
     private int damageDice;
-    private String description;
+    private boolean ranged;
     private int diceAmount;
+    private int imageUrl;
 
-    public Weapon(String name, int dammageDice, String description, int diceAmount){
+    public Weapon(String name, int damageDice, boolean ranged, int diceAmount){
         this.name = name;
-        this.damageDice = dammageDice;
-        this.description = description;
-        this. diceAmount = diceAmount;
+        this.damageDice = damageDice;
+        this.ranged = ranged;
+        this.diceAmount = diceAmount;
     }
 
     public String getName() {
@@ -23,8 +24,8 @@ public class Weapon {
         return damageDice;
     }
 
-    public String getDescription() {
-        return description;
+    public boolean isRanged(){
+        return this.ranged;
     }
 
     public int getDiceAmount() {
