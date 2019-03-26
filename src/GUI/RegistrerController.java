@@ -9,15 +9,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import login.Password;
-
-import javax.swing.*;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RegistrerController {
+
+    Alert alert = new Alert(Alert.AlertType.WARNING);
 
     @FXML
     private TextField usernameInput, emailInput;
@@ -39,9 +36,32 @@ public class RegistrerController {
 
 
     public void register() throws Exception {
-        boolean enable;
-        if (!chekEmailExist(emailInput.getText().trim()) || !emailValidation() || fieldIsEmpty()) {
-            enable = false;
+        boolean ok;
+
+        if(!emailValidation()){
+            alert.setTitle("Email validation");
+            alert.setHeaderText(null);
+            alert.setContentText("Please Enter a Valid Email!");
+            alert.showAndWait();
+            //ok = false;
+        }
+
+        else if(usernameInput.getText().isEmpty() || passwordInput.getText().isEmpty() || passwordInput.getText().isEmpty() ||
+                rePasswordInput.getText().isEmpty()) {
+            alert.setTitle("Empty textfield");
+            alert.setHeaderText(null);
+            alert.setContentText("Field can not be empty.");
+            alert.showAndWait();
+            //ok = false;
+        }
+
+        else if (db.emailExist(emailInput.getText().trim())) {
+            alert.setTitle("Check email");
+            alert.setHeaderText(null);
+            alert.setContentText("Email exists in database already!");
+            alert.showAndWait();
+            //ok = false;
+
         }else{
             db.registerUser(usernameInput.getText().trim(), emailInput.getText().trim(), passwordInput.getText().trim(), rePasswordInput.getText().trim());
             db.addPassword(passwordInput.getText().trim());
@@ -51,8 +71,6 @@ public class RegistrerController {
             sceneSwitcher.switchScene(registerButton, "MainMenu.fxml");
         }
     }
-
-
 
     public void cancel() throws Exception {
         SFXPlayer.getInstance().setSFX(0);
@@ -66,42 +84,33 @@ public class RegistrerController {
         Matcher m = p.matcher(emailInput.getText());
         if (m.find() && m.group().equals(emailInput.getText())) {
             return true;
-        } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Email validation");
-            alert.setHeaderText(null);
-            alert.setContentText("Please Enter a Valid Email");
-            alert.showAndWait();
-            return false;
         }
+        return false;
     }
 
-    public boolean chekEmailExist(String email){
-        if(!db.emailExist(email)){
-            return true;
-        }else{
-            Alert alert = new Alert(Alert.AlertType.WARNING);
+    /*
+    public boolean emailExist() {
+        if (db.emailExist(emailInput.getText().trim())) {
             alert.setTitle("Check email");
             alert.setHeaderText(null);
             alert.setContentText("Email exist in database already!");
             alert.showAndWait();
-            return false;
+            return true;
         }
+        return false;
     }
 
+
     public boolean fieldIsEmpty(){
-        if(passwordInput.getText().isEmpty() || rePasswordInput.getText().isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
+        if (usernameInput.getText().isEmpty() || passwordInput.getText().isEmpty() || passwordInput.getText().isEmpty() ||
+                rePasswordInput.getText().isEmpty()) {
             alert.setTitle("Empty textfield");
             alert.setHeaderText(null);
             alert.setContentText("Field can not be empty.");
             alert.showAndWait();
             return true;
-        }else{
-            return false;
         }
+        return false;
     }
-
-
-
+    */
 }
