@@ -4,6 +4,8 @@ package GUI;
 import Database.*;
 import Main.*;
 import audio.MusicPlayer;
+import game.Creature;
+import game.Game;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -48,7 +50,8 @@ public class BattlefieldController implements Initializable {
 
     private boolean yobClicked;
     private ArrayList<ImageView> playerPawns = new ArrayList<>();
-    private ArrayList<Integer> players = new ArrayList<>();
+    private String[] imageUrls = {"GUI/images/warrior.jpg", "GUI/images/rogue.jpg", "GUI/images/wizard.jpg"};
+    private Game game;
 
     public static Timer timer = new Timer();
 
@@ -56,13 +59,22 @@ public class BattlefieldController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         double width = 36.6875;
         double height = 23.8125;
-        ArrayList<Integer> x_pos = new ArrayList<>();
-        ArrayList<Integer> y_pos = new ArrayList<>();
-        x_pos = db.fetchStartPos(true);
-        y_pos = db.fetchStartPos(false);
-        players = db.fetchAllPlayerId();
         Image image = null;
-        for(int i = 0; i < db.fetchPlayerCount(); i++){
+        game = new Game();
+
+        for(int i = 0; i < game.getAmountOfCreatures(); i++){
+            Creature creature = game.getCreature(i);
+            image = new Image(imageUrls[creature.getCreatureId() -1], width, height, false, false);
+            ImageView iv = new ImageView(image);
+            iv.setPreserveRatio(false);
+            iv.setFitHeight(mapGrid.getHeight() / 16);
+            iv.setFitWidth(mapGrid.getWidth() / 16);
+            battlefieldUI.getChildren().add(iv);
+            this.playerPawns.add(iv);
+        }
+        updatePos();
+
+        /*for(int i = 0; i < db.fetchPlayerCount(); i++){
             for(int j = 0; i < db.fetchPlayerCount(); i++){
                 ArrayList<Integer> pos = db.fetchPlayerPos(players.get(j));
                 if(pos.get(0) == x_pos.get(i) && pos.get(1) == y_pos.get(i)){
@@ -83,13 +95,7 @@ public class BattlefieldController implements Initializable {
                     this.playerPawns.add(iv);
                 }
             }
-        }
-        if(db.setPos(10, 10, db.fetchPlayerId())){
-            System.out.println("si");
-        }
-        else{
-            System.out.println("no");
-        }
+        }*/
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -209,9 +215,9 @@ public class BattlefieldController implements Initializable {
     }
 
     private void updatePos() {
-        for (int i = 0; i < players.size(); i++) {
-            int x_pos = db.fetchPlayerPos(players.get(i)).get(0);
-            int y_pos = db.fetchPlayerPos(players.get(i)).get(1);
+        for (int i = 0; i < playerPawns.size(); i++) {
+            int x_pos = game.getPos(i).get(0);
+            int y_pos = game.getPos(i).get(1);
             if (x_pos != toGrid(mapGrid.getWidth(), playerPawns.get(i).getX()) || y_pos != toGrid(mapGrid.getHeight(), playerPawns.get(i).getY())) {
                 playerPawns.get(i).setX((double) x_pos * mapGrid.getWidth() / 16);
                 playerPawns.get(i).setY((double) y_pos * mapGrid.getHeight() / 16);
