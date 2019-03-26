@@ -13,7 +13,6 @@ public class Database {
     private String password;
     private ManageConnection manager;
     private BasicDataSource bds;
-    private User user = Main.user;
     public Chat chat;
 
     //Setup for database
@@ -555,9 +554,9 @@ public class Database {
             con.setAutoCommit(false);
             String prepString = "INSERT INTO player VALUES(DEFAULT, ?, ?)";
             prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
-            prepStmt.setInt(1, user.getLobbyKey());
-            prepStmt.setInt(2, user.getUser_id());
-            System.out.println(user.getLobbyKey() + "\n" + user.getUser_id());
+            prepStmt.setInt(1, Main.user.getLobbyKey());
+            prepStmt.setInt(2, Main.user.getUser_id());
+            System.out.println(Main.user.getLobbyKey() + "\n" + Main.user.getUser_id());
             prepStmt.executeUpdate();
             con.commit();
             res = prepStmt.getGeneratedKeys();
@@ -593,7 +592,7 @@ public class Database {
             con = this.bds.getConnection();
             con.setAutoCommit(false);
             int creatureId = fetchCreatureId(character);
-            String prepString = "INSERT INTO creature SELECT ?, ?, hp, ac, movement, damage_bonus, attack_bonus, attacks_per_turn, ?, ? FROM creatureTemplate WHERE creature_id = ?";
+            String prepString = "INSERT INTO creature SELECT ?, ?, creature_name, hp, ac, movement, damage_bonus, attack_bonus, attacks_per_turn, ?, ? FROM creatureTemplate WHERE creature_id = ?";
             prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
             prepStmt.setInt(1, playerId);
             prepStmt.setInt(2, creatureId);
@@ -654,8 +653,8 @@ public class Database {
             con = this.bds.getConnection();
             String prepString = "SELECT player_id FROM player WHERE user_id = ? AND lobby_key = ?";
             prepStmt = con.prepareStatement(prepString);
-            prepStmt.setInt(1, user.getUser_id());
-            prepStmt.setInt(2, user.getLobbyKey());
+            prepStmt.setInt(1, Main.user.getUser_id());
+            prepStmt.setInt(2, Main.user.getLobbyKey());
             res = prepStmt.executeQuery();
             res.next();
             id = res.getInt(1);
@@ -681,7 +680,7 @@ public class Database {
             con = this.bds.getConnection();
             String prepString = "SELECT COUNT(*) FROM player WHERE lobby_key = ?";
             prepStmt = con.prepareStatement(prepString);
-            prepStmt.setInt(1, user.getLobbyKey());
+            prepStmt.setInt(1, Main.user.getLobbyKey());
             res = prepStmt.executeQuery();
             res.next();
             count = res.getInt(1);
@@ -766,7 +765,7 @@ public class Database {
             String prepString = "UPDATE usr SET host = ? WHERE user_id = ?";
             prepStmt = con.prepareStatement(prepString);
             prepStmt.setBoolean(1, host);
-            prepStmt.setInt(2, user.getUser_id());
+            prepStmt.setInt(2, Main.user.getUser_id());
             prepStmt.executeUpdate();
             con.commit();
         }
@@ -793,7 +792,7 @@ public class Database {
             con = this.bds.getConnection();
             String prepString = "SELECT pos_x, pos_y FROM creature WHERE lobby_key = ?";
             prepStmt = con.prepareStatement(prepString);
-            prepStmt.setInt(1, user.getLobbyKey());
+            prepStmt.setInt(1, Main.user.getLobbyKey());
             res = prepStmt.executeQuery();
             while (res.next()){
                 if(xpos) {
@@ -826,7 +825,7 @@ public class Database {
             con = this.bds.getConnection();
             String prepString = "SELECT player_id FROM player WHERE lobby_key = ?";
             prepStmt = con.prepareStatement(prepString);
-            prepStmt.setInt(1, user.getLobbyKey());
+            prepStmt.setInt(1, Main.user.getLobbyKey());
             res = prepStmt.executeQuery();
             while (res.next()){
                 playerId.add(res.getInt(1));
