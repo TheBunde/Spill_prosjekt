@@ -66,13 +66,13 @@ public class BattlefieldController implements Initializable {
             for(int j = 0; i < db.fetchPlayerCount(); i++){
                 ArrayList<Integer> pos = db.fetchPlayerPos(players.get(j));
                 if(pos.get(0) == x_pos.get(i) && pos.get(1) == y_pos.get(i)){
-                    if(db.fetchPlayerCharacterId(players.get(j)) == 1){
+                    if(db.fetchPlayerCreatureId(players.get(j)) == 1){
                         image = new Image("GUI/images/warrior.jpg", width, height, false, false);
                     }
-                    else if(db.fetchPlayerCharacterId(players.get(j)) == 2){
+                    else if(db.fetchPlayerCreatureId(players.get(j)) == 2){
                         image = new Image("GUI/images/rogue.jpg", width, height, false, false);
                     }
-                    else if(db.fetchPlayerCharacterId(players.get(j)) == 3){
+                    else if(db.fetchPlayerCreatureId(players.get(j)) == 3){
                         image = new Image("GUI/images/wizard.jpg", width, height, false, false);
                     }
                     ImageView iv = new ImageView(image);
@@ -84,7 +84,7 @@ public class BattlefieldController implements Initializable {
                 }
             }
         }
-        if(db.movePos(10, 10, db.fetchPlayerId())){
+        if(db.setPos(10, 10, db.fetchPlayerId())){
             System.out.println("si");
         }
         else{
@@ -149,7 +149,7 @@ public class BattlefieldController implements Initializable {
         int y_pos = db.fetchPlayerPos(db.fetchPlayerId()).get(1);
         for(int i = 0; i < playerPawns.size(); i++){
             if(x_pos == toGrid(mapGrid.getWidth(), playerPawns.get(i).getX()) && y_pos == toGrid(mapGrid.getHeight(), playerPawns.get(i).getY())){
-                db.movePos(toGrid(mapGrid.getWidth(), xPos), toGrid(mapGrid.getHeight(), yPos), db.fetchPlayerId());
+                db.setPos(toGrid(mapGrid.getWidth(), xPos), toGrid(mapGrid.getHeight(), yPos), db.fetchPlayerId());
                 setPos(playerPawns.get(i), 0, 0);
             }
 

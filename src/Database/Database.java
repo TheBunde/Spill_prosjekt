@@ -205,11 +205,10 @@ public class Database {
         try{
             con = this.bds.getConnection();
             con.setAutoCommit(false);
-            String prepString = "INSERT INTO usr VALUES(DEFAULT, ?, 0, ?, ?, DEFAULT, DEFAULT)";
+            String prepString = "INSERT INTO usr VALUES(DEFAULT, ?, 0, ?, DEFAULT, DEFAULT)";
             prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
             prepStmt.setString(1, Main.user.getUsername());
             prepStmt.setString(2, Main.user.getEmail());
-            prepStmt.setString(3, "hunter2");
             System.out.println("done");
             prepStmt.executeUpdate();
             res = prepStmt.getGeneratedKeys();
@@ -549,22 +548,25 @@ public class Database {
         PreparedStatement prepStmt = null;
         ResultSet res = null;
         boolean status = true;
+        int playerId = -1;
         try{
+            System.out.println("uno");
             con = this.bds.getConnection();
             con.setAutoCommit(false);
-            String prepString = "INSERT INTO player VALUES(DEFAULT, ?, ?, ?)";
+            String prepString = "INSERT INTO player VALUES(DEFAULT, ?, ?)";
             prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
             prepStmt.setInt(1, user.getLobbyKey());
-            prepStmt.setInt(2, fetchCharacterId(character));
-            prepStmt.setInt(3, user.getUser_id());
+            prepStmt.setInt(2, user.getUser_id());
+            System.out.println(user.getLobbyKey() + "\n" + user.getUser_id());
             prepStmt.executeUpdate();
+            con.commit();
             res = prepStmt.getGeneratedKeys();
             res.next();
-            createCreature(character);
-            con.commit();
+            playerId = res.getInt(1);
+
         }
         catch (SQLException sq){
-            con.rollback();
+            this.manager.rollback(con);
             sq.printStackTrace();
             status = false;
         }
@@ -573,11 +575,16 @@ public class Database {
             this.manager.closeRes(res);
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con);
+            if(playerId <= 0){
+                status = false;
+            }else{
+                //createCreature(playerId, character);
+            }
             return status;
         }
     }
 
-    public boolean createCreature(String character){
+    public boolean createCreature(int playerId, String character){
         Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
@@ -585,51 +592,19 @@ public class Database {
         try{
             con = this.bds.getConnection();
             con.setAutoCommit(false);
-            String prepString = "INSERT INTO creature VALUES(?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?)";
+            int creatureId = fetchCreatureId(character);
+            String prepString = "INSERT INTO creature SELECT ?, ?, hp, ac, movement, damage_bonus, attack_bonus, attacks_per_turn, ?, ? FROM creatureTemplate WHERE creature_id = ?";
             prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
-            prepStmt.setInt(2, fetchPlayerId());
-            prepStmt.setInt(12, 0);
-            if(fetchCharacterId(character) == 1) {
-                prepStmt.setInt(1, fetchCharacterId(character));
-                prepStmt.setInt(3, user.getLobbyKey());
-                prepStmt.setInt(4, 36);
-                prepStmt.setInt(5, 18);
-                prepStmt.setInt(6, 0);
-                prepStmt.setInt(7, 0);
-                prepStmt.setInt(8, 3);
-                prepStmt.setInt(9, 5);
-                prepStmt.setInt(10, 8);
-                prepStmt.setInt(11, 2);
-            }
-            else if(fetchCharacterId(character) == 2){
-                prepStmt.setInt(1, fetchCharacterId(character));
-                prepStmt.setInt(4, 23);
-                prepStmt.setInt(3, user.getLobbyKey());
-                prepStmt.setInt(5, 16);
-                prepStmt.setInt(6, 0);
-                prepStmt.setInt(7, 0);
-                prepStmt.setInt(8, 3);
-                prepStmt.setInt(9, 7);
-                prepStmt.setInt(10, 7);
-                prepStmt.setInt(11, 2);
-            }
-            else if(fetchCharacterId(character) == 3){
-                prepStmt.setInt(1, fetchCharacterId(character));
-                prepStmt.setInt(3, user.getLobbyKey());
-                prepStmt.setInt(4, 22);
-                prepStmt.setInt(5, 15);
-                prepStmt.setInt(6, 0);
-                prepStmt.setInt(7, 0);
-                prepStmt.setInt(8, 3);
-                prepStmt.setInt(9, 0);
-                prepStmt.setInt(10, 8);
-                prepStmt.setInt(11, 1);
-            }
+            prepStmt.setInt(1, playerId);
+            prepStmt.setInt(2, creatureId);
+            prepStmt.setInt(3, (int)Math.floor(Math.random()*16 + 1));
+            prepStmt.setInt(4, (int)Math.floor(Math.random()*16 + 1));
+            prepStmt.setInt(5, creatureId);
             prepStmt.executeUpdate();
             con.commit();
         }
         catch (SQLException sq){
-            con.rollback();
+            this.manager.rollback(con);
             sq.printStackTrace();
             status = false;
         }
@@ -642,14 +617,14 @@ public class Database {
         }
     }
 
-    public int fetchCharacterId(String character){
+    public int fetchCreatureId(String character){
         Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
         int characterId = -1;
         try{
             con = this.bds.getConnection();
-            String prepString = "SELECT chrctr.character_id FROM chrctr WHERE character_name = ?";
+            String prepString = "SELECT creatureTemplate.creature_id FROM creatureTemplate WHERE creature_name = ?";
             prepStmt = con.prepareStatement(prepString);
             prepStmt.setString(1, character);
             res = prepStmt.executeQuery();
@@ -741,7 +716,7 @@ public class Database {
             con.commit();
         }
         catch (SQLException sq){
-            con.rollback();
+            this.manager.rollback(con);
             sq.printStackTrace();
             status = false;
         }
@@ -753,7 +728,7 @@ public class Database {
         }
     }
 
-    public boolean movePos(int xPos, int yPos, int playerId){
+    public boolean setPos(int xPos, int yPos, int playerId){
         Connection con = null;
         PreparedStatement prepStmt = null;
         boolean status = true;
@@ -762,14 +737,14 @@ public class Database {
             con.setAutoCommit(false);
             String prepString = "UPDATE creature SET pos_x = ?, pos_y = ? WHERE player_id = ?";
             prepStmt = con.prepareStatement(prepString);
-            prepStmt.setInt(1, 8);
-            prepStmt.setInt(2, 8);
+            prepStmt.setInt(1, xPos);
+            prepStmt.setInt(2, yPos);
             prepStmt.setInt(3, playerId);
             prepStmt.executeUpdate();
             con.commit();
         }
         catch (SQLException sq){
-            con.rollback();
+            this.manager.rollback(con);
             sq.printStackTrace();
             status = false;
         }
@@ -796,7 +771,7 @@ public class Database {
             con.commit();
         }
         catch (SQLException sq){
-            con.rollback();
+            this.manager.rollback(con);
             sq.printStackTrace();
             status = false;
         }
@@ -897,14 +872,14 @@ public class Database {
         }
     }
 
-    public int fetchPlayerCharacterId(int playerId){
+    public int fetchPlayerCreatureId(int playerId){
         Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
         int characterId = 0;
         try{
             con = this.bds.getConnection();
-            String prepString = "SELECT character_id FROM player WHERE player_id = ?";
+            String prepString = "SELECT creature_id FROM creature WHERE player_id = ?";
             prepStmt = con.prepareStatement(prepString);
             prepStmt.setInt(1, playerId);
             res = prepStmt.executeQuery();
