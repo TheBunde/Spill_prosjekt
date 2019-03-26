@@ -2,6 +2,8 @@ package Database;
 
 
 import Main.*;
+import game.Creature;
+import game.Monster;
 import javafx.scene.control.Alert;
 import org.apache.commons.dbcp2.BasicDataSource;
 
@@ -577,7 +579,7 @@ public class Database {
             if(playerId <= 0){
                 status = false;
             }else{
-                //createCreature(playerId, character);
+                createCreature(playerId, character);
             }
             return status;
         }
@@ -894,6 +896,38 @@ public class Database {
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con);
             return characterId;
+        }
+    }
+
+    public ArrayList<Creature> fetchCreaturesFromLobby(){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        ArrayList<Creature> creatures = new ArrayList<>();
+        try{
+            con = this.bds.getConnection();
+            String prepString = "SELECT creature.*, player.user_id From creature, player WHERE player.lobby_key = ? AND player.player_id = creature.player_id ";
+            prepStmt = con.prepareStatement(prepString);
+            prepStmt.setInt(1, Main.user.getLobbyKey());
+            res = prepStmt.executeQuery();
+            while (res.next()){
+                if(res.getInt("player.user_id") <= 0) {
+                    creatures.add(new Monster(res.getInt("hp"), res.getInt("ac"), res.getString("creature_name"), res.getInt("attacks_per_turn"), res.getInt("damage_bonus"), res.getInt("pos_x"), res.getInt("pos_y"), null,res.getString("backstory"), res.getInt("player_id")));
+                }
+                else{
+                    creatures.add(new Character(res.getInt("hp"), res.getInt("ac"), res.getString("creature_name"), res.getInt("attacks_per_turn"), res.getInt("damage_bonus"), res.getInt("pos_x"), res.getInt("pos_y"), null,res.getString("backstory"), res.getInt("player_id")));
+                }
+            }
+        }
+        catch (SQLException sq){
+            sq.printStackTrace();
+            creatures = null;
+        }
+        finally {
+            this.manager.closeRes(res);
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(con);
+            return creatures;
         }
     }
 }
