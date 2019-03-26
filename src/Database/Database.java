@@ -484,7 +484,7 @@ public class Database {
             //Checks if email with the specified user_id exists
             String prepString = "SELECT user_id FROM usr WHERE email =? ";
             prepStmt = this.con.prepareStatement(prepString);
-            prepStmt.setInt(1, Main.user.getUser_id());
+            prepStmt.setInt(1, email);
             res = prepStmt.executeQuery();
             emailExists = res.next();
 
