@@ -17,6 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 
@@ -40,12 +41,18 @@ public class BattlefieldController implements Initializable {
     private AnchorPane battlefieldUI;
     @FXML
     private Button moveButton;
+    @FXML
+    private Button attackButton;
+    @FXML
+    private Button endTurnButton;
 
     private Database db = Main.db;
     private User user = Main.user;
     private SceneSwitcher sceneSwitcher = new SceneSwitcher();
     private double mouseX;
     private double mouseY;
+    private double cellWidth;
+    private double cellHeight;
     private ArrayList<ImageView> playerPawns = new ArrayList<>();
     private String[] imageUrls = {"GUI/images/warrior.jpg", "GUI/images/rogue.jpg", "GUI/images/wizard.jpg"};
     private Game game;
@@ -62,14 +69,16 @@ public class BattlefieldController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        double width = 36.6875;
-        double height = 23.8125;
-        Image image = null;
         game = new Game();
+
+        Image image = null;
+        cellWidth = mapGrid.getPrefWidth()/(16.0);
+        cellHeight = mapGrid.getPrefHeight()/(16.0);
+        System.out.println(mapGrid.getWidth());
 
         for(int i = 0; i < game.getAmountOfCreatures(); i++){
             Creature creature = game.getCreature(i);
-            image = new Image(imageUrls[creature.getCreatureId() -1], width, height, false, false);
+            image = new Image(imageUrls[creature.getCreatureId() -1], cellWidth, cellHeight, false, false);
             ImageView iv = new ImageView(image);
             iv.setPreserveRatio(false);
             iv.setFitHeight(mapGrid.getHeight() / 16);
@@ -77,40 +86,63 @@ public class BattlefieldController implements Initializable {
             battlefieldUI.getChildren().add(iv);
             this.playerPawns.add(iv);
         }
-        updateGame();
+        refreshGameFromClient();
+        updateGameFromServer();
 
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 //db.movePos(10, 10, db.fetchPlayerId());
-                updateGame();
+                updateGameFromServer();
+                refreshGameFromClient();
                 System.out.println("Hei");
             }
         },0 ,1500);
     }
 
+    public BattlefieldController(){
+
+    }
+
     public void attackButtonPressed(){
         System.out.println(Math.floor(mapGrid.getWidth() / 16));
+        moveButton.setDisable(true);
+        endTurnButton.setDisable(true);
+        attackButton.getStyleClass().add("button-selected");
+    }
+
+    public void attackFinished(){
+        moveButton.setDisable(false);
+        endTurnButton.setDisable(false);
+        attackButton.getStyleClass().clear();
+        attackButton.getStyleClass().add("button");
     }
 
     public void moveButtonPressed(){
-        openMapGridEventHandler();
-        /*System.out.println("X-pososjon: " + toGrid(431, mouseX) + "\nY-posisjon: " + toGrid(310, mouseY) + "\n");
-        int x_pos = db.fetchPlayerPos(db.fetchPlayerId()).get(0);
-        int y_pos = db.fetchPlayerPos(db.fetchPlayerId()).get(1);
-        for(int i = 0; i < playerPawns.size(); i++){
-            if(x_pos == toGrid(mapGrid.getWidth(), playerPawns.get(i).getX()) && y_pos == toGrid(mapGrid.getHeight(), playerPawns.get(i).getY())){
-                db.setPos(toGrid(mapGrid.getWidth(), mouseX), toGrid(mapGrid.getHeight(), mouseY), db.fetchPlayerId());
-                setPos(playerPawns.get(i), 0, 0);
-            }
+        attackButton.setDisable(true);
+        endTurnButton.setDisable(true);
+        moveButton.getStyleClass().add("button-selected");
 
-        }*/
+        /*
+        Pane movementPane = new Pane();
+        double moveDistance = cellWidth*(2*game.playerCharacter.getMovement() + 1);
+        movementPane.setPrefWidth(moveDistance);
+        movementPane.setPrefHeight(moveDistance);
+        */
+
+        openMapGridEventHandler();
     }
+
     public void moveFinished(){
         game.playerCharacter.setNewPos(toGrid(mapGrid.getWidth(), mouseX), toGrid(mapGrid.getHeight(), mouseY));
-        updateGame();
         closeMapGridEventhandler();
+        attackButton.setDisable(false);
+        endTurnButton.setDisable(false);
+        moveButton.getStyleClass().clear();
+        moveButton.getStyleClass().add("button");
+        refreshGameFromClient();
+
     }
 
     public void endTurnButtonPressed(){
@@ -148,12 +180,15 @@ public class BattlefieldController implements Initializable {
         mapGrid.removeEventFilter(MouseEvent.MOUSE_CLICKED, mouseEventHandler);
     }
 
-    public void updateGame(){
+    public void updateGameFromServer(){
+        game.update();
+    }
+
+    public void refreshGameFromClient(){
         for(int i = 0; i < playerPawns.size(); i++){
             ArrayList<Integer> pos = game.getPos(i);
             playerPawns.get(i).setX((double) pos.get(0) * mapGrid.getWidth() / 16);
             playerPawns.get(i).setY((double) pos.get(1) * mapGrid.getHeight() / 16);
         }
-        game.update();
     }
 }

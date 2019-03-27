@@ -24,8 +24,8 @@ public class Game {
     }
 
     public void update(){
-        updateCreatureData();
         pushCreatureData();
+        updateCreatureData();
     }
 
     public void updateCreatureData(){
