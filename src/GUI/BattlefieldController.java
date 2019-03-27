@@ -33,13 +33,11 @@ public class BattlefieldController implements Initializable {
 
     // https://stackoverflow.com/questions/41081905/javafx-getting-the-location-of-a-click-on-a-gridpane
     @FXML
-    private Button exitButton;
+    private Button exitButton, moveButton, attackButton;
     @FXML
     private GridPane mapGrid;
     @FXML
     private AnchorPane battlefieldUI;
-    @FXML
-    private Button moveButton;
 
     private Database db = Main.db;
     private User user = Main.user;
@@ -85,6 +83,7 @@ public class BattlefieldController implements Initializable {
             public void run() {
                 //db.movePos(10, 10, db.fetchPlayerId());
                 updateGame();
+                isYourTurn();
                 System.out.println("Hei");
             }
         },0 ,1500);
@@ -114,7 +113,7 @@ public class BattlefieldController implements Initializable {
     }
 
     public void endTurnButtonPressed(){
-
+        game.endTurn();
     }
 
     public void helpButtonPressed(){
@@ -155,5 +154,16 @@ public class BattlefieldController implements Initializable {
             playerPawns.get(i).setY((double) pos.get(1) * mapGrid.getHeight() / 16);
         }
         game.update();
+    }
+
+    public void isYourTurn(){
+        if(!game.isYourTurn()){
+            moveButton.setDisable(true);
+            attackButton.setDisable(true);
+        }
+        else{
+            moveButton.setDisable(false);
+            attackButton.setDisable(false);
+        }
     }
 }
