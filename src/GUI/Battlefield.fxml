@@ -69,16 +69,6 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                 </GridPane>
-                <ImageView fx:id="green" fitHeight="118.0" fitWidth="171.0" mouseTransparent="true" opacity="0.0">
-                    <image>
-                        <Image url="@images/transparent_green.png" />
-                    </image>
-                </ImageView>
-                <ImageView fx:id="yobama" fitHeight="24.0" fitWidth="35.0" focusTraversable="true" onMouseClicked="#yobSelected" pickOnBounds="true">
-                    <image>
-                        <Image url="@images/yobammarere.jpg" />
-                    </image>
-                </ImageView>
             </children>
         </AnchorPane>
         <GridPane GridPane.rowIndex="1">
