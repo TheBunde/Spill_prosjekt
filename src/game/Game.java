@@ -8,6 +8,7 @@ public class Game {
     private ArrayList<Creature> creatures = new ArrayList<>();
     public game.Character playerCharacter;
     private Database db = Main.db;
+    private int turn = 0;
 
     public Game(){
         creatures = db.fetchCreaturesFromLobby();
@@ -29,6 +30,7 @@ public class Game {
     }
 
     public void updateCreatureData(){
+        turn = db.fetchPlayerTurn();
         for (int i = 0; i < creatures.size(); i++){
             int playerId = creatures.get(i).getPlayerId();
             ArrayList<Integer> newPos = db.fetchPlayerPos(playerId);
@@ -64,5 +66,15 @@ public class Game {
         return pos;
     }
 
+    public boolean isYourTurn(){
+        if(creatures.get(turn % creatures.size()).getPlayerId() == Main.user.getPlayerId()){
+            return true;
+        }
+        return false;
+    }
 
+    public void endTurn(){
+        turn++;
+        db.incrementPlayerTurn(turn);
+    }
 }

@@ -2,6 +2,7 @@ package Database;
 
 
 import Main.*;
+import com.mysql.cj.protocol.Resultset;
 import game.Creature;
 import game.Monster;
 import javafx.scene.control.Alert;
@@ -981,6 +982,60 @@ public class Database {
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con);
             return status;
+        }
+    }
+
+    public boolean incrementPlayerTurn(int turn){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        boolean status = true;
+        try{
+            con = this.bds.getConnection();
+            con.setAutoCommit(false);
+            String prepString = "UPDATE game_lobby SET player_turn = ? WHERE lobby_key = ?";
+            prepStmt = con.prepareStatement(prepString);
+            prepStmt.setInt(1, turn);
+            prepStmt.setInt(2, Main.user.getLobbyKey());
+            prepStmt.executeUpdate();
+            con.commit();
+        }
+        catch (SQLException sq){
+            this.manager.rollback(con);
+            sq.printStackTrace();
+            status = false;
+        }
+        finally {
+            this.manager.turnOnAutoCommit(con);
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(con);
+            return status;
+        }
+    }
+
+    public int fetchPlayerTurn(){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        int turn = 0;
+        try{
+            con = this.bds.getConnection();
+            String prepString = "SELECT player_turn FROM game_lobby WHERE lobby_key = ?";
+            prepStmt = con.prepareStatement(prepString);
+            prepStmt.setInt(1, Main.user.getLobbyKey());
+            res = prepStmt.executeQuery();
+            res.next();
+            turn = res.getInt(1);
+
+        }
+        catch (SQLException sq){
+            sq.printStackTrace();
+            turn = -1;
+        }
+        finally {
+            this.manager.turnOnAutoCommit(con);
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(con);
+            return turn;
         }
     }
 }
