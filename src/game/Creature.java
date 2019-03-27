@@ -16,10 +16,10 @@ public abstract class Creature {
     private int yPos;
     private int playerId;
     private int creatureId;
-    private String backStory;
+    private String backstory;
 
 
-    public Creature(int hp, int ac, String characterName, int attacksPerTurn, int damageBonus, int xPos, int yPos, ArrayList weapons, String backStory, int playerId, int creatureId){
+    public Creature(int hp, int ac, String characterName, int attacksPerTurn, int damageBonus, int xPos, int yPos, ArrayList weapons, String backstory, int playerId, int creatureId){
         this.hp = hp;
         this.ac = ac;
         this.creatureName = characterName;
@@ -30,7 +30,7 @@ public abstract class Creature {
         this.xPos = xPos;
         this.yPos = yPos;
         this.weapons = weapons;
-        this.backStory = backStory;
+        this.backstory = backstory;
         this.playerId = playerId;
         this.creatureId = creatureId;
     }
@@ -123,12 +123,16 @@ public abstract class Creature {
         return this.creatureId;
     }
 
+    public String getBackstory(){
+        return this.backstory;
+    }
+
     public String toString() {
         String weaponNames = "";
         for(int i = 0; i < this.weapons.size(); i++){
             weaponNames = this.weapons.get(i).getName();
         }
         return "Character: " + this.getCreatureName() + "\nHP: " + this.getHp() + "\nAC: " + this.getAc() + "\nSpeed: " + this.getMovement() +
-                "\nWeapon: " + weaponNames + "\nAttack bonus: " + this.getAttackBonus() +"\nAttacks per turn: " + this.getAttacksPerTurn();
+                "\nWeapon: " + weaponNames + "\nAttack bonus: " + this.getAttackBonus() +"\nAttacks per turn: " + this.getAttacksPerTurn() + "\nBackstory: " + this.getBackstory();
     }
 }
