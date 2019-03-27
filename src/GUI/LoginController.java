@@ -40,12 +40,7 @@ public class LoginController {
         sceneSwitcher.switchScene(cancelButton, "start.fxml");
     }
 
-    /*public void login() throws Exception{
-        SFXPlayer.getInstance().setSFX(0);
-        audio.MusicPlayer.getInstance().stopSong();
-        MusicPlayer.getInstance().changeSong(2);
-        sceneSwitcher.switchScene(loginButton, "MainMenu.fxml");
-    }*/
+  
 
     public void onLogin ()throws Exception{
 
