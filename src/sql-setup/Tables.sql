@@ -21,7 +21,7 @@ create table creatureTemplate(
     damage_bonus INTEGER,
     attack_bonus INTEGER,
     attacks_per_turn INTEGER,
-    back_story TEXT,
+    backstory TEXT,
     playable BOOLEAN,
     constraint creatureTemplate_pk primary key(creature_id));
 
@@ -35,6 +35,7 @@ create table creature(
     damage_bonus integer,
     attack_bonus integer,
     attacks_per_turn integer,
+    backstory TEXT,
     pos_x integer,
     pos_y integer,
     constraint creature_pk primary key(player_id));

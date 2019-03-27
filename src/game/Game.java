@@ -10,7 +10,7 @@ public class Game {
     private Database db = Main.db;
 
     public Game(){
-        init();
+        creatures = db.fetchCreaturesFromLobby();
         for (int i = 0; i < this.creatures.size(); i++){
             if (this.creatures.get(i).getPlayerId() == Main.user.getPlayerId()){
                 playerCharacter = (game.Character) this.creatures.get(i);
@@ -20,7 +20,7 @@ public class Game {
     }
 
     public void init(){
-        creatures = db.fetchCreaturesFromLobby();
+
     }
 
     public void update(){
