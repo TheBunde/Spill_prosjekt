@@ -58,6 +58,18 @@ public abstract class Creature {
         return false;
     }
 
+    public boolean moveCreature(int newX, int newY){
+        if ((Math.abs(newX - this.getxPos()) <= this.movement && Math.abs(newY - this.getyPos()) <= this.movement)){
+            this.setNewPos(newX, newY);
+            System.out.println("Moved");
+            return true;
+        }
+        else{
+            System.out.println("Did not move");
+            return false;
+        }
+    }
+
     public int getHp() {
         return hp;
     }
@@ -90,16 +102,8 @@ public abstract class Creature {
         return attacksPerTurn;
     }
 
-    public void setAttacksPerTurn(int attacksPerTurn) {
-        this.attacksPerTurn = attacksPerTurn;
-    }
-
     public int getDamageBonus() {
         return damageBonus;
-    }
-
-    public void setDamageBonus(int damageBonus) {
-        this.damageBonus = damageBonus;
     }
 
     public int getxPos() {

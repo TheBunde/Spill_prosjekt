@@ -33,7 +33,9 @@ public class Game {
             int playerId = creatures.get(i).getPlayerId();
             ArrayList<Integer> newPos = db.fetchPlayerPos(playerId);
             int newHp = db.fetchPlayerHp(playerId);
-            creatures.get(i).setNewPos(newPos.get(0), newPos.get(1));
+            if (playerId != Main.user.getPlayerId()){
+                creatures.get(i).setNewPos(newPos.get(0), newPos.get(1));
+            }
             creatures.get(i).setHp(newHp);
         }
     }
