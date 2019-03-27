@@ -206,10 +206,9 @@ public class Database {
         try{
             con = this.bds.getConnection();
             con.setAutoCommit(false);
-            String prepString = "INSERT INTO usr VALUES(DEFAULT, ?, 0, ?, DEFAULT, DEFAULT)";
+            String prepString = "INSERT INTO usr VALUES(DEFAULT, ?, 0, DEFAULT, DEFAULT)";
             prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
             prepStmt.setString(1, Main.user.getUsername());
-            prepStmt.setString(2, Main.user.getEmail());
             System.out.println("done");
             prepStmt.executeUpdate();
             res = prepStmt.getGeneratedKeys();
