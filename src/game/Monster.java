@@ -13,58 +13,74 @@ public class Monster extends Creature {
         return super.toString();
     }
 
-    public boolean monsterAction (ArrayList<Creature> players){
+    public void monsterAction (ArrayList<Creature> players){
+        Creature target = getClosest(players);
+        if(inRange(target)){
+            moveTo(target);
+            attackCreature(target, 0);
+        }else{
+            moveToward(target);
+            attackCreature(target, 1);
+        }
+    }
 
-
+    public Creature getClosest(ArrayList<Creature> players){
         ArrayList<Creature> creatures = players;
-        boolean first = true;
-        Creature target = null;
-        int xDistance = this.getMovement();
-        int yDistance = this.getMovement();
+        Creature target = creatures.get(0);
+        int xDistance = Math.abs(getxPos() - creatures.get(0).getxPos());
+        int yDistance = Math.abs(getyPos() - creatures.get(0).getyPos());
 
         for (Creature i : creatures) {
-            if ((i.getxPos() >= (this.getxPos() - this.getMovement() - 1)) && (i.getxPos() <= (this.getxPos() + this.getMovement() + 1))
-                    && (i.getyPos() >= (this.getyPos() - this.getMovement() - 1)) && (i.getyPos() <= (this.getyPos() + this.getMovement() + 1)) && i != this) {
-                if (Math.abs(i.getxPos() - this.getxPos()) <= xDistance && Math.abs(i.getyPos() - this.getyPos()) <= yDistance) {
-                    xDistance = i.getxPos() - this.getxPos();
-                    yDistance = i.getyPos() - this.getyPos();
-                    target = i;
-                    if (xDistance < 0 && Math.abs(xDistance) != this.getMovement()) {
-                        xDistance++;
-                    } else if (xDistance > 0 && Math.abs(xDistance) != this.getMovement()) {
-                        xDistance--;
-                    }
-                    if (yDistance < 0 && Math.abs(yDistance) != this.getMovement()) {
-                        yDistance++;
-                    } else if (yDistance > 0 && Math.abs(xDistance) != this.getMovement()) {
-                        yDistance++;
-                    }
-                }
-            }
+           if(Math.abs(getxPos() - i.getxPos()) < xDistance && Math.abs(getyPos() - i.getyPos()) < yDistance){
+               target = i;
+           }
         }
-        if (target == null) {
-            for (Creature i : creatures) {
-                if (Math.abs(i.getxPos() - this.getxPos()) < xDistance && Math.abs(i.getyPos() - this.getyPos()) < yDistance || first) {
-                    if (i.getxPos() > this.getxPos() && (i.getxPos() - this.getxPos()) > this.getMovement()) {
-                        xDistance = this.getMovement();
-                    } else if (i.getxPos() > this.getxPos()) {
-                        xDistance = i.getxPos() - this.getxPos();
-                    }
-                    if (i.getxPos() < this.getxPos() && (this.getxPos() - i.getxPos()) > this.getMovement()) {
-                        yDistance = -this.getMovement();
-                    } else if (i.getxPos() < this.getxPos()) {
-                        yDistance = -(this.getyPos() - i.getyPos());
-                    }
-                    first = false;
-                }
-            }
-            setNewPos(this.getxPos() + xDistance, this.getyPos() + yDistance);
-        } else if (target != null) {
-            setNewPos(this.getxPos() + xDistance, this.getyPos() + yDistance);
-            if(attackCreature(target, 0)){
-                return true;
-            }
+        return target;
+    }
+
+    public void moveToward(Creature target){
+        int xPos = getxPos();
+        int yPos = getyPos();
+        if(Math.abs(xPos -target.getxPos()) > getMovement()){
+            xPos = xPos + getMovement() * direction(xPos, target.getxPos());
+        }else if(Math.abs(xPos -target.getxPos()) < getMovement()){
+            xPos = target.getxPos() - 1 * direction(xPos, target.getxPos());
+        }
+        if(Math.abs(yPos -target.getyPos()) > getMovement()){
+            yPos = yPos + getMovement() * direction(yPos, target.getyPos());
+        }else if(Math.abs(yPos -target.getyPos()) < getMovement()){
+            yPos = target.getyPos() - 1 * direction(yPos, target.getyPos());
+        }
+        setNewPos(xPos, yPos);
+    }
+
+    public boolean inRange(Creature target){
+        if(Math.abs(getxPos() - target.getxPos()) <= (getMovement() +1) && Math.abs(getyPos() - target.getyPos()) <= (getMovement() +1)){
+            return true;
         }
         return false;
+    }
+
+    public void moveTo(Creature target){
+        int xPos = getxPos();
+        int yPos = getyPos();
+        if(xPos < target.getxPos()){
+            xPos = target.getxPos() -1;
+        }else if(xPos > target.getxPos()){
+            xPos = target.getxPos() + 1;
+        }
+        if(yPos < target.getyPos()){
+            yPos = target.getyPos() -1;
+        }else if(xPos > target.getyPos()){
+            yPos = target.getyPos() + 1;
+        }
+        setNewPos(xPos, yPos);
+    }
+
+    public int direction(int pos, int targetPos){
+        if(pos - targetPos < 0){
+            return -1;
+        }
+        return 1;
     }
 }
