@@ -3,7 +3,10 @@
 package Gamelogic;
 import Database.*;
 import com.mysql.cj.protocol.Resultset;
+<<<<<<< HEAD
 
+=======
+>>>>>>> helene
 
 //import java.sql.*;
 //import java.util.ArrayList;
