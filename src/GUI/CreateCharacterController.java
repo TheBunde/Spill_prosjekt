@@ -96,11 +96,12 @@ public class CreateCharacterController implements Initializable {
             return false;
         }
         SFXPlayer.getInstance().setSFX(0);
-        if(db.createPlayer(a)){
+        if(db.createPlayer(a, true)){
             System.out.println("character created");
         }else{
             System.out.println("character not created");
         }
+        db.createPlayer("Onkar Judge", false);
         sceneSwitcher.switchScene(createCharacterButton, "GameLobby.fxml");
         return true;
     }

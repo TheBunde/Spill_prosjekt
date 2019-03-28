@@ -49,7 +49,7 @@ public class BattlefieldController implements Initializable {
     private double cellWidth;
     private double cellHeight;
     private ArrayList<ImageView> playerPawns = new ArrayList<>();
-    private String[] imageUrls = {"GUI/images/warrior.jpg", "GUI/images/rogue.jpg", "GUI/images/wizard.jpg"};
+    private String[] imageUrls = {"GUI/images/warrior.jpg", "GUI/images/rogue.jpg", "GUI/images/wizard.jpg","ranger", "GUI/images/judge.jpg"};
     private Game game;
     private EventHandler<MouseEvent> mouseEventHandler = new EventHandler<MouseEvent>(){
         @Override
@@ -211,10 +211,12 @@ public class BattlefieldController implements Initializable {
         if(!game.isYourTurn()){
             moveButton.setDisable(true);
             attackButton.setDisable(true);
+            endTurnButton.setDisable(true);
         }
         else{
             moveButton.setDisable(false);
             attackButton.setDisable(false);
+            endTurnButton.setDisable(false);
         }
     }
 }

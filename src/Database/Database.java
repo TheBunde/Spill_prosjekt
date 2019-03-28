@@ -8,6 +8,7 @@ import game.Monster;
 import javafx.scene.control.Alert;
 import org.apache.commons.dbcp2.BasicDataSource;
 
+import javax.xml.bind.annotation.XmlType;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -544,7 +545,7 @@ public class Database {
         return 1;
     }
 
-    public boolean createPlayer(String character){
+    public boolean createPlayer(String character, boolean playable){
         Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
@@ -557,14 +558,23 @@ public class Database {
             String prepString = "INSERT INTO player VALUES(DEFAULT, ?, ?)";
             prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
             prepStmt.setInt(1, Main.user.getLobbyKey());
-            prepStmt.setInt(2, Main.user.getUser_id());
+            if(playable) {
+                prepStmt.setInt(2, Main.user.getUser_id());
+            }else{
+                prepStmt.setNull(2, java.sql.Types.INTEGER);
+            }
             System.out.println(Main.user.getLobbyKey() + "\n" + Main.user.getUser_id());
             prepStmt.executeUpdate();
             con.commit();
+
             res = prepStmt.getGeneratedKeys();
             res.next();
             playerId = res.getInt(1);
-            Main.user.setPlayerId(playerId);
+            if (playable){
+                Main.user.setPlayerId(playerId);
+            }
+
+
 
         }
         catch (SQLException sq){
@@ -577,7 +587,7 @@ public class Database {
             this.manager.closeRes(res);
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con);
-            if(playerId <= 0){
+            if(playerId < 0){
                 status = false;
             }else{
                 createCreature(playerId, character);
@@ -585,6 +595,8 @@ public class Database {
             return status;
         }
     }
+
+
 
     public boolean createCreature(int playerId, String character){
         Connection con = null;
