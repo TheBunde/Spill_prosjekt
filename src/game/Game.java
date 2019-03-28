@@ -68,6 +68,9 @@ public class Game {
     public boolean isYourTurn(){
         if(creatures.get(turn % creatures.size()).getPlayerId() == Main.user.getPlayerId()){
             return true;
+        }else if(Main.user.isHost() && creatures.get(turn % creatures.size()) instanceof Monster){
+            ((Monster) creatures.get(turn % creatures.size())).monsterAction(creatures);
+            turn++;
         }
         return false;
     }
