@@ -8,7 +8,7 @@ public class Game {
     private ArrayList<Creature> creatures = new ArrayList<>();
     public game.Character playerCharacter;
     private Database db = Main.db;
-    private int turn = 1;
+    private int turn = 0;
 
     public Game(){
         creatures = db.fetchCreaturesFromLobby();
@@ -24,10 +24,13 @@ public class Game {
     }
 
     public void update(){
-        pushCreatureData();
+        if (this.isPlayerTurn()){
+            pushCreatureData();
+        }
         updateCreatureData();
-        if (isMonsterTurn()){
+        if (isMonsterTurn() && Main.user.isHost()){
             monsterAction();
+            pushCreatureData();
         }
     }
 
@@ -45,28 +48,14 @@ public class Game {
     }
 
     public void pushCreatureData(){
-        for (Creature c : creatures){
-            if (Main.user.isHost()){
-                if (c instanceof Monster){
-                    int playerId = c.getPlayerId();
-                    int posX = c.getxPos();
-                    int posY = c.getyPos();
-                    db.setPos(posX, posY, playerId);
-                    int hp = c.getHp();
-                    db.setHp(hp, playerId);
-                }
-            }
-            if (c == playerCharacter){
-                int playerId = c.getPlayerId();
-                int posX = c.getxPos();
-                int posY = c.getyPos();
-                db.setPos(posX, posY, playerId);
-                int hp = c.getHp();
-                db.setHp(hp, playerId);
-            }
+        for (Creature c : creatures) {
+            int playerId = c.getPlayerId();
+            int posX = c.getxPos();
+            int posY = c.getyPos();
+            db.setPos(posX, posY, playerId);
+            int hp = c.getHp();
+            db.setHp(hp, playerId);
         }
-
-
     }
 
     public Creature getCreature(int index){
@@ -85,7 +74,6 @@ public class Game {
     }
 
     public boolean isPlayerTurn(){
-        update();
         if(creatures.get(turn % creatures.size()).getPlayerId() == Main.user.getPlayerId()){
             return true;
         }

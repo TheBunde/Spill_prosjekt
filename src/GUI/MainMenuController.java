@@ -22,7 +22,7 @@ public class MainMenuController {
 
     public void initialize(){
         Main.user.setPlayerId(-1);
-        db.setHost(true);
+        db.setHost(false);
     }
 
     public void startNewGameButtonPressed() throws Exception{

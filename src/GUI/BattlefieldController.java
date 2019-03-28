@@ -233,10 +233,10 @@ public class BattlefieldController implements Initializable {
             if (!movePressed){
                 attackButton.setDisable(false);
             }
-            else if (!attackPressed){
+            if (!attackPressed){
                 moveButton.setDisable(false);
             }
-            else if (!movePressed || !attackPressed){
+            if (!movePressed || !attackPressed){
                 endTurnButton.setDisable(false);
             }
         }
