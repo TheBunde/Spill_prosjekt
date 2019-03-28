@@ -76,7 +76,7 @@ public class Monster extends Creature {
         }else if(xPos > target.getyPos()){
             yPos = target.getyPos() + 1;
         }
-        setNewPos(xPos, yPos);
+        moveCreature(xPos, yPos);
     }
 
     public int direction(int pos, int targetPos){

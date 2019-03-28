@@ -632,6 +632,33 @@ public class Database {
         }
     }
 
+    public String fetchUsernameFromPlayerId(int playerId){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        String username = null;
+        try{
+            con = this.bds.getConnection();
+            String prepString = "SELECT username FROM usr, player WHERE player.user_id = usr.user_id AND player_id = ?";
+            prepStmt = con.prepareStatement(prepString);
+            prepStmt.setInt(1, playerId);
+            res = prepStmt.executeQuery();
+            res.next();
+            username = res.getString("username");
+
+        }
+        catch (SQLException sq){
+            sq.printStackTrace();
+            username = null;
+        }
+        finally {
+            this.manager.closeRes(res);
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(con);
+            return username;
+        }
+    }
+
     public int fetchCreatureId(String character){
         Connection con = null;
         PreparedStatement prepStmt = null;

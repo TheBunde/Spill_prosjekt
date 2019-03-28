@@ -221,6 +221,7 @@ public class BattlefieldController implements Initializable {
             System.out.println(game.getCreature(i).getCreatureName() + ": " + game.getCreature(i).getHp());
         }
         System.out.println(movePressed + " " + attackPressed);
+        System.out.println("Player turn: " + game.isPlayerTurn());
     }
 
     public void checkForPlayerTurn(){
