@@ -167,7 +167,7 @@ public class GameMethods {
         for (Creature i : creatures) {
             if ((i.getxCordinate() >= (monster.getxCordinate() - monster.getMovement() - 1)) && (i.getxCordinate() <= (monster.getxCordinate() + monster.getMovement() + 1))
                     && (i.getyCordinate() >= (monster.getyCordinate() - monster.getMovement() - 1)) && (i.getyCordinate() <= (monster.getyCordinate() + monster.getMovement() + 1)) && i != monster) {
-                if (Math.abs(i.getyCordinate() - monster.getyCordinate()) <= xDistance && Math.abs(i.getyCordinate() - monster.getyCordinate()) <= yDistance) {
+                if (Math.abs(i.getxCordinate() - monster.getxCordinate()) <= xDistance && Math.abs(i.getyCordinate() - monster.getyCordinate()) <= yDistance) {
                     xDistance = i.getxCordinate() - monster.getxCordinate();
                     yDistance = i.getyCordinate() - monster.getyCordinate();
                     target = i;
