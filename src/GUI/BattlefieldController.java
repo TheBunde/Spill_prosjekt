@@ -6,6 +6,7 @@ import Main.*;
 import audio.MusicPlayer;
 import game.Creature;
 import game.Game;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -78,7 +79,7 @@ public class BattlefieldController implements Initializable {
             iv.setPreserveRatio(false);
             iv.setFitHeight(mapGrid.getHeight() / 16);
             iv.setFitWidth(mapGrid.getWidth() / 16);
-            battlefieldUI.getChildren().add(iv);
+            mapGrid.add(iv, creature.getxPos(), creature.getyPos());
             this.playerPawns.add(iv);
         }
 
@@ -89,11 +90,12 @@ public class BattlefieldController implements Initializable {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                updateGameFromServer();
-                refreshGameFromClient();
-                updateTurn();
-
-                System.out.println("Hei");
+                Platform.runLater(() -> {
+                    updateGameFromServer();
+                    refreshGameFromClient();
+                    updateTurn();
+                    System.out.println("Hei");
+                });
             }
         },0 ,1500);
     }
@@ -186,13 +188,8 @@ public class BattlefieldController implements Initializable {
     public void refreshGameFromClient(){
         for(int i = 0; i < playerPawns.size(); i++){
             ArrayList<Integer> pos = game.getPos(i);
-            if (playerPawns.get(i).getParent() instanceof GridPane) {
-                ((GridPane) playerPawns.get(i).getParent()).getChildren().remove(playerPawns.get(i));
-                mapGrid.add(playerPawns.get(i), pos.get(0), pos.get(1));
-            }
-            else {
-                mapGrid.add(playerPawns.get(i), pos.get(0), pos.get(1));
-            }
+            ((GridPane) playerPawns.get(i).getParent()).getChildren().remove(playerPawns.get(i));
+            mapGrid.add(playerPawns.get(i), pos.get(0), pos.get(1));
         }
     }
 

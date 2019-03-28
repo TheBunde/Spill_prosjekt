@@ -101,7 +101,10 @@ public class CreateCharacterController implements Initializable {
         }else{
             System.out.println("character not created");
         }
-        db.createPlayer("Onkar Judge", false);
+        System.out.println(Main.user.isHost());
+        if (Main.user.isHost()){
+            db.createPlayer("Onkar Judge", false);
+        }
         sceneSwitcher.switchScene(createCharacterButton, "GameLobby.fxml");
         return true;
     }
