@@ -2,24 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b4b46630-3996-47b0-9cd4-38a5b8a7f7f6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/GUI/changeUsername.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/GUI/changeUsernameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/27a2e85a-9c6d-44f2-8852-7e7f8930b475/storage_v2/_src_/schema/saramoh.6ehmbw.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/27a2e85a-9c6d-44f2-8852-7e7f8930b475/storage_v2/_src_/schema/saramoh.6ehmbw.zip" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Database/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Database/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Database/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Database/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/AccountDetails.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/AccountDetails.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/AccountDetailsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/AccountDetailsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/CreateCharacterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/CreateCharacterController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/LoginScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/LoginScreen.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Registrer.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Registrer.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/RegistrerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/RegistrerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Gamelogic/Game2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Gamelogic/Game2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sql-setup/chatsetup.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sql-setup/tables.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/sql-setup/tables.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sql-setup/test.sql" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/../out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -86,7 +71,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553784679881" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553784991537" />
     <property name="last_opened_file_path" value="$USER_HOME$/IdeaProjects/oving_19" />
   </component>
   <component name="RunDashboard">
@@ -183,12 +168,12 @@
       <workItem from="1553686683441" duration="11184000" />
       <workItem from="1553707984259" duration="14947000" />
       <workItem from="1553765124841" duration="36000" />
-      <workItem from="1553765457347" duration="19498000" />
+      <workItem from="1553765457347" duration="19869000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="67713000" />
+    <option name="totallyTimeSpent" value="68084000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
@@ -378,7 +363,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/changeUsernameController.java">
+    <entry file="file://$PROJECT_DIR$/src/GUI/ChangeUsernameController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-199">
           <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
