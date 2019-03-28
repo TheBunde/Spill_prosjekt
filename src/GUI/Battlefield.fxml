@@ -116,7 +116,7 @@
                         <Insets left="40.0" top="10.0" />
                     </VBox.margin>
                 </Button>
-                <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exitButtonClicked" prefHeight="38.0" prefWidth="87.0" text="Exit">
+                <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exitButtonPressed" prefHeight="38.0" prefWidth="87.0" text="Exit">
                     <VBox.margin>
                         <Insets left="40.0" top="15.0" />
                     </VBox.margin>

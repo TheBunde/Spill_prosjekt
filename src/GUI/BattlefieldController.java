@@ -6,9 +6,11 @@ import Main.*;
 import audio.MusicPlayer;
 import game.Creature;
 import game.Game;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -79,6 +81,7 @@ public class BattlefieldController implements Initializable {
             battlefieldUI.getChildren().add(iv);
             this.playerPawns.add(iv);
         }
+
         refreshGameFromClient();
         updateGameFromServer();
 
@@ -86,7 +89,6 @@ public class BattlefieldController implements Initializable {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                //db.movePos(10, 10, db.fetchPlayerId());
                 updateGameFromServer();
                 refreshGameFromClient();
                 updateTurn();
@@ -121,9 +123,14 @@ public class BattlefieldController implements Initializable {
 
         /*
         Pane movementPane = new Pane();
-        double moveDistance = cellWidth*(2*game.playerCharacter.getMovement() + 1);
-        movementPane.setPrefWidth(moveDistance);
-        movementPane.setPrefHeight(moveDistance);
+        double moveDistanceX = cellWidth*(2*game.playerCharacter.getMovement() + 1);
+        double moveDistanceY = cellHeight*(2*game.playerCharacter.getMovement() + 1);
+        movementPane.setPrefWidth(moveDistanceX);
+        movementPane.setPrefHeight(moveDistanceY);
+        movementPane.setStyle("-fx-background-color: rgb(26, 188, 156, 0.5)");
+        movementPane.setLayoutX(cellWidth*((double)game.playerCharacter.getxPos() + 1.0/2.0));
+        movementPane.setLayoutY(cellHeight*((double)game.playerCharacter.getxPos() + 1.0/2.0));
+        battlefieldUI.getChildren().add(movementPane);
         */
 
         openMapGridEventHandler();
@@ -131,7 +138,7 @@ public class BattlefieldController implements Initializable {
 
     public void moveFinished(){
         game.playerCharacter.setNewPos(toGrid(mapGrid.getWidth(), mouseX), toGrid(mapGrid.getHeight(), mouseY));
-        closeMapGridEventhandler();
+        closeMapGridEventHandler();
         attackButton.setDisable(false);
         endTurnButton.setDisable(false);
         moveButton.getStyleClass().clear();
@@ -148,8 +155,12 @@ public class BattlefieldController implements Initializable {
 
     }
 
-    public void exitButtonPressed(){
-        
+    public void exitButtonPressed() throws Exception {
+        System.out.println(db.addChatMessage(user.getUsername() + " has left the lobby", true));
+        db.disconnectUserFromGameLobby();
+        chatController.timer.cancel();
+        chatController.timer.purge();
+        this.sceneSwitcher.switchScene(exitButton, "MainMenu.fxml");
     }
 
 
@@ -159,19 +170,12 @@ public class BattlefieldController implements Initializable {
         return iPos;
     }
 
-    public void exitButtonClicked() throws Exception{
-        System.out.println(db.addChatMessage(user.getUsername() + " has left the lobby", true));
-        db.disconnectUserFromGameLobby();
-        chatController.timer.cancel();
-        chatController.timer.purge();
-        this.sceneSwitcher.switchScene(exitButton, "MainMenu.fxml");
-    }
 
     public void openMapGridEventHandler(){
         mapGrid.addEventFilter(MouseEvent.MOUSE_CLICKED, mouseEventHandler);
     }
 
-    public void closeMapGridEventhandler(){
+    public void closeMapGridEventHandler(){
         mapGrid.removeEventFilter(MouseEvent.MOUSE_CLICKED, mouseEventHandler);
     }
 
@@ -182,9 +186,25 @@ public class BattlefieldController implements Initializable {
     public void refreshGameFromClient(){
         for(int i = 0; i < playerPawns.size(); i++){
             ArrayList<Integer> pos = game.getPos(i);
-            playerPawns.get(i).setX((double) pos.get(0) * mapGrid.getWidth() / 16);
-            playerPawns.get(i).setY((double) pos.get(1) * mapGrid.getHeight() / 16);
+            if (playerPawns.get(i).getParent() instanceof GridPane) {
+                ((GridPane) playerPawns.get(i).getParent()).getChildren().remove(playerPawns.get(i));
+                mapGrid.add(playerPawns.get(i), pos.get(0), pos.get(1));
+            }
+            else {
+                mapGrid.add(playerPawns.get(i), pos.get(0), pos.get(1));
+            }
         }
+    }
+
+    public Node getNodeFromGrid(int x, int y){
+        Node result = null;
+        ObservableList<Node> nodes = mapGrid.getChildren();
+        for (Node node : nodes){
+            if (GridPane.getColumnIndex(node) == x && GridPane.getRowIndex(node) ==  y){
+                result = node;
+            }
+        }
+        return result;
     }
 
     public void updateTurn(){

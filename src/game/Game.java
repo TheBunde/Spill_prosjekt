@@ -15,7 +15,6 @@ public class Game {
         for (int i = 0; i < this.creatures.size(); i++){
             if (this.creatures.get(i).getPlayerId() == Main.user.getPlayerId()){
                 playerCharacter = (game.Character) this.creatures.get(i);
-                break;
             }
         }
     }
