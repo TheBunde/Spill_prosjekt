@@ -784,7 +784,7 @@ public class Database {
             prepStmt.setInt(2, Main.user.getUser_id());
             prepStmt.executeUpdate();
             con.commit();
-            Main.user.setHost(true);
+            Main.user.setHost(host);
         }
         catch (SQLException sq){
             this.manager.rollback(con);

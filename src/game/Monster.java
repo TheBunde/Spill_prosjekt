@@ -31,9 +31,11 @@ public class Monster extends Creature {
         int yDistance = Math.abs(getyPos() - creatures.get(0).getyPos());
 
         for (Creature i : creatures) {
-           if(Math.abs(getxPos() - i.getxPos()) < xDistance && Math.abs(getyPos() - i.getyPos()) < yDistance){
-               target = i;
-           }
+            if (i != this) {
+                if (Math.abs(getxPos() - i.getxPos()) < xDistance && Math.abs(getyPos() - i.getyPos()) < yDistance) {
+                    target = i;
+                }
+            }
         }
         return target;
     }
@@ -78,7 +80,7 @@ public class Monster extends Creature {
     }
 
     public int direction(int pos, int targetPos){
-        if(pos - targetPos < 0){
+        if(targetPos - pos< 0){
             return -1;
         }
         return 1;
