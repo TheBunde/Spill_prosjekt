@@ -611,8 +611,8 @@ public class Database {
             prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
             prepStmt.setInt(1, playerId);
             prepStmt.setInt(2, creatureId);
-            prepStmt.setInt(3, (int)Math.floor(Math.random()*16 + 1));
-            prepStmt.setInt(4, (int)Math.floor(Math.random()*16 + 1));
+            prepStmt.setInt(3, (int)Math.floor(Math.random()*16));
+            prepStmt.setInt(4, (int)Math.floor(Math.random()*16));
             prepStmt.setInt(5, creatureId);
             prepStmt.executeUpdate();
             con.commit();
@@ -1038,7 +1038,6 @@ public class Database {
             res = prepStmt.executeQuery();
             res.next();
             turn = res.getInt(1);
-
         }
         catch (SQLException sq){
             sq.printStackTrace();
