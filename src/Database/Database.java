@@ -242,7 +242,7 @@ public class Database {
         try{
             con = this.bds.getConnection();
             con.setAutoCommit(false);
-            String prepString = "INSERT INTO game_lobby VALUES(DEFAULT, 0)";
+            String prepString = "INSERT INTO game_lobby VALUES(DEFAULT, 0, DEFAULT)";
             prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
             prepStmt.executeUpdate();
             res = prepStmt.getGeneratedKeys();
@@ -926,10 +926,10 @@ public class Database {
             res = prepStmt.executeQuery();
             while (res.next()){
                 if(res.getInt("player.user_id") <= 0) {
-                    creatures.add(new Monster(res.getInt("hp"), res.getInt("ac"), res.getString("creature_name"), res.getInt("attacks_per_turn"), res.getInt("damage_bonus"), res.getInt("pos_x"), res.getInt("pos_y"), null, res.getString("backstory"), res.getInt("player_id"), res.getInt("creature_id")));
+                    creatures.add(new Monster(res.getInt("player_id"), res.getInt("creature_id"), res.getString("creature_name"), res.getInt("hp"), res.getInt("ac"), res.getInt("movement"), res.getInt("damage_bonus"), res.getInt("attack_bonus"), res.getInt("attacks_per_turn"), res.getString("backstory"), res.getInt("pos_x"), res.getInt("pos_y"), null));
                 }
                 else{
-                    creatures.add(new game.Character(res.getInt("hp"), res.getInt("ac"), res.getString("creature_name"), res.getInt("attacks_per_turn"), res.getInt("damage_bonus"), res.getInt("pos_x"), res.getInt("pos_y"), null, res.getString("backstory"), res.getInt("player_id"), res.getInt("creature_id")));
+                    creatures.add(new game.Character(res.getInt("player_id"), res.getInt("creature_id"), res.getString("creature_name"), res.getInt("hp"), res.getInt("ac"), res.getInt("movement"), res.getInt("damage_bonus"), res.getInt("attack_bonus"), res.getInt("attacks_per_turn"), res.getString("backstory"), res.getInt("pos_x"), res.getInt("pos_y"), null));
                 }
             }
         }

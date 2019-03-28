@@ -49,6 +49,9 @@ public class BattlefieldController implements Initializable {
     private double mouseY;
     private double cellWidth;
     private double cellHeight;
+    private boolean attackPressed = false;
+    private boolean movePressed = false;
+    private Pane movementPane;
     private ArrayList<ImageView> playerPawns = new ArrayList<>();
     private String[] imageUrls = {"GUI/images/warrior.jpg", "GUI/images/rogue.jpg", "GUI/images/wizard.jpg","ranger", "GUI/images/judge.jpg"};
     private Game game;
@@ -66,7 +69,6 @@ public class BattlefieldController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         game = new Game();
-
         Image image = null;
         cellWidth = mapGrid.getPrefWidth()/(16.0);
         cellHeight = mapGrid.getPrefHeight()/(16.0);
@@ -105,6 +107,7 @@ public class BattlefieldController implements Initializable {
     }
 
     public void attackButtonPressed(){
+        attackPressed = true;
         System.out.println(Math.floor(mapGrid.getWidth() / 16));
         moveButton.setDisable(true);
         endTurnButton.setDisable(true);
@@ -112,6 +115,7 @@ public class BattlefieldController implements Initializable {
     }
 
     public void attackFinished(){
+        attackPressed = false;
         moveButton.setDisable(false);
         endTurnButton.setDisable(false);
         attackButton.getStyleClass().clear();
@@ -119,27 +123,33 @@ public class BattlefieldController implements Initializable {
     }
 
     public void moveButtonPressed(){
+        movePressed = true;
         attackButton.setDisable(true);
         endTurnButton.setDisable(true);
         moveButton.getStyleClass().add("button-selected");
 
-        /*
-        Pane movementPane = new Pane();
+
+        movementPane = new Pane();
         double moveDistanceX = cellWidth*(2*game.playerCharacter.getMovement() + 1);
         double moveDistanceY = cellHeight*(2*game.playerCharacter.getMovement() + 1);
+        movementPane.setMouseTransparent(true);
         movementPane.setPrefWidth(moveDistanceX);
         movementPane.setPrefHeight(moveDistanceY);
-        movementPane.setStyle("-fx-background-color: rgb(26, 188, 156, 0.5)");
-        movementPane.setLayoutX(cellWidth*((double)game.playerCharacter.getxPos() + 1.0/2.0));
-        movementPane.setLayoutY(cellHeight*((double)game.playerCharacter.getxPos() + 1.0/2.0));
+        movementPane.setStyle("-fx-background-color: rgb(26, 188, 156, 0.3)");
+        movementPane.setLayoutX(cellWidth*((double)game.playerCharacter.getxPos()) - cellWidth*game.playerCharacter.getMovement());
+        movementPane.setLayoutY(cellHeight*((double)game.playerCharacter.getyPos()) - cellHeight*game.playerCharacter.getMovement());
+
         battlefieldUI.getChildren().add(movementPane);
-        */
+
+
 
         openMapGridEventHandler();
     }
 
     public void moveFinished(){
-        game.playerCharacter.setNewPos(toGrid(mapGrid.getWidth(), mouseX), toGrid(mapGrid.getHeight(), mouseY));
+        movePressed = false;
+        battlefieldUI.getChildren().remove(movementPane);
+        game.playerCharacter.moveCreature(toGrid(mapGrid.getWidth(), mouseX), toGrid(mapGrid.getHeight(), mouseY));
         closeMapGridEventHandler();
         attackButton.setDisable(false);
         endTurnButton.setDisable(false);
@@ -162,6 +172,8 @@ public class BattlefieldController implements Initializable {
         db.disconnectUserFromGameLobby();
         chatController.timer.cancel();
         chatController.timer.purge();
+        timer.cancel();
+        timer.purge();
         this.sceneSwitcher.switchScene(exitButton, "MainMenu.fxml");
     }
 
@@ -211,9 +223,17 @@ public class BattlefieldController implements Initializable {
             endTurnButton.setDisable(true);
         }
         else{
-            moveButton.setDisable(false);
-            attackButton.setDisable(false);
-            endTurnButton.setDisable(false);
+            if (!movePressed){
+                attackButton.setDisable(false);
+            }
+            else if (!attackPressed){
+                moveButton.setDisable(false);
+            }
+            else if (!movePressed || !attackPressed){
+                endTurnButton.setDisable(false);
+            }
         }
     }
+
+    //private Pane createMovementPane
 }

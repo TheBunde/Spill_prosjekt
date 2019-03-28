@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 public class Monster extends Creature {
 
-    public Monster(int hp, int ac, String creatureName, int attacksPerTurn, int damageBonus, int xPos, int yPos, ArrayList weapons, String backstory, int playerId, int creatureId){
-        super(hp, ac, creatureName, attacksPerTurn, damageBonus, xPos, yPos, weapons, backstory, playerId, creatureId);
+    public Monster(int playerId, int creatureId, String creatureName, int hp, int ac, int movement, int damageBonus, int attackBonus, int attacksPerTurn, String backstory, int xPos, int yPos, ArrayList weapons){
+        super(playerId, creatureId, creatureName, hp, ac, movement, damageBonus, attackBonus, attacksPerTurn, backstory, xPos, yPos, weapons);
     }
 
     public String toString() {

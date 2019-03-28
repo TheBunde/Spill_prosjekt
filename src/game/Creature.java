@@ -19,20 +19,20 @@ public abstract class Creature {
     private String backstory;
 
 
-    public Creature(int hp, int ac, String characterName, int attacksPerTurn, int damageBonus, int xPos, int yPos, ArrayList weapons, String backstory, int playerId, int creatureId){
+    public Creature(int playerId, int creatureId, String creatureName, int hp, int ac, int movement, int damageBonus, int attackBonus, int attacksPerTurn, String backstory, int xPos, int yPos, ArrayList weapons){
+        this.playerId = playerId;
+        this.creatureId = creatureId;
+        this.creatureName = creatureName;
         this.hp = hp;
         this.ac = ac;
-        this.creatureName = characterName;
-        this.attackBonus = attackBonus;
         this.movement = movement;
+        this.attackBonus = attackBonus;
         this.attacksPerTurn = attacksPerTurn;
         this.damageBonus = damageBonus;
+        this.backstory = backstory;
         this.xPos = xPos;
         this.yPos = yPos;
         this.weapons = weapons;
-        this.backstory = backstory;
-        this.playerId = playerId;
-        this.creatureId = creatureId;
     }
 
     public boolean attackCreature(Creature target, int weaponIndex){
@@ -59,6 +59,9 @@ public abstract class Creature {
     }
 
     public boolean moveCreature(int newX, int newY){
+        System.out.println("NewX: " + newX + "\nNewY: " + newY + "\nMovement: " + this.movement);
+        System.out.println("Math.abs(newX - this.getxPos()): " + Math.abs(newX - this.getxPos()));
+        System.out.println("Math.abs(newY - this.getyPos()): " + Math.abs(newY - this.getyPos()));
         if ((Math.abs(newX - this.getxPos()) <= this.movement && Math.abs(newY - this.getyPos()) <= this.movement)){
             this.setNewPos(newX, newY);
             System.out.println("Moved");
