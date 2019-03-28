@@ -14,8 +14,6 @@ public class Monster extends Creature {
     }
 
     public boolean monsterAction (ArrayList<Creature> players){
-
-
         ArrayList<Creature> creatures = players;
         boolean first = true;
         Creature target = null;

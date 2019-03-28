@@ -93,10 +93,7 @@ public class BattlefieldController implements Initializable {
             @Override
             public void run() {
                 Platform.runLater(() -> {
-                    updateGameFromServer();
-                    refreshGameFromClient();
-                    updateTurn();
-                    System.out.println("Hei");
+                    update();
                 });
             }
         },0 ,1500);
@@ -108,7 +105,6 @@ public class BattlefieldController implements Initializable {
 
     public void attackButtonPressed(){
         attackPressed = true;
-        System.out.println(Math.floor(mapGrid.getWidth() / 16));
         moveButton.setDisable(true);
         endTurnButton.setDisable(true);
         attackButton.getStyleClass().add("button-selected");
@@ -216,8 +212,19 @@ public class BattlefieldController implements Initializable {
         return result;
     }
 
-    public void updateTurn(){
-        if(!game.isYourTurn()){
+    public void update(){
+        updateGameFromServer();
+        refreshGameFromClient();
+        checkForPlayerTurn();
+        System.out.println("Hei");
+        for (int i = 0; i < game.getAmountOfCreatures(); i++){
+            System.out.println(game.getCreature(i).getCreatureName() + ": " + game.getCreature(i).getHp());
+        }
+        System.out.println(movePressed + " " + attackPressed);
+    }
+
+    public void checkForPlayerTurn(){
+        if(!game.isPlayerTurn()){
             moveButton.setDisable(true);
             attackButton.setDisable(true);
             endTurnButton.setDisable(true);

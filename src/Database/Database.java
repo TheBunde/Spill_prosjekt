@@ -5,6 +5,7 @@ import Main.*;
 import com.mysql.cj.protocol.Resultset;
 import game.Creature;
 import game.Monster;
+import game.Weapon;
 import javafx.scene.control.Alert;
 import org.apache.commons.dbcp2.BasicDataSource;
 
@@ -925,11 +926,13 @@ public class Database {
             prepStmt.setInt(1, Main.user.getLobbyKey());
             res = prepStmt.executeQuery();
             while (res.next()){
+                int creatureId = res.getInt("creature_id");
+                ArrayList<Weapon> weapons = this.fetchWeaponsFromCreature(creatureId);
                 if(res.getInt("player.user_id") <= 0) {
-                    creatures.add(new Monster(res.getInt("player_id"), res.getInt("creature_id"), res.getString("creature_name"), res.getInt("hp"), res.getInt("ac"), res.getInt("movement"), res.getInt("damage_bonus"), res.getInt("attack_bonus"), res.getInt("attacks_per_turn"), res.getString("backstory"), res.getInt("pos_x"), res.getInt("pos_y"), null));
+                    creatures.add(new Monster(res.getInt("player_id"), creatureId, res.getString("creature_name"), res.getInt("hp"), res.getInt("ac"), res.getInt("movement"), res.getInt("damage_bonus"), res.getInt("attack_bonus"), res.getInt("attacks_per_turn"), res.getString("backstory"), res.getInt("pos_x"), res.getInt("pos_y"), weapons));
                 }
                 else{
-                    creatures.add(new game.Character(res.getInt("player_id"), res.getInt("creature_id"), res.getString("creature_name"), res.getInt("hp"), res.getInt("ac"), res.getInt("movement"), res.getInt("damage_bonus"), res.getInt("attack_bonus"), res.getInt("attacks_per_turn"), res.getString("backstory"), res.getInt("pos_x"), res.getInt("pos_y"), null));
+                    creatures.add(new game.Character(res.getInt("player_id"), creatureId, res.getString("creature_name"), res.getInt("hp"), res.getInt("ac"), res.getInt("movement"), res.getInt("damage_bonus"), res.getInt("attack_bonus"), res.getInt("attacks_per_turn"), res.getString("backstory"), res.getInt("pos_x"), res.getInt("pos_y"), weapons));
                 }
             }
         }
@@ -942,6 +945,37 @@ public class Database {
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con);
             return creatures;
+        }
+    }
+
+    public ArrayList<Weapon> fetchWeaponsFromCreature(int creatureId){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        ArrayList<Weapon> weapons = new ArrayList<>();
+        try{
+            con = this.bds.getConnection();
+            String prepString = "SELECT weapon_name, damage_dice, description, dice_amount FROM weapon INNER JOIN creature_weapon ON (weapon.weapon_id = creature_weapon.weapon_id) WHERE creature_weapon.creature_id = ?";
+            prepStmt = con.prepareStatement(prepString);
+            prepStmt.setInt(1, creatureId);
+            res = prepStmt.executeQuery();
+            while (res.next()){
+                boolean ranged = false;
+                if (res.getString("description").equals("Ranged")){
+                    ranged = true;
+                }
+                weapons.add(new Weapon(res.getString("weapon_name"), res.getInt("damage_dice"), ranged, res.getInt("dice_amount")));
+            }
+        }
+        catch (SQLException sq){
+            sq.printStackTrace();
+            weapons = null;
+        }
+        finally {
+            this.manager.closeRes(res);
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(con);
+            return weapons;
         }
     }
 

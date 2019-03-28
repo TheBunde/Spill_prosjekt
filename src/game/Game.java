@@ -8,7 +8,7 @@ public class Game {
     private ArrayList<Creature> creatures = new ArrayList<>();
     public game.Character playerCharacter;
     private Database db = Main.db;
-    private int turn = 0;
+    private int turn = 1;
 
     public Game(){
         creatures = db.fetchCreaturesFromLobby();
@@ -26,6 +26,9 @@ public class Game {
     public void update(){
         pushCreatureData();
         updateCreatureData();
+        if (isMonsterTurn()){
+            monsterAction();
+        }
     }
 
     public void updateCreatureData(){
@@ -42,12 +45,28 @@ public class Game {
     }
 
     public void pushCreatureData(){
-        int playerId = playerCharacter.getPlayerId();
-        int posX = playerCharacter.getxPos();
-        int posY = playerCharacter.getyPos();
-        db.setPos(posX, posY, playerId);
-        int hp = playerCharacter.getHp();
-        db.setHp(hp, playerId);
+        for (Creature c : creatures){
+            if (Main.user.isHost()){
+                if (c instanceof Monster){
+                    int playerId = c.getPlayerId();
+                    int posX = c.getxPos();
+                    int posY = c.getyPos();
+                    db.setPos(posX, posY, playerId);
+                    int hp = c.getHp();
+                    db.setHp(hp, playerId);
+                }
+            }
+            if (c == playerCharacter){
+                int playerId = c.getPlayerId();
+                int posX = c.getxPos();
+                int posY = c.getyPos();
+                db.setPos(posX, posY, playerId);
+                int hp = c.getHp();
+                db.setHp(hp, playerId);
+            }
+        }
+
+
     }
 
     public Creature getCreature(int index){
@@ -65,14 +84,24 @@ public class Game {
         return pos;
     }
 
-    public boolean isYourTurn(){
+    public boolean isPlayerTurn(){
+        update();
         if(creatures.get(turn % creatures.size()).getPlayerId() == Main.user.getPlayerId()){
             return true;
-        }else if(Main.user.isHost() && creatures.get(turn % creatures.size()) instanceof Monster){
-            ((Monster) creatures.get(turn % creatures.size())).monsterAction(creatures);
-            turn++;
         }
         return false;
+    }
+
+    public boolean isMonsterTurn(){
+        if(creatures.get(turn % creatures.size()) instanceof Monster){
+            return true;
+        }
+        return false;
+    }
+
+    public void monsterAction(){
+        ((Monster) creatures.get(turn % creatures.size())).monsterAction(creatures);
+        endTurn();
     }
 
     public void endTurn(){
