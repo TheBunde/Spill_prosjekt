@@ -1,10 +1,8 @@
-<<<<<<< HEAD
-=======
+
 /*
 package Gamelogic;
 import Database.*;
 import com.mysql.cj.protocol.Resultset;
->>>>>>> helene
 
 //import java.sql.*;
 //import java.util.ArrayList;
@@ -166,4 +164,4 @@ import com.mysql.cj.protocol.Resultset;
     }
 }
 */
->>>>>>> helene
+
