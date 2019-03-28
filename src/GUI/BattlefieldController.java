@@ -221,6 +221,7 @@ public class BattlefieldController implements Initializable {
             System.out.println(game.getCreature(i).getCreatureName() + ": " + game.getCreature(i).getHp());
         }
         System.out.println(movePressed + " " + attackPressed);
+        System.out.println("Player turn: " + game.isPlayerTurn());
     }
 
     public void checkForPlayerTurn(){
@@ -233,10 +234,10 @@ public class BattlefieldController implements Initializable {
             if (!movePressed){
                 attackButton.setDisable(false);
             }
-            else if (!attackPressed){
+            if (!attackPressed){
                 moveButton.setDisable(false);
             }
-            else if (!movePressed || !attackPressed){
+            if (!movePressed || !attackPressed){
                 endTurnButton.setDisable(false);
             }
         }

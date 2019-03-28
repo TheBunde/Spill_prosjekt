@@ -38,6 +38,14 @@ public abstract class Creature {
     public boolean attackCreature(Creature target, int weaponIndex){
         Weapon weapon = this.weapons.get(weaponIndex);
         if (!hitSuccess(target)){
+            String chatMessage = "";
+            if (this instanceof Character){
+                chatMessage += Main.db.fetchUsernameFromPlayerId(this.getPlayerId()) + " missed " + target.getCreatureName();
+            }
+            else{
+                chatMessage += this.getCreatureName() + " missed " + Main.db.fetchUsernameFromPlayerId(target.getPlayerId());
+            }
+            Main.db.addChatMessage(chatMessage, true);
             return false;
         }
 
@@ -47,6 +55,14 @@ public abstract class Creature {
         }
         damage += this.damageBonus;
         target.setHp(target.getHp() - damage);
+        String chatMessage = "";
+        if (this instanceof Character){
+            chatMessage += Main.db.fetchUsernameFromPlayerId(this.getPlayerId()) + " dealt " + damage + " to " + target.getCreatureName();
+        }
+        else{
+            chatMessage += this.getCreatureName() + " dealt " + damage + " to " + Main.db.fetchUsernameFromPlayerId(target.getPlayerId());
+        }
+        Main.db.addChatMessage(chatMessage, true);
         return true;
     }
 
@@ -65,6 +81,12 @@ public abstract class Creature {
         if ((Math.abs(newX - this.getxPos()) <= this.movement && Math.abs(newY - this.getyPos()) <= this.movement)){
             this.setNewPos(newX, newY);
             System.out.println("Moved");
+            if (this instanceof Character){
+                Main.db.addChatMessage(Main.db.fetchUsernameFromPlayerId(this.getPlayerId()) + " moved to X: " + newX + " Y: " + newY, true);
+            }
+            else{
+                Main.db.addChatMessage(this.getCreatureName() + " moved to X: " + newX + " Y: " + newY, true);
+            }
             return true;
         }
         else{
