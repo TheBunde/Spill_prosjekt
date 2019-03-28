@@ -10,7 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-public class RegistrerController {
+public class RegisterController {
 
     Alert alert = new Alert(Alert.AlertType.WARNING);
 
@@ -25,7 +25,7 @@ public class RegistrerController {
     private SceneSwitcher sceneSwitcher;
     private Database db = Main.db;
 
-    public RegistrerController() {
+    public RegisterController() {
         sceneSwitcher = new SceneSwitcher();
     }
 
