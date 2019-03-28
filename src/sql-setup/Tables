@@ -156,6 +156,7 @@ ALTER TABLE initiative ADD CONSTRAINT initiative_fk2 FOREIGN KEY(lobby_key) REFE
 
 
 // insert into
+//weapon
 INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description,weapon_url) VALUES (1,"Longsword",1,8,"Melee","Long_sword.png");
 INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description,weapon_url) VALUES (2,"Javelin",1,6,"Ranged","Javelin.png");
 INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description,weapon_url) VALUES (3,"Longbow",1,8,"Ranged","Long_bow.png");
