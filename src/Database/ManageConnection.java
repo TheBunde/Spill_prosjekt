@@ -37,13 +37,14 @@ public class ManageConnection {
         System.err.println("*** Fail happened: " + message + ". ***");
         e.printStackTrace(System.err);
     }
-    
+
     public void turnOnAutoCommit(Connection con){
         try{
             con.setAutoCommit(true);
         }
         catch(SQLException sq){
-            System.out.println("SQL-feil: " + sq);
+            sq.printStackTrace();
+            System.out.println("SQL-exception: " + sq);
         }
     }
 
@@ -52,7 +53,8 @@ public class ManageConnection {
             con.rollback();
         }
         catch(SQLException sq){
-            System.out.println("SQL-feil: " + sq);
+            sq.printStackTrace();
+            System.out.println("SQL-exception: " + sq);
         }
     }
 }

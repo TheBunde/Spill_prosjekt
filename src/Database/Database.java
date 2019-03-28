@@ -1,13 +1,10 @@
 package Database;
 
-
 import Main.*;
 import javafx.scene.control.Alert;
 import login.Password;
 import org.apache.commons.dbcp2.BasicDataSource;
-//
-//
-// import org.apache.commons.dbcp2.BasicDataSource;
+
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -837,6 +834,72 @@ public class Database {
         }
         return hashpass;
     }
+
+    public String fetchUsername(){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        String str = "";
+
+        try {
+            con = this.bds.getConnection();
+            String prepString = "select username from usr where user_id = ?";
+            prepStmt = con.prepareStatement(prepString);
+            prepStmt.setInt(1, Main.user.getUser_id());
+            res = prepStmt.executeQuery();
+            while (res.next()) {
+                str = res.getString("username");
+            }
+        }
+        catch (SQLException sq){
+            sq.printStackTrace();
+            return null;
+        } finally {
+            if(res != null){
+                manager.closeRes(res);
+            }
+            manager.closePrepStmt(prepStmt);
+            manager.closeConnection(con);
+        }
+        return str;
+    }
+
+    public int fetchRank(){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        int rank = 0;
+
+        try {
+            con = this.bds.getConnection();
+            String prepString = "select rank from usr where user_id = ?";
+            prepStmt = con.prepareStatement(prepString);
+            prepStmt.setInt(1, Main.user.getUser_id());
+            res = prepStmt.executeQuery();
+            while (res.next()) {
+                rank = res.getInt("rank");
+            }
+        }
+        catch (SQLException sq){
+            sq.printStackTrace();
+            return -1;
+        } finally {
+            if(res != null){
+                manager.closeRes(res);
+            }
+            manager.closePrepStmt(prepStmt);
+            manager.closeConnection(con);
+        }
+        return rank;
+    }
+}
+
+
+class test{
+    public static void main(String[] args){
+        Database db = new Database("jdbc:mysql://mysql-ait.stud.idi.ntnu.no:3306/g_tdat1006_01?user=g_tdat1006_01&password=", "q8CeXgyy");
+    }
+
 }
 
 

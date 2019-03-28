@@ -1,7 +1,6 @@
 package GUI;
-
+import Main.Main;
 import Database.Database;
-import GUI.InterfaceMain;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,11 +8,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import static javax.swing.JOptionPane.*;
 
-public class ChangeUsernameController {
+public class changeUsernameController {
 
-    private Database db = InterfaceMain.db;
+    private Database db = Main.db;
 
     @FXML
     private TextField newUsername;
@@ -22,10 +20,8 @@ public class ChangeUsernameController {
     private Button ok, cancel;
 
     public void setNewUsername()throws Exception{
-            db.setNewUsername(newUsername.getText().trim());
+        db.setNewUsername(newUsername.getText().trim());
     }
-
-
 
     public void okButtonPressed() throws Exception{
         boolean enable;

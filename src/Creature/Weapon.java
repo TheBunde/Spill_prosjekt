@@ -1,30 +1,33 @@
-package Creature;
-class Weapon {
-    private String name;
-    private int damageBonus;
-    private int damageDice;
-    private String description;
 
-    public Weapon(String name, int damageBonus, int dammageDice, String description){
+package creature;
+
+public class Weapon {
+
+    private String name;
+    private int damageDice;
+    private boolean ranged;
+    private int diceAmount;
+
+    public Weapon(String name, int dammageDice,  int diceAmount,boolean ranged){
         this.name = name;
-        this.damageBonus = damageBonus;
         this.damageDice = dammageDice;
-        this.description = description;
+        this.ranged = ranged;
+        this. diceAmount = diceAmount;
     }
 
     public String getName() {
         return name;
     }
 
-    public int getdamageBonus() {
-        return damageBonus;
-    }
-
     public int getDamageDice() {
         return damageDice;
     }
 
-    public String getDescription() {
-        return description;
+    public boolean getRanged(){
+        return ranged;
+    }
+
+    public int getDiceAmount() {
+        return diceAmount;
     }
 }

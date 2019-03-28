@@ -1,5 +1,9 @@
 package GUI;
 
+import Main.*;
+import Database.*;
+import audio.MusicPlayer;
+import audio.SFXPlayer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -27,6 +31,10 @@ public class CreateCharacterController implements Initializable {
     @FXML
     private SceneSwitcher sceneSwitcher;
 
+    private Database db = Main.db;
+
+   // private String a = chooseClassDropdown.getValue();
+
     public CreateCharacterController(){
         sceneSwitcher = new SceneSwitcher();
     }
@@ -35,15 +43,17 @@ public class CreateCharacterController implements Initializable {
     //add class to chooseClassDropdown.getItems().addAll(... , "class")
     //add class to displayCharacter() method
     //images to display selected character
+    @FXML
+    Image RangerImage = new Image("GUI/images/Ranger.png");
 
     @FXML
     Image warriorImage = new Image("GUI/images/warrior.jpg");
 
     @FXML
-    Image rogueImage = new Image("GUI/images/Default.jpg");
+    Image rogueImage = new Image("GUI/images/rogue.jpg");
 
     @FXML
-    Image wizardImage = new Image("GUI/images/Default.jpg");
+    Image wizardImage = new Image("GUI/images/wizard.jpg");
 
     @FXML
     Image defaultImage = new Image("GUI/images/Default.jpg");
@@ -51,31 +61,58 @@ public class CreateCharacterController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("View is now loaded!");
-        chooseClassDropdown.getItems().addAll("Warrior","Rogue","Wizard");
+        chooseClassDropdown.getItems().addAll("Warrior","Rogue","Wizard","Ranger");
         iv.setImage(defaultImage);
     }
 
     //method to display selected character
     public void displayCharacter(){
-        String a = chooseClassDropdown.getValue();
 
+        String a = chooseClassDropdown.getValue();
         if(a.equals("Warrior")) {
+            SFXPlayer.getInstance().setSFX(2);
             iv.setImage(warriorImage);
-            text.setText("Warrior.");
+            text.setText("Warrior. This mighty motherfather is one of the best classes for new players." +
+                    "\nYou like hitting things,and you like to hit it hard." +
+                    "\nIf your enemy runs away you can always throw your javelin at it.");
+            MusicPlayer.getInstance().stopSong();
+            MusicPlayer.getInstance().changeSong(4);
         }
         if(a.equals("Rogue")) {
             iv.setImage(rogueImage);
-            text.setText("Rogue.");
+            text.setText("Roge-y stab stab." +
+                    "\nSneaking and stabbing without getting hit is your speciality." +
+                    "\nOr assaulting it with your crossbow. your choice");
+            SFXPlayer.getInstance().setSFX(3);
+            MusicPlayer.getInstance().stopSong();
+            MusicPlayer.getInstance().changeSong(5);
         }
         if(a.equals("Wizard")) {
             iv.setImage(wizardImage);
-            text.setText("Wizard is a class");
+            text.setText("It's LeviOsa, not LeviosA." +
+                    "\nAs a Wizzard you like to stay an arms distance away from you enemy," +
+                    "\nwhile asulting it with your array of spells.");
+            SFXPlayer.getInstance().setSFX(4);
+            MusicPlayer.getInstance().stopSong();
+            MusicPlayer.getInstance().changeSong(6);
+        }
+        if(a.equals("Ranger")) {
+            iv.setImage(RangerImage);
+            text.setText("Legolas got nothing on this fella." +
+                    "\nRangers are one with nature." +
+                    "\nWith their longbow and short sword they are good with both ranged and melee attacks." +
+                    "\nA truly versatile character.");
+            SFXPlayer.getInstance().setSFX(4);
+            MusicPlayer.getInstance().stopSong();
+            MusicPlayer.getInstance().changeSong(6);
         }
     }
     //method to create the character
     public void createCharacter() throws Exception{
-        sceneSwitcher.switchScene(createCharacterButton, "MainMenu.fxml");
-
+        String a = chooseClassDropdown.getValue();
+        SFXPlayer.getInstance().setSFX(0);
+        db.createCharacter(a);
+        sceneSwitcher.switchScene(createCharacterButton, "GameLobby.fxml");
     }
 
 }
