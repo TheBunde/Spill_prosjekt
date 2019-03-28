@@ -783,6 +783,7 @@ public class Database {
             prepStmt.setInt(2, Main.user.getUser_id());
             prepStmt.executeUpdate();
             con.commit();
+            Main.user.setHost(true);
         }
         catch (SQLException sq){
             this.manager.rollback(con);
@@ -1044,7 +1045,6 @@ public class Database {
             turn = -1;
         }
         finally {
-            this.manager.turnOnAutoCommit(con);
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con);
             return turn;
