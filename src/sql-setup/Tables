@@ -60,8 +60,8 @@ create table creature_weapon(
     weapon_id integer not null,
     creature_id integer not null,
     constraint creature_weapon_pk primary key(weapon_id, creature_id),
-CONSTRAINT creature_weapon_fk1 FOREIGN KEY(weapon_id)REFERENCES weapon(weapon_id),
-CONSTRAINT creature_weapon_fk2 FOREIGN KEY(creature_id)REFERENCES creature(creature_id));
+alter table creature_weapon add CONSTRAINT creature_weapon_fk1 FOREIGN KEY(weapon_id)REFERENCES weapon(weapon_id);,
+alter table creature_weapon add CONSTRAINT creature_weapon_fk2 FOREIGN KEY(creature_id)REFERENCES creatureTemplate(creature_id);
 
 
 create table creature_weapon(
@@ -97,6 +97,7 @@ CREATE TABLE level_monster(
     constraint level_monster_pk primary key(level_id,creature_id));
 
     ALTER TABLE level_monster ADD CONSTRAINT level_monster_fk1 FOREIGN KEY(creature_id) REFERENCES creatureTemplate(creature_id);
+    ALTER TABLE level_monster ADD CONSTRAINT level_monster_fk2 FOREIGN KEY (level_id) REFERENCES level(level_id);
 
 create table game_lobby(
     lobby_key integer not null AUTO_INCREMENT,
