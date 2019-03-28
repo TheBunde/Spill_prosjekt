@@ -22,7 +22,7 @@ public class ChangeUsernameController {
     private Button ok, cancel;
 
     public void setNewUsername()throws Exception{
-            db.user.setUsername(newUsername.getText().trim());
+            db.setNewUsername(newUsername.getText().trim());
     }
 
 
