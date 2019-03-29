@@ -12,24 +12,33 @@
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Account" textAlignment="CENTER" underline="true">
                <font>
-                  <Font size="42.0" />
+                  <Font size="60.0" />
                </font>
             </Text>
             <Text fx:id="usernameOutput" layoutX="218.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" textAlignment="CENTER">
                <font>
-                  <Font size="25.0" />
+                  <Font size="35.0" />
                </font>
             </Text>
 
             <Text fx:id="rankOutput" layoutX="250.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rank" textAlignment="CENTER">
                <font>
-                  <Font size="18.0" />
+                  <Font size="35.0" />
                </font>
             </Text>
 
-            <Button fx:id="changeUsernameButton" mnemonicParsing="false" onAction="#changeUsername" text="Change Username" />
-            <Button fx:id="changePasswordButton" mnemonicParsing="false" onAction="#changePassword" text="Change Password" />
-            <Button fx:id="backButton" mnemonicParsing="false" onAction="#menu" text="Back to menu" />
+            <Button fx:id="changeUsernameButton" mnemonicParsing="false" onAction="#changeUsernameButtonPressed" prefWidth="200.0" text="Change Username" textAlignment="CENTER">
+               <font>
+                  <Font size="20.0" />
+               </font></Button>
+            <Button fx:id="changePasswordButton" mnemonicParsing="false" onAction="#changePasswordButtonPressed" prefWidth="200.0" text="Change Password" textAlignment="CENTER">
+               <font>
+                  <Font size="20.0" />
+               </font></Button>
+            <Button fx:id="backButton" mnemonicParsing="false" onAction="#backToMenuButtonPressed" prefWidth="200.0" text="Back to menu">
+               <font>
+                  <Font size="20.0" />
+               </font></Button>
          </children>
       </VBox>
    </children>

@@ -3,6 +3,7 @@ package GUI;
 import Main.*;
 import Database.*;
 
+import audio.MusicPlayer;
 import audio.SFXPlayer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,10 +16,18 @@ import javafx.stage.Stage;
 
 public class AccountDetailsController {
     private Database db = Main.db;
+    private SceneSwitcher sceneSwitcher;
 
     @FXML
     private Text usernameOutput, rankOutput;
 
+    @FXML
+    private Button changeUsernameButton, changePasswordButton, backButton;
+
+
+    public AccountDetailsController() {
+        sceneSwitcher = new SceneSwitcher();
+    }
 
     public void initialize() throws Exception {
         getInfo();
@@ -29,32 +38,24 @@ public class AccountDetailsController {
         rankOutput.setText(Integer.toString(db.fetchRank()));
     }
 
-    @FXML
-    private Button changeUsernameButton, changePasswordButton, backButton;
-
-    public void changeUsername() throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("changeUsername.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = (Stage) changeUsernameButton.getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+    public void changeUsernameButtonPressed() throws Exception {
+        SFXPlayer.getInstance().setSFX(0);
+        audio.MusicPlayer.getInstance().stopSong();
+        MusicPlayer.getInstance().changeSong(2);
+        sceneSwitcher.switchScene(changeUsernameButton, "changeUsername.fxml");
     }
 
-    public void changePassword() throws Exception {
+    public void changePasswordButtonPressed() throws Exception {
         SFXPlayer.getInstance().setSFX(0);
-        Parent root = FXMLLoader.load(getClass().getResource("changePassword.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = (Stage) changePasswordButton.getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+        audio.MusicPlayer.getInstance().stopSong();
+        MusicPlayer.getInstance().changeSong(2);
+        sceneSwitcher.switchScene(changePasswordButton, "changePassword.fxml");
     }
 
-    public void menu() throws Exception {
+    public void backToMenuButtonPressed() throws Exception {
         SFXPlayer.getInstance().setSFX(0);
-        Parent root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = (Stage) backButton.getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+        audio.MusicPlayer.getInstance().stopSong();
+        MusicPlayer.getInstance().changeSong(2);
+        sceneSwitcher.switchScene(backButton, "MainMenu.fxml");
     }
 }

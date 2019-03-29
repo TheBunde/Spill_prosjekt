@@ -1,10 +1,13 @@
 package Database;
 
+
 import Main.*;
 import javafx.scene.control.Alert;
 import login.Password;
 import org.apache.commons.dbcp2.BasicDataSource;
-
+//
+//
+// import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -17,7 +20,6 @@ public class Database {
     private BasicDataSource bds;
     public User user = Main.user;
     public Chat chat;
-    private Password pass = new Password();
     private Alert alert;
 
     //Setup for database
@@ -644,8 +646,8 @@ public class Database {
             con = this.bds.getConnection();
             con.setAutoCommit(false);
             String prepString = "INSERT INTO usr VALUES(DEFAULT, ?, 0, DEFAULT, DEFAULT)";
-            Main.user = new User(username, 0);
             prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
+            Main.user = new User(username, 0);
             prepStmt.setString(1, Main.user.getUsername());
             int added = prepStmt.executeUpdate();
             res = prepStmt.getGeneratedKeys();
@@ -653,7 +655,6 @@ public class Database {
             user_id = res.getInt(1);
             Main.user.setUser_id(user_id);
             con.commit();
-
 
             if (added == 1) {
                 alert = new Alert(Alert.AlertType.INFORMATION);
@@ -710,9 +711,38 @@ public class Database {
         }
     }
 
+    public boolean setNewUsername(String newun){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        boolean status = true;
+        try{
+            con = this.bds.getConnection();
+            con.setAutoCommit(false);
+            String prepString = "UPDATE usr SET username = ? WHERE user_id = ?";
+            prepStmt = con.prepareStatement(prepString);
+            prepStmt.setString(1, newun);
+            prepStmt.setInt(2, user.getUser_id());
+            prepStmt.executeUpdate();
+            con.commit();
+            user.setUsername(newun);
+        }
+        catch (SQLException sq){
+            this.manager.rollback(con);
+            sq.printStackTrace();
+            status = false;
+        }
+        finally {
+            this.manager.turnOnAutoCommit(con);
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(this.con);
+            return status;
+        }
+    }
+
 
     public boolean addPassword(String pw){
 
+        Password pass = new Password();
         byte[] salt = pass.getSalt();
 
         Connection con = null;
@@ -725,10 +755,9 @@ public class Database {
             con.setAutoCommit(false);
             String prepString = "INSERT INTO password VALUES(?, ?, ?)";
             prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
-            prepStmt.setInt(1, Main.user.getUser_id());
+            prepStmt.setInt(1, user.getUser_id());
             prepStmt.setBytes(2, salt);
             prepStmt.setString(3, pass.createPassword(pw, salt));
-            System.out.println("done");
             prepStmt.executeUpdate();
             con.commit();
         }
@@ -746,24 +775,28 @@ public class Database {
         }
     }
 
-    public boolean setNewUsername(String newusername){
+    public boolean deleteOldPassword(String newPw){
+
         Connection con = null;
         PreparedStatement prepStmt = null;
         boolean status = true;
         try{
             con = this.bds.getConnection();
-            String prepString = "UPDATE usr SET username = ? WHERE user_id = ?";
+            con.setAutoCommit(false);
+            String prepString = "delete from password WHERE user_id = ?";
             prepStmt = con.prepareStatement(prepString);
-            prepStmt.setString(1, newusername);
-            prepStmt.setInt(2, Main.user.getUser_id());
+            prepStmt.setInt(1, user.getUser_id());
+
             prepStmt.executeUpdate();
-            user.setUsername(newusername);
+            con.commit();
         }
         catch (SQLException sq){
+            this.manager.rollback(con);
             sq.printStackTrace();
             status = false;
         }
         finally {
+            this.manager.turnOnAutoCommit(con);
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(this.con);
             return status;
@@ -845,7 +878,7 @@ public class Database {
             con = this.bds.getConnection();
             String prepString = "select username from usr where user_id = ?";
             prepStmt = con.prepareStatement(prepString);
-            prepStmt.setInt(1, Main.user.getUser_id());
+            prepStmt.setInt(1, user.getUser_id());
             res = prepStmt.executeQuery();
             while (res.next()) {
                 str = res.getString("username");
@@ -874,7 +907,7 @@ public class Database {
             con = this.bds.getConnection();
             String prepString = "select rank from usr where user_id = ?";
             prepStmt = con.prepareStatement(prepString);
-            prepStmt.setInt(1, Main.user.getUser_id());
+            prepStmt.setInt(1, user.getUser_id());
             res = prepStmt.executeQuery();
             while (res.next()) {
                 rank = res.getInt("rank");

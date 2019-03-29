@@ -1,6 +1,8 @@
 package GUI;
 import Main.Main;
 import Database.Database;
+import audio.MusicPlayer;
+import audio.SFXPlayer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,6 +13,7 @@ import javafx.stage.Stage;
 
 public class changeUsernameController {
 
+    private SceneSwitcher sceneSwitcher;
     private Database db = Main.db;
 
     @FXML
@@ -18,6 +21,10 @@ public class changeUsernameController {
 
     @FXML
     private Button ok, cancel;
+
+    public changeUsernameController(){
+        sceneSwitcher = new SceneSwitcher();
+    }
 
     public void setNewUsername()throws Exception{
         db.setNewUsername(newUsername.getText().trim());
@@ -29,19 +36,15 @@ public class changeUsernameController {
             enable = false;
         }else{
             setNewUsername();
-            Parent root = FXMLLoader.load(getClass().getResource("AccountDetails.fxml"));
-            Scene scene = new Scene(root);
-            Stage stage = (Stage)ok.getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
+            SFXPlayer.getInstance().setSFX(0);
+            audio.MusicPlayer.getInstance().stopSong();
+            MusicPlayer.getInstance().changeSong(2);
+            sceneSwitcher.switchScene(ok, "AccountDetails.fxml");
         }
     }
 
     public void cancelButtonPressed() throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("AccountDetails.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = (Stage)cancel.getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+        SFXPlayer.getInstance().setSFX(0);
+        sceneSwitcher.switchScene(cancel, "start.fxml");
     }
 }

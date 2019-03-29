@@ -1,14 +1,12 @@
 <component name="libraryTable">
-  <library name="mysql-connector-java-8.0.13">
+  <library name="commons-dbcp2-2.6.0">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib/mysql-connector-java-8.0.13.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/commons-dbcp2-2.6.0.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/commons-logging-1.2.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/commons-pool2-2.6.1.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="jar://$USER_HOME$/.ideaLibSources/mysql-connector-java-8.0.13-sources.jar!/" />
       <root url="jar://$USER_HOME$/.ideaLibSources/commons-dbcp2-2.6.0-sources.jar!/" />
     </SOURCES>
   </library>

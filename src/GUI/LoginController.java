@@ -14,19 +14,16 @@ import login.Password;
 public class LoginController {
 
     Alert alert = new Alert(Alert.AlertType.WARNING);
+    private SceneSwitcher sceneSwitcher;
     private Password pw = new Password();
-
+    private Database db = Main.db;
 
     @FXML
-    TextField username;
-    @FXML
-    TextField password;
+    TextField username, password;
 
     @FXML
     private Button cancelButton, loginButton;
-    private SceneSwitcher sceneSwitcher;
 
-    private Database db = Main.db;
 
     public LoginController() {
         sceneSwitcher = new SceneSwitcher();
@@ -47,11 +44,11 @@ public class LoginController {
         return false;
     }
 
-    public boolean login() throws Exception {
+    public boolean loginButtonPressed() throws Exception {
         boolean ok;
 
         if(username.getText().isEmpty() || password.getText().isEmpty()) {
-            alert.setTitle("Empty textfield");
+            alert.setTitle("Empty Field");
             alert.setHeaderText(null);
             alert.setContentText("Field can not be empty.");
             alert.showAndWait();
@@ -65,7 +62,7 @@ public class LoginController {
         else if(!checkPassword()){
             alert.setTitle("Check password");
             alert.setHeaderText(null);
-            alert.setContentText("You put wrong password, try again!");
+            alert.setContentText("You input wrong password, try again!");
             alert.showAndWait();
         }else{
             SFXPlayer.getInstance().setSFX(0);
@@ -77,7 +74,7 @@ public class LoginController {
     }
 
 
-    public void cancel() throws Exception {
+    public void cancelButtonPressed() throws Exception {
         SFXPlayer.getInstance().setSFX(0);
         sceneSwitcher.switchScene(cancelButton, "start.fxml");
     }
