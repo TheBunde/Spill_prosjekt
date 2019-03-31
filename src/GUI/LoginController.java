@@ -1,14 +1,13 @@
 package GUI;
 
 import Main.*;
-import Database.Database;
 import audio.MusicPlayer;
 import audio.SFXPlayer;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import login.Password;
+import Database.*;
 
 
 public class LoginController {
@@ -17,6 +16,7 @@ public class LoginController {
     private SceneSwitcher sceneSwitcher;
     private Password pw = new Password();
     private Database db = Main.db;
+    private User user = Main.user;
 
     @FXML
     TextField username, password;
@@ -45,7 +45,6 @@ public class LoginController {
     }
 
     public boolean loginButtonPressed() throws Exception {
-        boolean ok;
 
         if(username.getText().isEmpty() || password.getText().isEmpty()) {
             alert.setTitle("Empty Field");
@@ -65,6 +64,7 @@ public class LoginController {
             alert.setContentText("You input wrong password, try again!");
             alert.showAndWait();
         }else{
+            Main.user = new User(db.fetchUser_id(username.getText().trim()), username.getText().trim(), db.fetchRank(db.fetchUser_id(username.getText().trim())));
             SFXPlayer.getInstance().setSFX(0);
             audio.MusicPlayer.getInstance().stopSong();
             MusicPlayer.getInstance().changeSong(2);

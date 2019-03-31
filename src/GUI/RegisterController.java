@@ -53,7 +53,7 @@ public class RegisterController {
             alert.showAndWait();
 
         }else{
-            db.registerUser(usernameInput.getText().trim(), passwordInput.getText().trim(), rePasswordInput.getText().trim());
+            db.registerUser(usernameInput.getText().trim());
             db.addPassword(passwordInput.getText().trim());
             SFXPlayer.getInstance().setSFX(0);
             audio.MusicPlayer.getInstance().stopSong();
@@ -61,7 +61,6 @@ public class RegisterController {
             sceneSwitcher.switchScene(registerButton, "MainMenu.fxml");
         }
     }
-
 
     public void cancel() throws Exception {
         SFXPlayer.getInstance().setSFX(0);

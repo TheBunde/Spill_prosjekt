@@ -45,6 +45,6 @@ public class changeUsernameController {
 
     public void cancelButtonPressed() throws Exception{
         SFXPlayer.getInstance().setSFX(0);
-        sceneSwitcher.switchScene(cancel, "start.fxml");
+        sceneSwitcher.switchScene(cancel, "AccountDetails.fxml");
     }
 }

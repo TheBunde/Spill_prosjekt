@@ -3,13 +3,14 @@ import Main.*;
 
 public class User {
     private Database db = Main.db;
-    private int user_id = -1;
+    private int user_id;
     private String username;
     private int rank;
     private int lobbyKey;
 
 
-    public User(String username, int rank){
+    public User(int user_id, String username, int rank){
+        this.user_id = user_id;
         this.username = username;
         this.rank = rank;
     }
@@ -23,19 +24,19 @@ public class User {
     }
 
     public String getUsername(){
-        return username;
+        return this.username;
     }
 
     public void setUsername(String new_username){
-        username = new_username;
+        this.username = new_username;
     }
 
     public int getRank(){
-        return rank;
+        return this.rank;
     }
 
     public void setRank(int newRank){
-        rank = newRank;
+        this.rank = newRank;
     }
 
     public int getLobbyKey(){

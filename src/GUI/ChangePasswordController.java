@@ -27,7 +27,7 @@ public class ChangePasswordController {
         sceneSwitcher = new SceneSwitcher();
     }
 
-    public void confirmButtonPressed(){
+    public void confirmButtonPressed()throws Exception{
         SFXPlayer.getInstance().setSFX(0);
 
         if(oldPassword.getText().isEmpty() || newPassword.getText().isEmpty() || reNewPassword.getText().isEmpty()) {
@@ -45,11 +45,11 @@ public class ChangePasswordController {
         } else {
 
             setNewPassword();
-            SFXPlayer.getInstance().setSFX(0);
             alert.setTitle("Password changed");
             alert.setHeaderText(null);
             alert.setContentText("Password changed successfully.");
             alert.showAndWait();
+            sceneSwitcher.switchScene(confirmButton, "AccountDetails.fxml");
         }
     }
 

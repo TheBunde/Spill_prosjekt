@@ -3,11 +3,7 @@ package Database;
 
 import Main.*;
 import javafx.scene.control.Alert;
-import login.Password;
 import org.apache.commons.dbcp2.BasicDataSource;
-//
-//
-// import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -218,40 +214,6 @@ public class Database {
         }
         finally {
             this.manager.turnOnAutoCommit(con);
-            this.manager.closePrepStmt(prepStmt);
-            this.manager.closeConnection(con);
-            return status;
-        }
-    }
-
-    public boolean addUser(User user){
-        Connection con = null;
-        PreparedStatement prepStmt = null;
-        ResultSet res = null;
-        int user_id = -1;
-        boolean status = true;
-        try{
-            con = this.bds.getConnection();
-            con.setAutoCommit(false);
-            String prepString = "INSERT INTO usr VALUES(DEFAULT, ?, 0, DEFAULT, DEFAULT)";
-            prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
-            prepStmt.setString(1, Main.user.getUsername());
-            System.out.println("done");
-            prepStmt.executeUpdate();
-            res = prepStmt.getGeneratedKeys();
-            res.next();
-            user_id = res.getInt(1);
-            Main.user.setUser_id(user_id);
-            con.commit();
-        }
-        catch (SQLException sq){
-            this.manager.rollback(con);
-            sq.printStackTrace();
-            status = false;
-        }
-        finally {
-            this.manager.turnOnAutoCommit(con);
-            this.manager.closeRes(res);
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con);
             return status;
@@ -637,7 +599,7 @@ public class Database {
         }
     }
 
-    public int registerUser(String username, String password, String re_pass) {
+    public int registerUser(String un) {
         Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
@@ -647,12 +609,12 @@ public class Database {
             con.setAutoCommit(false);
             String prepString = "INSERT INTO usr VALUES(DEFAULT, ?, 0, DEFAULT, DEFAULT)";
             prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
-            Main.user = new User(username, 0);
-            prepStmt.setString(1, Main.user.getUsername());
+            prepStmt.setString(1, un);
             int added = prepStmt.executeUpdate();
             res = prepStmt.getGeneratedKeys();
             res.next();
             user_id = res.getInt(1);
+            Main.user = new User(user_id, un, 0);
             Main.user.setUser_id(user_id);
             con.commit();
 
@@ -721,7 +683,7 @@ public class Database {
             String prepString = "UPDATE usr SET username = ? WHERE user_id = ?";
             prepStmt = con.prepareStatement(prepString);
             prepStmt.setString(1, newun);
-            prepStmt.setInt(2, user.getUser_id());
+            prepStmt.setInt(2, Main.user.getUser_id());
             prepStmt.executeUpdate();
             con.commit();
             user.setUsername(newun);
@@ -755,7 +717,7 @@ public class Database {
             con.setAutoCommit(false);
             String prepString = "INSERT INTO password VALUES(?, ?, ?)";
             prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
-            prepStmt.setInt(1, user.getUser_id());
+            prepStmt.setInt(1, Main.user.getUser_id());
             prepStmt.setBytes(2, salt);
             prepStmt.setString(3, pass.createPassword(pw, salt));
             prepStmt.executeUpdate();
@@ -785,7 +747,7 @@ public class Database {
             con.setAutoCommit(false);
             String prepString = "delete from password WHERE user_id = ?";
             prepStmt = con.prepareStatement(prepString);
-            prepStmt.setInt(1, user.getUser_id());
+            prepStmt.setInt(1, Main.user.getUser_id());
 
             prepStmt.executeUpdate();
             con.commit();
@@ -878,7 +840,7 @@ public class Database {
             con = this.bds.getConnection();
             String prepString = "select username from usr where user_id = ?";
             prepStmt = con.prepareStatement(prepString);
-            prepStmt.setInt(1, user.getUser_id());
+            prepStmt.setInt(1, Main.user.getUser_id());
             res = prepStmt.executeQuery();
             while (res.next()) {
                 str = res.getString("username");
@@ -897,7 +859,7 @@ public class Database {
         return str;
     }
 
-    public int fetchRank(){
+    public int fetchRank(int user_id){
         Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
@@ -907,7 +869,7 @@ public class Database {
             con = this.bds.getConnection();
             String prepString = "select rank from usr where user_id = ?";
             prepStmt = con.prepareStatement(prepString);
-            prepStmt.setInt(1, user.getUser_id());
+            prepStmt.setInt(1, user_id);
             res = prepStmt.executeQuery();
             while (res.next()) {
                 rank = res.getInt("rank");
@@ -924,6 +886,35 @@ public class Database {
             manager.closeConnection(con);
         }
         return rank;
+    }
+
+    public int fetchUser_id(String un){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        int user_id = 0;
+
+        try {
+            con = this.bds.getConnection();
+            String prepString = "select user_id from usr where username = ?";
+            prepStmt = con.prepareStatement(prepString);
+            prepStmt.setString(1, un);
+            res = prepStmt.executeQuery();
+            while (res.next()) {
+                user_id = res.getInt("user_id");
+            }
+        }
+        catch (SQLException sq){
+            sq.printStackTrace();
+            return -1;
+        } finally {
+            if(res != null){
+                manager.closeRes(res);
+            }
+            manager.closePrepStmt(prepStmt);
+            manager.closeConnection(con);
+        }
+        return user_id;
     }
 }
 
