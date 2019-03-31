@@ -32,7 +32,7 @@ public class GameLobbyController {
 
     public void travelButtonPressed() throws Exception{
         audio.MusicPlayer.getInstance().stopSong();
-        MusicPlayer.getInstance().changeSong(7);
+        MusicPlayer.getInstance().changeSong(14);
         chatController.timer.cancel();
         chatController.timer.purge();
         this.sceneSwitcher.switchScene(travelButton, "Battlefield.fxml");

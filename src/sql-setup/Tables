@@ -127,4 +127,5 @@ ALTER TABLE initiative ADD CONSTRAINT initiative_fk2 FOREIGN KEY(lobby_key) REFE
    INSERT INTO chrctr VALUES(1, "Warior" , "He be legendary warior. Yeet that goblin");
    INSERT INTO chrctr VALUES(2, "Rogee", "she be the sneaky girl. not the one from Rogue One");
 
+ALTER TABLE game_lobby ADD level_id integer;
 

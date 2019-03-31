@@ -36,7 +36,6 @@ public class SFXPlayer implements Runnable{
     public SFXPlayer(String... files){
         soundFiles = new ArrayList<AudioFile>();
         for(String file : files)
-            //soundFiles.add(new AudioFile("C:/Users/henri/OneDrive/Documents/Dataingeniør/gitworkshop/Ny Mappe/Game-development-project/src/audio/SFX/" + file + ".wav"));
             soundFiles.add(new AudioFile("src/audio/SFX/" + file + ".wav"));
     }
 
@@ -47,15 +46,10 @@ public class SFXPlayer implements Runnable{
     public void setSFX(int currentSFXIndex){
         AudioFile sfx = soundFiles.get(currentSFXIndex);
         sfx.play(volumeSFX);
-        //this.currentSFXIndex = currentSFXIndex;
     }
-
-
     @Override
     public void run(){
         AudioFile soundEffect = soundFiles.get(currentSFXIndex);
         soundEffect.play(volumeSFX);
     }
-
-
 }

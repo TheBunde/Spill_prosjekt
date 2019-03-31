@@ -9,10 +9,9 @@ public class PooledThread extends Thread {
     private ThreadPool pool;
 
     public PooledThread(ThreadPool pool) {
-        super(pool, "PooledThread-" + threadID.next());
+        super(pool, "Pool:" + threadID.next());
         this.pool = pool;
     }
-
     @Override
     public void run() {
         while (!isInterrupted()) {
