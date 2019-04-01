@@ -1110,5 +1110,59 @@ public class Database {
             return turn;
         }
     }
+
+    public boolean isReady(boolean ready){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        boolean status = true;
+        try{
+            con = this.bds.getConnection();
+            con.setAutoCommit(false);
+            String prepString = "UPDATE players SET ready = ? WHERE lobby_key = ? AND player_id = ?";
+            prepStmt = con.prepareStatement(prepString);
+            prepStmt.setBoolean(1, ready);
+            prepStmt.setInt(2, Main.user.getLobbyKey());
+            prepStmt.setInt(3, Main.user.getPlayerId());
+            prepStmt.executeUpdate();
+            con.commit();
+        }
+        catch (SQLException sq){
+            this.manager.rollback(con);
+            sq.printStackTrace();
+            status = false;
+        }
+        finally {
+            this.manager.turnOnAutoCommit(con);
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(con);
+            return status;
+        }
+    }
+
+    public ArrayList<Boolean> everyoneIsReady(){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res;
+        ArrayList<Boolean> ready = new ArrayList<>();
+        try{
+            con = this.bds.getConnection();
+            String prepString = "SELECT ready FROM player WHERE lobby_key = ? AND user_id is not NULL";
+            prepStmt = con.prepareStatement(prepString);
+            prepStmt.setInt(1, Main.user.getLobbyKey());
+            res = prepStmt.executeQuery();
+            while (res.next()){
+                ready.add(res.getBoolean(1));
+            }
+        }
+        catch (SQLException sq){
+            sq.printStackTrace();
+            return ready;
+        }
+        finally {
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(con);
+            return ready;
+        }
+    }
 }
 

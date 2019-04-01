@@ -66,6 +66,7 @@ create table player(
     player_id integer not null AUTO_INCREMENT,
     lobby_key INTEGER NOT NULL,
     user_id integer,
+    ready boolean DEFAULT FALSE,
     constraint player_pk primary key(player_id));
 
 --create table initiative(
@@ -77,6 +78,8 @@ create table player(
 create table game_lobby(
     lobby_key integer not null AUTO_INCREMENT,
     player_turn integer,
+    level_id integer,
+    joinable boolean DEFAULT TRUE,
     constraint game_lobby_pk primary key(lobby_key));
 
 create table chat_message(
