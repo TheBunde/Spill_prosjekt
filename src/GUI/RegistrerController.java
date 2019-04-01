@@ -96,10 +96,13 @@ public class RegistrerController {
     public void onRegister() throws Exception {
         Main.user = new User(-1, usernameInput.getText(), 0, emailInput.getText());
         db.addUser(Main.user);
-
+        SFXPlayer.getInstance().setSFX(0);
+        audio.MusicPlayer.getInstance().stopSong();
+        MusicPlayer.getInstance().changeSong(2);
+        sceneSwitcher.switchScene(registrerButton, "MainMenu.fxml");
 
        // DBConnection db = new DBConnection("jdbc:mysql://mysql-ait.stud.idi.ntnu.no:3306/g_tdat1006_01?user=g_tdat1006_01&password=", "q8CeXgyy");
-        if (UsernameValidation() && EmailValidation()) {
+        /*if (UsernameValidation() && EmailValidation()) {
             int status = (int) db.Button_Register_ActionPerformed(usernameInput.getText().trim().toLowerCase(), emailInput.getText(), passwordInput.getText(), rePasswordInput.getText());
             if (status == 1) {
 
@@ -112,6 +115,6 @@ public class RegistrerController {
                 JOptionPane.showMessageDialog(null, "noe feil");
 
             }
-        }
+        }*/
     }
 }

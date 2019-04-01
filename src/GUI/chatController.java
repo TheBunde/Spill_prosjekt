@@ -17,6 +17,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -47,6 +49,10 @@ public class chatController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
+        chatMessageObservableList.clear();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        chatMessageObservableList.add(new ChatMessage("Event" ,"Welcome to the Chat! Here you can communicate with your teammates", dtf.format(now), true));
         list.setItems(chatMessageObservableList);
         list.setCellFactory(chatMessageObservableList -> {
             return new ChatMessageCell();

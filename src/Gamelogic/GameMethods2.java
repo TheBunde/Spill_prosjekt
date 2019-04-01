@@ -1,7 +1,7 @@
 /*
 package Gamelogic;
 
-import creature.Creature;
+import game.Dice;
 
 import java.util.ArrayList;
 
