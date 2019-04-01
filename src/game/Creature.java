@@ -51,10 +51,8 @@ public abstract class Creature {
         }
 
         int damage = 0;
-        for (int i = 0; i < weapon.getDiceAmount(); i++){
-            damage += Dice.roll(weapon.getDamageDice());
-        }
-        damage += this.damageBonus;
+        damage += Dice.roll(weapon.getDamageDice(), weapon.getDiceAmount()) + this.damageBonus;
+
         target.setHp(target.getHp() - damage);
         String chatMessage = "";
         if (this instanceof Character){
@@ -68,7 +66,7 @@ public abstract class Creature {
     }
 
     public int hit(){
-        int hit = Dice.roll(20) + this.attackBonus;
+        int hit = Dice.roll(20, 1) + this.attackBonus;
         return hit;
     }
 

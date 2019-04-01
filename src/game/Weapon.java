@@ -9,6 +9,7 @@ public class Weapon {
     private int diceAmount;
     private int imageUrl;
 
+
     public Weapon(String name, int damageDice, boolean ranged, int diceAmount){
         this.name = name;
         this.damageDice = damageDice;

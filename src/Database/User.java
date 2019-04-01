@@ -6,17 +6,15 @@ public class User {
     private int user_id;
     private String username;
     private int rank;
-    private String email;
     private int lobbyKey;
     private int playerId = -1;
     private boolean host = false;
 
 
-    public User(int user_id, String username, int rank, String email){
+    public User(int user_id, String username, int rank){
         this.user_id = user_id;
         this.username = username;
         this.rank = rank;
-        this.email = email;
 
     }
 
@@ -42,14 +40,6 @@ public class User {
 
     public void setRank(int newRank){
         rank = newRank;
-    }
-
-    public String getEmail(){
-        return email;
-    }
-
-    public void setEmail(String newEmail){
-        email = newEmail;
     }
 
     public int getLobbyKey(){
@@ -84,6 +74,6 @@ public class User {
     }
 
     public String toString(){
-        return "User info:\n" + user_id + "\n" + username + "\n" + rank + "\n" + email;
+        return "User info:\n" + user_id + "\n" + username + "\n" + rank ;
     }
 }

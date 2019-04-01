@@ -1,89 +1,84 @@
 package GUI;
 
 import Main.*;
-import Database.Database;
 import audio.MusicPlayer;
 import audio.SFXPlayer;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-
-import javax.swing.*;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import Database.*;
+import login.*;
 
 
 public class LoginController {
 
+    Alert alert = new Alert(Alert.AlertType.WARNING);
+    private SceneSwitcher sceneSwitcher;
+    private Password pw = new Password();
+    private Database db = Main.db;
+    private User user = Main.user;
+
     @FXML
-    TextField username;
-    @FXML
-    TextField password;
+    TextField username, password;
 
     @FXML
     private Button cancelButton, loginButton;
-    private SceneSwitcher sceneSwitcher;
 
-    private Database db = Main.db;
-    public LoginController(){
+
+    public LoginController() {
         sceneSwitcher = new SceneSwitcher();
     }
 
-    public void cancel() throws Exception{
-        SFXPlayer.getInstance().setSFX(0);
+    public boolean checkUsername() {
+        if (db.findUsername(username.getText())) {
+            return true;
+        }
+        return false;
+    }
 
+
+    public boolean checkPassword() {
+        if (db.fetchHash(username.getText()).equals(pw.getHash(password.getText(), db.fetchSalt(username.getText())))) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean loginButtonPressed() throws Exception {
+
+        if(username.getText().isEmpty() || password.getText().isEmpty()) {
+            alert.setTitle("Empty Field");
+            alert.setHeaderText(null);
+            alert.setContentText("Field can not be empty.");
+            alert.showAndWait();
+        }
+        else if(!checkUsername()){
+            alert.setTitle("Check username");
+            alert.setHeaderText(null);
+            alert.setContentText("Username is not valid, try again!");
+            alert.showAndWait();
+        }
+        else if(!checkPassword()){
+            alert.setTitle("Check password");
+            alert.setHeaderText(null);
+            alert.setContentText("You input wrong password, try again!");
+            alert.showAndWait();
+        }else{
+            Main.user = new User(db.fetchUser_id(username.getText().trim()), username.getText().trim(), db.fetchRank(db.fetchUser_id(username.getText().trim())));
+            SFXPlayer.getInstance().setSFX(0);
+            audio.MusicPlayer.getInstance().stopSong();
+            MusicPlayer.getInstance().changeSong(2);
+            sceneSwitcher.switchScene(loginButton, "MainMenu.fxml");
+        }
+        return false;
+    }
+
+
+    public void cancelButtonPressed() throws Exception {
+        SFXPlayer.getInstance().setSFX(0);
         sceneSwitcher.switchScene(cancelButton, "start.fxml");
     }
-
-    /*public void login() throws Exception{
-        SFXPlayer.getInstance().setSFX(0);
-        audio.MusicPlayer.getInstance().stopSong();
-        MusicPlayer.getInstance().changeSong(2);
-        sceneSwitcher.switchScene(loginButton, "MainMenu.fxml");
-    }*/
-
-    public void onLogin ()throws Exception{
-
-
-        String usernameInput = username.getText().trim().toLowerCase();
-        String passwordInput = password.getText().trim();
-
-        System.out.println("username " + usernameInput);
-        System.out.println("password " + passwordInput);
-        if(username.getText().isEmpty()){
-            return;
-        }
-
-        int status = db.checkLogin(usernameInput,passwordInput);
-
-        System.out.println(status);
-        switch (status){
-            case 0:
-                Stage stage = (Stage) username.getScene().getWindow();
-
-                try {
-                    SFXPlayer.getInstance().setSFX(0);
-                    audio.MusicPlayer.getInstance().stopSong();
-                    MusicPlayer.getInstance().changeSong(2);
-                    sceneSwitcher.switchScene(loginButton, "MainMenu.fxml");
-
-                } catch (IOException ex) {
-                    Logger.getLogger(GUI.LoginController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;
-            case -1:
-                JOptionPane.showMessageDialog(null, "Connection Failed");
-                break;
-            case 1:
-                JOptionPane.showMessageDialog(null, "Username or password wrong");
-                break;
-        }
-
-    }
 }
+
 

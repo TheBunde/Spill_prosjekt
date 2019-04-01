@@ -75,11 +75,6 @@ public class BattlefieldController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if (Main.user.isHost()){
-            db.createPlayer("Hell Hound", false);
-        }
-
-
         game = new Game();
         weaponOne.setEffect(light);
         weaponTwo.setEffect(shadow);

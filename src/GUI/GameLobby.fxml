@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.GameLobbyController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.GameLobbyController">
    <children>
       <GridPane alignment="CENTER" prefHeight="500.0" prefWidth="800.0">
         <columnConstraints>
@@ -49,12 +49,16 @@
                <children>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0">
                      <children>
-                        <Label text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. " textAlignment="JUSTIFY" wrapText="true">
+                        <Label prefHeight="80.0" prefWidth="547.0" text="You and your band of adventurers have been traveling together for some time. After some exciting adventures, you have come upon an old forgotten castle in the middle of the deep forest. While rummaging through, you found an old diary lying among the rubble. Quickly scanning through, the last page catches your eye." textAlignment="JUSTIFY" wrapText="true">
+                           <padding>
+                              <Insets left="50.0" right="50.0" />
+                           </padding></Label>
+                        <Label prefHeight="128.0" prefWidth="547.0" text="[After all these years, I have finally found it. I have finally found the entry I have been searching for all these years. But my body is getting older and my mind is not what it used to be. Therefore, I must give up on the dream of the hidden treasure hidden deep within the mountain. I write this down so that others might be able to go on this adventure I can’t complete. About two days walk from here, you will come upon the mountain of Calbo. The entry is about 100 feet up the mountainside. Good luck adventurers. And may the blessing of the gods be with you. CR]" textAlignment="JUSTIFY" wrapText="true">
                            <padding>
                               <Insets left="50.0" right="50.0" />
                            </padding>
                            <font>
-                              <Font size="15.0" />
+                              <Font size="12.0" />
                            </font>
                            <VBox.margin>
                               <Insets />

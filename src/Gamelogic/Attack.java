@@ -1,4 +1,4 @@
-package game;
+/*package game;
 
 import java.util.ArrayList;
 
@@ -11,3 +11,4 @@ public class Attack {
         return false;
     }
 }
+*/
