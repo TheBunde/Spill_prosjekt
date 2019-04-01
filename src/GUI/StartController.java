@@ -1,6 +1,5 @@
 package GUI;
 
-import audio.MusicPlayer;
 import audio.SFXPlayer;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -8,7 +7,7 @@ import javafx.scene.control.Button;
 public class StartController {
 
     @FXML
-    private Button loginButton, registrerButton;
+    private Button loginButton, registerButton;
     private SceneSwitcher sceneSwitcher;
 
     public StartController(){
@@ -25,7 +24,7 @@ public class StartController {
     public void register() throws Exception{
         SFXPlayer.getInstance().setSFX(1);
 
-        sceneSwitcher.switchScene(registrerButton, "Register.fxml");
+        sceneSwitcher.switchScene(registerButton, "Register.fxml");
     }
 
 }

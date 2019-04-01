@@ -7,22 +7,24 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import login.Password;
 import Database.*;
 
 
 public class LoginController {
 
     Alert alert = new Alert(Alert.AlertType.WARNING);
-    private SceneSwitcher sceneSwitcher;
     private Password pw = new Password();
+    private SceneSwitcher sceneSwitcher;
     private Database db = Main.db;
     private User user = Main.user;
+
 
     @FXML
     TextField username, password;
 
     @FXML
-    private Button cancelButton, loginButton;
+    Button cancelButton, loginButton;
 
 
     public LoginController() {
@@ -44,6 +46,7 @@ public class LoginController {
         return false;
     }
 
+
     public boolean loginButtonPressed() throws Exception {
 
         if(username.getText().isEmpty() || password.getText().isEmpty()) {
@@ -61,8 +64,9 @@ public class LoginController {
         else if(!checkPassword()){
             alert.setTitle("Check password");
             alert.setHeaderText(null);
-            alert.setContentText("You input wrong password, try again!");
+            alert.setContentText("You put wrong password, try again!");
             alert.showAndWait();
+
         }else{
             Main.user = new User(db.fetchUser_id(username.getText().trim()), username.getText().trim(), db.fetchRank(db.fetchUser_id(username.getText().trim())));
             SFXPlayer.getInstance().setSFX(0);
@@ -73,10 +77,10 @@ public class LoginController {
         return false;
     }
 
-
     public void cancelButtonPressed() throws Exception {
         SFXPlayer.getInstance().setSFX(0);
         sceneSwitcher.switchScene(cancelButton, "start.fxml");
     }
 }
+
 

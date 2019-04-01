@@ -10,38 +10,38 @@
 <?import javafx.scene.text.Text?>
 
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" spacing="50.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.LoginController">
-   <children>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="sign in" textAlignment="CENTER" underline="true">
-         <font>
-            <Font size="57.0" />
-         </font>
-      </Text>
-      <TextField fx:id="username" prefHeight="50.0" prefWidth="300.0" promptText="Username">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </TextField>
-      <PasswordField fx:id="password" prefHeight="50.0" prefWidth="300.0" promptText="Password">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </PasswordField>
-      <HBox alignment="CENTER" prefHeight="103.0" prefWidth="200.0" spacing="50.0">
-         <children>
-            <Button fx:id="loginButton" mnemonicParsing="false" onAction="#loginButtonPressed" prefHeight="40.0" prefWidth="100.0" text="Log in">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Button>
-            <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelButtonPressed" prefHeight="40.0" prefWidth="100.0" text="Cancel">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Button>
-         </children>
-      </HBox>
-   </children>
-   <padding>
-      <Insets left="200.0" right="200.0" />
-   </padding>
+    <children>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="sign in" textAlignment="CENTER" underline="true">
+            <font>
+                <Font size="57.0" />
+            </font>
+        </Text>
+        <TextField fx:id="username" prefHeight="50.0" prefWidth="300.0" promptText="Username">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </TextField>
+        <PasswordField fx:id="password" prefHeight="50.0" prefWidth="300.0" promptText="Password">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </PasswordField>
+        <HBox alignment="CENTER" prefHeight="103.0" prefWidth="200.0" spacing="50.0">
+            <children>
+                <Button fx:id="loginButton" mnemonicParsing="false" onAction="#loginButtonPressed" prefHeight="40.0" prefWidth="100.0" text="Log in">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                </Button>
+                <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelButtonPressed" prefHeight="40.0" prefWidth="100.0" text="Cancel">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                </Button>
+            </children>
+        </HBox>
+    </children>
+    <padding>
+        <Insets left="200.0" right="200.0" />
+    </padding>
 </VBox>

@@ -39,14 +39,14 @@ public class RegisterController {
             alert.setContentText("Field can not be empty.");
             alert.showAndWait();
         }
-         else if (db.findUsername(usernameInput.getText().trim())) {
-             alert.setTitle("Check Username");
-             alert.setHeaderText(null);
-             alert.setContentText("Username exists in database already!");
-             alert.showAndWait();
+        else if (db.findUsername(usernameInput.getText().trim())) {
+            alert.setTitle("Check Username");
+            alert.setHeaderText(null);
+            alert.setContentText("Username exists in database already!");
+            alert.showAndWait();
 
-         }
-         else if(!passwordInput.getText().trim().equals(rePasswordInput.getText().trim())){
+        }
+        else if(!passwordInput.getText().trim().equals(rePasswordInput.getText().trim())){
             alert.setTitle("Not match Password");
             alert.setHeaderText(null);
             alert.setContentText("You input different password, try again!");

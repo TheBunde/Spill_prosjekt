@@ -1,0 +1,10 @@
+
+gi spillere startposisjon i create character
+går til bttlefield
+
+@overide
+Initialize(){
+
+host henter karakterene fra database og for hver spiller setter inn bilde på map korresponderende til karakter
+host lager monster (host må også styre monster)
+}

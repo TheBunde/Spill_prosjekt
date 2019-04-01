@@ -20,6 +20,11 @@ public class MainMenuController {
 
     private Database db = Main.db;
 
+    public void initialize(){
+        Main.user.setPlayerId(-1);
+        db.setHost(false);
+    }
+
     public void startNewGameButtonPressed() throws Exception{
         db.createNewLobby();
         db.setHost(true);

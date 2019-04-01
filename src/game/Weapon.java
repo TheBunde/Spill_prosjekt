@@ -1,5 +1,5 @@
 
-package creature;
+package game;
 
 public class Weapon {
 
@@ -7,12 +7,14 @@ public class Weapon {
     private int damageDice;
     private boolean ranged;
     private int diceAmount;
+    private int imageUrl;
 
-    public Weapon(String name, int dammageDice,  int diceAmount,boolean ranged){
+
+    public Weapon(String name, int damageDice, boolean ranged, int diceAmount){
         this.name = name;
-        this.damageDice = dammageDice;
+        this.damageDice = damageDice;
         this.ranged = ranged;
-        this. diceAmount = diceAmount;
+        this.diceAmount = diceAmount;
     }
 
     public String getName() {
@@ -23,8 +25,8 @@ public class Weapon {
         return damageDice;
     }
 
-    public boolean getRanged(){
-        return ranged;
+    public boolean isRanged(){
+        return this.ranged;
     }
 
     public int getDiceAmount() {
