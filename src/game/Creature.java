@@ -37,13 +37,14 @@ public abstract class Creature {
 
     public boolean attackCreature(Creature target, int weaponIndex){
         Weapon weapon = this.weapons.get(weaponIndex);
-        if (!hitSuccess(target)){
+        int roll = hit();
+        if (!hitSuccess(roll, target)){
             String chatMessage = "";
             if (this instanceof Character){
-                chatMessage += Main.db.fetchUsernameFromPlayerId(this.getPlayerId()) + " missed " + target.getCreatureName();
+                chatMessage += Main.db.fetchUsernameFromPlayerId(this.getPlayerId()) + " rolled " + roll + " and missed " + target.getCreatureName();
             }
             else{
-                chatMessage += this.getCreatureName() + " missed " + Main.db.fetchUsernameFromPlayerId(target.getPlayerId());
+                chatMessage += this.getCreatureName() + " rolled " + roll + " and missed " + Main.db.fetchUsernameFromPlayerId(target.getPlayerId());
             }
             Main.db.addChatMessage(chatMessage, true);
             return false;
@@ -57,17 +58,21 @@ public abstract class Creature {
         target.setHp(target.getHp() - damage);
         String chatMessage = "";
         if (this instanceof Character){
-            chatMessage += Main.db.fetchUsernameFromPlayerId(this.getPlayerId()) + " dealt " + damage + " to " + target.getCreatureName();
+            chatMessage += Main.db.fetchUsernameFromPlayerId(this.getPlayerId()) + " rolled " + roll + " and dealt " + damage + " to " + target.getCreatureName();
         }
         else{
-            chatMessage += this.getCreatureName() + " dealt " + damage + " to " + Main.db.fetchUsernameFromPlayerId(target.getPlayerId());
+            chatMessage += this.getCreatureName() + " rolled " + roll + " and dealt " + damage + " to " + Main.db.fetchUsernameFromPlayerId(target.getPlayerId());
         }
         Main.db.addChatMessage(chatMessage, true);
         return true;
     }
 
-    public boolean hitSuccess(Creature target){
+    public int hit(){
         int hit = Dice.roll(20) + this.attackBonus;
+        return hit;
+    }
+
+    public boolean hitSuccess(int hit, Creature target){
         if (hit >= target.getAc()){
             return true;
         }

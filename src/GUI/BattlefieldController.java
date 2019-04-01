@@ -4,13 +4,14 @@ package GUI;
 import Database.*;
 import Main.*;
 import audio.MusicPlayer;
-import game.Creature;
-import game.Game;
+import game.*;
+import game.Monster;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -21,10 +22,16 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 
 import javafx.event.EventHandler;
+
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -52,22 +59,22 @@ public class BattlefieldController implements Initializable {
     private boolean attackPressed = false;
     private boolean movePressed = false;
     private Pane movementPane;
+    private ArrayList<Pane> attackPanes = new ArrayList<>();
     private ArrayList<ImageView> playerPawns = new ArrayList<>();
     private String[] imageUrls = {"GUI/images/warrior.jpg", "GUI/images/rogue.jpg", "GUI/images/wizard.jpg","ranger", "GUI/images/judge.jpg"};
     private Game game;
-    private EventHandler<MouseEvent> mouseEventHandler = new EventHandler<MouseEvent>(){
-        @Override
-        public void handle(MouseEvent e){
-            mouseX = e.getX();
-            mouseY = e.getY();
-            moveFinished();
-        }
-    };
 
     public static Timer timer = new Timer();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        if (Main.user.isHost()){
+            db.createPlayer("Hell Hound", false);
+            db.createPlayer("Hell Hound", false);
+            db.createPlayer("Hell Hound", false);
+            db.createPlayer("Hell Hound", false);
+        }
+
         game = new Game();
         Image image = null;
         cellWidth = mapGrid.getPrefWidth()/(16.0);
@@ -85,6 +92,9 @@ public class BattlefieldController implements Initializable {
             this.playerPawns.add(iv);
         }
 
+        initMovementPane();
+        initAttackPanes();
+
         refreshGameFromClient();
         updateGameFromServer();
 
@@ -96,7 +106,7 @@ public class BattlefieldController implements Initializable {
                     update();
                 });
             }
-        },0 ,1500);
+        },0 ,1200);
     }
 
     public BattlefieldController(){
@@ -108,7 +118,32 @@ public class BattlefieldController implements Initializable {
         moveButton.setDisable(true);
         endTurnButton.setDisable(true);
         attackButton.getStyleClass().add("button-selected");
+        new Thread(new Runnable(){
+            @Override public void run(){
+                showAttackPanes();
+                ArrayList<Integer> monstersIndex = game.getMonstersIndex();
+                for (int i = 0; i < monstersIndex.size(); i++){
+                    ImageView image = playerPawns.get(monstersIndex.get(i));
+                    image.addEventFilter(MouseEvent.MOUSE_CLICKED, attackEventHandler);
+                    image.setCursor(Cursor.CROSSHAIR);
+                }
+            }
+        }).start();
     }
+
+    private EventHandler<MouseEvent> attackEventHandler = new EventHandler<MouseEvent>(){
+        @Override
+        public void handle(MouseEvent e){
+            int clickedMonsterIndex = 0;
+            for (int i = 0; i < game.getAmountOfCreatures(); i++){
+                if (e.getSource() == playerPawns.get(i)){
+                    clickedMonsterIndex = i;
+                }
+            }
+            game.playerCharacter.attackCreature(game.getCreature(clickedMonsterIndex), 0);
+            attackFinished();
+        }
+    };
 
     public void attackFinished(){
         attackPressed = false;
@@ -116,6 +151,13 @@ public class BattlefieldController implements Initializable {
         endTurnButton.setDisable(false);
         attackButton.getStyleClass().clear();
         attackButton.getStyleClass().add("button");
+        hideAttackPanes();
+        ArrayList<Integer> monstersIndex = game.getMonstersIndex();
+        for (int i = 0; i < monstersIndex.size(); i++){
+            ImageView image = playerPawns.get(monstersIndex.get(i));
+            image.removeEventFilter(MouseEvent.MOUSE_CLICKED, attackEventHandler);
+            image.setCursor(Cursor.DEFAULT);
+        }
     }
 
     public void moveButtonPressed(){
@@ -123,30 +165,24 @@ public class BattlefieldController implements Initializable {
         attackButton.setDisable(true);
         endTurnButton.setDisable(true);
         moveButton.getStyleClass().add("button-selected");
-
-
-        movementPane = new Pane();
-        double moveDistanceX = cellWidth*(2*game.playerCharacter.getMovement() + 1);
-        double moveDistanceY = cellHeight*(2*game.playerCharacter.getMovement() + 1);
-        movementPane.setMouseTransparent(true);
-        movementPane.setPrefWidth(moveDistanceX);
-        movementPane.setPrefHeight(moveDistanceY);
-        movementPane.setStyle("-fx-background-color: rgb(26, 188, 156, 0.3)");
-        movementPane.setLayoutX(cellWidth*((double)game.playerCharacter.getxPos()) - cellWidth*game.playerCharacter.getMovement());
-        movementPane.setLayoutY(cellHeight*((double)game.playerCharacter.getyPos()) - cellHeight*game.playerCharacter.getMovement());
-
-        battlefieldUI.getChildren().add(movementPane);
-
-
-
-        openMapGridEventHandler();
+        showMovementPane();
+        openMapMoveEventHandler();
     }
+
+    private EventHandler<MouseEvent> mapMoveEventHandler = new EventHandler<MouseEvent>(){
+        @Override
+        public void handle(MouseEvent e){
+            mouseX = e.getX();
+            mouseY = e.getY();
+            moveFinished();
+        }
+    };
 
     public void moveFinished(){
         movePressed = false;
-        battlefieldUI.getChildren().remove(movementPane);
+        hideMovementPane();
         game.playerCharacter.moveCreature(toGrid(mapGrid.getWidth(), mouseX), toGrid(mapGrid.getHeight(), mouseY));
-        closeMapGridEventHandler();
+        closeMapMoveEventHandler();
         attackButton.setDisable(false);
         endTurnButton.setDisable(false);
         moveButton.getStyleClass().clear();
@@ -160,7 +196,19 @@ public class BattlefieldController implements Initializable {
     }
 
     public void helpButtonPressed(){
-
+        if (Desktop.isDesktopSupported()){
+            try {
+                Desktop.getDesktop().browse(new URI("https://gitlab.stud.iie.ntnu.no/heleneyj/game-development-project/wikis/System%20Documentation"));
+            }
+            catch (IOException ioe){
+                System.out.println("Error with IO");
+                ioe.printStackTrace();
+            }
+            catch (URISyntaxException e){
+                System.out.println("Error in URL");
+                e.printStackTrace();
+            }
+        }
     }
 
     public void exitButtonPressed() throws Exception {
@@ -181,12 +229,14 @@ public class BattlefieldController implements Initializable {
     }
 
 
-    public void openMapGridEventHandler(){
-        mapGrid.addEventFilter(MouseEvent.MOUSE_CLICKED, mouseEventHandler);
+    public void openMapMoveEventHandler(){
+        mapGrid.setCursor(Cursor.HAND);
+        mapGrid.addEventFilter(MouseEvent.MOUSE_CLICKED, mapMoveEventHandler);
     }
 
-    public void closeMapGridEventHandler(){
-        mapGrid.removeEventFilter(MouseEvent.MOUSE_CLICKED, mouseEventHandler);
+    public void closeMapMoveEventHandler(){
+        mapGrid.setCursor(Cursor.DEFAULT);
+        mapGrid.removeEventFilter(MouseEvent.MOUSE_CLICKED, mapMoveEventHandler);
     }
 
     public void updateGameFromServer(){
@@ -200,6 +250,7 @@ public class BattlefieldController implements Initializable {
             mapGrid.add(playerPawns.get(i), pos.get(0), pos.get(1));
         }
     }
+
 
     public Node getNodeFromGrid(int x, int y){
         Node result = null;
@@ -237,11 +288,67 @@ public class BattlefieldController implements Initializable {
             if (!attackPressed){
                 moveButton.setDisable(false);
             }
-            if (!movePressed || !attackPressed){
+            if (!movePressed && !attackPressed){
                 endTurnButton.setDisable(false);
             }
         }
     }
 
-    //private Pane createMovementPane
+    public void initMovementPane(){
+        movementPane = new Pane();
+        double moveDistanceX = cellWidth*(2*game.playerCharacter.getMovement() + 1);
+        double moveDistanceY = cellHeight*(2*game.playerCharacter.getMovement() + 1);
+        movementPane.setPrefWidth(moveDistanceX);
+        movementPane.setPrefHeight(moveDistanceY);
+        movementPane.setMouseTransparent(true);
+        movementPane.setStyle("-fx-background-color: rgb(26, 188, 156, 0.3)");
+        movementPane.setVisible(false);
+        battlefieldUI.getChildren().add(movementPane);
+    }
+
+
+    public void showMovementPane(){
+        double moveDistanceX = cellWidth*(2*game.playerCharacter.getMovement() + 1);
+        double moveDistanceY = cellHeight*(2*game.playerCharacter.getMovement() + 1);
+        movementPane.setPrefWidth(moveDistanceX);
+        movementPane.setPrefHeight(moveDistanceY);
+        movementPane.setLayoutX(cellWidth*((double)game.playerCharacter.getxPos()) - cellWidth*game.playerCharacter.getMovement());
+        movementPane.setLayoutY(cellHeight*((double)game.playerCharacter.getyPos()) - cellHeight*game.playerCharacter.getMovement());
+        movementPane.setVisible(true);
+    }
+
+    public void hideMovementPane(){
+        movementPane.setVisible(false);
+    }
+
+    public void initAttackPanes(){
+        ArrayList<Integer> monstersIndex = game.getMonstersIndex();
+        for (int i = 0; i < monstersIndex.size(); i++){
+            Pane pane = new Pane();
+            pane.setPrefWidth(cellWidth);
+            pane.setPrefHeight(cellHeight);
+            pane.setStyle("-fx-background-color: rgb(252, 91, 55, 0.7)");
+            pane.setMouseTransparent(true);
+            pane.setVisible(false);
+            attackPanes.add(pane);
+            battlefieldUI.getChildren().add(pane);
+        }
+
+    }
+
+    public void showAttackPanes(){
+        ArrayList<Integer> monstersIndex = game.getMonstersIndex();
+        for (int i = 0; i < attackPanes.size(); i++){
+            Pane attackpane = attackPanes.get(i);
+            attackpane.setVisible(true);
+            attackpane.setLayoutX(cellWidth*(double)game.getCreature(monstersIndex.get(i)).getxPos());
+            attackpane.setLayoutY(cellHeight*(double)game.getCreature(monstersIndex.get(i)).getyPos());
+        }
+    }
+
+    public void hideAttackPanes(){
+        for (int i = 0; i < attackPanes.size(); i++){
+            attackPanes.get(i).setVisible(false);
+        }
+    }
 }

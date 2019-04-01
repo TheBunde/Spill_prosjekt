@@ -24,6 +24,26 @@ public class Monster extends Creature {
         }
     }
 
+    //Splitted version of monsterAction for movement
+    public void monsterMove (ArrayList<Creature> players){
+        Creature target = getClosest(players);
+        if(inRange(target)){
+            moveTo(target);
+        }else{
+            moveToward(target);
+        }
+    }
+
+    //Splitted version of monsterAction for attack
+    public void monsterAttack (ArrayList<Creature> players){
+        Creature target = getClosest(players);
+        if(inRange(target)){
+            attackCreature(target, 0);
+        }else{
+            attackCreature(target, 1);
+        }
+    }
+
     public Creature getClosest(ArrayList<Creature> players){
         ArrayList<Creature> creatures = players;
         Creature target = creatures.get(0);
@@ -31,7 +51,7 @@ public class Monster extends Creature {
         int yDistance = Math.abs(getyPos() - creatures.get(0).getyPos());
 
         for (Creature i : creatures) {
-            if (i != this) {
+            if (i != this && i instanceof game.Character) {
                 if (Math.abs(getxPos() - i.getxPos()) < xDistance && Math.abs(getyPos() - i.getyPos()) < yDistance) {
                     target = i;
                 }
@@ -53,7 +73,7 @@ public class Monster extends Creature {
         }else if(Math.abs(yPos -target.getyPos()) < getMovement()){
             yPos = target.getyPos() - 1 * direction(yPos, target.getyPos());
         }
-        setNewPos(xPos, yPos);
+        moveCreature(xPos, yPos);
     }
 
     public boolean inRange(Creature target){

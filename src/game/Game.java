@@ -1,8 +1,11 @@
 package game;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+
 import Main.*;
 import Database.*;
+import javafx.application.Platform;
 
 public class Game {
     private ArrayList<Creature> creatures = new ArrayList<>();
@@ -29,8 +32,11 @@ public class Game {
         }
         updateCreatureData();
         if (isMonsterTurn() && Main.user.isHost()){
-            monsterAction();
-            pushCreatureData();
+            new Thread(new Runnable(){
+                @Override public void run(){
+                    monsterAction();
+                }
+            }).start();
         }
     }
 
@@ -56,6 +62,16 @@ public class Game {
             int hp = c.getHp();
             db.setHp(hp, playerId);
         }
+    }
+
+    public ArrayList<Integer> getMonstersIndex(){
+        ArrayList<Integer> monstersIndex = new ArrayList<>();
+        for (int i = 0; i < this.creatures.size(); i++){
+            if (this.creatures.get(i) instanceof Monster){
+                monstersIndex.add(i);
+            }
+        }
+        return monstersIndex;
     }
 
     public Creature getCreature(int index){
@@ -87,8 +103,30 @@ public class Game {
         return false;
     }
 
+    public boolean isPositionAvailable(int x, int y){
+        boolean available = true;
+        for (Creature c : this.creatures){
+            if (c.getxPos() == x && c.getyPos() == y){
+                available = false;
+            }
+        }
+        return available;
+    }
+
+    public Creature getCreatureFromPosition(int x, int y){
+        for (Creature c : this.creatures){
+            if (c.getxPos() == x && c.getyPos() == y){
+                return c;
+            }
+        }
+        return null;
+    }
+
     public void monsterAction(){
-        ((Monster) creatures.get(turn % creatures.size())).monsterAction(creatures);
+        Monster monster = ((Monster) creatures.get(turn % creatures.size()));
+        monster.monsterMove(creatures);
+        monster.monsterAttack(creatures);
+        pushCreatureData();
         endTurn();
     }
 
