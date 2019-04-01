@@ -16,17 +16,22 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class FindLobbyController {
-    @FXML
-    private Button joinLobbyButton;
 
+    private Database db = Main.db;
+    private SceneSwitcher sceneSwitcher;
+
+    @FXML
+    private Button joinLobbyButton, cancelButton;
     @FXML
     private TextField lobbyKeyInput;
-
     @FXML
     private Label errorLabel;
 
-    private Database db = Main.db;
 
+
+    public FindLobbyController() {
+        sceneSwitcher = new SceneSwitcher();
+    }
 
     public void joinLobbyButtonPressed() throws IOException {
         String key = lobbyKeyInput.getText();
@@ -57,5 +62,10 @@ public class FindLobbyController {
 
     public void clearErrorLabel(){
         errorLabel.setText("");
+    }
+
+    public void cancelButtonPressed() throws Exception {
+        SFXPlayer.getInstance().setSFX(0);
+        sceneSwitcher.switchScene(cancelButton, "MainMenu.fxml");
     }
 }
