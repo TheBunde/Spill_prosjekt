@@ -42,11 +42,11 @@ public class Game {
 
     public void updateCreatureData(){
         turn = db.fetchPlayerTurn();
-        for (int i = 0; i < creatures.size(); i++){
+        for (int i = 0; i < creatures.size(); i++) {
             int playerId = creatures.get(i).getPlayerId();
             ArrayList<Integer> newPos = db.fetchPlayerPos(playerId);
             int newHp = db.fetchPlayerHp(playerId);
-            if (playerId != Main.user.getPlayerId()){
+            if (playerId != Main.user.getPlayerId()) {
                 creatures.get(i).setNewPos(newPos.get(0), newPos.get(1));
             }
             creatures.get(i).setHp(newHp);
@@ -89,6 +89,10 @@ public class Game {
 
     public int getAmountOfCreatures(){
         return this.creatures.size();
+    }
+
+    public ArrayList<Creature> getCreatures(){
+        return this.creatures;
     }
 
     public ArrayList<Integer> getPos(int index){

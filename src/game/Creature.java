@@ -2,6 +2,8 @@ package game;
 
 import java.util.ArrayList;
 import Main.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public abstract class Creature {
     private int hp;
@@ -17,9 +19,11 @@ public abstract class Creature {
     private int playerId;
     private int creatureId;
     private String backstory;
+    private String imageUrl;
+    private ImageView pawn;
 
 
-    public Creature(int playerId, int creatureId, String creatureName, int hp, int ac, int movement, int damageBonus, int attackBonus, int attacksPerTurn, String backstory, int xPos, int yPos, ArrayList weapons){
+    public Creature(int playerId, int creatureId, String creatureName, int hp, int ac, int movement, int damageBonus, int attackBonus, int attacksPerTurn, String backstory, int xPos, int yPos, String imageUrl, ArrayList weapons){
         this.playerId = playerId;
         this.creatureId = creatureId;
         this.creatureName = creatureName;
@@ -32,7 +36,12 @@ public abstract class Creature {
         this.backstory = backstory;
         this.xPos = xPos;
         this.yPos = yPos;
+        this.imageUrl = imageUrl;
         this.weapons = weapons;
+
+        Image image = new Image("GUI/images/" + this.imageUrl);
+        this.pawn = new ImageView(image);
+        this.pawn.setPreserveRatio(false);
     }
 
     public boolean attackCreature(Creature target, int weaponIndex){
@@ -166,5 +175,18 @@ public abstract class Creature {
         }
         return "Character: " + this.getCreatureName() + "\nHP: " + this.getHp() + "\nAC: " + this.getAc() + "\nSpeed: " + this.getMovement() +
                 "\nWeapon: " + weaponNames + "\nAttack bonus: " + this.getAttackBonus() +"\nAttacks per turn: " + this.getAttacksPerTurn() + "\nBackstory: " + this.getBackstory();
+    }
+
+    public String getImageUrl(){
+        return this.imageUrl;
+    }
+
+    public ImageView getPawn(){
+        return this.pawn;
+    }
+
+    public void setPawnSize(double width, double height){
+        this.pawn.setFitWidth(width);
+        this.pawn.setFitHeight(height);
     }
 }

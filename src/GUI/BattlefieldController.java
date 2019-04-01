@@ -51,7 +51,7 @@ public class BattlefieldController implements Initializable {
     @FXML
     private AnchorPane battlefieldUI;
     @FXML
-    private ImageView weaponOne, weaponTwo;
+    private ImageView weaponOne, weaponTwo, playerImage;
     private Database db = Main.db;
     private User user = Main.user;
     private SceneSwitcher sceneSwitcher = new SceneSwitcher();
@@ -64,8 +64,6 @@ public class BattlefieldController implements Initializable {
     private int equipedWeapon = 0;
     private Pane movementPane;
     private ArrayList<Pane> attackPanes = new ArrayList<>();
-    private ArrayList<ImageView> playerPawns = new ArrayList<>();
-    private String[] imageUrls = {"GUI/images/warrior.jpg", "GUI/images/rogue.jpg", "GUI/images/wizard.jpg","ranger", "GUI/images/judge.jpg"};
     private Game game;
     private Lighting light = new Lighting();
     private InnerShadow shadow = new InnerShadow();
@@ -75,25 +73,22 @@ public class BattlefieldController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        //New instance of game
         game = new Game();
-        weaponOne.setEffect(light);
-        weaponTwo.setEffect(shadow);
-        Image image = null;
+
         cellWidth = mapGrid.getPrefWidth()/(16.0);
         cellHeight = mapGrid.getPrefHeight()/(16.0);
-        System.out.println(mapGrid.getWidth());
 
-        for(int i = 0; i < game.getAmountOfCreatures(); i++){
-            Creature creature = game.getCreature(i);
-            image = new Image(imageUrls[creature.getCreatureId() -1], cellWidth, cellHeight, false, false);
-            ImageView iv = new ImageView(image);
-            iv.setPreserveRatio(false);
-            iv.setFitHeight(mapGrid.getHeight() / 16);
-            iv.setFitWidth(mapGrid.getWidth() / 16);
-            mapGrid.add(iv, creature.getxPos(), creature.getyPos());
-            this.playerPawns.add(iv);
+        for (Creature c : game.getCreatures()){
+            c.setPawnSize(cellWidth, cellHeight);
+            mapGrid.add(c.getPawn(), c.getxPos(), c.getyPos());
         }
+        weaponOne.setImage(new Image("GUI/images/" + game.playerCharacter.getWeapons().get(0).getImageUrl()));
+        weaponTwo.setImage(new Image("GUI/images/" + game.playerCharacter.getWeapons().get(1).getImageUrl()));
+        weaponOne.setEffect(light);
+        weaponTwo.setEffect(shadow);
+
+        playerImage.setImage(new Image("GUI/images/" + game.playerCharacter.getImageUrl()));
 
         initMovementPane();
         initAttackPanes();
@@ -112,10 +107,6 @@ public class BattlefieldController implements Initializable {
         },0 ,1200);
     }
 
-    public BattlefieldController(){
-
-    }
-
     public void attackButtonPressed(){
         attackPressed = true;
         moveButton.setDisable(true);
@@ -125,7 +116,7 @@ public class BattlefieldController implements Initializable {
                 showAttackPanes();
                 ArrayList<Integer> monstersIndex = game.getMonstersIndex();
                 for (int i = 0; i < monstersIndex.size(); i++){
-                    ImageView image = playerPawns.get(monstersIndex.get(i));
+                    ImageView image = game.getCreature(monstersIndex.get(i)).getPawn();
                     image.addEventFilter(MouseEvent.MOUSE_CLICKED, attackEventHandler);
                     image.setCursor(Cursor.CROSSHAIR);
                 }
@@ -139,7 +130,7 @@ public class BattlefieldController implements Initializable {
         public void handle(MouseEvent e){
             int clickedMonsterIndex = 0;
             for (int i = 0; i < game.getAmountOfCreatures(); i++){
-                if (e.getSource() == playerPawns.get(i)){
+                if (e.getSource() == game.getCreature(i).getPawn()){
                     clickedMonsterIndex = i;
                 }
             }
@@ -157,7 +148,7 @@ public class BattlefieldController implements Initializable {
         hideAttackPanes();
         ArrayList<Integer> monstersIndex = game.getMonstersIndex();
         for (int i = 0; i < monstersIndex.size(); i++){
-            ImageView image = playerPawns.get(monstersIndex.get(i));
+            ImageView image = game.getCreature(monstersIndex.get(i)).getPawn();
             image.removeEventFilter(MouseEvent.MOUSE_CLICKED, attackEventHandler);
             image.setCursor(Cursor.DEFAULT);
         }
@@ -247,10 +238,10 @@ public class BattlefieldController implements Initializable {
     }
 
     public void refreshGameFromClient(){
-        for(int i = 0; i < playerPawns.size(); i++){
-            ArrayList<Integer> pos = game.getPos(i);
-            ((GridPane) playerPawns.get(i).getParent()).getChildren().remove(playerPawns.get(i));
-            mapGrid.add(playerPawns.get(i), pos.get(0), pos.get(1));
+        for(int i = 0; i < game.getCreatures().size(); i++){
+            Creature c = game.getCreatures().get(i);
+            mapGrid.getChildren().remove(c.getPawn());
+            mapGrid.add(c.getPawn(), c.getxPos(), c.getyPos());
         }
     }
 

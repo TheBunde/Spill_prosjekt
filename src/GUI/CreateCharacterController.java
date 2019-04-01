@@ -44,7 +44,7 @@ public class CreateCharacterController implements Initializable {
     //add class to displayCharacter() method
     //images to display selected character
     @FXML
-    Image RangerImage = new Image("GUI/images/Ranger.png");
+    Image RangerImage = new Image("GUI/images/ranger.png");
 
     @FXML
     Image warriorImage = new Image("GUI/images/warrior.jpg");

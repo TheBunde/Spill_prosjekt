@@ -95,7 +95,7 @@
          <children>
             <VBox prefHeight="117.0" prefWidth="107.0">
                <children>
-                  <ImageView fitHeight="84.0" fitWidth="115.0" pickOnBounds="true">
+                  <ImageView fx:id="playerImage" fitHeight="84.0" fitWidth="115.0" pickOnBounds="true">
                      <image>
                         <Image url="@images/yobammarere.jpg" />
                      </image>
@@ -110,16 +110,8 @@
             </VBox>
             <VBox prefHeight="117.0" prefWidth="71.0">
                <children>
-                  <ImageView fx:id="weaponOne" fitHeight="58.0" fitWidth="76.0" onMouseClicked="#weaponOneSelected" pickOnBounds="true">
-                     <image>
-                        <Image url="@images/swordExample.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="weaponTwo" fitHeight="59.0" fitWidth="76.0" onMouseClicked="#weaponTwoSelected" pickOnBounds="true">
-                     <image>
-                        <Image url="@images/shrek2.png" />
-                     </image>
-                  </ImageView>
+                  <ImageView fx:id="weaponOne" fitHeight="58.0" fitWidth="76.0" onMouseClicked="#weaponOneSelected" pickOnBounds="true" smooth="false" />
+                  <ImageView fx:id="weaponTwo" fitHeight="59.0" fitWidth="76.0" onMouseClicked="#weaponTwoSelected" pickOnBounds="true" smooth="false" />
                </children>
             </VBox>
             <VBox prefHeight="117.0" prefWidth="154.0">

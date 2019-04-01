@@ -14,7 +14,7 @@ drop table chat_message;
 
 create table creatureTemplate(
     creature_id INTEGER NOT NULL AUTO_INCREMENT,
-    creature_name VARCHAR(20),
+    creature_name VARCHAR(30),
     hp INTEGER,
     ac INTEGER,
     movement INTEGER,
@@ -22,6 +22,7 @@ create table creatureTemplate(
     attack_bonus INTEGER,
     attacks_per_turn INTEGER,
     backstory TEXT,
+    image_url VARCHAR(30),
     playable BOOLEAN,
     constraint creatureTemplate_pk primary key(creature_id));
 
@@ -38,6 +39,7 @@ create table creature(
     backstory TEXT,
     pos_x integer,
     pos_y integer,
+    image_url VARCHAR(30),
     constraint creature_pk primary key(player_id));
 
 
@@ -59,7 +61,7 @@ Create TABLE level(
     dice_amount integer,
     damage_dice integer,
     description varchar(50),
-    weapon_url varchar(20),
+    image_url varchar(20),
     CONSTRAINT weapon_pk primary key (weapon_id));
 
 
@@ -166,11 +168,11 @@ ALTER TABLE creature_weapon ADD CONSTRAINT creature_weapon_fk2 FOREIGN KEY(creat
 
 
 -- INSERTS
-INSERT INTO creatureTemplate VALUES(DEFAULT, "Warrior", 36, 18, 3, 5, 8, 2, "He be legendary warior. Yeet that goblin", true);
-INSERT INTO creatureTemplate VALUES(DEFAULT, "Rogue", 23, 16, 3, 7, 7, 2, "she be the sneaky girl. not the one from Rogue One", true);
-INSERT INTO creatureTemplate VALUES(DEFAULT, "Wizard", 22, 15, 3, 0, 8, 1, "Penny for your thoughts. Nothing that a little music can't help. Seagulls stop it now.", true);
-INSERT INTO creatureTemplate VALUES(DEFAULT, "Ranger", 32, 16, 3, 5, 9, 2, "Think LOtR. pointy ears, just as sexy", true);
-INSERT INTO creatureTemplate(creature_id,creature_name,hp,ac,movement,damage_bonus,attack_bonus,attacks_per_turn) values(5,"Hell Hound",45,15,5,3,5,1, false)
+INSERT INTO creatureTemplate VALUES(DEFAULT, "Warrior", 36, 18, 3, 5, 8, 2, "He be legendary warior. Yeet that goblin", "warrior.jpg", true);
+INSERT INTO creatureTemplate VALUES(DEFAULT, "Rogue", 23, 16, 3, 7, 7, 2, "she be the sneaky girl. not the one from Rogue One", "rogue.jpg", true);
+INSERT INTO creatureTemplate VALUES(DEFAULT, "Wizard", 22, 15, 3, 0, 8, 1, "Penny for your thoughts. Nothing that a little music can't help. Seagulls stop it now.", "wizard.jpg", true);
+INSERT INTO creatureTemplate VALUES(DEFAULT, "Ranger", 32, 16, 3, 5, 9, 2, "Think LOtR. pointy ears, just as sexy", "ranger.png", true);
+INSERT INTO creatureTemplate(creature_id,creature_name,hp,ac,movement,damage_bonus,attack_bonus,attacks_per_turn) values(5,"Hell Hound",45,15,5,3,5,1, "judge.jpg", false)
 INSERT INTO creatureTemplate(creature_id,creature_name,hp,ac,movement,damage_bonus,attack_bonus,attacks_per_turn) values(6,"Earth elemental",126,17,3,5,8,2, false);
 INSERT INTO creatureTemplate(creature_id,creature_name,hp,ac,movement,damage_bonus,attack_bonus,attacks_per_turn) values(7,"Grick alpha",75,18,3,4,7,2, false);
 INSERT INTO creatureTemplate(creature_id,creature_name,hp,ac,movement,damage_bonus,attack_bonus,attacks_per_turn) values(8,"Green slaad",127,16,3,4,7,3, false);

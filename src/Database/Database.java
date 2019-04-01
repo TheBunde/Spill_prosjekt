@@ -248,7 +248,7 @@ public class Database {
         try{
             con = this.bds.getConnection();
             con.setAutoCommit(false);
-            String prepString = "INSERT INTO game_lobby VALUES(DEFAULT, 0, DEFAULT)";
+            String prepString = "INSERT INTO game_lobby VALUES(DEFAULT, 0, DEFAULT, DEFAULT)";
             prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
             prepStmt.executeUpdate();
             res = prepStmt.getGeneratedKeys();
@@ -621,7 +621,7 @@ public class Database {
             System.out.println("uno");
             con = this.bds.getConnection();
             con.setAutoCommit(false);
-            String prepString = "INSERT INTO player VALUES(DEFAULT, ?, ?)";
+            String prepString = "INSERT INTO player VALUES(DEFAULT, ?, ?, READY)";
             prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
             prepStmt.setInt(1, Main.user.getLobbyKey());
             if (playable) {
@@ -669,7 +669,7 @@ public class Database {
             con = this.bds.getConnection();
             con.setAutoCommit(false);
             int creatureId = fetchCreatureId(character);
-            String prepString = "INSERT INTO creature SELECT ?, ?, creature_name, hp, ac, movement, damage_bonus, attack_bonus, attacks_per_turn, backstory, ?, ? FROM creatureTemplate WHERE creature_id = ?";
+            String prepString = "INSERT INTO creature SELECT ?, ?, creature_name, hp, ac, movement, damage_bonus, attack_bonus, attacks_per_turn, backstory, ?, ?, image_url FROM creatureTemplate WHERE creature_id = ?";
             prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
             prepStmt.setInt(1, playerId);
             prepStmt.setInt(2, creatureId);
@@ -796,35 +796,6 @@ public class Database {
         }
     }
 
-   /* public boolean setStartPos(int playerId){
-        Connection con = null;
-        PreparedStatement prepStmt = null;
-        boolean status = true;
-        try{
-            con = this.bds.getConnection();
-            con.setAutoCommit(false);
-            //String prepString = "UPDATE creature INNER JOIN player ON(creature.player_id = player.player_id) SET pos_x = ?, pos_y = ? WHERE user_id = ?";
-            String prepString = "UPDATE creature SET pos_x = ?, pos_y = ? WHERE player_id = ?";
-            prepStmt = con.prepareStatement(prepString);
-            prepStmt.setInt(1, 3 + fetchPlayerCount());
-            prepStmt.setInt(2, 3 + fetchPlayerCount());
-            prepStmt.setInt(3, playerId);
-            prepStmt.executeUpdate();
-            con.commit();
-        }
-        catch (SQLException sq){
-            this.manager.rollback(con);
-            sq.printStackTrace();
-            status = false;
-        }
-        finally {
-            this.manager.turnOnAutoCommit(con);
-            this.manager.closePrepStmt(prepStmt);
-            this.manager.closeConnection(con);
-            return status;
-        }
-    }*/
-
     public boolean setPos(int xPos, int yPos, int playerId){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -881,39 +852,6 @@ public class Database {
         }
     }
 
-    public ArrayList<Integer> fetchStartPos(boolean xpos){
-        Connection con = null;
-        PreparedStatement prepStmt = null;
-        ResultSet res = null;
-        boolean status = true;
-        ArrayList<Integer> pos = new ArrayList<>();
-        try{
-            con = this.bds.getConnection();
-            String prepString = "SELECT pos_x, pos_y FROM creature WHERE lobby_key = ?";
-            prepStmt = con.prepareStatement(prepString);
-            prepStmt.setInt(1, Main.user.getLobbyKey());
-            res = prepStmt.executeQuery();
-            while (res.next()){
-                if(xpos) {
-                    pos.add(res.getInt(1));
-                }
-                else{
-                    pos.add(res.getInt(2));
-                }
-            }
-
-        }
-        catch (SQLException sq){
-            sq.printStackTrace();
-            status = false;
-        }
-        finally {
-            this.manager.closeRes(res);
-            this.manager.closePrepStmt(prepStmt);
-            this.manager.closeConnection(con);
-            return pos;
-        }
-    }
 
     public ArrayList<Integer> fetchAllPlayerId(){
         Connection con = null;
@@ -1011,10 +949,10 @@ public class Database {
                 int creatureId = res.getInt("creature_id");
                 ArrayList<Weapon> weapons = this.fetchWeaponsFromCreature(creatureId);
                 if(res.getInt("player.user_id") <= 0) {
-                    creatures.add(new Monster(res.getInt("player_id"), creatureId, res.getString("creature_name"), res.getInt("hp"), res.getInt("ac"), res.getInt("movement"), res.getInt("damage_bonus"), res.getInt("attack_bonus"), res.getInt("attacks_per_turn"), res.getString("backstory"), res.getInt("pos_x"), res.getInt("pos_y"), weapons));
+                    creatures.add(new Monster(res.getInt("player_id"), creatureId, res.getString("creature_name"), res.getInt("hp"), res.getInt("ac"), res.getInt("movement"), res.getInt("damage_bonus"), res.getInt("attack_bonus"), res.getInt("attacks_per_turn"), res.getString("backstory"), res.getInt("pos_x"), res.getInt("pos_y"), res.getString("image_url"), weapons));
                 }
                 else{
-                    creatures.add(new game.Character(res.getInt("player_id"), creatureId, res.getString("creature_name"), res.getInt("hp"), res.getInt("ac"), res.getInt("movement"), res.getInt("damage_bonus"), res.getInt("attack_bonus"), res.getInt("attacks_per_turn"), res.getString("backstory"), res.getInt("pos_x"), res.getInt("pos_y"), weapons));
+                    creatures.add(new game.Character(res.getInt("player_id"), creatureId, res.getString("creature_name"), res.getInt("hp"), res.getInt("ac"), res.getInt("movement"), res.getInt("damage_bonus"), res.getInt("attack_bonus"), res.getInt("attacks_per_turn"), res.getString("backstory"), res.getInt("pos_x"), res.getInt("pos_y"), res.getString("image_url"), weapons));
                 }
             }
         }
@@ -1037,7 +975,7 @@ public class Database {
         ArrayList<Weapon> weapons = new ArrayList<>();
         try{
             con = this.bds.getConnection();
-            String prepString = "SELECT weapon_name, damage_dice, description, dice_amount FROM weapon INNER JOIN creature_weapon ON (weapon.weapon_id = creature_weapon.weapon_id) WHERE creature_weapon.creature_id = ?";
+            String prepString = "SELECT weapon_name, damage_dice, description, dice_amount, image_url FROM weapon INNER JOIN creature_weapon ON (weapon.weapon_id = creature_weapon.weapon_id) WHERE creature_weapon.creature_id = ?";
             prepStmt = con.prepareStatement(prepString);
             prepStmt.setInt(1, creatureId);
             res = prepStmt.executeQuery();
@@ -1046,7 +984,7 @@ public class Database {
                 if (res.getString("description").equals("Ranged")){
                     ranged = true;
                 }
-                weapons.add(new Weapon(res.getString("weapon_name"), res.getInt("damage_dice"), ranged, res.getInt("dice_amount")));
+                weapons.add(new Weapon(res.getString("weapon_name"), res.getInt("damage_dice"), ranged, res.getInt("dice_amount"), res.getString("image_url")));
             }
         }
         catch (SQLException sq){
