@@ -79,6 +79,7 @@ public class BattlefieldController implements Initializable {
             db.createPlayer("Hell Hound", false);
         }
 
+
         game = new Game();
         weaponOne.setEffect(light);
         weaponTwo.setEffect(shadow);
