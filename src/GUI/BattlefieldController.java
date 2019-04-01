@@ -77,9 +77,6 @@ public class BattlefieldController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         if (Main.user.isHost()){
             db.createPlayer("Hell Hound", false);
-            db.createPlayer("Hell Hound", false);
-            db.createPlayer("Hell Hound", false);
-            db.createPlayer("Hell Hound", false);
         }
 
         game = new Game();
