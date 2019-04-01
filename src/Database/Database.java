@@ -429,11 +429,41 @@ public class Database {
     }
 
 
+    public boolean emailExist(String email){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        //Boolean variable to keep track of the existence of the specified email
+        boolean emailExists = false;
+        try{
+            con = this.bds.getConnection();
+            //Checks if email with the specified user_id exists
+            String prepString = "SELECT user_id FROM usr WHERE email =? ";
+            prepStmt = con.prepareStatement(prepString);
+            prepStmt.setInt(1, Main.user.getUser_id());
+            res = prepStmt.executeQuery();
+            emailExists = res.next();
+
+        }
+        catch (SQLException sq){
+            sq.printStackTrace();
+            emailExists = false;
+        }
+        finally {
+            this.manager.closeRes(res);
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(con);
+            return emailExists;
+        }
+    }
+
+
+
     public int Button_Register_ActionPerformed(String username, String email, String password, String re_pass){
         Connection con = null;
         try {
             con = this.bds.getConnection();
-            if (con == null) {
+            if (con != null) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Warning Dialog");
                 alert.setHeaderText(null);
@@ -443,7 +473,7 @@ public class Database {
 
             }
 
-            /*if(emailExist(email)) {
+            if(emailExist(email)) {
                 System.out.println("here we are");
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Warning Dialog");
@@ -451,7 +481,7 @@ public class Database {
                 alert.setContentText("this email is already exist");
                 alert.showAndWait();
                 return -1;
-            }*/
+            }
 
 
             else if (password.isEmpty()) {
