@@ -1,3 +1,4 @@
+/*
 package Gamelogic;
 
 import creature.Creature;
@@ -39,4 +40,4 @@ public class GameMethods2 {
         }
         return sort;
     }
-}
+}*/

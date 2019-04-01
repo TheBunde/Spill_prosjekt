@@ -77,7 +77,7 @@
       </VBox>
       <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="300.0" spacing="30.0">
          <children>
-            <Button fx:id="registrerButton" mnemonicParsing="false" onAction="#registrer" prefHeight="50.0" prefWidth="200.0" text="Register">
+            <Button fx:id="registrerButton" mnemonicParsing="false" onAction="#onRegister" prefHeight="50.0" prefWidth="200.0" text="Register">
                <font>
                   <Font size="20.0" />
                </font>
