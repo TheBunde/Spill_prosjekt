@@ -62,6 +62,15 @@ public class Game {
         return this.creatures.get(index);
     }
 
+    public Creature getYourCreature(){
+        for(Creature i: creatures){
+            if(i.getPlayerId() == Main.user.getPlayerId()){
+                return i;
+            }
+        }
+        return null;
+    }
+
     public int getAmountOfCreatures(){
         return this.creatures.size();
     }

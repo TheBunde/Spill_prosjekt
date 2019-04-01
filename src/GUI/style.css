@@ -5,3 +5,6 @@
 .button-selected{
     -fx-background-color: #2ecc71;
 }
+.attack-button-selected{
+    -fx-background-color: #cc0b0e;
+}
