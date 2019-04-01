@@ -63,6 +63,9 @@ public class CreateCharacterController implements Initializable {
         System.out.println("View is now loaded!");
         chooseClassDropdown.getItems().addAll("Warrior","Rogue","Wizard","Ranger");
         iv.setImage(defaultImage);
+        if (Main.user.isHost()){
+            db.createPlayer("Hell Hound", false);
+        }
     }
 
     //method to display selected character
