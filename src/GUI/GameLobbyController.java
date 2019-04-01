@@ -53,11 +53,13 @@ public class GameLobbyController {
     public void readyButtonPressed() throws Exception{
 
         if(!ready){
+            readyButton.getStyleClass().clear();
             readyButton.getStyleClass().add("button-selected");
             ready = true;
             db.isReady(true);
         }else if(ready){
-            readyButton.getStyleClass().add("button-selected");
+            readyButton.getStyleClass().clear();
+            readyButton.getStyleClass().add("button-deselected");
             ready = false;
             db.isReady(false);
         }
@@ -94,6 +96,8 @@ public class GameLobbyController {
             MusicPlayer.getInstance().changeSong(7);
             chatController.timer.cancel();
             chatController.timer.purge();
+            timer.cancel();
+            timer.purge();
             this.sceneSwitcher.switchScene(readyButton , "Battlefield.fxml");
         }
     }
