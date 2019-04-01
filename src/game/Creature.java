@@ -185,6 +185,10 @@ public abstract class Creature {
         return this.pawn;
     }
 
+    public void setPawnImage(String imageUrl){
+        this.pawn.setImage(new Image("GUI/images/" + imageUrl));
+    }
+
     public void setPawnSize(double width, double height){
         this.pawn.setFitWidth(width);
         this.pawn.setFitHeight(height);

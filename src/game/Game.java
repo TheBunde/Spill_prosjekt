@@ -50,6 +50,9 @@ public class Game {
                 creatures.get(i).setNewPos(newPos.get(0), newPos.get(1));
             }
             creatures.get(i).setHp(newHp);
+            if (creatures.get(i).getHp() <= 0){
+                creatures.get(i).setPawnImage("gravestone.png");
+            }
         }
     }
 
