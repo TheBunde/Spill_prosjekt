@@ -16,7 +16,7 @@ public class MusicPlayer implements Runnable {
 
     private static MusicPlayer thisInstance = new MusicPlayer("testintro","pause", "mainmenu", "battlesongone",
             "warriorSong2","rogueSong","wizardSong","desertwalk","pianosong","pianosong2","testintro3",
-            "intro","intro2","rangerSong","snowSong2","lavaSong");
+            "intro","intro2","rangerSong","snowSong2","lavaSong","forestSong");
     public static MusicPlayer getInstance(){
         return thisInstance;
     }
@@ -39,6 +39,7 @@ public class MusicPlayer implements Runnable {
     13: "rangerSong"
     14: "snowSong(2)"
     15: "lavaSong"
+    16: "forestSong"
 
      */
 
