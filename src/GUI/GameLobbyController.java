@@ -25,7 +25,7 @@ public class GameLobbyController {
     private User user = Main.user;
 
     public void initialize(){
-        db.setStartPos(db.fetchPlayerId());
+        //db.setStartPos(db.fetchPlayerId());
         //db.movePos(8, 8, db.fetchPlayerId());
         lobbyKeyLabel.setText("" + user.getLobbyKey());
         MusicPlayer.getInstance().stopSong();
