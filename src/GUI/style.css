@@ -8,3 +8,6 @@
 .attack-button-selected{
     -fx-background-color: #cc0b0e;
 }
+.button-deselected{
+    -fx-background-color: #cccccc;
+}
