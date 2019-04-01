@@ -73,7 +73,10 @@ public class BattlefieldController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+<<<<<<< HEAD
         //New instance of game
+=======
+>>>>>>> d80811b269175d510062814e3cefcb7d5ee15342
         game = new Game();
 
         cellWidth = mapGrid.getPrefWidth()/(16.0);
