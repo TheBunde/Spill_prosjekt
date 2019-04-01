@@ -63,9 +63,6 @@ public class CreateCharacterController implements Initializable {
         System.out.println("View is now loaded!");
         chooseClassDropdown.getItems().addAll("Warrior","Rogue","Wizard","Ranger");
         iv.setImage(defaultImage);
-        if (Main.user.isHost()){
-            db.createPlayer("Hell Hound", false);
-        }
     }
 
     //method to display selected character
@@ -121,6 +118,9 @@ public class CreateCharacterController implements Initializable {
             System.out.println("character created");
         }else{
             System.out.println("character not created");
+        }
+        if (Main.user.isHost()){
+            db.createPlayer("Hell Hound", false);
         }
         sceneSwitcher.switchScene(createCharacterButton, "GameLobby.fxml");
         return true;

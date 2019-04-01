@@ -86,6 +86,13 @@ create table usr(
     lobby_key INTEGER,
     constraint usr_pk primary key(user_id));
 
+create table password(
+    user_id integer not null references usr(user_id),
+    salt_pass char(64) not null,
+    hash_pass text not null,
+    constraint password_pk primary key(user_id));
+
+
 create table player(
     player_id integer not null AUTO_INCREMENT,
     lobby_key INTEGER NOT NULL,

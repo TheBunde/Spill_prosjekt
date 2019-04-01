@@ -25,7 +25,7 @@ public class StartController {
     public void registrer() throws Exception{
         SFXPlayer.getInstance().setSFX(1);
 
-        sceneSwitcher.switchScene(registrerButton, "Registrer.fxml");
+        sceneSwitcher.switchScene(registrerButton, "Register.fxml");
     }
 
 }

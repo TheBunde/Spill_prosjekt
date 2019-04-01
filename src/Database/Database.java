@@ -7,6 +7,7 @@ import game.Creature;
 import game.Monster;
 import game.Weapon;
 import javafx.scene.control.Alert;
+import login.Password;
 import org.apache.commons.dbcp2.BasicDataSource;
 //
 //
@@ -22,6 +23,7 @@ public class Database {
     private ManageConnection manager;
     private BasicDataSource bds;
     public Chat chat;
+    private Alert alert;
 
     //Setup for database
     public Database(String url, String password){
@@ -43,6 +45,7 @@ public class Database {
             prepStmt = con.prepareStatement(prepString);
             prepStmt.setInt(1, Main.user.getLobbyKey());
             prepStmt.setInt(2, chat.getLastSeenMessageId());
+
             res = prepStmt.executeQuery();
             while (res.next()) {
                 if (res.getInt("user_id") == 0){
@@ -130,7 +133,6 @@ public class Database {
             prepStmt.setInt(1, lobbyKey);
             res = prepStmt.executeQuery();
             lobbyExists = res.next();
-
         }
         catch (SQLException sq){
             sq.printStackTrace();
@@ -280,14 +282,12 @@ public class Database {
             prepStmt = con.prepareStatement(prepString);
             prepStmt.setInt(1, Main.user.getUser_id());
             res = prepStmt.executeQuery();
-            while(res.next()){
-                username  += res.getString("username");
+            while (res.next()) {
+                username += res.getString("username");
             }
-        }
-        catch (SQLException sq){
+        } catch (SQLException sq) {
             manager.writeMessage(sq, "fetchUsername");
-        }
-        finally {
+        } finally {
             manager.closeRes(res);
             manager.closePrepStmt(prepStmt);
             manager.closeConnection(con);
@@ -295,89 +295,42 @@ public class Database {
         return username;
     }
 
-    public String fetchEmail() {
+    public int fetchRank(int user_id){
         Connection con = null;
-        String email = "";
         PreparedStatement prepStmt = null;
         ResultSet res = null;
-        try {
-            con = this.bds.getConnection();
-            String prepString = "select distinct email from usr where user_id = ?";
-            prepStmt = con.prepareStatement(prepString);
-            prepStmt.setInt(1, Main.user.getUser_id());
-            res = prepStmt.executeQuery();
-            while (res.next()){
-                email  += res.getString("email");
-            }
-        } catch (SQLException sq) {
-            manager.writeMessage(sq, "fetchEmail");
-        } finally {
-            manager.closeRes(res);
-            manager.closePrepStmt(prepStmt);
-            manager.closeConnection(con);
-        }
-        return email;
-    }
-
-    public int fetchRank() {
         int rank = 0;
-        Connection con = null;
-        PreparedStatement prepStmt = null;
-        ResultSet res = null;
+
         try {
             con = this.bds.getConnection();
-            String prepString = "select distinct rank from usr where user_id = ?";
+            String prepString = "select rank from usr where user_id = ?";
             prepStmt = con.prepareStatement(prepString);
-            prepStmt.setInt(1, Main.user.getUser_id());
+            prepStmt.setInt(1, user_id);
             res = prepStmt.executeQuery();
-            while(res.next()){
-                rank += res.getInt("level");
+            while (res.next()) {
+                rank = res.getInt("rank");
             }
-        } catch (SQLException e) {
-            manager.writeMessage(e, "fetchLevel");
+        }
+        catch (SQLException sq){
+            sq.printStackTrace();
+            return -1;
         } finally {
-            manager.closeRes(res);
+            if(res != null){
+                manager.closeRes(res);
+            }
             manager.closePrepStmt(prepStmt);
             manager.closeConnection(con);
         }
         return rank;
     }
 
-    public boolean registerUser(User user) {
-        if(userExist(user.getUsername())){
-            return false;
-        }
-        Connection con = null;
-        PreparedStatement prepStmt = null;
-        try {
-            con = this.bds.getConnection();
-            con.setAutoCommit(false);
-            String prepString = "INSERT INTO usr VALUES(?, ?, DEFAULT, DEFAULT, ?, ?)";
-            prepStmt = con.prepareStatement(prepString);
-            prepStmt.setInt(1, user.getUser_id());
-            prepStmt.setString(2, user.getUsername());
-            prepStmt.setString(3, user.getEmail());
-            prepStmt.setString(4, "test");
-            prepStmt.executeUpdate();
-            con.commit();
-        } catch (SQLException e) {
-            con.rollback();
-            this.manager.writeMessage(e, "registerUser");
-            return false;
-        } finally {
-            this.manager.turnOnAutoCommit(con);
-            this.manager.closePrepStmt(prepStmt);
-            this.manager.closeConnection(con);
-            return true;
-        }
-    }
 
-    public boolean userExist(String username){
+    public boolean userExist(String username) {
         Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
         boolean userExists = false;
-        try{
+        try {
             con = this.bds.getConnection();
             String prepString = "SELECT user_id FROM usr WHERE username = ?";
             prepStmt = con.prepareStatement(prepString);
@@ -385,9 +338,8 @@ public class Database {
             res = prepStmt.executeQuery();
             userExists = res.next();
 
-        }
-        catch (SQLException e){
-            manager.writeMessage(e, "userExist");
+        } catch (SQLException sq) {
+            manager.writeMessage(sq, "userExist");
             return false;
         } finally {
             manager.closeRes(res);
@@ -397,174 +349,284 @@ public class Database {
         }
     }
 
-
-   // check if the user exits.
-    public int checkLogin(String username, String password) {
-        Connection con = null;
-        PreparedStatement ps = null;
-        ResultSet res = null;
-        int status = -1;
-        try {
-            con = this.bds.getConnection();
-            String query = "SELECT * FROM usr WHERE username=? AND password =?";
-            ps = con.prepareStatement(query);
-            ps.setString(1, username);
-            ps.setString(2, password);
-            res = ps.executeQuery();
-
-            // if user found -> return 0 that indicates success login.
-            if(res.next()){
-                status = 0;
-            }
-
-        } catch (SQLException sq) {
-            sq.printStackTrace();
-        } finally {
-            this.manager.closeRes(res);
-            this.manager.closePrepStmt(ps);
-            this.manager.closeConnection(con);
-        }
-        //If made it to here return -1, login failed.
-        return status;
-    }
-
-
-    public boolean emailExist(String email){
+    public int registerUser(String un) {
         Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
-        //Boolean variable to keep track of the existence of the specified email
-        boolean emailExists = false;
-        try{
-            con = this.bds.getConnection();
-            //Checks if email with the specified user_id exists
-            String prepString = "SELECT user_id FROM usr WHERE email =? ";
-            prepStmt = con.prepareStatement(prepString);
-            prepStmt.setInt(1, Main.user.getUser_id());
-            res = prepStmt.executeQuery();
-            emailExists = res.next();
-
-        }
-        catch (SQLException sq){
-            sq.printStackTrace();
-            emailExists = false;
-        }
-        finally {
-            this.manager.closeRes(res);
-            this.manager.closePrepStmt(prepStmt);
-            this.manager.closeConnection(con);
-            return emailExists;
-        }
-    }
-
-
-
-    public int Button_Register_ActionPerformed(String username, String email, String password, String re_pass){
-        Connection con = null;
+        int user_id = -1;
         try {
             con = this.bds.getConnection();
-            if (con != null) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Warning Dialog");
-                alert.setHeaderText(null);
-                alert.setContentText("Connection failed");
-                alert.showAndWait();
-                return -1;
-
-            }
-
-            if(emailExist(email)) {
-                System.out.println("here we are");
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Warning Dialog");
-                alert.setHeaderText(null);
-                alert.setContentText("this email is already exist");
-                alert.showAndWait();
-                return -1;
-            }
-
-
-            else if (password.isEmpty()) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Warning Dialog");
-                alert.setHeaderText(null);
-                alert.setContentText("Write your password");
-                alert.showAndWait();
-                return -1;
-
-            }else if(re_pass.isEmpty()) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Warning Dialog");
-                alert.setHeaderText(null);
-                alert.setContentText("Re-enter your password please");
-                alert.showAndWait();
-                return -1;
-            }
-        }
-        catch (SQLException sq){
-            sq.printStackTrace();
-        }
-        catch (NullPointerException np1){
-            System.out.println(np1 +"np1");
-        }
-
-
-
-        PreparedStatement ps2 = null;
-        //ResultSet rs2;
-        String sql ="INSERT INTO usr(user_id, username, email, password) VALUES(?,?,?,?)";
-        Main.user = new User(0, username+"", 1, email);
-        try{
             con.setAutoCommit(false);
-            ps2 = con.prepareStatement(sql);
-            ps2.setInt(1, Main.user.getUser_id());
-            ps2.setString(2, username);
-            ps2.setString(3, email);
-            ps2.setString(4, password);
-            int added = ps2.executeUpdate();
+            String prepString = "INSERT INTO usr VALUES(DEFAULT, ?, 0, DEFAULT, DEFAULT)";
+            prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
+            prepStmt.setString(1, un);
+            int added = prepStmt.executeUpdate();
+            res = prepStmt.getGeneratedKeys();
+            res.next();
+            user_id = res.getInt(1);
+            Main.user = new User(user_id, un, 0);
+            Main.user.setUser_id(user_id);
             con.commit();
-            if (added == 1){
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+            if (added == 1) {
+                alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Information Dialog");
                 alert.setHeaderText(null);
                 alert.setContentText("User has been added");
                 alert.showAndWait();
             }
 
-        } catch (SQLException e) {
+        } catch (SQLException sq) {
             this.manager.rollback(con);
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.WARNING);
+            sq.printStackTrace();
+            alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning Dialog");
             alert.setHeaderText(null);
             alert.setContentText("adding failed");
             alert.showAndWait();
-        }
-
-        finally {
+        } finally {
             this.manager.turnOnAutoCommit(con);
-            this.manager.closePrepStmt(ps2);
+            this.manager.closeRes(res);
+            this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con);
+            return 1;
         }
-        return 1;
     }
 
-    public boolean createPlayer(String character, boolean playable){
+    public boolean findUsername(String username){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        boolean ok = false;
+        try {
+            con = this.bds.getConnection();
+            String prepString = "SELECT * FROM usr WHERE username = ?";
+            prepStmt = con.prepareStatement(prepString);
+            prepStmt.setString(1, username);
+            res = prepStmt.executeQuery();
+            if(res.next()){
+                ok = true;
+            }else{
+                System.out.println("not found");
+            }
+        }
+        catch (SQLException sq){
+            sq.printStackTrace();
+            return false;
+        } finally {
+            if(res != null){
+                manager.closeRes(res);
+            }
+            manager.closePrepStmt(prepStmt);
+            manager.closeConnection(con);
+            return ok;
+        }
+    }
+
+    public boolean setNewUsername(String newun){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        boolean status = true;
+        try{
+            con = this.bds.getConnection();
+            con.setAutoCommit(false);
+            String prepString = "UPDATE usr SET username = ? WHERE user_id = ?";
+            prepStmt = con.prepareStatement(prepString);
+            prepStmt.setString(1, newun);
+            prepStmt.setInt(2, Main.user.getUser_id());
+            prepStmt.executeUpdate();
+            con.commit();
+            Main.user.setUsername(newun);
+        }
+        catch (SQLException sq){
+            this.manager.rollback(con);
+            sq.printStackTrace();
+            status = false;
+        }
+        finally {
+            this.manager.turnOnAutoCommit(con);
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(con);
+            return status;
+        }
+    }
+
+
+    public boolean addPassword(String pw){
+
+        Password pass = new Password();
+        byte[] salt = pass.getSalt();
+
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        boolean status = true;
+
+        try{
+            con = this.bds.getConnection();
+            con.setAutoCommit(false);
+            String prepString = "INSERT INTO password VALUES(?, ?, ?)";
+            prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
+            prepStmt.setInt(1, Main.user.getUser_id());
+            prepStmt.setBytes(2, salt);
+            prepStmt.setString(3, pass.createPassword(pw, salt));
+            prepStmt.executeUpdate();
+            con.commit();
+        }
+        catch (SQLException sq){
+            this.manager.rollback(con);
+            sq.printStackTrace();
+            status = false;
+        }
+        finally {
+            this.manager.turnOnAutoCommit(con);
+            this.manager.closeRes(res);
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(con);
+            return status;
+        }
+    }
+
+    public boolean deleteOldPassword(String newPw){
+
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        boolean status = true;
+        try{
+            con = this.bds.getConnection();
+            con.setAutoCommit(false);
+            String prepString = "delete from password WHERE user_id = ?";
+            prepStmt = con.prepareStatement(prepString);
+            prepStmt.setInt(1, Main.user.getUser_id());
+
+            prepStmt.executeUpdate();
+            con.commit();
+        }
+        catch (SQLException sq){
+            this.manager.rollback(con);
+            sq.printStackTrace();
+            status = false;
+        }
+        finally {
+            this.manager.turnOnAutoCommit(con);
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(con);
+            return status;
+        }
+    }
+
+    public byte[] fetchSalt(String un){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        byte[] saltPass = null;
+
+        try {
+            con = this.bds.getConnection();
+            String prepString = "SELECT  usr.username, password.salt_pass from usr left outer join password on(usr.user_id = password.user_id)";
+            prepStmt = con.prepareStatement(prepString);
+            res = prepStmt.executeQuery();
+            String str;
+            while (res.next()) {
+                str = res.getString("username");
+                if(str.equalsIgnoreCase(un)){
+                    saltPass = res.getBytes("salt_pass");
+                }
+            }
+        }
+        catch (SQLException sq){
+            sq.printStackTrace();
+            return null;
+        } finally {
+            if(res != null){
+                manager.closeRes(res);
+            }
+            manager.closePrepStmt(prepStmt);
+            manager.closeConnection(con);
+        }
+        return saltPass;
+    }
+
+
+    public String fetchHash(String un){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        String hashpass = "";
+
+        try {
+            con = this.bds.getConnection();
+            String prepString = "SELECT  usr.username, password.hash_pass from usr left outer join password on(usr.user_id = password.user_id)";
+            prepStmt = con.prepareStatement(prepString);
+            res = prepStmt.executeQuery();
+            String str;
+            while (res.next()) {
+                str = res.getString("username");
+                if(str.equalsIgnoreCase(un)){
+                    hashpass = res.getString("hash_pass");
+                }
+            }
+        }
+        catch (SQLException sq){
+            sq.printStackTrace();
+            return null;
+        } finally {
+            if(res != null){
+                manager.closeRes(res);
+            }
+            manager.closePrepStmt(prepStmt);
+            manager.closeConnection(con);
+        }
+        return hashpass;
+    }
+
+    public int fetchUser_id(String un){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        int user_id = 0;
+
+        try {
+            con = this.bds.getConnection();
+            String prepString = "select user_id from usr where username = ?";
+            prepStmt = con.prepareStatement(prepString);
+            prepStmt.setString(1, un);
+            res = prepStmt.executeQuery();
+            while (res.next()) {
+                user_id = res.getInt("user_id");
+            }
+        }
+        catch (SQLException sq){
+            sq.printStackTrace();
+            return -1;
+        } finally {
+            if(res != null){
+                manager.closeRes(res);
+            }
+            manager.closePrepStmt(prepStmt);
+            manager.closeConnection(con);
+        }
+        return user_id;
+    }
+
+
+
+    public boolean createPlayer(String character, boolean playable) {
         Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
         boolean status = true;
         int playerId = -1;
-        try{
+        try {
             System.out.println("uno");
             con = this.bds.getConnection();
             con.setAutoCommit(false);
             String prepString = "INSERT INTO player VALUES(DEFAULT, ?, ?)";
             prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
             prepStmt.setInt(1, Main.user.getLobbyKey());
-            if(playable) {
+            if (playable) {
                 prepStmt.setInt(2, Main.user.getUser_id());
-            }else{
+            } else {
                 prepStmt.setNull(2, java.sql.Types.INTEGER);
             }
             System.out.println(Main.user.getLobbyKey() + "\n" + Main.user.getUser_id());
@@ -574,26 +636,23 @@ public class Database {
             res = prepStmt.getGeneratedKeys();
             res.next();
             playerId = res.getInt(1);
-            if (playable){
+            if (playable) {
                 Main.user.setPlayerId(playerId);
             }
 
 
-
-        }
-        catch (SQLException sq){
+        } catch (SQLException sq) {
             this.manager.rollback(con);
             sq.printStackTrace();
             status = false;
-        }
-        finally {
+        } finally {
             this.manager.turnOnAutoCommit(con);
             this.manager.closeRes(res);
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con);
-            if(playerId < 0){
+            if (playerId < 0) {
                 status = false;
-            }else{
+            } else {
                 createCreature(playerId, character);
             }
             return status;
@@ -601,13 +660,12 @@ public class Database {
     }
 
 
-
-    public boolean createCreature(int playerId, String character){
+    public boolean createCreature(int playerId, String character) {
         Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
         boolean status = true;
-        try{
+        try {
             con = this.bds.getConnection();
             con.setAutoCommit(false);
             int creatureId = fetchCreatureId(character);
@@ -615,18 +673,16 @@ public class Database {
             prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
             prepStmt.setInt(1, playerId);
             prepStmt.setInt(2, creatureId);
-            prepStmt.setInt(3, (int)Math.floor(Math.random()*16));
-            prepStmt.setInt(4, (int)Math.floor(Math.random()*16));
+            prepStmt.setInt(3, (int) Math.floor(Math.random() * 16));
+            prepStmt.setInt(4, (int) Math.floor(Math.random() * 16));
             prepStmt.setInt(5, creatureId);
             prepStmt.executeUpdate();
             con.commit();
-        }
-        catch (SQLException sq){
+        } catch (SQLException sq) {
             this.manager.rollback(con);
             sq.printStackTrace();
             status = false;
-        }
-        finally {
+        } finally {
             this.manager.turnOnAutoCommit(con);
             this.manager.closeRes(res);
             this.manager.closePrepStmt(prepStmt);
@@ -635,12 +691,12 @@ public class Database {
         }
     }
 
-    public String fetchUsernameFromPlayerId(int playerId){
+    public String fetchUsernameFromPlayerId(int playerId) {
         Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
         String username = null;
-        try{
+        try {
             con = this.bds.getConnection();
             String prepString = "SELECT username FROM usr, player WHERE player.user_id = usr.user_id AND player_id = ?";
             prepStmt = con.prepareStatement(prepString);
@@ -649,12 +705,10 @@ public class Database {
             res.next();
             username = res.getString("username");
 
-        }
-        catch (SQLException sq){
+        } catch (SQLException sq) {
             sq.printStackTrace();
             username = null;
-        }
-        finally {
+        } finally {
             this.manager.closeRes(res);
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con);
@@ -662,27 +716,25 @@ public class Database {
         }
     }
 
-    public int fetchCreatureId(String character){
+    public int fetchCreatureId(String character) {
         Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
         int characterId = -1;
-        try{
+        try {
             con = this.bds.getConnection();
             String prepString = "SELECT creatureTemplate.creature_id FROM creatureTemplate WHERE creature_name = ?";
             prepStmt = con.prepareStatement(prepString);
             prepStmt.setString(1, character);
             res = prepStmt.executeQuery();
-            while (res.next()){
+            while (res.next()) {
                 characterId = res.getInt(1);
             }
 
-        }
-        catch (SQLException sq){
+        } catch (SQLException sq) {
             sq.printStackTrace();
             characterId = -1;
-        }
-        finally {
+        } finally {
             this.manager.closeRes(res);
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con);
@@ -1089,12 +1141,12 @@ public class Database {
         }
     }
 
-    public int fetchPlayerTurn(){
+    public int fetchPlayerTurn() {
         Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
         int turn = 0;
-        try{
+        try {
             con = this.bds.getConnection();
             String prepString = "SELECT player_turn FROM game_lobby WHERE lobby_key = ?";
             prepStmt = con.prepareStatement(prepString);
@@ -1102,16 +1154,40 @@ public class Database {
             res = prepStmt.executeQuery();
             res.next();
             turn = res.getInt(1);
-        }
-        catch (SQLException sq){
+        } catch (SQLException sq) {
             sq.printStackTrace();
             turn = -1;
-        }
-        finally {
+        } finally {
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con);
             return turn;
         }
     }
-}
+// The method checks the username and the password to log in
 
+    public int checkLogin(String username, String password) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        try {
+            con = this.bds.getConnection();
+            String query = "SELECT * FROM usr WHERE username=? AND password =?";
+            ps = con.prepareStatement(query);
+            ps.setString(1, username);
+            ps.setString(2, password);
+            ResultSet resultSet = ps.executeQuery();
+
+            // if user found -> return 0 that indicates success login.
+            if (resultSet.next()) {
+                return 0;
+            }
+
+        } catch (SQLException sq) {
+            manager.writeMessage(sq, "checkLogin");
+        } finally {
+            manager.closePrepStmt(ps);
+            manager.closeConnection(con);
+        }
+        //If made it to here return -1, login failed.
+        return -1;
+    }
+}
