@@ -16,7 +16,7 @@ public class MusicPlayer implements Runnable {
 
     private static MusicPlayer thisInstance = new MusicPlayer("testintro","pause", "mainmenu", "battlesongone",
             "warriorSong2","rogueSong","wizardSong","desertwalk","pianosong","pianosong2","testintro3",
-            "intro","intro2","rangerSong","snowSong2");
+            "intro","intro2","rangerSong","snowSong2","lavaSong");
     public static MusicPlayer getInstance(){
         return thisInstance;
     }
@@ -38,7 +38,7 @@ public class MusicPlayer implements Runnable {
     12: "intro2"
     13: "rangerSong"
     14: "snowSong(2)"
-
+    15: "lavaSong"
 
      */
 
@@ -53,13 +53,17 @@ public class MusicPlayer implements Runnable {
     }
 
     public void changeSong(int currentSongIndex){
-        this.currentSongIndex = currentSongIndex;
+        try{
+            this.currentSongIndex = currentSongIndex;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     public void setVolumeMusic(float volumeMusic){
         this.volumeMusic = volumeMusic;
     }
-
 
     @Override
     public void run() {
@@ -83,32 +87,6 @@ public class MusicPlayer implements Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
         }
     }
-
-    /*
-    @Override
-    public void run() {
-        running = true;
-        AudioFile song = musicFiles.get(currentSongIndex);
-        song.play();
-        while(running) {
-            if(!song.isPlaying()) {
-                currentSongIndex++;
-                if(currentSongIndex >= musicFiles.size())
-                    currentSongIndex = 0;
-                song = musicFiles.get(currentSongIndex);
-                song.play();
-            }
-
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    */
 }

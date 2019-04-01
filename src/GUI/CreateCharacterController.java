@@ -46,19 +46,15 @@ public class CreateCharacterController implements Initializable {
 
     @FXML
     Image warriorImage = new Image("GUI/images/warrior.jpg");
-
     @FXML
     Image rogueImage = new Image("GUI/images/rogue.jpg");
-
     @FXML
     Image wizardImage = new Image("GUI/images/wizard.jpg");
-
     @FXML
     Image defaultImage = new Image("GUI/images/Default.jpg");
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("View is now loaded!");
         chooseClassDropdown.getItems().addAll("Warrior","Rogue","Wizard");
         iv.setImage(defaultImage);
     }
