@@ -74,7 +74,9 @@ public class BattlefieldController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+
         //New instance of game
+
 
         game = new Game();
 

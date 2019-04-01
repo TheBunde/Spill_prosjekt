@@ -1110,7 +1110,7 @@ public class Database {
         try{
             con = this.bds.getConnection();
             con.setAutoCommit(false);
-            String prepString = "UPDATE players SET ready = ? WHERE lobby_key = ? AND player_id = ?";
+            String prepString = "UPDATE player SET ready = ? WHERE lobby_key = ? AND player_id = ?";
             prepStmt = con.prepareStatement(prepString);
             prepStmt.setBoolean(1, ready);
             prepStmt.setInt(2, Main.user.getLobbyKey());
