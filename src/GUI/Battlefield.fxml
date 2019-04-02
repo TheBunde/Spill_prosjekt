@@ -116,7 +116,7 @@
             </VBox>
             <VBox prefHeight="117.0" prefWidth="154.0">
                <children>
-                  <Label prefHeight="58.0" prefWidth="159.0" text="Sword. Very good in close courters. not so good at range tho." wrapText="true" />
+                  <Label prefHeight="58.0" prefWidth="159.0" text="Sword. Very good in close courters. not so good at range tho" wrapText="true" />
                   <Label prefHeight="60.0" prefWidth="172.0" text="The greatest trick the devil ever pullled, was making shrek 2." wrapText="true" />
                </children>
             </VBox>

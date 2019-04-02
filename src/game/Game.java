@@ -38,6 +38,7 @@ public class Game {
                 }
             }).start();
         }
+        setMonsterDead();
         playerCharacter.setDead();
         if(playerCharacter.isDead()){
             db.addChatMessage(Main.user.getUsername() + " died", true);
@@ -75,7 +76,7 @@ public class Game {
     public ArrayList<Integer> getMonstersIndex(){
         ArrayList<Integer> monstersIndex = new ArrayList<>();
         for (int i = 0; i < this.creatures.size(); i++){
-            if (this.creatures.get(i) instanceof Monster){
+            if (this.creatures.get(i) instanceof Monster && !(this.creatures.get(i).isDead())){
                 monstersIndex.add(i);
             }
         }
@@ -122,6 +123,12 @@ public class Game {
             return true;
         }
         return false;
+    }
+
+    public void setMonsterDead(){
+        if(creatures.get(turn % creatures.size()) instanceof Monster){
+            creatures.get(turn % creatures.size()).setDead();
+        }
     }
 
     public boolean isPositionAvailable(int x, int y){

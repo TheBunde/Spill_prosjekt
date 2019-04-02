@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 public class Monster extends Creature {
 
-    public Monster(int playerId, int creatureId, String creatureName, int hp, int ac, int movement, int damageBonus, int attackBonus, int attacksPerTurn, String backstory, int xPos, int yPos, String imageUrl, ArrayList weapons){
-        super(playerId, creatureId, creatureName, hp, ac, movement, damageBonus, attackBonus, attacksPerTurn, backstory, xPos, yPos, imageUrl, weapons);
+    public Monster(int playerId, int creatureId, String creatureName, int hp, int ac, int movement, int damageBonus, int attackBonus, int attacksPerTurn, String backstory, int xPos, int yPos, String imageUrl, ArrayList weapons, boolean isDead){
+        super(playerId, creatureId, creatureName, hp, ac, movement, damageBonus, attackBonus, attacksPerTurn, backstory, xPos, yPos, imageUrl, weapons, isDead);
     }
 
     public String toString() {
@@ -51,7 +51,7 @@ public class Monster extends Creature {
         int yDistance = Math.abs(getyPos() - creatures.get(0).getyPos());
 
         for (Creature i : creatures) {
-            if (i != this && i instanceof game.Character) {
+            if (i != this && i instanceof game.Character && !i.isDead()) {
                 if (Math.abs(getxPos() - i.getxPos()) < xDistance && Math.abs(getyPos() - i.getyPos()) < yDistance) {
                     target = i;
                 }
