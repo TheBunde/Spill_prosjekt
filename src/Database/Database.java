@@ -4,6 +4,7 @@ package Database;
 import Main.*;
 import com.mysql.cj.protocol.Resultset;
 import game.Creature;
+import game.Level;
 import game.Monster;
 import game.Weapon;
 import javafx.scene.control.Alert;
@@ -248,7 +249,7 @@ public class Database {
         try{
             con = this.bds.getConnection();
             con.setAutoCommit(false);
-            String prepString = "INSERT INTO game_lobby VALUES(DEFAULT, 0, DEFAULT, DEFAULT)";
+            String prepString = "INSERT INTO game_lobby VALUES(DEFAULT, 0, 1, DEFAULT)";
             prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
             prepStmt.executeUpdate();
             res = prepStmt.getGeneratedKeys();
@@ -1187,7 +1188,7 @@ public class Database {
     public boolean isJoinable(int lobbyKey){
         Connection con = null;
         PreparedStatement prepStmt = null;
-        ResultSet res;
+        ResultSet res = null;
         boolean joinable = false;
         try{
             con = this.bds.getConnection();
@@ -1203,9 +1204,91 @@ public class Database {
             return joinable;
         }
         finally {
+            this.manager.closeRes(res);
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con);
             return joinable;
         }
     }
+
+    public Level fetchLevelObject(int level_id){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        Level level = null;
+        try {
+            con = this.bds.getConnection();
+            String prepString = "SELECT level.* FROM level WHERE level_id = ?";
+            prepStmt = con.prepareStatement(prepString);
+            prepStmt.setInt(1, level_id);
+            res = prepStmt.executeQuery();
+            res.next();
+            level = new Level(res.getInt("level_id"), res.getInt("music"), res.getString("background_url"));
+        }
+        catch (SQLException sq){
+            sq.printStackTrace();
+        }
+        finally {
+            this.manager.closeRes(res);
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(con);
+            return level;
+        }
+    }
+
+    public int fetchLevelId(int lobbyKey){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        int levelId = 0;
+        try{
+            con = this.bds.getConnection();
+            String prepString = "SELECT level_id FROM game_lobby WHERE lobby_key = ?";
+            prepStmt = con.prepareStatement(prepString);
+            prepStmt.setInt(1, lobbyKey);
+            res = prepStmt.executeQuery();
+            res.next();
+            levelId = res.getInt(1);
+        }
+        catch (SQLException sq){
+            sq.printStackTrace();
+            levelId = 0;
+        }
+        finally {
+            this.manager.closeRes(res);
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(con);
+            return levelId;
+        }
+    }
+
+    public boolean setLevel(int lobbyKey, int level){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        boolean status = false;
+        try{
+            con = this.bds.getConnection();
+            con.setAutoCommit(false);
+            String prepString = "UPDATE game_lobby SET level_id = ? WHERE lobby_key = ?";
+            prepStmt = con.prepareStatement(prepString);
+            prepStmt.setInt(1, level);
+            prepStmt.setInt(2, lobbyKey);
+            prepStmt.executeUpdate();
+            status = true;
+            con.commit();
+        }
+        catch (SQLException sq){
+            this.manager.rollback(con);
+            sq.printStackTrace();
+            status = false;
+        }
+        finally {
+            this.manager.turnOnAutoCommit(con);
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(con);
+            return status;
+        }
+    }
+
+
 }
