@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0ddb62fa-bd07-4ef8-aa24-26820581c8d5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Database/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Database/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/BattlefieldController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/BattlefieldController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/ChatMessageCell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/ChatMessageCell.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/GameLobbyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/GameLobbyController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/images/gravestone.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/images/gravestone.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Creature.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Creature.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Game.java" afterDir="false" />
+    <list default="true" id="fafb167d-53b3-4bf6-893d-7d77a240bb32" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sql-setup/Tables.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/sql-setup/Tables.sql" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/../out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,76 +15,84 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/GUI/chatController.java">
+        <entry file="file://$PROJECT_DIR$/src/Main/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="527">
-              <caret line="54" column="147" selection-start-line="54" selection-start-column="147" selection-end-line="54" selection-end-column="147" />
+            <state relative-caret-position="84">
+              <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/GUI/ChatMessageCell.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="697">
-              <caret line="56" column="54" selection-start-line="56" selection-start-column="54" selection-end-line="56" selection-end-column="54" />
-            </state>
-          </provider>
+        <entry file="file://$PROJECT_DIR$/src/GUI/MainMenu.fxml">
+          <provider editor-type-id="text-editor" />
+          <provider selected="true" editor-type-id="JavaFX-Scene-Builder" />
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/GUI/BattlefieldController.java">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Gamelogic/Attack.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="229">
-              <caret line="66" lean-forward="true" selection-start-line="66" selection-end-line="66" />
+            <state>
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#0#260#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/GUI/style.css">
+        <entry file="file://$PROJECT_DIR$/src/Gamelogic/GameDraft.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="4" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="34" />
+            <state>
+              <folding>
+                <element signature="e#0#5952#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/game/Creature.java">
+        <entry file="file://$PROJECT_DIR$/src/Gamelogic/Game2Draft.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="35" column="35" lean-forward="true" selection-start-line="35" selection-start-column="35" selection-end-line="35" selection-end-column="35" />
+            <state>
+              <folding>
+                <element signature="e#0#5683#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/game/Game.java">
+        <entry file="file://$PROJECT_DIR$/src/GUI/BattlefieldController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="39" column="9" selection-start-line="39" selection-start-column="9" selection-end-line="39" selection-end-column="9" />
+            <state relative-caret-position="-720">
+              <caret line="85" selection-start-line="85" selection-end-line="85" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/GUI/GameLobbyController.java">
+        <entry file="file://$PROJECT_DIR$/src/GUI/Battlefield.fxml">
+          <provider editor-type-id="text-editor">
+            <state relative-caret-position="-1827" />
+          </provider>
+          <provider selected="true" editor-type-id="JavaFX-Scene-Builder" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/sql-setup/Tables.sql">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1037">
-              <caret line="79" column="48" selection-start-line="79" selection-start-column="48" selection-end-line="79" selection-end-column="48" />
+            <state relative-caret-position="294">
+              <caret line="191" column="116" selection-start-line="191" selection-start-column="116" selection-end-line="191" selection-end-column="116" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Database/Database.java">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/game/Dice.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="765">
-              <caret line="59" column="13" selection-start-line="59" selection-start-column="13" selection-end-line="59" selection-end-column="13" />
+            <state relative-caret-position="168">
+              <caret line="8" column="47" lean-forward="true" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="47" />
             </state>
           </provider>
         </entry>
@@ -117,9 +120,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="324" />
-    <option name="y" value="12" />
-    <option name="width" value="702" />
+    <option name="x" value="676" />
+    <option name="width" value="697" />
     <option name="height" value="735" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -128,76 +130,35 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="Game-development-project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Game-development-project" type="462c0819:PsiDirectoryNode" />
+              <item name="Game-development project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Game-development project" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Game-development-project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Game-development-project" type="462c0819:PsiDirectoryNode" />
-              <item name=".idea" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Game-development-project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Game-development-project" type="462c0819:PsiDirectoryNode" />
+              <item name="Game-development project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Game-development project" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Game-development-project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Game-development-project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Database" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Game-development-project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Game-development-project" type="462c0819:PsiDirectoryNode" />
+              <item name="Game-development project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Game-development project" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="game" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Game-development-project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Game-development-project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Gamelogic" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Game-development-project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Game-development-project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="GUI" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Game-development-project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Game-development-project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="GUI" type="462c0819:PsiDirectoryNode" />
-              <item name="images" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Game-development-project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Game-development-project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Game-development-project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Game-development-project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="sql-setup" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1554192448223" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1554201612710" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Java programmer/Fun" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -250,11 +211,14 @@
     </task>
     <servers />
   </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="3248000" />
+  </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.27611336" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20227273" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -263,7 +227,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3285968" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.12643678" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -332,7 +296,7 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/Main/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
+        <state relative-caret-position="84">
           <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
         </state>
       </provider>
@@ -377,8 +341,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sql-setup/Tables.sql">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="346">
-          <caret line="63" column="9" selection-start-line="63" selection-start-column="9" selection-end-line="63" selection-end-column="9" />
+        <state relative-caret-position="294">
+          <caret line="191" column="116" selection-start-line="191" selection-start-column="116" selection-end-line="191" selection-end-column="116" />
         </state>
       </provider>
     </entry>
@@ -447,11 +411,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/GUI/BattlefieldController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
-          <caret line="66" lean-forward="true" selection-start-line="66" selection-end-line="66" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="-720">
+          <caret line="85" selection-start-line="85" selection-end-line="85" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GUI/MainMenu.fxml">
+      <provider editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="JavaFX-Scene-Builder" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/game/Dice.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="8" column="47" lean-forward="true" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="47" />
         </state>
       </provider>
     </entry>

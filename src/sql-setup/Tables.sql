@@ -189,7 +189,7 @@ INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, descriptio
 INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description,weapon_url) VALUES (5,"Dagger",1,4,"Melee","Dagger.png");
 INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description,weapon_url) VALUES (6,"Hand crossbow",1,6,"Ranged","Crossbow.png");
 INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description,weapon_url) VALUES (7,"Chromatic orb",3,8,"Ranged","Chromatic_orb.png");
-INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description,weapon_url) VALUES (8,"Fireball",6,6,"Ranged","Fireball.png");
+INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description,weapon_url) VALUES (8,"Fireball",2,6,"Ranged","Fireball.png");
 
 INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description) VALUES (9,"Slaad bite",2,6,"Melee");
 INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description) VALUES (10,"Slaad claw",1,6,"Melee");
