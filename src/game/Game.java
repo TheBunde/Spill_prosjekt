@@ -43,15 +43,16 @@ public class Game {
     public void updateCreatureData(){
         turn = db.fetchPlayerTurn();
         for (int i = 0; i < creatures.size(); i++) {
-            int playerId = creatures.get(i).getPlayerId();
+            Creature c = creatures.get(i);
+            int playerId = c.getPlayerId();
             ArrayList<Integer> newPos = db.fetchPlayerPos(playerId);
             int newHp = db.fetchPlayerHp(playerId);
             if (playerId != Main.user.getPlayerId()) {
-                creatures.get(i).setNewPos(newPos.get(0), newPos.get(1));
+                c.setNewPos(newPos.get(0), newPos.get(1));
             }
-            creatures.get(i).setHp(newHp);
-            if (creatures.get(i).getHp() <= 0){
-                creatures.get(i).setPawnImage("gravestone.png");
+            c.setHp(newHp);
+            if (c.isDead()){
+                c.setPawnImage("gravestone.png");
             }
         }
     }
@@ -140,10 +141,15 @@ public class Game {
 
     public void monsterAction(){
         Monster monster = ((Monster) creatures.get(turn % creatures.size()));
-        monster.monsterMove(creatures);
-        monster.monsterAttack(creatures);
-        pushCreatureData();
-        endTurn();
+        if (monster.isDead()){
+            endTurn();
+        }
+        else {
+            monster.monsterMove(creatures);
+            monster.monsterAttack(creatures);
+            pushCreatureData();
+            endTurn();
+        }
     }
 
     public void endTurn(){

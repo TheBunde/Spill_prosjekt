@@ -49,7 +49,7 @@ public class Database {
             res = prepStmt.executeQuery();
             while (res.next()) {
                 if (res.getInt("user_id") == 0){
-                    chat.addMessage("Event", res.getString("message"), res.getString("time_stamp"), true);
+                    chat.addMessage("Event", res.getString("message"), "", true);
                 }
                 else{
                     chat.addMessage(res.getString("username"), res.getString("message"), res.getString("time_stamp"), false);
@@ -1154,6 +1154,58 @@ public class Database {
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con);
             return ready;
+        }
+    }
+
+    public boolean setJoinable(boolean joinable){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        boolean status = true;
+        try{
+            con = this.bds.getConnection();
+            con.setAutoCommit(false);
+            String prepString = "UPDATE game_lobby SET joinable = ? WHERE lobby_key = ?";
+            prepStmt = con.prepareStatement(prepString);
+            prepStmt.setBoolean(1, joinable);
+            prepStmt.setInt(2, Main.user.getLobbyKey());
+            prepStmt.executeUpdate();
+            con.commit();
+        }
+        catch (SQLException sq){
+            this.manager.rollback(con);
+            sq.printStackTrace();
+            status = false;
+        }
+        finally {
+            this.manager.turnOnAutoCommit(con);
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(con);
+            return status;
+        }
+    }
+
+    public boolean isJoinable(int lobbyKey){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res;
+        boolean joinable = false;
+        try{
+            con = this.bds.getConnection();
+            String prepString = "SELECT joinable FROM game_lobby WHERE lobby_key = ?";
+            prepStmt = con.prepareStatement(prepString);
+            prepStmt.setInt(1, lobbyKey);
+            res = prepStmt.executeQuery();
+            res.next();
+            joinable = res.getBoolean(1);
+        }
+        catch (SQLException sq){
+            sq.printStackTrace();
+            return joinable;
+        }
+        finally {
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(con);
+            return joinable;
         }
     }
 }
