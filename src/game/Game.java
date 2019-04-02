@@ -38,6 +38,10 @@ public class Game {
                 }
             }).start();
         }
+        playerCharacter.setDead();
+        if(playerCharacter.isDead()){
+            db.addChatMessage(Main.user.getUsername() + " died", true);
+        }
     }
 
     public void updateCreatureData(){
