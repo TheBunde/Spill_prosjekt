@@ -101,7 +101,7 @@
                <children>
                   <ImageView fitHeight="22.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true" rotate="25.0">
                      <image>
-                        <Image url="@lobbykeyimage.png" />
+                        <Image url="@images/lobbykeyimage.png" />
                      </image>
                   </ImageView>
                   <Label alignment="CENTER" contentDisplay="CENTER" text="Lobby key">

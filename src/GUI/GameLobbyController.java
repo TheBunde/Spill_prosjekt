@@ -98,6 +98,7 @@ public class GameLobbyController {
             chatController.timer.purge();
             timer.cancel();
             timer.purge();
+            db.setJoinable(false);
             this.sceneSwitcher.switchScene(readyButton , "Battlefield.fxml");
         }
     }
