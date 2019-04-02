@@ -55,12 +55,16 @@ public class BattlefieldController implements Initializable {
     private Database db = Main.db;
     private User user = Main.user;
     private SceneSwitcher sceneSwitcher = new SceneSwitcher();
+
     private double mouseX;
     private double mouseY;
     private double cellWidth;
     private double cellHeight;
+
     private boolean attackPressed = false;
     private boolean movePressed = false;
+
+
     private int equipedWeapon = 0;
     private Pane movementPane;
     private ArrayList<Pane> attackPanes = new ArrayList<>();
@@ -269,13 +273,18 @@ public class BattlefieldController implements Initializable {
         System.out.println("Player turn: " + game.isPlayerTurn());
     }
 
-    public void checkForPlayerTurn(){
+    public boolean checkForPlayerTurn(){
         if(!game.isPlayerTurn()){
             moveButton.setDisable(true);
             attackButton.setDisable(true);
             endTurnButton.setDisable(true);
+            return false;
         }
         else{
+            if (game.playerCharacter.isDead()){
+                game.endTurn();
+                return false;
+            }
             if (!movePressed){
                 attackButton.setDisable(false);
             }
@@ -285,6 +294,7 @@ public class BattlefieldController implements Initializable {
             if (!movePressed && !attackPressed){
                 endTurnButton.setDisable(false);
             }
+            return true;
         }
     }
 

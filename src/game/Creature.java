@@ -168,6 +168,10 @@ public abstract class Creature {
         return this.backstory;
     }
 
+    public boolean isDead(){
+        return (this.hp <= 0);
+    }
+
     public String toString() {
         String weaponNames = "";
         for(int i = 0; i < this.weapons.size(); i++){

@@ -47,13 +47,15 @@ public class ChatMessageCell extends ListCell<ChatMessage> {
 
 
             if (chatmessage.isEvent()){
-                messageLabel.setTextFill(Color.color(52.0/255.0, 152.0/255.0, 219.0/255.0));
-                messageLabel.setText(chatmessage.getMessage() + " | " + chatmessage.getTimestamp());
+                messageLabel.setTextFill(Color.color(55.0/255.0, 126.0/255.0, 219.0/255.0));
+                messageLabel.setText(chatmessage.getMessage());
+                messageLabel.setStyle("-fx-font-weight: bold");
 
             }
             else{
-                setTextFill(Color.BLACK);
                 messageLabel.setText(chatmessage.getUsername() + ": " + chatmessage.getMessage() + " | " + chatmessage.getTimestamp());
+                messageLabel.setTextFill(Color.BLACK);
+                messageLabel.setStyle("-fx-font-weight: regular");
             }
             setText(null);
             setGraphic(hbox);

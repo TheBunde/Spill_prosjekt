@@ -53,23 +53,16 @@ public class GameLobbyController {
     public void readyButtonPressed() throws Exception{
 
         if(!ready){
-            readyButton.getStyleClass().clear();
-            readyButton.getStyleClass().add("button-selected");
+            readyButton.setStyle("-fx-background-color: #2ecc71;");
             ready = true;
+            db.addChatMessage(Main.user.getUsername() + " is ready", true);
             db.isReady(true);
         }else if(ready){
-            readyButton.getStyleClass().clear();
-            readyButton.getStyleClass().add("button-deselected");
+            readyButton.setStyle("-fx-background-color: #cccccc;");
             ready = false;
+            db.addChatMessage(Main.user.getUsername() + " is not ready", true);
             db.isReady(false);
         }
-
-        /* audio.MusicPlayer.getInstance().stopSong();
-        MusicPlayer.getInstance().changeSong(7);
-        chatController.timer.cancel();
-        chatController.timer.purge();
-        this.sceneSwitcher.switchScene(travelButton, "Battlefield.fxml"); */
-
     }
 
     public void backToMenuButtonPressed() throws Exception{
