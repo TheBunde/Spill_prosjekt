@@ -1,6 +1,7 @@
 package GUI;
 import Database.*;
 
+import audio.MusicPlayer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,6 +15,7 @@ import javafx.stage.Stage;
 public class InterfaceMain extends Application implements Runnable {
     @Override
     public void run() {
+        MusicPlayer.getInstance().changeSong(12);
         launch();
     }
 
