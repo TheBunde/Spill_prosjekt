@@ -1,5 +1,6 @@
 package game;
 import game.Creature;
+import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 
@@ -51,7 +52,7 @@ public class Monster extends Creature {
         int yDistance = Math.abs(getyPos() - creatures.get(0).getyPos());
 
         for (Creature i : creatures) {
-            if (i != this && i instanceof game.Character) {
+            if (i != this && i instanceof game.Character && !i.isDead()) {
                 if (Math.abs(getxPos() - i.getxPos()) < xDistance && Math.abs(getyPos() - i.getyPos()) < yDistance) {
                     target = i;
                 }

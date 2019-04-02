@@ -170,7 +170,7 @@ public abstract class Creature {
         return this.backstory;
     }
 
-    public boolean setDead(){
+    public boolean updateDead(){
         isDead = (this.hp <= 0);
         return isDead;
     }
