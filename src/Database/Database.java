@@ -49,7 +49,7 @@ public class Database {
             res = prepStmt.executeQuery();
             while (res.next()) {
                 if (res.getInt("user_id") == 0){
-                    chat.addMessage("Event", res.getString("message"), res.getString("time_stamp"), true);
+                    chat.addMessage("Event", res.getString("message"), "", true);
                 }
                 else{
                     chat.addMessage(res.getString("username"), res.getString("message"), res.getString("time_stamp"), false);
