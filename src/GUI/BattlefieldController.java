@@ -92,6 +92,8 @@ public class BattlefieldController implements Initializable {
 
         playerImage.setImage(new Image("GUI/images/" + game.playerCharacter.getImageUrl()));
 
+
+
         initMovementPane();
         initAttackPanes();
 
@@ -269,6 +271,7 @@ public class BattlefieldController implements Initializable {
         }
         System.out.println(player.isMovePressed() + " " + player.isAttackPressed());
         System.out.println("Player turn: " + game.isPlayerTurn());
+        updateImage();
     }
 
     public boolean checkForPlayerTurn(){
@@ -364,6 +367,25 @@ public class BattlefieldController implements Initializable {
         weaponOne.setEffect(shadow);
         weaponTwo.setEffect(light);
         equipedWeapon = 1;
+    }
+
+    public void updateImage(){
+        if(game.playerCharacter.getCreatureId() == 1){
+            if(game.playerCharacter.getHp() > game.playerCharacter.getInitialHp()){
+                playerImage.setImage(new Image("GUI/images/" + game.playerCharacter.getImageUrl()));
+            }
+            else if(game.playerCharacter.getHp() >= 11 && game.playerCharacter.getHp() <= 22){
+                playerImage.setImage(new Image("GUI/images/warriordamaged.jpg"));
+            }
+            else if(game.playerCharacter.getHp() < 11){
+                playerImage.setImage(new Image("GUI/images/warriordamaged2.jpg"));
+            }
+            else if(game.playerCharacter.getHp() <= 0){
+                playerImage.setImage(new Image("GUI/images/gravestone.png"));
+            }
+        }
+
+
     }
 
 }

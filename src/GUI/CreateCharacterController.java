@@ -45,7 +45,6 @@ public class CreateCharacterController implements Initializable {
     //images to display selected character
     @FXML
     Image RangerImage = new Image("GUI/images/ranger.jpg");
-
     @FXML
     Image warriorImage = new Image("GUI/images/warrior.jpg");
     @FXML
@@ -99,7 +98,7 @@ public class CreateCharacterController implements Initializable {
                     "\nRangers are one with nature." +
                     "\nWith their longbow and short sword they are good with both ranged and melee attacks." +
                     "\nA truly versatile character.");
-            SFXPlayer.getInstance().setSFX(0);
+            SFXPlayer.getInstance().setSFX(8);
             MusicPlayer.getInstance().stopSong();
             MusicPlayer.getInstance().changeSong(13);
         }
