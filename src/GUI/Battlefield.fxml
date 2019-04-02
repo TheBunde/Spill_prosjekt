@@ -79,10 +79,6 @@
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
-               <children>
-                  <ImageView fx:id="weaponOne" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" />
-                  <ImageView fx:id="weaponTwo" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" GridPane.columnIndex="1" />
-               </children>
             </GridPane>
             </children>
         </AnchorPane>
