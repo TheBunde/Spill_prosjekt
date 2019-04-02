@@ -61,14 +61,11 @@ public class BattlefieldController implements Initializable {
     private double cellWidth;
     private double cellHeight;
 
-    private boolean attackPressed = false;
-    private boolean movePressed = false;
-
-
     private int equipedWeapon = 0;
     private Pane movementPane;
     private ArrayList<Pane> attackPanes = new ArrayList<>();
     private Game game;
+    private Player player;
     private Lighting light = new Lighting();
     private InnerShadow shadow = new InnerShadow();
 
@@ -83,6 +80,7 @@ public class BattlefieldController implements Initializable {
 
 
         game = new Game();
+        player = new Player();
 
         cellWidth = mapGrid.getPrefWidth()/(16.0);
         cellHeight = mapGrid.getPrefHeight()/(16.0);
@@ -116,7 +114,7 @@ public class BattlefieldController implements Initializable {
     }
 
     public void attackButtonPressed(){
-        attackPressed = true;
+        player.setAttackPressed(true);
         moveButton.setDisable(true);
         endTurnButton.setDisable(true);
         new Thread(new Runnable(){
@@ -148,7 +146,7 @@ public class BattlefieldController implements Initializable {
     };
 
     public void attackFinished(){
-        attackPressed = false;
+        player.setAttackPressed(false);
         moveButton.setDisable(false);
         endTurnButton.setDisable(false);
         attackButton.getStyleClass().clear();
@@ -163,7 +161,7 @@ public class BattlefieldController implements Initializable {
     }
 
     public void moveButtonPressed(){
-        movePressed = true;
+        player.setMovePressed(true);
         attackButton.setDisable(true);
         endTurnButton.setDisable(true);
         moveButton.getStyleClass().add("button-selected");
@@ -181,7 +179,7 @@ public class BattlefieldController implements Initializable {
     };
 
     public void moveFinished(){
-        movePressed = false;
+        player.setMovePressed(false);
         hideMovementPane();
         game.playerCharacter.moveCreature(toGrid(mapGrid.getWidth(), mouseX), toGrid(mapGrid.getHeight(), mouseY));
         closeMapMoveEventHandler();
@@ -273,7 +271,7 @@ public class BattlefieldController implements Initializable {
         for (int i = 0; i < game.getAmountOfCreatures(); i++){
             System.out.println(game.getCreature(i).getCreatureName() + ": " + game.getCreature(i).getHp());
         }
-        System.out.println(movePressed + " " + attackPressed);
+        System.out.println(player.isMovePressed() + " " + player.isAttackPressed());
         System.out.println("Player turn: " + game.isPlayerTurn());
     }
 
@@ -289,13 +287,13 @@ public class BattlefieldController implements Initializable {
                 game.endTurn();
                 return false;
             }
-            if (!movePressed){
+            if (!player.isMovePressed()){
                 attackButton.setDisable(false);
             }
-            if (!attackPressed){
+            if (!player.isAttackPressed()){
                 moveButton.setDisable(false);
             }
-            if (!movePressed && !attackPressed){
+            if (!player.isMovePressed() && !player.isAttackPressed()){
                 endTurnButton.setDisable(false);
             }
             return true;

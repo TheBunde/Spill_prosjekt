@@ -36,7 +36,6 @@ public class AudioFile implements LineListener{
             gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
 
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             System.exit(1);
 
@@ -65,7 +64,6 @@ public class AudioFile implements LineListener{
 
     @Override
     public void update(LineEvent event) {
-        // TODO Auto-generated method stub
         if(event.getType() == LineEvent.Type.START)
             playing = true;
         else if(event.getType() == LineEvent.Type.STOP) {

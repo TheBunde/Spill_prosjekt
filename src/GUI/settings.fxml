@@ -22,9 +22,9 @@
                </font>
             </Label>
             <Label text="SFX" />
-            <Slider fx:id="sfxSlider" blockIncrement="1.0" max="6.0" maxHeight="-Infinity" maxWidth="-Infinity" min="-34.0" minHeight="-Infinity" minWidth="-Infinity" minorTickCount="1" onMouseClicked="#changeVolumeSFX" prefHeight="14.0" prefWidth="150.0" value="-4.0" />
+            <Slider fx:id="sfxSlider" blockIncrement="1.0" max="6.0" maxHeight="-Infinity" maxWidth="-Infinity" min="-34.0" minHeight="-Infinity" minWidth="-Infinity" minorTickCount="1" onMouseReleased="#changeVolumeSFX" prefHeight="14.0" prefWidth="150.0" value="-4.0" />
             <Label text="Music" />
-            <Slider fx:id="musicSlider" blockIncrement="1.0" max="6.0" maxHeight="-Infinity" maxWidth="-Infinity" min="-34.0" minHeight="-Infinity" minWidth="-Infinity" minorTickCount="1" onMouseClicked="#changeVolumeMusic" prefHeight="14.0" prefWidth="150.0" value="-4.0">
+            <Slider fx:id="musicSlider" blockIncrement="1.0" max="6.0" maxHeight="-Infinity" maxWidth="-Infinity" min="-34.0" minHeight="-Infinity" minWidth="-Infinity" minorTickCount="1" onMouseReleased="#changeVolumeMusic" prefHeight="14.0" prefWidth="150.0" value="-4.0">
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor>

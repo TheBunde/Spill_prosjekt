@@ -91,6 +91,15 @@ import com.mysql.cj.protocol.Resultset;
 //
 
 
+<<<<<<< HEAD:src/Gamelogic/Game2Draft.java
+=======
+import java.sql.*;
+import java.util.ArrayList;
+/*
+public class Game2 {
+    private GameMethods2 methods2 = new GameMethods2();
+
+>>>>>>> henrik:src/Gamelogic/Game2.java
 
 
 <<<<<<< HEAD

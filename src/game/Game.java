@@ -30,6 +30,9 @@ public class Game {
         if (this.isPlayerTurn()){
             pushCreatureData();
         }
+        if(playerCharacter.getHp() <= 0 && !playerCharacter.isDead()){
+            db.addChatMessage(Main.user.getUsername() + " died", true);
+        }
         updateCreatureData();
         if (isMonsterTurn() && Main.user.isHost()){
             new Thread(new Runnable(){
@@ -51,6 +54,7 @@ public class Game {
                 c.setNewPos(newPos.get(0), newPos.get(1));
             }
             c.setHp(newHp);
+            c.updateDead();
             if (c.isDead()){
                 c.setPawnImage("gravestone.png");
             }
@@ -71,7 +75,7 @@ public class Game {
     public ArrayList<Integer> getMonstersIndex(){
         ArrayList<Integer> monstersIndex = new ArrayList<>();
         for (int i = 0; i < this.creatures.size(); i++){
-            if (this.creatures.get(i) instanceof Monster){
+            if (this.creatures.get(i) instanceof Monster && !(this.creatures.get(i).isDead())){
                 monstersIndex.add(i);
             }
         }

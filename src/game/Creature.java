@@ -21,6 +21,7 @@ public abstract class Creature {
     private String backstory;
     private String imageUrl;
     private ImageView pawn;
+    private boolean isDead;
 
 
     public Creature(int playerId, int creatureId, String creatureName, int hp, int ac, int movement, int damageBonus, int attackBonus, int attacksPerTurn, String backstory, int xPos, int yPos, String imageUrl, ArrayList weapons){
@@ -38,6 +39,7 @@ public abstract class Creature {
         this.yPos = yPos;
         this.imageUrl = imageUrl;
         this.weapons = weapons;
+        this.isDead = false;
 
         Image image = new Image("GUI/images/" + this.imageUrl);
         this.pawn = new ImageView(image);
@@ -168,8 +170,13 @@ public abstract class Creature {
         return this.backstory;
     }
 
+    public boolean updateDead(){
+        isDead = (this.hp <= 0);
+        return isDead;
+    }
+
     public boolean isDead(){
-        return (this.hp <= 0);
+        return isDead;
     }
 
     public String toString() {
