@@ -38,8 +38,6 @@ public class Game {
                 }
             }).start();
         }
-        setMonsterDead();
-        playerCharacter.setDead();
         if(playerCharacter.isDead()){
             db.addChatMessage(Main.user.getUsername() + " died", true);
         }
@@ -56,6 +54,7 @@ public class Game {
                 c.setNewPos(newPos.get(0), newPos.get(1));
             }
             c.setHp(newHp);
+            c.updateDead();
             if (c.isDead()){
                 c.setPawnImage("gravestone.png");
             }
@@ -123,12 +122,6 @@ public class Game {
             return true;
         }
         return false;
-    }
-
-    public void setMonsterDead(){
-        if(creatures.get(turn % creatures.size()) instanceof Monster){
-            creatures.get(turn % creatures.size()).setDead();
-        }
     }
 
     public boolean isPositionAvailable(int x, int y){
