@@ -65,8 +65,8 @@ public class BattlefieldController implements Initializable {
 
     private double mouseX;
     private double mouseY;
-    private double cellWidth;
-    private double cellHeight;
+    public double cellWidth;
+    public double cellHeight;
 
     private Pane movementPane;
     private ArrayList<Pane> attackPanes = new ArrayList<>();

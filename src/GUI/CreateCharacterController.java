@@ -106,8 +106,8 @@ public class CreateCharacterController implements Initializable {
     }
     //method to create the character
     public boolean createCharacter() throws Exception{
-        String a = chooseClassDropdown.getValue();
-        if (a == null){
+        int a = chooseClassDropdown.getSelectionModel().getSelectedIndex() + 1;
+        if (a == 0){
             return false;
         }
         SFXPlayer.getInstance().setSFX(0);
@@ -115,9 +115,6 @@ public class CreateCharacterController implements Initializable {
             System.out.println("character created");
         }else{
             System.out.println("character not created");
-        }
-        if (Main.user.isHost()){
-            db.createPlayer("Hell Hound", false);
         }
         sceneSwitcher.switchScene(createCharacterButton, "GameLobby.fxml");
         return true;
