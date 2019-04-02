@@ -12,8 +12,10 @@ public class Game {
     public game.Character playerCharacter;
     private Database db = Main.db;
     private int turn = 0;
+    public Level level;
 
     public Game(){
+        level = Main.db.fetchLevelObject(1);
         creatures = db.fetchCreaturesFromLobby();
         for (int i = 0; i < this.creatures.size(); i++){
             if (this.creatures.get(i).getPlayerId() == Main.user.getPlayerId()){
@@ -34,12 +36,33 @@ public class Game {
             db.addChatMessage(Main.user.getUsername() + " died", true);
         }
         updateCreatureData();
-        if (isMonsterTurn() && Main.user.isHost()){
-            new Thread(new Runnable(){
-                @Override public void run(){
-                    monsterAction();
-                }
-            }).start();
+        if (Main.user.isHost()){
+            if (isMonsterTurn()) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        monsterAction();
+                    }
+                }).start();
+            }
+            if (this.isLevelCleared()){
+                this.level.setLevelId(this.level.getLevelId() + 1);
+                Main.db.setLevel(Main.user.getLobbyKey(), this.level.getLevelId());
+                changeToNewLevel();
+            }
+        }
+        else{
+            if (this.isLevelCleared()) {
+                changeToNewLevel();
+            }
+        }
+    }
+
+    public void changeToNewLevel(){
+        int newLevel_id = Main.db.fetchLevelId(Main.user.getLobbyKey());
+        if (this.level.getLevelId() < newLevel_id){
+            this.level.setLevelId(newLevel_id);
+            this.level.updateLevel();
         }
     }
 
@@ -143,6 +166,29 @@ public class Game {
         return null;
     }
 
+    public ArrayList<Monster> getMonsters(){
+        ArrayList<Monster> monsters = new ArrayList<>();
+        for (Creature c : this.creatures){
+            if (c instanceof Monster){
+                monsters.add((Monster)c);
+            }
+        }
+        return monsters;
+    }
+
+    public boolean isLevelCleared(){
+        boolean cleared = false;
+        boolean allMonstersDead = true;
+        ArrayList<Monster> monsters = this.getMonsters();
+        for (Monster m : monsters){
+            if (!m.isDead()){
+                allMonstersDead = false;
+            }
+        }
+        cleared = allMonstersDead;
+        return cleared;
+    }
+
     public void monsterAction(){
         Monster monster = ((Monster) creatures.get(turn % creatures.size()));
         if (monster.isDead()){
@@ -159,5 +205,9 @@ public class Game {
     public void endTurn(){
         turn++;
         db.incrementPlayerTurn(turn);
+    }
+
+    public Level getLevel(){
+        return this.level;
     }
 }

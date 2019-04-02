@@ -15,6 +15,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.effect.*;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
@@ -23,6 +24,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -51,7 +53,12 @@ public class BattlefieldController implements Initializable {
     @FXML
     private AnchorPane battlefieldUI;
     @FXML
-    private ImageView weaponOne, weaponTwo, playerImage;
+    private Pane mapContainer;
+    @FXML
+    private ImageView weaponOne, weaponTwo, playerImage, backgroundImage;
+    @FXML
+    private Label hpLabel, acLabel;
+
     private Database db = Main.db;
     private User user = Main.user;
     private SceneSwitcher sceneSwitcher = new SceneSwitcher();
@@ -61,7 +68,6 @@ public class BattlefieldController implements Initializable {
     private double cellWidth;
     private double cellHeight;
 
-    private int equipedWeapon = 0;
     private Pane movementPane;
     private ArrayList<Pane> attackPanes = new ArrayList<>();
     private Game game;
@@ -91,10 +97,15 @@ public class BattlefieldController implements Initializable {
         }
         weaponOne.setImage(new Image("GUI/images/" + game.playerCharacter.getWeapons().get(0).getImageUrl()));
         weaponTwo.setImage(new Image("GUI/images/" + game.playerCharacter.getWeapons().get(1).getImageUrl()));
+
         weaponOne.setEffect(light);
         weaponTwo.setEffect(shadow);
 
+        mapContainer.getChildren().add(game.getLevel().backgroundImage);
+        game.getLevel().backgroundImage.toBack();
+
         playerImage.setImage(new Image("GUI/images/" + game.playerCharacter.getImageUrl()));
+        acLabel.setText("AC: " + game.playerCharacter.getAc());
 
         initMovementPane();
         initAttackPanes();
@@ -140,13 +151,14 @@ public class BattlefieldController implements Initializable {
                     clickedMonsterIndex = i;
                 }
             }
-            game.playerCharacter.attackCreature(game.getCreature(clickedMonsterIndex), equipedWeapon);
+            game.playerCharacter.attackCreature(game.getCreature(clickedMonsterIndex), player.getEquippedWeapon());
             attackFinished();
         }
     };
 
     public void attackFinished(){
         player.setAttackPressed(false);
+        player.setAttackUsed(true);
         moveButton.setDisable(false);
         endTurnButton.setDisable(false);
         attackButton.getStyleClass().clear();
@@ -158,6 +170,7 @@ public class BattlefieldController implements Initializable {
             image.removeEventFilter(MouseEvent.MOUSE_CLICKED, attackEventHandler);
             image.setCursor(Cursor.DEFAULT);
         }
+        checkForPlayerTurn();
     }
 
     public void moveButtonPressed(){
@@ -181,13 +194,16 @@ public class BattlefieldController implements Initializable {
     public void moveFinished(){
         player.setMovePressed(false);
         hideMovementPane();
-        game.playerCharacter.moveCreature(toGrid(mapGrid.getWidth(), mouseX), toGrid(mapGrid.getHeight(), mouseY));
+        if (game.playerCharacter.moveCreature(toGrid(mapGrid.getWidth(), mouseX), toGrid(mapGrid.getHeight(), mouseY))){
+            player.setMoveUsed(true);
+        };
         closeMapMoveEventHandler();
         attackButton.setDisable(false);
         endTurnButton.setDisable(false);
         moveButton.getStyleClass().clear();
         moveButton.getStyleClass().add("button");
         refreshGameFromClient();
+        checkForPlayerTurn();
 
     }
 
@@ -249,6 +265,8 @@ public class BattlefieldController implements Initializable {
             mapGrid.getChildren().remove(c.getPawn());
             mapGrid.add(c.getPawn(), c.getxPos(), c.getyPos());
         }
+        hpLabel.setText("HP: " + Math.max(0, game.playerCharacter.getHp()) + "/" + game.playerCharacter.getInitialHp());
+
     }
 
 
@@ -283,15 +301,16 @@ public class BattlefieldController implements Initializable {
             return false;
         }
         else{
-            if (game.playerCharacter.isDead()){
+            if (game.playerCharacter.isDead() || player.isAllActionsUsed()){
                 game.endTurn();
+                player.resetUsedActions();
                 return false;
             }
             if (!player.isMovePressed()){
                 attackButton.setDisable(false);
             }
             if (!player.isAttackPressed()){
-                moveButton.setDisable(false);
+                    moveButton.setDisable(false);
             }
             if (!player.isMovePressed() && !player.isAttackPressed()){
                 endTurnButton.setDisable(false);
@@ -361,13 +380,13 @@ public class BattlefieldController implements Initializable {
     public void weaponOneSelected(){
         weaponOne.setEffect(light);
         weaponTwo.setEffect(shadow);
-        equipedWeapon = 0;
+        player.setEquippedWeapon(0);
     }
 
     public void weaponTwoSelected(){
         weaponOne.setEffect(shadow);
         weaponTwo.setEffect(light);
-        equipedWeapon = 1;
+        player.setEquippedWeapon(1);
     }
 
 }

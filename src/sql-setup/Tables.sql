@@ -51,8 +51,8 @@ create table creature(
 
 Create TABLE level(
     level_id integer,
-    music varchar(30),
-    background_uml varchar(30),
+    music integer,
+    background_url varchar(30),
     constraint level_pk primary key (level_id));
 
     create table weapon(
@@ -171,6 +171,15 @@ ALTER TABLE creature_weapon ADD CONSTRAINT creature_weapon_fk2 FOREIGN KEY(creat
 
 
 -- INSERTS
+INSERT INTO level VALUES(1, 16, "Forest-map.png", "");
+INSERT INTO level VALUES(2, 7, "Dessert-map.png", "");
+INSERT INTO level VALUES(3, 14, "Snow-map.png", "");
+INSERT INTO level VALUES(4, 15, "Lava-map.png", "");
+
+INSERT INTO level_monster VALUES(1, 5);
+INSERT INTO level_monster VALUES(1, 5);
+INSERT INTO level_monster VALUES(2, 5);
+
 INSERT INTO creatureTemplate VALUES(DEFAULT, "Warrior", 36, 18, 3, 5, 8, 2, "He be legendary warior. Yeet that goblin", "warrior.jpg", true);
 INSERT INTO creatureTemplate VALUES(DEFAULT, "Rogue", 23, 16, 3, 7, 7, 2, "she be the sneaky girl. not the one from Rogue One", "rogue.jpg", true);
 INSERT INTO creatureTemplate VALUES(DEFAULT, "Wizard", 22, 15, 3, 0, 8, 1, "Penny for your thoughts. Nothing that a little music can't help. Seagulls stop it now.", "wizard.jpg", true);
