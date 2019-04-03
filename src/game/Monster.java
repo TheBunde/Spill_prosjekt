@@ -1,11 +1,15 @@
 package game;
 import game.Creature;
+import javafx.scene.Cursor;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 
 import java.util.ArrayList;
 
 public class Monster extends Creature {
 
+    public Pane attackPane;
     public Monster(int playerId, int creatureId, String creatureName, int hp, int ac, int movement, int damageBonus, int attackBonus, int attacksPerTurn, String backstory, int xPos, int yPos, String imageUrl, ArrayList weapons){
         super(playerId, creatureId, creatureName, hp, ac, movement, damageBonus, attackBonus, attacksPerTurn, backstory, xPos, yPos, imageUrl, weapons);
     }
@@ -14,24 +18,24 @@ public class Monster extends Creature {
         return super.toString();
     }
 
-    public void monsterAction (ArrayList<Creature> players){
-        Creature target = getClosest(players);
+    public void monsterAction (ArrayList<Creature> creatures){
+        Creature target = getClosest(creatures);
         if(inRange(target)){
-            moveTo(target);
+            moveTo(target, creatures);
             attackCreature(target, 0);
         }else{
-            moveToward(target);
+            moveToward(target, creatures);
             attackCreature(target, 1);
         }
     }
 
     //Splitted version of monsterAction for movement
-    public void monsterMove (ArrayList<Creature> players){
-        Creature target = getClosest(players);
+    public void monsterMove (ArrayList<Creature> creatures){
+        Creature target = getClosest(creatures);
         if(inRange(target)){
-            moveTo(target);
+            moveTo(target, creatures);
         }else{
-            moveToward(target);
+            moveToward(target, creatures);
         }
     }
 
@@ -61,7 +65,7 @@ public class Monster extends Creature {
         return target;
     }
 
-    public void moveToward(Creature target){
+    public void moveToward(Creature target, ArrayList<Creature> creatures){
         int xPos = getxPos();
         int yPos = getyPos();
         if(Math.abs(xPos -target.getxPos()) > getMovement()){
@@ -74,7 +78,7 @@ public class Monster extends Creature {
         }else if(Math.abs(yPos -target.getyPos()) < getMovement()){
             yPos = target.getyPos() - 1 * direction(yPos, target.getyPos());
         }
-        moveCreature(xPos, yPos);
+        moveCreature(xPos, yPos, creatures);
     }
 
     public boolean inRange(Creature target){
@@ -84,7 +88,7 @@ public class Monster extends Creature {
         return false;
     }
 
-    public void moveTo(Creature target){
+    public void moveTo(Creature target, ArrayList<Creature> creatures){
         int xPos = getxPos();
         int yPos = getyPos();
         if(xPos < target.getxPos()){
@@ -97,7 +101,7 @@ public class Monster extends Creature {
         }else if(xPos > target.getyPos()){
             yPos = target.getyPos() + 1;
         }
-        moveCreature(xPos, yPos);
+        moveCreature(xPos, yPos, creatures);
     }
 
     public int direction(int pos, int targetPos){
@@ -105,5 +109,28 @@ public class Monster extends Creature {
             return -1;
         }
         return 1;
+    }
+
+    public void updateAttackPane(){
+        GridPane parent = (GridPane) this.attackPane.getParent();
+        parent.getChildren().remove(this.attackPane);
+        parent.add(this.attackPane, this.getxPos(), this.getyPos());
+    }
+
+    public void initAttackPane(double cellWidth, double cellHeight){
+        this.attackPane = new Pane();
+        this.attackPane.setPrefWidth(cellWidth);
+        this.attackPane.setPrefHeight(cellHeight);
+        this.attackPane.setStyle("-fx-background-color: rgb(252, 91, 55, 0.7)");
+        this.attackPane.setVisible(false);
+        this.attackPane.setCursor(Cursor.CROSSHAIR);
+    }
+
+    public void showAttackPane(){
+        this.attackPane.setVisible(true);
+    }
+
+    public void hideAttackPane(){
+        this.attackPane.setVisible(false);
     }
 }

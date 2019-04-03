@@ -12,8 +12,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.*;
@@ -24,9 +22,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.control.*;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 
 
 import javafx.event.EventHandler;
@@ -55,7 +50,7 @@ public class BattlefieldController implements Initializable {
     @FXML
     private Pane mapContainer;
     @FXML
-    private ImageView weaponOne, weaponTwo, playerImage, backgroundImage;
+    private ImageView weaponOne, weaponTwo, playerImage;
     @FXML
     private Label hpLabel, acLabel;
 
@@ -69,8 +64,7 @@ public class BattlefieldController implements Initializable {
     public double cellHeight;
 
     private Pane movementPane;
-    private ArrayList<Pane> attackPanes = new ArrayList<>();
-    private Game game;
+    public static Game game;
     private Player player;
     private Lighting light = new Lighting();
     private InnerShadow shadow = new InnerShadow();
@@ -88,9 +82,14 @@ public class BattlefieldController implements Initializable {
         cellHeight = mapGrid.getPrefHeight()/(16.0);
 
         for (Creature c : game.getCreatures()){
+            if (c instanceof Monster){
+                ((Monster) c).initAttackPane(cellWidth, cellHeight);
+                mapGrid.add(((Monster) c).attackPane, c.getxPos(), c.getyPos());
+            }
             c.setPawnSize(cellWidth, cellHeight);
             mapGrid.add(c.getPawn(), c.getxPos(), c.getyPos());
         }
+
         weaponOne.setImage(new Image("GUI/images/" + game.playerCharacter.getWeapons().get(0).getImageUrl()));
         weaponTwo.setImage(new Image("GUI/images/" + game.playerCharacter.getWeapons().get(1).getImageUrl()));
 
@@ -103,12 +102,7 @@ public class BattlefieldController implements Initializable {
         playerImage.setImage(new Image("GUI/images/" + game.playerCharacter.getImageUrl()));
         acLabel.setText("AC: " + game.playerCharacter.getAc());
 
-
-
-
-
         initMovementPane();
-        initAttackPanes();
 
         refreshGameFromClient();
         updateGameFromServer();
@@ -130,12 +124,11 @@ public class BattlefieldController implements Initializable {
         endTurnButton.setDisable(true);
         new Thread(new Runnable(){
             @Override public void run(){
-                showAttackPanes();
-                ArrayList<Integer> monstersIndex = game.getMonstersIndex();
-                for (int i = 0; i < monstersIndex.size(); i++){
-                    ImageView image = game.getCreature(monstersIndex.get(i)).getPawn();
-                    image.addEventFilter(MouseEvent.MOUSE_CLICKED, attackEventHandler);
-                    image.setCursor(Cursor.CROSSHAIR);
+                for (Monster m : game.getMonsters()){
+                    if (!m.isDead()) {
+                        m.showAttackPane();
+                        m.attackPane.addEventFilter(MouseEvent.MOUSE_CLICKED, attackEventHandler);
+                    }
                 }
             }
         }).start();
@@ -145,13 +138,13 @@ public class BattlefieldController implements Initializable {
     private EventHandler<MouseEvent> attackEventHandler = new EventHandler<MouseEvent>(){
         @Override
         public void handle(MouseEvent e){
-            int clickedMonsterIndex = 0;
-            for (int i = 0; i < game.getAmountOfCreatures(); i++){
-                if (e.getSource() == game.getCreature(i).getPawn()){
-                    clickedMonsterIndex = i;
+            Monster clickedMonster = null;
+            for (Monster m : game.getMonsters()){
+                if (e.getSource() == m.attackPane){
+                    clickedMonster = m;
                 }
             }
-            game.playerCharacter.attackCreature(game.getCreature(clickedMonsterIndex), player.getEquippedWeapon());
+            game.playerCharacter.attackCreature(clickedMonster, player.getEquippedWeapon());
             attackFinished();
         }
     };
@@ -163,14 +156,13 @@ public class BattlefieldController implements Initializable {
         endTurnButton.setDisable(false);
         attackButton.getStyleClass().clear();
         attackButton.getStyleClass().add("button");
-        hideAttackPanes();
-        ArrayList<Integer> monstersIndex = game.getMonstersIndex();
-        for (int i = 0; i < monstersIndex.size(); i++){
-            ImageView image = game.getCreature(monstersIndex.get(i)).getPawn();
-            image.removeEventFilter(MouseEvent.MOUSE_CLICKED, attackEventHandler);
-            image.setCursor(Cursor.DEFAULT);
+
+        for (Monster m : game.getMonsters()){
+            m.hideAttackPane();
+            m.attackPane.removeEventFilter(MouseEvent.MOUSE_CLICKED, attackEventHandler);
         }
         checkForPlayerTurn();
+        refreshGameFromClient();
     }
 
     public void moveButtonPressed(){
@@ -194,7 +186,7 @@ public class BattlefieldController implements Initializable {
     public void moveFinished(){
         player.setMovePressed(false);
         hideMovementPane();
-        if (game.playerCharacter.moveCreature(toGrid(mapGrid.getWidth(), mouseX), toGrid(mapGrid.getHeight(), mouseY))){
+        if (game.playerCharacter.moveCreature(toGrid(mapGrid.getWidth(), mouseX), toGrid(mapGrid.getHeight(), mouseY), game.getCreatures())){
             player.setMoveUsed(true);
         };
         closeMapMoveEventHandler();
@@ -262,8 +254,13 @@ public class BattlefieldController implements Initializable {
     public void refreshGameFromClient(){
         for(int i = 0; i < game.getCreatures().size(); i++){
             Creature c = game.getCreatures().get(i);
-            mapGrid.getChildren().remove(c.getPawn());
-            mapGrid.add(c.getPawn(), c.getxPos(), c.getyPos());
+            if (c.getPawn().getX() != c.getxPos() || c.getPawn().getY() != c.getyPos()) {
+                mapGrid.getChildren().remove(c.getPawn());
+                mapGrid.add(c.getPawn(), c.getxPos(), c.getyPos());
+                if (c instanceof Monster){
+                    ((Monster) c).updateAttackPane();
+                }
+            }
         }
         hpLabel.setText("HP: " + Math.max(0, game.playerCharacter.getHp()) + "/" + game.playerCharacter.getInitialHp());
         updateImage();
@@ -329,53 +326,23 @@ public class BattlefieldController implements Initializable {
         movementPane.setMouseTransparent(true);
         movementPane.setStyle("-fx-background-color: rgb(26, 188, 156, 0.3)");
         movementPane.setVisible(false);
-        battlefieldUI.getChildren().add(movementPane);
+        mapGrid.add(movementPane, game.playerCharacter.getxPos(), game.playerCharacter.getyPos());
+        GridPane.setColumnSpan(movementPane, 2*(game.playerCharacter.getMovement()) + 1);
+        GridPane.setRowSpan(movementPane, 2*(game.playerCharacter.getMovement()) + 1);
+        movementPane.setTranslateX(-game.playerCharacter.getMovement()*cellWidth);
+        movementPane.setTranslateY(-game.playerCharacter.getMovement()*cellHeight);
     }
 
 
     public void showMovementPane(){
-        double moveDistanceX = cellWidth*(2*game.playerCharacter.getMovement() + 1);
-        double moveDistanceY = cellHeight*(2*game.playerCharacter.getMovement() + 1);
-        movementPane.setPrefWidth(moveDistanceX);
-        movementPane.setPrefHeight(moveDistanceY);
-        movementPane.setLayoutX(cellWidth*((double)game.playerCharacter.getxPos()) - cellWidth*game.playerCharacter.getMovement());
-        movementPane.setLayoutY(cellHeight*((double)game.playerCharacter.getyPos()) - cellHeight*game.playerCharacter.getMovement());
+        mapGrid.getChildren().remove(movementPane);
+        mapGrid.add(movementPane, game.playerCharacter.getxPos(), game.playerCharacter.getyPos());
+        movementPane.toBack();
         movementPane.setVisible(true);
     }
 
     public void hideMovementPane(){
         movementPane.setVisible(false);
-    }
-
-    public void initAttackPanes(){
-        ArrayList<Integer> monstersIndex = game.getMonstersIndex();
-        for (int i = 0; i < monstersIndex.size(); i++){
-            Pane pane = new Pane();
-            pane.setPrefWidth(cellWidth);
-            pane.setPrefHeight(cellHeight);
-            pane.setStyle("-fx-background-color: rgb(252, 91, 55, 0.7)");
-            pane.setMouseTransparent(true);
-            pane.setVisible(false);
-            attackPanes.add(pane);
-            battlefieldUI.getChildren().add(pane);
-        }
-
-    }
-
-    public void showAttackPanes(){
-        ArrayList<Integer> monstersIndex = game.getMonstersIndex();
-        for (int i = 0; i < attackPanes.size(); i++){
-            Pane attackpane = attackPanes.get(i);
-            attackpane.setVisible(true);
-            attackpane.setLayoutX(cellWidth*(double)game.getCreature(monstersIndex.get(i)).getxPos());
-            attackpane.setLayoutY(cellHeight*(double)game.getCreature(monstersIndex.get(i)).getyPos());
-        }
-    }
-
-    public void hideAttackPanes(){
-        for (int i = 0; i < attackPanes.size(); i++){
-            attackPanes.get(i).setVisible(false);
-        }
     }
 
     public void weaponOneSelected(){
