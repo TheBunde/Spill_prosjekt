@@ -612,7 +612,7 @@ public class Database {
 
 
 
-    public boolean createPlayer(String character, boolean playable) {
+    public boolean createPlayer(int creatureId, boolean playable) {
         Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
@@ -654,14 +654,14 @@ public class Database {
             if (playerId < 0) {
                 status = false;
             } else {
-                createCreature(playerId, character);
+                createCreature(playerId, creatureId);
             }
             return status;
         }
     }
 
 
-    public boolean createCreature(int playerId, String character) {
+    public boolean createCreature(int playerId, int creatureId) {
         Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
@@ -669,7 +669,6 @@ public class Database {
         try {
             con = this.bds.getConnection();
             con.setAutoCommit(false);
-            int creatureId = fetchCreatureId(character);
             String prepString = "INSERT INTO creature SELECT ?, ?, creature_name, hp, ac, movement, damage_bonus, attack_bonus, attacks_per_turn, backstory, ?, ?, image_url FROM creatureTemplate WHERE creature_id = ?";
             prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
             prepStmt.setInt(1, playerId);
@@ -942,7 +941,7 @@ public class Database {
         ArrayList<Creature> creatures = new ArrayList<>();
         try{
             con = this.bds.getConnection();
-            String prepString = "SELECT creature.*, player.user_id From creature, player WHERE player.lobby_key = ? AND player.player_id = creature.player_id ";
+            String prepString = "SELECT creature.*, player.user_id From creature, player WHERE player.lobby_key = ? AND player.player_id = creature.player_id AND creature.hp >= 0";
             prepStmt = con.prepareStatement(prepString);
             prepStmt.setInt(1, Main.user.getLobbyKey());
             res = prepStmt.executeQuery();
@@ -1290,5 +1289,30 @@ public class Database {
         }
     }
 
-
+    public ArrayList<Integer> fetchMonstersFromLevel(int levelId){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        ArrayList<Integer> creatureIds = new ArrayList<>();
+        try{
+            con = this.bds.getConnection();
+            String prepString = "SELECT creature_id FROM level_monster WHERE level_id = ?";
+            prepStmt = con.prepareStatement(prepString);
+            prepStmt.setInt(1, levelId);
+            res = prepStmt.executeQuery();
+            while(res.next()){
+                creatureIds.add(res.getInt(1));
+            }
+        }
+        catch (SQLException sq){
+            sq.printStackTrace();
+            creatureIds = null;
+        }
+        finally {
+            this.manager.closeRes(res);
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(con);
+            return creatureIds;
+        }
+    }
 }
