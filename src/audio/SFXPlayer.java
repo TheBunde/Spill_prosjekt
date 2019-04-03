@@ -10,9 +10,9 @@ public class SFXPlayer implements Runnable{
 
     private int currentSFXIndex;
     private float volumeSFX;
-    //TEST START
+
     private static SFXPlayer thisInstance = new SFXPlayer("knockSFX", "splashSFX","warriorSFX","rogueSFX2","wizardSFX",
-        "noKeySFX","wrongKeySFX","correctKeySFX" );
+        "noKeySFX","wrongKeySFX","correctKeySFX","rangerSFX" );
 
     public static SFXPlayer getInstance(){
         return thisInstance;
@@ -28,10 +28,8 @@ public class SFXPlayer implements Runnable{
     5: "noKeySFX"
     6: "wrongKeySFX"
     7: "correctKeySFX"
+    8: "rangerSFX"
      */
-    ///TEST SLUTT
-
-    /// TO GET MORE SFX TO PLAY AT THE SAME TIME USE: new SFXPlayer("knockSFX").run();
 
     public SFXPlayer(String... files){
         soundFiles = new ArrayList<AudioFile>();

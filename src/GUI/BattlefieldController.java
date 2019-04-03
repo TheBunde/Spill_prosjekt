@@ -103,6 +103,10 @@ public class BattlefieldController implements Initializable {
         playerImage.setImage(new Image("GUI/images/" + game.playerCharacter.getImageUrl()));
         acLabel.setText("AC: " + game.playerCharacter.getAc());
 
+
+
+
+
         initMovementPane();
         initAttackPanes();
 
@@ -262,7 +266,7 @@ public class BattlefieldController implements Initializable {
             mapGrid.add(c.getPawn(), c.getxPos(), c.getyPos());
         }
         hpLabel.setText("HP: " + Math.max(0, game.playerCharacter.getHp()) + "/" + game.playerCharacter.getInitialHp());
-
+        updateImage();
     }
 
 
@@ -287,6 +291,7 @@ public class BattlefieldController implements Initializable {
         }
         System.out.println(player.isMovePressed() + " " + player.isAttackPressed());
         System.out.println("Player turn: " + game.isPlayerTurn());
+
     }
 
     public boolean checkForPlayerTurn(){
@@ -383,6 +388,68 @@ public class BattlefieldController implements Initializable {
         weaponOne.setEffect(shadow);
         weaponTwo.setEffect(light);
         player.setEquippedWeapon(1);
+    }
+
+    public void updateImage(){
+        int chrID = game.playerCharacter.getCreatureId();
+        int chrHP = game.playerCharacter.getHp();
+        int chrInHP = game.playerCharacter.getInitialHp();
+
+        int dmgOne = (chrInHP * 2)/3;
+        int dmgTwo = chrInHP/3;
+
+        //Warrior
+        if(chrID == 1){
+            if(chrHP > dmgOne){
+                playerImage.setImage(new Image("GUI/images/" + game.playerCharacter.getImageUrl()));
+            }
+            else if(chrHP >= dmgTwo && chrHP <= dmgOne){
+                playerImage.setImage(new Image("GUI/images/warriordamaged.jpg"));
+            }
+            else if(chrHP < dmgOne){
+                playerImage.setImage(new Image("GUI/images/warriordamaged2.jpg"));
+            }
+        }
+        //Rogue
+        if(chrID == 2){
+            if(chrHP > dmgOne){
+                playerImage.setImage(new Image("GUI/images/" + game.playerCharacter.getImageUrl()));
+            }
+            else if(chrHP >= dmgTwo && chrHP <= dmgOne){
+                playerImage.setImage(new Image("GUI/images/roguedamaged.jpg"));
+            }
+            else if(chrHP < dmgOne){
+                playerImage.setImage(new Image("GUI/images/roguedamaged2.jpg"));
+            }
+        }
+        //Wizard
+        if(chrID == 3){
+            if(chrHP > dmgOne){
+                playerImage.setImage(new Image("GUI/images/" + game.playerCharacter.getImageUrl()));
+            }
+            else if(chrHP >= dmgTwo && chrHP <= dmgOne){
+                playerImage.setImage(new Image("GUI/images/wizarddamaged.jpg"));
+            }
+            else if(chrHP < dmgOne){
+                playerImage.setImage(new Image("GUI/images/wizarddamaged2.jpg"));
+            }
+        }
+        //Ranger
+        if(chrID == 4){
+            if(chrHP > dmgOne){
+                playerImage.setImage(new Image("GUI/images/" + game.playerCharacter.getImageUrl()));
+            }
+            else if(chrHP >= dmgTwo && chrHP <= dmgOne){
+                playerImage.setImage(new Image("GUI/images/ranger.jpg"));
+            }
+            else if(chrHP < dmgOne){
+                playerImage.setImage(new Image("GUI/images/ranger.jpg"));
+            }
+        }
+        if(chrHP <= 0){
+            playerImage.setImage(new Image("GUI/images/dead.jpg"));
+        }
+
     }
 
 }
