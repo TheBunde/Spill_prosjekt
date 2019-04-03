@@ -149,6 +149,16 @@ public class Game {
         return this.creatures;
     }
 
+    public ArrayList<Character> getCharacters(){
+        ArrayList<Character> characters= new ArrayList<>();
+        for(Creature i: creatures){
+            if(i instanceof Character){
+                characters.add((Character) i);
+            }
+        }
+        return characters;
+    }
+
     public ArrayList<Integer> getPos(int index){
         ArrayList<Integer> pos = new ArrayList<>();
         pos.add(this.creatures.get(index).getxPos());
