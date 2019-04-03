@@ -21,25 +21,36 @@ public class TeamMatesController implements Initializable {
     @FXML
     private ListView<Character> listView;
 
-    private ObservableList<Character> characterObservableList;
-    private ArrayList<Character> characters;
+    public static ObservableList<Character> characterObservableList;
+    public static ArrayList<Character> charactersInListView;
     private Database db = Main.db;
 
     public TeamMatesController(){
-        characters = getCharacters();
+        charactersInListView = BattlefieldController.game.getCharacters();
         characterObservableList = FXCollections.observableArrayList();
-        for(Character i: characters){
+        characterObservableList.addAll(charactersInListView);
+        /*for(Character i: characters){
             characterObservableList.add(i);
-        }
+        }*/
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
+       // characterObservableList.add(new Character(10000, 1, "Warrior", 20, 15, 3, 3, 4, 1, "yas", 3, 3, "warrior.jpg", null));
+
         listView.setItems(characterObservableList);
-        listView.setCellFactory(characterListView -> new TeamMateCellController());
+        listView.setCellFactory(characterListView -> {
+            return new TeamMateListCell();
+        });
     }
 
-    public ArrayList<Character> getCharacters(){
+    public static void updateListView(){
+        charactersInListView = BattlefieldController.game.getCharacters();
+        characterObservableList.removeAll(charactersInListView);
+        characterObservableList.addAll(charactersInListView);
+    }
+
+    /*public ArrayList<Character> getCharacters(){
         ArrayList<Creature> creatures = db.fetchCreaturesFromLobby();
         ArrayList<Character> characters = new ArrayList<>();
         for(int i = 0; i < creatures.size(); i++){
@@ -48,7 +59,7 @@ public class TeamMatesController implements Initializable {
             }
         }
         return characters;
-    }
+    }*/
 
 
 }
