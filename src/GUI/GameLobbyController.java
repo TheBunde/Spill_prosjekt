@@ -44,6 +44,7 @@ public class GameLobbyController {
                         playersReady();
                     }catch (Exception e){
                         System.out.println("travel to battlefield failed: " + e);
+                        e.printStackTrace();
                     }
                 });
             }

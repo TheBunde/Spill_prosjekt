@@ -70,7 +70,7 @@ public class BattlefieldController implements Initializable {
 
     private Pane movementPane;
     private ArrayList<Pane> attackPanes = new ArrayList<>();
-    private Game game;
+    public static Game game;
     private Player player;
     private Lighting light = new Lighting();
     private InnerShadow shadow = new InnerShadow();
@@ -78,10 +78,14 @@ public class BattlefieldController implements Initializable {
 
     public static Timer timer = new Timer();
 
+    public BattlefieldController(){
+        game = new Game();
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //New instance of game
-        game = new Game();
+        //game = new Game();
         player = new Player();
 
         cellWidth = mapGrid.getPrefWidth()/(16.0);
@@ -115,6 +119,7 @@ public class BattlefieldController implements Initializable {
             public void run() {
                 Platform.runLater(() -> {
                     update();
+                    TeamMatesController.updateListView();
                 });
             }
         },0 ,1200);
