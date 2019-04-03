@@ -19,7 +19,7 @@ public class Game {
     public Game(){
         level = new Level(1, 16, "Forest-map.png");
         level.updateLevel();
-        //this.changeToNewLevel();
+
         if (Main.user.isHost()){
             this.addNewMonstersToLobby(1);
         }

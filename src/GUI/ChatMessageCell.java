@@ -1,6 +1,5 @@
 package GUI;
 
-import Database.Chat;
 import Database.ChatMessage;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

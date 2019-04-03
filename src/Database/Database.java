@@ -150,7 +150,7 @@ public class Database {
         Connection con = null;
         PreparedStatement prepStmt = null;
         boolean status = true;
-        if (this.gameLobbyExists(lobbyKey) && Main.user.getUser_id() != -1){
+        if (this.gameLobbyExists(lobbyKey) && Main.user.getUser_id() != -1 && this.isJoinable(lobbyKey)){
             try {
                 con = this.bds.getConnection();
                 con.setAutoCommit(false);
@@ -941,7 +941,7 @@ public class Database {
         ArrayList<Creature> creatures = new ArrayList<>();
         try{
             con = this.bds.getConnection();
-            String prepString = "SELECT creature.*, player.user_id From creature, player WHERE player.lobby_key = ? AND player.player_id = creature.player_id AND creature.hp >= 0";
+            String prepString = "SELECT creature.*, player.user_id From creature, player WHERE player.lobby_key = ? AND player.player_id = creature.player_id AND creature.hp > 0";
             prepStmt = con.prepareStatement(prepString);
             prepStmt.setInt(1, Main.user.getLobbyKey());
             res = prepStmt.executeQuery();

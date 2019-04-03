@@ -1,11 +1,14 @@
 package game;
 
+import javafx.scene.image.ImageView;
+
 public class Player {
     private boolean attackPressed = false;
     private boolean movePressed = false;
     private boolean attackUsed = false;
     private boolean moveUsed = false;
     private int equippedWeapon = 0;
+    private ImageView playerImage;
 
     public Player(){
 

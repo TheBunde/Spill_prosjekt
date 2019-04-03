@@ -50,9 +50,7 @@ public class chatController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources){
         chatMessageObservableList.clear();
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
-        LocalDateTime now = LocalDateTime.now();
-        chatMessageObservableList.add(new ChatMessage("Event" ,"Welcome to the Chat! Here you can communicate with your teammates", dtf.format(now), true));
+        chatMessageObservableList.add(new ChatMessage("Event" ,"Welcome to the Chat! Here you can communicate with your teammates", "", true));
         list.setItems(chatMessageObservableList);
         list.setCellFactory(chatMessageObservableList -> {
             return new ChatMessageCell();
@@ -92,6 +90,7 @@ public class chatController implements Initializable {
                 }
                 messageInput.setText("");
                 enableChat();
+                list.scrollTo(list.getItems().size());
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
@@ -104,7 +103,6 @@ public class chatController implements Initializable {
 
     public void updateChat(){
         this.db.getMessagesFromChat();
-        list.scrollTo(list.getItems().size());
     }
 
     public void disableChat(){
