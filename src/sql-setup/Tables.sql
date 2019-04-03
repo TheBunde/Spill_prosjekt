@@ -109,9 +109,10 @@ create table player(
 --    constraint initiative_pk primary key(lobby_key, user_id));
 
 CREATE TABLE level_monster(
+    level_monster_id integer AUTO_INCREMENT,
     level_id integer not null,
     creature_id integer not null,
-    constraint level_monster_pk primary key(level_id,creature_id));
+    constraint level_monster_pk primary key(level_monster_id));
 
     ALTER TABLE level_monster ADD CONSTRAINT level_monster_fk1 FOREIGN KEY(creature_id) REFERENCES creatureTemplate(creature_id);
     ALTER TABLE level_monster ADD CONSTRAINT level_monster_fk2 FOREIGN KEY (level_id) REFERENCES level(level_id);
@@ -176,9 +177,11 @@ INSERT INTO level VALUES(2, 7, "Dessert-map.png", "");
 INSERT INTO level VALUES(3, 14, "Snow-map.png", "");
 INSERT INTO level VALUES(4, 15, "Lava-map.png", "");
 
-INSERT INTO level_monster VALUES(1, 5);
-INSERT INTO level_monster VALUES(1, 5);
-INSERT INTO level_monster VALUES(2, 5);
+INSERT INTO level_monster VALUES(DEFAULT, 1, 5);
+INSERT INTO level_monster VALUES(DEFAULT, 1, 5);
+INSERT INTO level_monster VALUES(DEFAULT, 2, 5);
+INSERT INTO level_monster VALUES(DEFAULT, 3, 5);
+INSERT INTO level_monster VALUES(DEFAULT, 4, 5);
 
 INSERT INTO creatureTemplate VALUES(DEFAULT, "Warrior", 36, 18, 3, 5, 8, 2, "He be legendary warior. Yeet that goblin", "warrior.jpg", true);
 INSERT INTO creatureTemplate VALUES(DEFAULT, "Rogue", 23, 16, 3, 7, 7, 2, "she be the sneaky girl. not the one from Rogue One", "rogue.jpg", true);

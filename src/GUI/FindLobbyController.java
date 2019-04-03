@@ -32,7 +32,7 @@ public class FindLobbyController {
         String key = lobbyKeyInput.getText();
         //Checking if the input is valid
         if (key.length() > 0){
-            if (db.connectUserToGameLobby(Integer.parseInt(key)) && db.isJoinable(Integer.parseInt(key))){
+            if (db.connectUserToGameLobby(Integer.parseInt(key))){
                 //Loads new scene
                 SFXPlayer.getInstance().setSFX(7);
                 Parent root = FXMLLoader.load(getClass().getResource("createcharacter.fxml"));

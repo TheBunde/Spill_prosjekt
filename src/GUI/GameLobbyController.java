@@ -86,8 +86,6 @@ public class GameLobbyController {
         readyCounter.setText("Players Ready: " + playersReady + " / " + players.size());
 
         if(playersReady == players.size()){
-            audio.MusicPlayer.getInstance().stopSong();
-            MusicPlayer.getInstance().changeSong(7);
             chatController.timer.cancel();
             chatController.timer.purge();
             timer.cancel();

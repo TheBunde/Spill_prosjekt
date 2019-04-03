@@ -88,10 +88,12 @@ public abstract class Creature {
         return false;
     }
 
-    public boolean moveCreature(int newX, int newY){
-        System.out.println("NewX: " + newX + "\nNewY: " + newY + "\nMovement: " + this.movement);
-        System.out.println("Math.abs(newX - this.getxPos()): " + Math.abs(newX - this.getxPos()));
-        System.out.println("Math.abs(newY - this.getyPos()): " + Math.abs(newY - this.getyPos()));
+    public boolean moveCreature(int newX, int newY, ArrayList<Creature> creatures){
+        for (Creature c : creatures){
+            if (newX == c.getxPos() && newY == c.getyPos()){
+                return false;
+            }
+        }
         if ((Math.abs(newX - this.getxPos()) <= this.movement && Math.abs(newY - this.getyPos()) <= this.movement)){
             this.setNewPos(newX, newY);
             System.out.println("Moved");

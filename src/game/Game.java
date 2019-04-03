@@ -3,9 +3,11 @@ package game;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+import GUI.BattlefieldController;
 import Main.*;
 import Database.*;
 import javafx.application.Platform;
+import javafx.scene.layout.GridPane;
 
 public class Game {
     private ArrayList<Creature> creatures = new ArrayList<>();
@@ -15,7 +17,12 @@ public class Game {
     public Level level;
 
     public Game(){
-        level = Main.db.fetchLevelObject(1);
+        level = new Level(1, 16, "Forest-map.png");
+        level.updateLevel();
+
+        if (Main.user.isHost()){
+            this.addNewMonstersToLobby(1);
+        }
         creatures = db.fetchCreaturesFromLobby();
         for (int i = 0; i < this.creatures.size(); i++){
             if (this.creatures.get(i).getPlayerId() == Main.user.getPlayerId()){
@@ -46,8 +53,8 @@ public class Game {
                 }).start();
             }
             if (this.isLevelCleared()){
-                this.level.setLevelId(this.level.getLevelId() + 1);
-                Main.db.setLevel(Main.user.getLobbyKey(), this.level.getLevelId());
+                Main.db.setLevel(Main.user.getLobbyKey(), this.level.getLevelId() + 1);
+                addNewMonstersToLobby(this.level.getLevelId() + 1);
                 changeToNewLevel();
             }
         }
@@ -58,11 +65,27 @@ public class Game {
         }
     }
 
+    public void addNewMonstersToLobby(int levelId){
+        ArrayList<Integer> creatureIds = Main.db.fetchMonstersFromLevel(levelId);
+        for (int i = 0; i < creatureIds.size(); i++){
+            Main.db.createPlayer(creatureIds.get(i), false);
+        }
+    }
+
     public void changeToNewLevel(){
         int newLevel_id = Main.db.fetchLevelId(Main.user.getLobbyKey());
         if (this.level.getLevelId() < newLevel_id){
             this.level.setLevelId(newLevel_id);
             this.level.updateLevel();
+        }
+        GridPane mapGrid = (GridPane)this.creatures.get(0).getPawn().getParent();
+        for (Creature c : this.creatures){
+            mapGrid.getChildren().remove(c.getPawn());
+        }
+        this.creatures = Main.db.fetchCreaturesFromLobby();
+        for (Creature c : this.creatures){
+            c.setPawnSize(mapGrid.getPrefWidth()/16, mapGrid.getPrefHeight()/16);
+            mapGrid.add(c.getPawn(), c.getxPos(), c.getyPos());
         }
     }
 

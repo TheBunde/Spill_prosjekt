@@ -1,6 +1,7 @@
 package game;
 
 import Main.*;
+import audio.MusicPlayer;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -16,6 +17,8 @@ public class Level {
         this.music = music;
         this.backgroundUrl = backgroundUrl;
         this.backgroundImage = new ImageView(new Image("GUI/images/" + backgroundUrl));
+        MusicPlayer.getInstance().stopSong();
+        MusicPlayer.getInstance().changeSong(this.music);
     }
 
     public int getLevelId() {
@@ -56,5 +59,7 @@ public class Level {
         this.setMusic(newLevel.getMusic());
         this.setBackgroundUrl(newLevel.getBackgroundUrl());
         this.backgroundImage.setImage(new Image("GUI/images/" + this.getBackgroundUrl()));
+        MusicPlayer.getInstance().stopSong();
+        MusicPlayer.getInstance().changeSong(this.music);
     }
 }
