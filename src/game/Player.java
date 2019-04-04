@@ -1,5 +1,8 @@
 package game;
 
+import GUI.BattlefieldController;
+import javafx.fxml.FXML;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class Player {
@@ -10,8 +13,8 @@ public class Player {
     private int equippedWeapon = 0;
     private ImageView playerImage;
 
-    public Player(){
-
+    public Player(ImageView playerImage){
+        this.playerImage = playerImage;
     }
 
     public boolean isAttackPressed(){
@@ -62,4 +65,69 @@ public class Player {
         this.setAttackUsed(false);
         this.setMoveUsed(false);
     }
+
+    public void imageUpdate(){
+        int chrID = BattlefieldController.game.playerCharacter.getCreatureId();
+        int chrHP = BattlefieldController.game.playerCharacter.getHp();
+        int chrInHP = BattlefieldController.game.playerCharacter.getInitialHp();
+
+
+
+        int dmgOne = (chrInHP * 2)/3;
+        int dmgTwo = chrInHP/3;
+
+        //Warrior
+        if(chrID == 1){
+            if(chrHP > dmgOne){
+                playerImage.setImage(new Image("GUI/images/" + BattlefieldController.game.playerCharacter.getImageUrl()));
+            }
+            else if(chrHP >= dmgTwo && chrHP <= dmgOne){
+                playerImage.setImage(new Image("GUI/images/warriordamaged.jpg"));
+            }
+            else if(chrHP < dmgOne){
+                playerImage.setImage(new Image("GUI/images/warriordamaged2.jpg"));
+            }
+        }
+        //Rogue
+        if(chrID == 2){
+            if(chrHP > dmgOne){
+                playerImage.setImage(new Image("GUI/images/" + BattlefieldController.game.playerCharacter.getImageUrl()));
+            }
+            else if(chrHP >= dmgTwo && chrHP <= dmgOne){
+                playerImage.setImage(new Image("GUI/images/roguedamaged.jpg"));
+            }
+            else if(chrHP < dmgOne){
+                playerImage.setImage(new Image("GUI/images/roguedamaged2.jpg"));
+            }
+        }
+        //Wizard
+        if(chrID == 3){
+            if(chrHP > dmgOne){
+                playerImage.setImage(new Image("GUI/images/" + BattlefieldController.game.playerCharacter.getImageUrl()));
+            }
+            else if(chrHP >= dmgTwo && chrHP <= dmgOne){
+                playerImage.setImage(new Image("GUI/images/wizarddamaged.jpg"));
+            }
+            else if(chrHP < dmgOne){
+                playerImage.setImage(new Image("GUI/images/wizarddamaged2.jpg"));
+            }
+        }
+        //Ranger
+        if(chrID == 4){
+            if(chrHP > dmgOne){
+                playerImage.setImage(new Image("GUI/images/" + BattlefieldController.game.playerCharacter.getImageUrl()));
+            }
+            else if(chrHP >= dmgTwo && chrHP <= dmgOne){
+                playerImage.setImage(new Image("GUI/images/ranger.jpg"));
+            }
+            else if(chrHP < dmgOne){
+                playerImage.setImage(new Image("GUI/images/ranger.jpg"));
+            }
+        }
+        if(chrHP <= 0){
+            playerImage.setImage(new Image("GUI/images/dead.jpg"));
+        }
+
+    }
+
 }
