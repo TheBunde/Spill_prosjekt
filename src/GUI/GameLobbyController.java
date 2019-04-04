@@ -27,16 +27,18 @@ public class GameLobbyController {
     private Database db = Main.db;
     private User user = Main.user;
     private boolean ready = false;
-    public static Timer timer = new Timer();
+    public static Timer playerReadyTimer = new Timer();
+    public static Timer limitPlayerTimer = new Timer();
     private int playersReady;
+    private int playerLimit = 4;
+    private boolean joinable = true;
 
     public void initialize(){
-        //db.movePos(8, 8, db.fetchPlayerId());
         lobbyKeyLabel.setText("" + user.getLobbyKey());
         MusicPlayer.getInstance().stopSong();
         MusicPlayer.getInstance().changeSong(10);
-        timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
+        playerReadyTimer = new Timer();
+        playerReadyTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 Platform.runLater(() -> {
@@ -49,6 +51,23 @@ public class GameLobbyController {
                 });
             }
         },0 ,1200);
+
+        limitPlayerTimer = new Timer();
+        if (Main.user.isHost()) {
+            limitPlayerTimer.scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+                    Platform.runLater(() -> {
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                limitPlayers();
+                            }
+                        }).start();
+                    });
+                }
+            }, 0, 300);
+        }
     }
 
     public void readyButtonPressed() throws Exception{
@@ -88,10 +107,26 @@ public class GameLobbyController {
         if(playersReady == players.size()){
             chatController.timer.cancel();
             chatController.timer.purge();
-            timer.cancel();
-            timer.purge();
+            playerReadyTimer.cancel();
+            playerReadyTimer.purge();
+            limitPlayerTimer.cancel();
+            limitPlayerTimer.purge();
             db.setJoinable(false);
             this.sceneSwitcher.switchScene(readyButton , "Battlefield.fxml");
+        }
+    }
+
+    public void limitPlayers(){
+        if (Main.db.everyoneIsReady().size() >= this.playerLimit){
+            Main.db.setJoinable(false);
+            if (joinable) {
+                joinable = false;
+                Main.db.addChatMessage("Player limit reached", true);
+            }
+        }
+        else{
+            Main.db.setJoinable(true);
+            joinable = true;
         }
     }
 }

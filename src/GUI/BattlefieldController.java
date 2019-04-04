@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.NodeOrientation;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -31,7 +32,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -50,7 +50,9 @@ public class BattlefieldController implements Initializable {
     @FXML
     private Pane mapContainer;
     @FXML
-    private ImageView weaponOne, weaponTwo, playerImage;
+    private ImageView weaponOne, weaponTwo;
+    @FXML
+    public ImageView playerImage;
     @FXML
     private Label hpLabel, acLabel;
 
@@ -81,7 +83,7 @@ public class BattlefieldController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         //New instance of game
         //game = new Game();
-        player = new Player();
+        player = new Player(playerImage);
 
         cellWidth = mapGrid.getPrefWidth()/(16.0);
         cellHeight = mapGrid.getPrefHeight()/(16.0);
@@ -104,13 +106,13 @@ public class BattlefieldController implements Initializable {
         mapContainer.getChildren().add(game.getLevel().backgroundImage);
         game.getLevel().backgroundImage.toBack();
 
-        playerImage.setImage(new Image("GUI/images/" + game.playerCharacter.getImageUrl()));
+        //playerImage.setImage(new Image("GUI/images/" + game.playerCharacter.getImageUrl()));
         acLabel.setText("AC: " + game.playerCharacter.getAc());
 
         initMovementPane();
 
         refreshGameFromClient();
-        updateGameFromServer();
+        updateGame();
 
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
@@ -125,22 +127,28 @@ public class BattlefieldController implements Initializable {
     }
 
     public void attackButtonPressed(){
-        player.setAttackPressed(true);
-        moveButton.setDisable(true);
-        endTurnButton.setDisable(true);
-        new Thread(new Runnable(){
-            @Override public void run(){
-                for (Monster m : game.getMonsters()){
-                    if (!m.isDead()) {
-                        if(!game.attackRange(m, game.playerCharacter.getWeapons().get(player.getEquippedWeapon()).isRanged())){
-                            m.showAttackPane();
-                            m.attackPane.addEventFilter(MouseEvent.MOUSE_CLICKED, attackEventHandler);
+        player.setAttackPressed(!player.isAttackPressed());
+        if (player.isAttackPressed()) {
+            moveButton.setDisable(true);
+            endTurnButton.setDisable(true);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    for (Monster m : game.getMonsters()) {
+                        if (!m.isDead()) {
+                            if(!game.attackRange(m, game.playerCharacter.getWeapons().get(player.getEquippedWeapon()).isRanged())) {
+                                m.showAttackPane();
+                                m.attackPane.addEventFilter(MouseEvent.MOUSE_CLICKED, attackEventHandler);
+                            }
                         }
                     }
                 }
-            }
-        }).start();
-        attackButton.getStyleClass().add("attack-button-selected");
+            }).start();
+            attackButton.getStyleClass().add("attack-button-selected");
+        }
+        else{
+            attackFinished();
+        }
     }
 
     private EventHandler<MouseEvent> attackEventHandler = new EventHandler<MouseEvent>(){
@@ -153,13 +161,13 @@ public class BattlefieldController implements Initializable {
                 }
             }
             game.playerCharacter.attackCreature(clickedMonster, player.getEquippedWeapon());
+            player.setAttackUsed(true);
             attackFinished();
         }
     };
 
     public void attackFinished(){
         player.setAttackPressed(false);
-        player.setAttackUsed(true);
         moveButton.setDisable(false);
         endTurnButton.setDisable(false);
         attackButton.getStyleClass().clear();
@@ -174,12 +182,17 @@ public class BattlefieldController implements Initializable {
     }
 
     public void moveButtonPressed(){
-        player.setMovePressed(true);
-        attackButton.setDisable(true);
-        endTurnButton.setDisable(true);
-        moveButton.getStyleClass().add("button-selected");
-        showMovementPane();
-        openMapMoveEventHandler();
+        player.setMovePressed(!player.isMovePressed());
+        if (player.isMovePressed()) {
+            attackButton.setDisable(true);
+            endTurnButton.setDisable(true);
+            moveButton.getStyleClass().add("button-selected");
+            showMovementPane();
+            openMapMoveEventHandler();
+        }
+        else{
+            moveFinished();
+        }
     }
 
     private EventHandler<MouseEvent> mapMoveEventHandler = new EventHandler<MouseEvent>(){
@@ -204,7 +217,6 @@ public class BattlefieldController implements Initializable {
         moveButton.getStyleClass().add("button");
         refreshGameFromClient();
         checkForPlayerTurn();
-
     }
 
     public void endTurnButtonPressed(){
@@ -237,13 +249,11 @@ public class BattlefieldController implements Initializable {
         this.sceneSwitcher.switchScene(exitButton, "MainMenu.fxml");
     }
 
-
     private int toGrid(double pixels, double pos){
         double dPos = pos / (pixels / 16);
         int iPos = (int) (dPos);
         return iPos;
     }
-
 
     public void openMapMoveEventHandler(){
         mapGrid.setCursor(Cursor.HAND);
@@ -255,7 +265,7 @@ public class BattlefieldController implements Initializable {
         mapGrid.removeEventFilter(MouseEvent.MOUSE_CLICKED, mapMoveEventHandler);
     }
 
-    public void updateGameFromServer(){
+    public void updateGame(){
         game.update();
     }
 
@@ -287,7 +297,7 @@ public class BattlefieldController implements Initializable {
     }
 
     public void update(){
-        updateGameFromServer();
+        updateGame();
         refreshGameFromClient();
         checkForPlayerTurn();
         System.out.println("Hei");
@@ -321,6 +331,12 @@ public class BattlefieldController implements Initializable {
             if (!player.isMovePressed() && !player.isAttackPressed()){
                 endTurnButton.setDisable(false);
             }
+            if (player.isAttackUsed()){
+                attackButton.setDisable(true);
+            }
+            if (player.isMoveUsed()){
+                moveButton.setDisable(true);
+            }
             return true;
         }
     }
@@ -334,19 +350,19 @@ public class BattlefieldController implements Initializable {
         movementPane.setMouseTransparent(true);
         movementPane.setStyle("-fx-background-color: rgb(26, 188, 156, 0.3)");
         movementPane.setVisible(false);
-        mapGrid.add(movementPane, game.playerCharacter.getxPos(), game.playerCharacter.getyPos());
-        GridPane.setColumnSpan(movementPane, 2*(game.playerCharacter.getMovement()) + 1);
-        GridPane.setRowSpan(movementPane, 2*(game.playerCharacter.getMovement()) + 1);
-        movementPane.setTranslateX(-game.playerCharacter.getMovement()*cellWidth);
-        movementPane.setTranslateY(-game.playerCharacter.getMovement()*cellHeight);
     }
 
 
     public void showMovementPane(){
+        int xpos = game.playerCharacter.getxPos();
+        int ypos = game.playerCharacter.getyPos();
+        int movement = game.playerCharacter.getMovement();
         mapGrid.getChildren().remove(movementPane);
-        mapGrid.add(movementPane, game.playerCharacter.getxPos(), game.playerCharacter.getyPos());
+        mapGrid.add(movementPane, xpos - movement + ((xpos < movement) ? movement-xpos : 0), ypos - movement + ((ypos < movement) ? movement-ypos : 0));
         movementPane.toBack();
         movementPane.setVisible(true);
+        GridPane.setColumnSpan(movementPane, 2*(game.playerCharacter.getMovement()) + 1 - ((xpos < movement) ? movement-xpos : 0));
+        GridPane.setRowSpan(movementPane, 2*(game.playerCharacter.getMovement()) + 1 - ((ypos < movement) ? movement-ypos : 0));
     }
 
     public void hideMovementPane(){
@@ -365,66 +381,7 @@ public class BattlefieldController implements Initializable {
         player.setEquippedWeapon(1);
     }
 
-    public void updateImage(){
-        int chrID = game.playerCharacter.getCreatureId();
-        int chrHP = game.playerCharacter.getHp();
-        int chrInHP = game.playerCharacter.getInitialHp();
-
-        int dmgOne = (chrInHP * 2)/3;
-        int dmgTwo = chrInHP/3;
-
-        //Warrior
-        if(chrID == 1){
-            if(chrHP > dmgOne){
-                playerImage.setImage(new Image("GUI/images/" + game.playerCharacter.getImageUrl()));
-            }
-            else if(chrHP >= dmgTwo && chrHP <= dmgOne){
-                playerImage.setImage(new Image("GUI/images/warriordamaged.jpg"));
-            }
-            else if(chrHP < dmgOne){
-                playerImage.setImage(new Image("GUI/images/warriordamaged2.jpg"));
-            }
-        }
-        //Rogue
-        if(chrID == 2){
-            if(chrHP > dmgOne){
-                playerImage.setImage(new Image("GUI/images/" + game.playerCharacter.getImageUrl()));
-            }
-            else if(chrHP >= dmgTwo && chrHP <= dmgOne){
-                playerImage.setImage(new Image("GUI/images/roguedamaged.jpg"));
-            }
-            else if(chrHP < dmgOne){
-                playerImage.setImage(new Image("GUI/images/roguedamaged2.jpg"));
-            }
-        }
-        //Wizard
-        if(chrID == 3){
-            if(chrHP > dmgOne){
-                playerImage.setImage(new Image("GUI/images/" + game.playerCharacter.getImageUrl()));
-            }
-            else if(chrHP >= dmgTwo && chrHP <= dmgOne){
-                playerImage.setImage(new Image("GUI/images/wizarddamaged.jpg"));
-            }
-            else if(chrHP < dmgOne){
-                playerImage.setImage(new Image("GUI/images/wizarddamaged2.jpg"));
-            }
-        }
-        //Ranger
-        if(chrID == 4){
-            if(chrHP > dmgOne){
-                playerImage.setImage(new Image("GUI/images/" + game.playerCharacter.getImageUrl()));
-            }
-            else if(chrHP >= dmgTwo && chrHP <= dmgOne){
-                playerImage.setImage(new Image("GUI/images/ranger.jpg"));
-            }
-            else if(chrHP < dmgOne){
-                playerImage.setImage(new Image("GUI/images/ranger.jpg"));
-            }
-        }
-        if(chrHP <= 0){
-            playerImage.setImage(new Image("GUI/images/dead.jpg"));
-        }
-
+    public void updateImage() {
+        player.imageUpdate();
     }
-
 }
