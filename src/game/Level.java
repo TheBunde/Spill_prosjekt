@@ -12,6 +12,7 @@ public class Level {
     private boolean readyForNewLevel = false;
     public ImageView backgroundImage;
 
+
     public Level(int levelId, int music, String backgroundUrl){
         this.levelId = levelId;
         this.music = music;
