@@ -50,7 +50,9 @@ public class BattlefieldController implements Initializable {
     @FXML
     private Pane mapContainer;
     @FXML
-    private ImageView weaponOne, weaponTwo, playerImage;
+    private ImageView weaponOne, weaponTwo;
+    @FXML
+    public ImageView playerImage;
     @FXML
     private Label hpLabel, acLabel;
 
@@ -81,7 +83,7 @@ public class BattlefieldController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         //New instance of game
         //game = new Game();
-        player = new Player();
+        player = new Player(playerImage);
 
         cellWidth = mapGrid.getPrefWidth()/(16.0);
         cellHeight = mapGrid.getPrefHeight()/(16.0);
@@ -104,7 +106,7 @@ public class BattlefieldController implements Initializable {
         mapContainer.getChildren().add(game.getLevel().backgroundImage);
         game.getLevel().backgroundImage.toBack();
 
-        playerImage.setImage(new Image("GUI/images/" + game.playerCharacter.getImageUrl()));
+        //playerImage.setImage(new Image("GUI/images/" + game.playerCharacter.getImageUrl()));
         acLabel.setText("AC: " + game.playerCharacter.getAc());
 
         initMovementPane();
@@ -363,66 +365,7 @@ public class BattlefieldController implements Initializable {
         player.setEquippedWeapon(1);
     }
 
-    public void updateImage(){
-        int chrID = game.playerCharacter.getCreatureId();
-        int chrHP = game.playerCharacter.getHp();
-        int chrInHP = game.playerCharacter.getInitialHp();
-
-        int dmgOne = (chrInHP * 2)/3;
-        int dmgTwo = chrInHP/3;
-
-        //Warrior
-        if(chrID == 1){
-            if(chrHP > dmgOne){
-                playerImage.setImage(new Image("GUI/images/" + game.playerCharacter.getImageUrl()));
-            }
-            else if(chrHP >= dmgTwo && chrHP <= dmgOne){
-                playerImage.setImage(new Image("GUI/images/warriordamaged.jpg"));
-            }
-            else if(chrHP < dmgOne){
-                playerImage.setImage(new Image("GUI/images/warriordamaged2.jpg"));
-            }
-        }
-        //Rogue
-        if(chrID == 2){
-            if(chrHP > dmgOne){
-                playerImage.setImage(new Image("GUI/images/" + game.playerCharacter.getImageUrl()));
-            }
-            else if(chrHP >= dmgTwo && chrHP <= dmgOne){
-                playerImage.setImage(new Image("GUI/images/roguedamaged.jpg"));
-            }
-            else if(chrHP < dmgOne){
-                playerImage.setImage(new Image("GUI/images/roguedamaged2.jpg"));
-            }
-        }
-        //Wizard
-        if(chrID == 3){
-            if(chrHP > dmgOne){
-                playerImage.setImage(new Image("GUI/images/" + game.playerCharacter.getImageUrl()));
-            }
-            else if(chrHP >= dmgTwo && chrHP <= dmgOne){
-                playerImage.setImage(new Image("GUI/images/wizarddamaged.jpg"));
-            }
-            else if(chrHP < dmgOne){
-                playerImage.setImage(new Image("GUI/images/wizarddamaged2.jpg"));
-            }
-        }
-        //Ranger
-        if(chrID == 4){
-            if(chrHP > dmgOne){
-                playerImage.setImage(new Image("GUI/images/" + game.playerCharacter.getImageUrl()));
-            }
-            else if(chrHP >= dmgTwo && chrHP <= dmgOne){
-                playerImage.setImage(new Image("GUI/images/ranger.jpg"));
-            }
-            else if(chrHP < dmgOne){
-                playerImage.setImage(new Image("GUI/images/ranger.jpg"));
-            }
-        }
-        if(chrHP <= 0){
-            playerImage.setImage(new Image("GUI/images/dead.jpg"));
-        }
-
+    public void updateImage() {
+        player.imageUpdate();
     }
-
 }
