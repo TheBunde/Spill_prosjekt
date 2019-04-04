@@ -243,4 +243,14 @@ public class Game {
     public Level getLevel(){
         return this.level;
     }
+
+    public boolean attackRange(Monster monster, boolean melee){
+        if(melee && Math.abs(playerCharacter.getxPos() - monster.getxPos()) <= 1 && Math.abs(playerCharacter.getyPos() - monster.getyPos()) <= 1){
+            return true;
+        }else if(!melee && Math.abs(playerCharacter.getxPos() - monster.getxPos()) >= 1 && Math.abs(playerCharacter.getyPos() - monster.getyPos()) >= 1){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

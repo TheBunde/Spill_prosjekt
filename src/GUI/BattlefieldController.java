@@ -132,8 +132,10 @@ public class BattlefieldController implements Initializable {
             @Override public void run(){
                 for (Monster m : game.getMonsters()){
                     if (!m.isDead()) {
-                        m.showAttackPane();
-                        m.attackPane.addEventFilter(MouseEvent.MOUSE_CLICKED, attackEventHandler);
+                        if(!game.attackRange(m, game.playerCharacter.getWeapons().get(player.getEquippedWeapon()).isRanged())){
+                            m.showAttackPane();
+                            m.attackPane.addEventFilter(MouseEvent.MOUSE_CLICKED, attackEventHandler);
+                        }
                     }
                 }
             }
