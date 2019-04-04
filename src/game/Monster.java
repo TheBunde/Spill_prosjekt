@@ -1,4 +1,5 @@
 package game;
+//import com.sun.java.util.jar.pack.Instruction;
 import game.Creature;
 import javafx.scene.Cursor;
 import javafx.scene.layout.GridPane;
@@ -78,7 +79,16 @@ public class Monster extends Creature {
         }else if(Math.abs(yPos -target.getyPos()) < getMovement()){
             yPos = target.getyPos() - 1 * direction(yPos, target.getyPos());
         }
-        moveCreature(xPos, yPos, creatures);
+        boolean validPos = false;
+        while(!validPos){
+            if (!moveCreature(xPos, yPos, creatures)){
+                ArrayList<Integer> newPos = dontStepOnOthers(xPos, yPos, target);
+                xPos = newPos.get(0);
+                yPos = newPos.get(1);
+            }else{
+                validPos = true;
+            }
+        }
     }
 
     public boolean inRange(Creature target){
@@ -101,12 +111,63 @@ public class Monster extends Creature {
         }else if(xPos > target.getyPos()){
             yPos = target.getyPos() + 1;
         }
-        moveCreature(xPos, yPos, creatures);
+        boolean validPos = false;
+        while(!validPos){
+            if (!moveCreature(xPos, yPos, creatures)){
+                ArrayList<Integer> newPos = dontStepOnOthers(xPos, yPos, target);
+                xPos = newPos.get(0);
+                yPos = newPos.get(1);
+            }else{
+                validPos = true;
+            }
+        }
+    }
+    //endre så den ikke setter pos men returner array med pos
+    public ArrayList<Integer> dontStepOnOthers(int newX, int newY, Creature target){
+        ArrayList<Integer> pos = new ArrayList<>();
+        int xD = relativePos(newX, target.getxPos());
+        int yD = relativePos(newY, target.getyPos());
+        if(xD == 1 && yD == 1){
+            pos.add(newX +1);
+            pos.add(newY);
+        }else if(xD == 0 && yD == 1){
+            pos.add(newX +1);
+            pos.add(newY);
+        }else if(xD == -1 && yD == 1){
+            pos.add(newX);
+            pos.add(newY + 1);
+        }else if(xD == -1 && yD == 0){
+            setNewPos(newX , newY + 1);
+            pos.add(newX);
+            pos.add(newY + 1);
+        }else if(xD == -1 && yD == -1){
+            pos.add(newX);
+            pos.add(newY - 1);
+        }else if(xD == 0 && yD == -1){
+            pos.add(newX -1);
+            pos.add(newY);
+        }else if(xD == 1 && yD == -1){
+            pos.add(newX);
+            pos.add(newY - 1);
+        }else if(xD == 1 && yD == 0){
+            pos.add(newX);
+            pos.add(newY - 1);
+        }
+        return pos;
     }
 
     public int direction(int pos, int targetPos){
         if(targetPos - pos< 0){
             return -1;
+        }
+        return 1;
+    }
+
+    public int relativePos(int pos, int targetPos){
+        if(targetPos - pos< 0){
+            return -1;
+        }else if(targetPos - pos == 0){
+            return 0;
         }
         return 1;
     }

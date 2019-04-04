@@ -152,7 +152,7 @@ public class Game {
     public ArrayList<Character> getCharacters(){
         ArrayList<Character> characters= new ArrayList<>();
         for(Creature i: creatures){
-            if(i instanceof Character){
+            if(i instanceof Character && i != playerCharacter){
                 characters.add((Character) i);
             }
         }
