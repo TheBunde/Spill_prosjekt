@@ -12,7 +12,7 @@ public class SFXPlayer implements Runnable{
     private float volumeSFX;
 
     private static SFXPlayer thisInstance = new SFXPlayer("knockSFX", "splashSFX","warriorSFX","rogueSFX2","wizardSFX",
-        "noKeySFX","wrongKeySFX","correctKeySFX","rangerSFX" );
+        "noKeySFX","wrongKeySFX","correctKeySFX","rangerSFX","arrowSFX","enmhitSFX","enmmissSFX","pdefSFX","victory1SFX" );
 
     public static SFXPlayer getInstance(){
         return thisInstance;
@@ -29,6 +29,11 @@ public class SFXPlayer implements Runnable{
     6: "wrongKeySFX"
     7: "correctKeySFX"
     8: "rangerSFX"
+    9: "arrowSFX"
+    10: "enmhitSFX"
+    11: "enmmissSFX"
+    12: "pdefSFX"
+    13: "victory1SFX"
      */
 
     public SFXPlayer(String... files){
