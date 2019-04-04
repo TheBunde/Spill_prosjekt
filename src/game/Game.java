@@ -14,6 +14,7 @@ public class Game {
     public game.Character playerCharacter;
     private Database db = Main.db;
     private int turn = 0;
+    private int amountOfLevels = Main.db.fetchAmountOfLevels();
     public Level level;
 
     public Game(){
@@ -43,18 +44,28 @@ public class Game {
             db.addChatMessage(Main.user.getUsername() + " died", true);
         }
         updateCreatureData();
-        if (Main.user.isHost()){
+        if (Main.user.isHost()) {
             monsterAction();
-            if (this.isLevelCleared()){
-                pushNewLevel();
-                changeToNewLevel();
-            }
         }
-        else{
-            if (this.isLevelCleared()) {
-                changeToNewLevel();
-            }
+    }
+
+    public void newLevel(){
+        if (Main.user.isHost()){
+            pushNewLevel();
         }
+        changeToNewLevel();
+
+        if (this.level.getLevelId() == this.amountOfLevels){
+            //Update rank for user
+        }
+    }
+
+    public void resetTurn(){
+        if (Main.user.isHost()){
+            Main.db.incrementPlayerTurn(0);
+        }
+        turn = 0;
+        //turn = turn%this.getCharacters().size();
     }
 
     public void pushNewLevel(){
@@ -244,5 +255,9 @@ public class Game {
 
     public Level getLevel(){
         return this.level;
+    }
+
+    public int getAmountOfLevels(){
+        return this.amountOfLevels;
     }
 }
