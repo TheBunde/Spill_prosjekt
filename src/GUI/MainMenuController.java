@@ -28,7 +28,7 @@ public class MainMenuController {
     public void startNewGameButtonPressed() throws Exception{
         db.createNewLobby();
         db.setHost(true);
-        new SFXPlayer("knockSFX").run();
+        SFXPlayer.getInstance().setSFX(0);
         MusicPlayer.getInstance().stopSong();
         MusicPlayer.getInstance().changeSong(3);
         Parent root = FXMLLoader.load(getClass().getResource("createcharacter.fxml"));

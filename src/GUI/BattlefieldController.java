@@ -4,6 +4,7 @@ package GUI;
 import Database.*;
 import Main.*;
 import audio.MusicPlayer;
+import audio.SFXPlayer;
 import game.*;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -138,8 +139,10 @@ public class BattlefieldController implements Initializable {
                 public void run() {
                     for (Monster m : game.getMonsters()) {
                         if (!m.isDead()) {
-                            m.showAttackPane();
-                            m.attackPane.addEventFilter(MouseEvent.MOUSE_CLICKED, attackEventHandler);
+                            if(!game.attackRange(m, game.playerCharacter.getWeapons().get(player.getEquippedWeapon()).isRanged())) {
+                                m.showAttackPane();
+                                m.attackPane.addEventFilter(MouseEvent.MOUSE_CLICKED, attackEventHandler);
+                            }
                         }
                     }
                 }
@@ -306,6 +309,9 @@ public class BattlefieldController implements Initializable {
     public boolean update(){
         if (game.isLevelCleared() && !transitioning){
             transitioning = true;
+            SFXPlayer.getInstance().setSFX(13);
+            MusicPlayer.getInstance().stopSong();
+            MusicPlayer.getInstance().changeSong(1);
             showLevelTransitionVBox();
             new Thread(new Runnable(){
                 @Override public void run(){
@@ -319,10 +325,10 @@ public class BattlefieldController implements Initializable {
                         @Override
                         public void run() {
                             newLevel();
-                            if (game.getLevel().getLevelId() < game.getAmountOfLevels()) {
+                            if (game.getLevel().getLevelId() <= game.getAmountOfLevels()) {
                                 hideLevelTransitionVbox();
+                                transitioning = false;
                             }
-                            transitioning = false;
                         }
                     });
                 }

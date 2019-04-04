@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 import GUI.BattlefieldController;
 import Main.*;
 import Database.*;
+import audio.SFXPlayer;
 import javafx.application.Platform;
 import javafx.scene.layout.GridPane;
 
@@ -257,7 +258,17 @@ public class Game {
         return this.level;
     }
 
-    public int getAmountOfLevels(){
+    public int getAmountOfLevels() {
         return this.amountOfLevels;
+    }
+
+    public boolean attackRange(Monster monster, boolean melee){
+        if(melee && Math.abs(playerCharacter.getxPos() - monster.getxPos()) <= 1 && Math.abs(playerCharacter.getyPos() - monster.getyPos()) <= 1){
+            return true;
+        }else if(!melee && Math.abs(playerCharacter.getxPos() - monster.getxPos()) >= 1 && Math.abs(playerCharacter.getyPos() - monster.getyPos()) >= 1){
+            return true;
+        }else{
+            return false;
+        }
     }
 }
