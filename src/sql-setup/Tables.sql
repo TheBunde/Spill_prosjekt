@@ -56,7 +56,7 @@ Create TABLE level(
     constraint level_pk primary key (level_id));
 
     create table weapon(
-    weapon_id integer,
+    weapon_id integer AUTO_INCREMENT,
     weapon_name varchar(20),
     dice_amount integer,
     damage_dice integer,
@@ -182,6 +182,7 @@ INSERT INTO level_monster VALUES(DEFAULT, 1, 5);
 INSERT INTO level_monster VALUES(DEFAULT, 2, 5);
 INSERT INTO level_monster VALUES(DEFAULT, 3, 5);
 INSERT INTO level_monster VALUES(DEFAULT, 4, 5);
+INSERT INTO level_monster VALUES(DEFAULT, 1, 10);
 
 INSERT INTO creatureTemplate VALUES(DEFAULT, "Warrior", 36, 18, 3, 5, 8, 2, "He be legendary warior. Yeet that goblin", "warrior.jpg", true);
 INSERT INTO creatureTemplate VALUES(DEFAULT, "Rogue", 23, 16, 3, 7, 7, 2, "she be the sneaky girl. not the one from Rogue One", "rogue.jpg", true);
@@ -192,6 +193,7 @@ INSERT INTO creatureTemplate(creature_id,creature_name,hp,ac,movement,damage_bon
 INSERT INTO creatureTemplate(creature_id,creature_name,hp,ac,movement,damage_bonus,attack_bonus,attacks_per_turn) values(7,"Grick alpha",75,18,3,4,7,2, false);
 INSERT INTO creatureTemplate(creature_id,creature_name,hp,ac,movement,damage_bonus,attack_bonus,attacks_per_turn) values(8,"Green slaad",127,16,3,4,7,3, false);
 INSERT INTO creatureTemplate(creature_id,creature_name,hp,ac,movement,damage_bonus,attack_bonus,attacks_per_turn) values(9,"Dragon",178,18,4,6,10,3, false);
+INSERT INTO creatureTemplate VALUES(DEFAULT, "Ushabti", 20, 15, 3, 3, 5, 1, " ", "judge.jpg"));
 
 --weapon
 INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description,weapon_url) VALUES (1,"Longsword",1,8,"Melee","Long_sword.png");
@@ -215,6 +217,7 @@ INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, descriptio
 INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description) VALUES (18,"Dragon claw",2,6,"Melee");
 INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description) VALUES (19,"Dragon breath",6,10,"Ranged");
 INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description) VALUES (20,"Hound breath",2,6,"Ranged");
+INSERT INTO weapon VALUES(DEFAULT, "Great Bow", 3, 6, "Ranged", NULL);
 
 
 --weapon and creature
@@ -238,4 +241,6 @@ INSERT INTO creature_weapon (weapon_id,creature_id) VALUES (17,9);
 INSERT INTO creature_weapon (weapon_id,creature_id) VALUES (18,9);
 INSERT INTO creature_weapon (weapon_id,creature_id) VALUES (19,9);
 INSERT INTO creature_weapon (weapon_id,creature_id) VALUES (20,5);
+INSERT INTO creature_weapon VALUES(21, 10);
+
 

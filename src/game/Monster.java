@@ -33,9 +33,15 @@ public class Monster extends Creature {
     //Splitted version of monsterAction for movement
     public void monsterMove (ArrayList<Creature> creatures){
         Creature target = getClosest(creatures);
-        if(inRange(target)){
+        boolean melee = false;
+        for(Weapon i: getWeapons()){
+            if(!i.isRanged()){
+                melee = true;
+            }
+        }
+        if(inRange(target) && melee){
             moveTo(target, creatures);
-        }else{
+        }else if(melee){
             moveToward(target, creatures);
         }
     }
@@ -43,10 +49,18 @@ public class Monster extends Creature {
     //Splitted version of monsterAction for attack
     public void monsterAttack (ArrayList<Creature> players){
         Creature target = getClosest(players);
-        if(inRange(target)){
-            attackCreature(target, 0);
+        if(meleeRange(target)){
+            for(Weapon i: getWeapons()){
+                if(!i.isRanged()){
+                    attackCreature(target, getWeapons().indexOf(i));
+                }
+            }
         }else{
-            attackCreature(target, 1);
+            for(Weapon i: getWeapons()) {
+                if (i.isRanged()) {
+                    attackCreature(target, getWeapons().indexOf(i));
+                }
+            }
         }
     }
 
@@ -93,6 +107,13 @@ public class Monster extends Creature {
 
     public boolean inRange(Creature target){
         if(Math.abs(getxPos() - target.getxPos()) <= (getMovement() +1) && Math.abs(getyPos() - target.getyPos()) <= (getMovement() +1)){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean meleeRange(Creature target){
+        if(Math.abs(getxPos() - target.getxPos()) <= 1 && Math.abs(getyPos() - target.getyPos()) <= 1){
             return true;
         }
         return false;

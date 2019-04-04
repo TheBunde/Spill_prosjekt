@@ -139,9 +139,16 @@ public class BattlefieldController implements Initializable {
                 public void run() {
                     for (Monster m : game.getMonsters()) {
                         if (!m.isDead()) {
-                            if(!game.attackRange(m, game.playerCharacter.getWeapons().get(player.getEquippedWeapon()).isRanged())) {
-                                m.showAttackPane();
-                                m.attackPane.addEventFilter(MouseEvent.MOUSE_CLICKED, attackEventHandler);
+                            if(game.playerCharacter.getWeapons().get(player.getEquippedWeapon()).isRanged()){
+                                if(game.attackRange(m, false)) {
+                                    m.showAttackPane();
+                                    m.attackPane.addEventFilter(MouseEvent.MOUSE_CLICKED, attackEventHandler);
+                                }
+                            }else if(!game.playerCharacter.getWeapons().get(player.getEquippedWeapon()).isRanged()){
+                                if(game.attackRange(m, true)) {
+                                    m.showAttackPane();
+                                    m.attackPane.addEventFilter(MouseEvent.MOUSE_CLICKED, attackEventHandler);
+                                }
                             }
                         }
                     }
