@@ -173,7 +173,7 @@ ALTER TABLE creature_weapon ADD CONSTRAINT creature_weapon_fk2 FOREIGN KEY(creat
 
 -- INSERTS
 INSERT INTO level VALUES(1, 16, "Forest-map.png", "");
-INSERT INTO level VALUES(2, 7, "Dessert-map.png", "");
+INSERT INTO level VALUES(2, 7, "Desert-map.png", "");
 INSERT INTO level VALUES(3, 14, "Snow-map.png", "");
 INSERT INTO level VALUES(4, 15, "Lava-map.png", "");
 
