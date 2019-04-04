@@ -63,4 +63,9 @@ public class Level {
         MusicPlayer.getInstance().stopSong();
         MusicPlayer.getInstance().changeSong(this.music);
     }
+
+    public String getLevelName(){
+        String[] urlParts = this.getBackgroundUrl().split("/");
+        return urlParts[0];
+    }
 }

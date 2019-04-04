@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.NodeOrientation;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -20,12 +21,12 @@ import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 
 
 import javafx.event.EventHandler;
+import javafx.scene.text.Font;
 
 import java.awt.*;
 import java.io.IOException;
@@ -66,6 +67,7 @@ public class BattlefieldController implements Initializable {
     public double cellHeight;
 
     private Pane movementPane;
+    private VBox transitionVbox;
 
     public static Game game;
     private Player player;
@@ -76,15 +78,14 @@ public class BattlefieldController implements Initializable {
     public static Timer timer = new Timer();
 
     public BattlefieldController(){
+        //New instance of game
         game = new Game();
+
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //New instance of game
-        //game = new Game();
         player = new Player(playerImage);
-
         cellWidth = mapGrid.getPrefWidth()/(16.0);
         cellHeight = mapGrid.getPrefHeight()/(16.0);
 
@@ -106,9 +107,9 @@ public class BattlefieldController implements Initializable {
         mapContainer.getChildren().add(game.getLevel().backgroundImage);
         game.getLevel().backgroundImage.toBack();
 
-        //playerImage.setImage(new Image("GUI/images/" + game.playerCharacter.getImageUrl()));
         acLabel.setText("AC: " + game.playerCharacter.getAc());
 
+        //initLevelTransitionVBox();
         initMovementPane();
 
         refreshGameFromClient();
@@ -124,6 +125,8 @@ public class BattlefieldController implements Initializable {
                 });
             }
         },0 ,1200);
+
+        //showLevelTransitionVBox();
     }
 
     public void attackButtonPressed(){
@@ -295,6 +298,9 @@ public class BattlefieldController implements Initializable {
     }
 
     public void update(){
+        if (game.isLevelCleared()){
+
+        }
         updateGame();
         refreshGameFromClient();
         checkForPlayerTurn();
@@ -381,5 +387,36 @@ public class BattlefieldController implements Initializable {
 
     public void updateImage() {
         player.imageUpdate();
+    }
+
+    public void initLevelTransitionVBox(){
+        transitionVbox = new VBox();
+        VBox vbox = transitionVbox;
+        vbox.setPrefWidth(mapGrid.getPrefWidth());
+        vbox.setPrefHeight(mapGrid.getPrefHeight());
+        vbox.setAlignment(Pos.CENTER);
+        vbox.setSpacing(40);
+        vbox.setStyle("-fx-background-color:  #1c1c1c80");
+
+        Label label1 = new Label("Level cleared!");
+        label1.setTextFill(Color.web("f8d256"));
+        label1.setFont(new Font(60));
+        label1.setStyle("-fx-font-weight: bold");
+
+        Label label2 = new Label();
+        label2.setFont(new Font(30));
+        label2.setTextFill(Color.WHITE);
+        vbox.getChildren().addAll(label1, label2);
+        vbox.setVisible(false);
+        battlefieldUI.getChildren().add(vbox);
+    }
+
+    public void showLevelTransitionVBox(){
+        ((Label)transitionVbox.getChildren().get(1)).setText("Travelling to " + game.getLevel().getLevelName());
+        transitionVbox.setVisible(true);
+    }
+
+    public void hideLevelTransitionVbox(){
+        transitionVbox.setVisible(false);
     }
 }
