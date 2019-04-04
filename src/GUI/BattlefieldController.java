@@ -4,6 +4,7 @@ package GUI;
 import Database.*;
 import Main.*;
 import audio.MusicPlayer;
+import audio.SFXPlayer;
 import game.*;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -36,7 +37,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
-
+import java.util.concurrent.TimeUnit;
 
 
 public class BattlefieldController implements Initializable {
@@ -65,6 +66,7 @@ public class BattlefieldController implements Initializable {
     private double mouseY;
     public double cellWidth;
     public double cellHeight;
+    private boolean transitioning;
 
     private Pane movementPane;
     private VBox transitionVbox;
@@ -109,7 +111,7 @@ public class BattlefieldController implements Initializable {
 
         acLabel.setText("AC: " + game.playerCharacter.getAc());
 
-        //initLevelTransitionVBox();
+        initLevelTransitionVBox();
         initMovementPane();
 
         refreshGameFromClient();
@@ -125,8 +127,6 @@ public class BattlefieldController implements Initializable {
                 });
             }
         },0 ,1200);
-
-        //showLevelTransitionVBox();
     }
 
     public void attackButtonPressed(){
@@ -230,6 +230,7 @@ public class BattlefieldController implements Initializable {
     }
 
     public void endTurnButtonPressed(){
+        player.resetUsedActions();
         game.endTurn();
     }
 
@@ -286,7 +287,13 @@ public class BattlefieldController implements Initializable {
                 mapGrid.getChildren().remove(c.getPawn());
                 mapGrid.add(c.getPawn(), c.getxPos(), c.getyPos());
                 if (c instanceof Monster){
-                    ((Monster) c).updateAttackPane();
+                    if (((Monster) c).attackPane == null){
+                        ((Monster) c).initAttackPane(cellWidth, cellHeight);
+                        mapGrid.add(((Monster) c).attackPane, c.getxPos(), c.getyPos());
+                    }
+                    else {
+                        ((Monster) c).updateAttackPane();
+                    }
                 }
             }
         }
@@ -306,20 +313,52 @@ public class BattlefieldController implements Initializable {
         return result;
     }
 
-    public void update(){
-        if (game.isLevelCleared()){
-
+    public boolean update(){
+        if (game.isLevelCleared() && !transitioning){
+            transitioning = true;
+            SFXPlayer.getInstance().setSFX(13);
+            MusicPlayer.getInstance().stopSong();
+            MusicPlayer.getInstance().changeSong(1);
+            showLevelTransitionVBox();
+            new Thread(new Runnable(){
+                @Override public void run(){
+                    try{
+                        Thread.sleep(6000);
+                    }
+                    catch (InterruptedException ie){
+                        ie.printStackTrace();
+                    }
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            newLevel();
+                            if (game.getLevel().getLevelId() <= game.getAmountOfLevels()) {
+                                hideLevelTransitionVbox();
+                                transitioning = false;
+                            }
+                        }
+                    });
+                }
+            }).start();
+            return false;
         }
+
         updateGame();
         refreshGameFromClient();
         checkForPlayerTurn();
-        System.out.println("Hei");
         for (int i = 0; i < game.getAmountOfCreatures(); i++){
             System.out.println(game.getCreature(i).getCreatureName() + ": " + game.getCreature(i).getHp());
         }
         System.out.println(player.isMovePressed() + " " + player.isAttackPressed());
         System.out.println("Player turn: " + game.isPlayerTurn());
+        return true;
+    }
 
+    public void newLevel(){
+        game.newLevel();
+        player.resetUsedActions();
+        game.resetTurn();
+        player.resetUsedActions();
     }
 
     public boolean checkForPlayerTurn(){
@@ -421,11 +460,20 @@ public class BattlefieldController implements Initializable {
     }
 
     public void showLevelTransitionVBox(){
-        ((Label)transitionVbox.getChildren().get(1)).setText("Travelling to " + game.getLevel().getLevelName());
+        String nextLevelName = Main.db.getLevelName(game.getLevel().getLevelId() + 1);
+        if (nextLevelName != null){
+            ((Label)transitionVbox.getChildren().get(1)).setText("Travelling to " + nextLevelName + "world");
+        }
+        else{
+            ((Label)transitionVbox.getChildren().get(0)).setText("Victory!");
+            ((Label)transitionVbox.getChildren().get(1)).setText("Credits");
+        }
         transitionVbox.setVisible(true);
+        mapGrid.setGridLinesVisible(false);
     }
 
     public void hideLevelTransitionVbox(){
         transitionVbox.setVisible(false);
+        mapGrid.setGridLinesVisible(true);
     }
 }

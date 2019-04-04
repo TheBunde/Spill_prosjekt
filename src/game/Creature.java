@@ -2,6 +2,7 @@ package game;
 
 import java.util.ArrayList;
 import Main.*;
+import audio.SFXPlayer;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -52,9 +53,11 @@ public abstract class Creature {
         if (!hitSuccess(roll, target)){
             String chatMessage = "";
             if (this instanceof Character){
+                SFXPlayer.getInstance().setSFX(11);
                 chatMessage += Main.db.fetchUsernameFromPlayerId(this.getPlayerId()) + " rolled " + roll + " and missed " + target.getCreatureName();
             }
             else{
+                SFXPlayer.getInstance().setSFX(12);
                 chatMessage += this.getCreatureName() + " rolled " + roll + " and missed " + Main.db.fetchUsernameFromPlayerId(target.getPlayerId());
             }
             Main.db.addChatMessage(chatMessage, true);
@@ -67,9 +70,11 @@ public abstract class Creature {
         target.setHp(target.getHp() - damage);
         String chatMessage = "";
         if (this instanceof Character){
+            SFXPlayer.getInstance().setSFX(10);
             chatMessage += Main.db.fetchUsernameFromPlayerId(this.getPlayerId()) + " rolled " + roll + " and dealt " + damage + " to " + target.getCreatureName();
         }
         else{
+            SFXPlayer.getInstance().setSFX(10);
             chatMessage += this.getCreatureName() + " rolled " + roll + " and dealt " + damage + " to " + Main.db.fetchUsernameFromPlayerId(target.getPlayerId());
         }
         Main.db.addChatMessage(chatMessage, true);
@@ -173,7 +178,10 @@ public abstract class Creature {
     }
 
     public boolean updateDead(){
-        isDead = (this.hp <= 0);
+        if(this.hp <= 0 && !isDead()){
+            SFXPlayer.getInstance().setSFX(0);
+            isDead = true;
+        }
         return isDead;
     }
 

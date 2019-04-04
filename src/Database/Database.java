@@ -1221,8 +1221,9 @@ public class Database {
             prepStmt = con.prepareStatement(prepString);
             prepStmt.setInt(1, level_id);
             res = prepStmt.executeQuery();
-            res.next();
-            level = new Level(res.getInt("level_id"), res.getInt("music"), res.getString("background_url"));
+            if (res.next()) {
+                level = new Level(res.getInt("level_id"), res.getInt("music"), res.getString("background_url"));
+            }
         }
         catch (SQLException sq){
             sq.printStackTrace();
@@ -1258,6 +1259,59 @@ public class Database {
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con);
             return levelId;
+        }
+    }
+
+    public String getLevelName(int levelId){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        String levelName = null;
+        try{
+            con = this.bds.getConnection();
+            String prepString = "SELECT background_url FROM level WHERE level_id = ?";
+            prepStmt = con.prepareStatement(prepString);
+            prepStmt.setInt(1, levelId);
+            res = prepStmt.executeQuery();
+            while(res.next()) {
+                levelName = res.getString(1);
+                levelName = levelName.split("-")[0];
+            }
+        }
+        catch (SQLException sq){
+            sq.printStackTrace();
+            levelName = null;
+        }
+        finally {
+            this.manager.closeRes(res);
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(con);
+            return levelName;
+        }
+    }
+
+    public int fetchAmountOfLevels(){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        int levelCount = 0;
+        try{
+            con = this.bds.getConnection();
+            String prepString = "SELECT COUNT(*) FROM level;";
+            prepStmt = con.prepareStatement(prepString);
+            res = prepStmt.executeQuery();
+            res.next();
+            levelCount = res.getInt(1);
+        }
+        catch (SQLException sq){
+            sq.printStackTrace();
+            levelCount = 0;
+        }
+        finally {
+            this.manager.closeRes(res);
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(con);
+            return levelCount;
         }
     }
 
