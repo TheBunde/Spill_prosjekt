@@ -76,8 +76,11 @@ public class chatController implements Initializable {
         }
     }
 
-    public void sendMessage(){
+    public boolean sendMessage(){
         String text = messageInput.getText();
+        if (text.length() == 0){
+            return false;
+        }
         new Thread(new Runnable(){
             @Override public void run(){
                 disableChat();
@@ -99,6 +102,7 @@ public class chatController implements Initializable {
                 });
             }
         }).start();
+        return true;
     }
 
     public void updateChat(){

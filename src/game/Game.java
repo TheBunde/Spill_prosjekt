@@ -45,17 +45,9 @@ public class Game {
         }
         updateCreatureData();
         if (Main.user.isHost()){
-            if (isMonsterTurn()) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        monsterAction();
-                    }
-                }).start();
-            }
+            monsterAction();
             if (this.isLevelCleared()){
-                Main.db.setLevel(Main.user.getLobbyKey(), this.level.getLevelId() + 1);
-                addNewMonstersToLobby(this.level.getLevelId() + 1);
+                pushNewLevel();
                 changeToNewLevel();
             }
         }
@@ -66,6 +58,11 @@ public class Game {
         }
     }
 
+    public void pushNewLevel(){
+        addNewMonstersToLobby(this.level.getLevelId() + 1);
+        Main.db.setLevel(Main.user.getLobbyKey(), this.level.getLevelId() + 1);
+    }
+
     public void addNewMonstersToLobby(int levelId){
         ArrayList<Integer> creatureIds = Main.db.fetchMonstersFromLevel(levelId);
         for (int i = 0; i < creatureIds.size(); i++){
@@ -73,22 +70,6 @@ public class Game {
         }
     }
 
-    public void changeToNewLevel(){
-        int newLevel_id = Main.db.fetchLevelId(Main.user.getLobbyKey());
-        if (this.level.getLevelId() < newLevel_id){
-            this.level.setLevelId(newLevel_id);
-            this.level.updateLevel();
-        }
-        GridPane mapGrid = (GridPane)this.creatures.get(0).getPawn().getParent();
-        for (Creature c : this.creatures){
-            mapGrid.getChildren().remove(c.getPawn());
-        }
-        this.creatures = Main.db.fetchCreaturesFromLobby();
-        for (Creature c : this.creatures){
-            c.setPawnSize(mapGrid.getPrefWidth()/16, mapGrid.getPrefHeight()/16);
-            mapGrid.add(c.getPawn(), c.getxPos(), c.getyPos());
-        }
-    }
 
     public void updateCreatureData(){
         turn = db.fetchPlayerTurn();
@@ -223,16 +204,37 @@ public class Game {
         return cleared;
     }
 
-    public void monsterAction(){
-        Monster monster = ((Monster) creatures.get(turn % creatures.size()));
-        if (monster.isDead()){
-            endTurn();
+    public void changeToNewLevel(){
+        this.level.setLevelId(this.level.getLevelId() + 1);
+        this.level.updateLevel();
+
+        GridPane mapGrid = (GridPane)this.creatures.get(0).getPawn().getParent();
+        for (Creature c : this.creatures){
+            mapGrid.getChildren().remove(c.getPawn());
         }
-        else {
-            monster.monsterMove(creatures);
-            monster.monsterAttack(creatures);
-            pushCreatureData();
-            endTurn();
+        this.creatures = Main.db.fetchCreaturesFromLobby();
+        for (Creature c : this.creatures){
+            c.setPawnSize(mapGrid.getPrefWidth()/16, mapGrid.getPrefHeight()/16);
+            mapGrid.add(c.getPawn(), c.getxPos(), c.getyPos());
+        }
+    }
+
+    public void monsterAction() {
+        if (isMonsterTurn()) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Monster monster = ((Monster) creatures.get(turn % creatures.size()));
+                    if (monster.isDead()) {
+                        endTurn();
+                    } else {
+                        monster.monsterMove(creatures);
+                        monster.monsterAttack(creatures);
+                        pushCreatureData();
+                        endTurn();
+                    }
+                }
+            }).start();
         }
     }
 
@@ -243,5 +245,15 @@ public class Game {
 
     public Level getLevel(){
         return this.level;
+    }
+
+    public boolean attackRange(Monster monster, boolean melee){
+        if(melee && Math.abs(playerCharacter.getxPos() - monster.getxPos()) <= 1 && Math.abs(playerCharacter.getyPos() - monster.getyPos()) <= 1){
+            return true;
+        }else if(!melee && Math.abs(playerCharacter.getxPos() - monster.getxPos()) >= 1 && Math.abs(playerCharacter.getyPos() - monster.getyPos()) >= 1){
+            return true;
+        }else{
+            return false;
+        }
     }
 }

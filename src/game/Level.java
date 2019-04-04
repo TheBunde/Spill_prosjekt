@@ -12,6 +12,7 @@ public class Level {
     private boolean readyForNewLevel = false;
     public ImageView backgroundImage;
 
+
     public Level(int levelId, int music, String backgroundUrl){
         this.levelId = levelId;
         this.music = music;
@@ -61,5 +62,10 @@ public class Level {
         this.backgroundImage.setImage(new Image("GUI/images/" + this.getBackgroundUrl()));
         MusicPlayer.getInstance().stopSong();
         MusicPlayer.getInstance().changeSong(this.music);
+    }
+
+    public String getLevelName(){
+        String[] urlParts = this.getBackgroundUrl().split("/");
+        return urlParts[0];
     }
 }
