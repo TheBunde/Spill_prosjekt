@@ -193,7 +193,9 @@ INSERT INTO creatureTemplate(creature_id,creature_name,hp,ac,movement,damage_bon
 INSERT INTO creatureTemplate(creature_id,creature_name,hp,ac,movement,damage_bonus,attack_bonus,attacks_per_turn) values(7,"Grick alpha",75,18,3,4,7,2, false);
 INSERT INTO creatureTemplate(creature_id,creature_name,hp,ac,movement,damage_bonus,attack_bonus,attacks_per_turn) values(8,"Green slaad",127,16,3,4,7,3, false);
 INSERT INTO creatureTemplate(creature_id,creature_name,hp,ac,movement,damage_bonus,attack_bonus,attacks_per_turn) values(9,"Dragon",178,18,4,6,10,3, false);
-INSERT INTO creatureTemplate VALUES(DEFAULT, "Ushabti", 20, 15, 3, 3, 5, 1, " ", "judge.jpg"));
+INSERT INTO creatureTemplate VALUES(DEFAULT, "Ushabti", 20, 15, 3, 3, 5, 1, " ", "Ushabti2.png"));
+INSERT INTO creatureTemplate values(6,"Earth elemental",126,17,3,5,8,2, " ", "Ent.png");
+INSERT INTO creatureTemplate VALUES(DEFAULT, "Ent", 50, 11, 3, 4, 1, 1, "Ent.png", FALSE);
 
 --weapon
 INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description,weapon_url) VALUES (1,"Longsword",1,8,"Melee","Long_sword.png");
@@ -218,6 +220,7 @@ INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, descriptio
 INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description) VALUES (19,"Dragon breath",6,10,"Ranged");
 INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description) VALUES (20,"Hound breath",2,6,"Ranged");
 INSERT INTO weapon VALUES(DEFAULT, "Great Bow", 3, 6, "Ranged", NULL);
+INSERT INTO weapon VALUES(DEFAULT, "Branch", 1, 6, "melee", NULL)
 
 
 --weapon and creature
