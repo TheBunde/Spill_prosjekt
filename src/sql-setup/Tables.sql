@@ -153,10 +153,10 @@ SELECT
 
 
 
-ALTER TABLE user ADD CONSTRAINT user_fk1 FOREIGN KEY(lobby_key) REFERENCES game_lobby(lobby_key);
+ALTER TABLE usr ADD CONSTRAINT user_fk1 FOREIGN KEY(lobby_key) REFERENCES game_lobby(lobby_key);
 
 ALTER TABLE chat_message ADD CONSTRAINT chat_message_fk1 FOREIGN KEY(lobby_key) REFERENCES game_lobby(lobby_key);
-ALTER TABLE chat_message ADD CONSTRAINT chat_message_fk2 FOREIGN KEY(user_id) REFERENCES user(user_id);
+ALTER TABLE chat_message ADD CONSTRAINT chat_message_fk2 FOREIGN KEY(user_id) REFERENCES usr(user_id);
 
 ALTER TABLE player ADD CONSTRAINT player_fk1 FOREIGN KEY(lobby_key) REFERENCES game_lobby(lobby_key);
 ALTER TABLE player ADD CONSTRAINT player_fk2 FOREIGN KEY(user_id) REFERENCES usr(user_id);
