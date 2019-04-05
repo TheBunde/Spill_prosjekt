@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="087e88ab-62a8-4acd-bbca-733827594b1d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Database/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Database/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sql-setup/Tables.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/sql-setup/Tables.sql" afterDir="false" />
+    <list default="true" id="a46a462a-d0eb-41c3-86e1-728bb8a394a6" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
     </list>
-    <ignored path="$PROJECT_DIR$/../out/" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -97,7 +93,7 @@
         <entry file="file://$PROJECT_DIR$/src/sql-setup/Tables.sql">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="646">
-              <caret line="215" column="122" lean-forward="true" selection-start-line="215" selection-start-column="122" selection-end-line="215" selection-end-column="122" />
+              <caret line="215" column="122" selection-start-line="215" selection-start-column="122" selection-end-line="215" selection-end-column="122" />
             </state>
           </provider>
         </entry>
@@ -120,30 +116,8 @@
       </list>
     </option>
   </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>fetchCreaturesFrom</find>
-      <find>uno</find>
-    </findStrings>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/src/game/Game.java" />
-        <option value="$PROJECT_DIR$/src/Database/Database.java" />
-        <option value="$PROJECT_DIR$/src/Database/DataSource.java" />
-        <option value="$PROJECT_DIR$/src/sql-setup/Tables.sql" />
-      </list>
-    </option>
-  </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="324" />
-    <option name="y" value="12" />
-    <option name="width" value="702" />
-    <option name="height" value="735" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -256,7 +230,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1554458525756" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1554458898404" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../out" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
@@ -940,7 +914,7 @@
     <entry file="file://$PROJECT_DIR$/src/sql-setup/Tables.sql">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="646">
-          <caret line="215" column="122" lean-forward="true" selection-start-line="215" selection-start-column="122" selection-end-line="215" selection-end-column="122" />
+          <caret line="215" column="122" selection-start-line="215" selection-start-column="122" selection-end-line="215" selection-end-column="122" />
         </state>
       </provider>
     </entry>
