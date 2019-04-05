@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+<<<<<<< HEAD
   <component name="ChangeListManager">
     <list default="true" id="a46a462a-d0eb-41c3-86e1-728bb8a394a6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
@@ -249,6 +250,8 @@
       </list>
     </option>
   </component>
+=======
+>>>>>>> 213055487f102dddd580770f9600f57826b6705f
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main.Main" />
@@ -269,6 +272,7 @@
       </list>
     </recent_temporary>
   </component>
+<<<<<<< HEAD
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -919,4 +923,6 @@
       </provider>
     </entry>
   </component>
+=======
+>>>>>>> 213055487f102dddd580770f9600f57826b6705f
 </project>
