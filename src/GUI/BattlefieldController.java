@@ -308,33 +308,39 @@ public class BattlefieldController implements Initializable {
 
 
     public boolean update(){
-        if (game.isLevelCleared() && !transitioning){
-            transitioning = true;
-            SFXPlayer.getInstance().setSFX(13);
-            MusicPlayer.getInstance().stopSong();
-            MusicPlayer.getInstance().changeSong(1);
-            showLevelTransitionVBox();
-            new Thread(new Runnable(){
-                @Override public void run(){
-                    try{
-                        Thread.sleep(6000);
-                    }
-                    catch (InterruptedException ie){
-                        ie.printStackTrace();
-                    }
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            newLevel();
-                            if (game.getLevel().getLevelId() <= game.getAmountOfLevels()) {
-                                hideLevelTransitionVbox();
-                                transitioning = false;
-                            }
+        if (game.isLevelCleared() && !transitioning) {
+            if (!game.playerCharacter.isReadyForNewLevel()){
+                Main.db.setReadyForNewLevel(game.playerCharacter.getPlayerId(), true);
+            }
+            game.updatePlayersReadyForNewLevel();
+            if (game.playersReadyForNewLevel()) {
+                transitioning = true;
+                SFXPlayer.getInstance().setSFX(13);
+                MusicPlayer.getInstance().stopSong();
+                MusicPlayer.getInstance().changeSong(1);
+                showLevelTransitionVBox();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(6000);
+                        } catch (InterruptedException ie) {
+                            ie.printStackTrace();
                         }
-                    });
-                }
-            }).start();
-            return false;
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                newLevel();
+                                if (game.getLevel().getLevelId() <= game.getAmountOfLevels()) {
+                                    hideLevelTransitionVbox();
+                                    transitioning = false;
+                                }
+                            }
+                        });
+                    }
+                }).start();
+                return false;
+            }
         }
 
         updateGame();
@@ -352,6 +358,9 @@ public class BattlefieldController implements Initializable {
         game.newLevel();
         game.resetTurn();
         player.resetUsedActions();
+        if (Main.user.isHost()) {
+            game.setAllPlayersReadyForNewLevel(false);
+        }
     }
 
     public boolean checkForPlayerTurn(){

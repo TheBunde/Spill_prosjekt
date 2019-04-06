@@ -100,6 +100,7 @@ create table player(
     lobby_key INTEGER NOT NULL,
     user_id integer,
     ready boolean DEFAULT FALSE,
+    ready_for_new_level BOOLEAN DEFAULT FALSE,
     constraint player_pk primary key(player_id));
 
 --create table initiative(

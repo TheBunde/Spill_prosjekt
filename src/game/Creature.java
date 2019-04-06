@@ -23,6 +23,7 @@ public abstract class Creature {
     private String imageUrl;
     private ImageView pawn;
     private boolean isDead;
+    private boolean readyForNewLevel = false;
 
 
     public Creature(int playerId, int creatureId, String creatureName, int hp, int ac, int movement, int damageBonus, int attackBonus, int attacksPerTurn, String backstory, int xPos, int yPos, String imageUrl, ArrayList weapons){
@@ -214,5 +215,13 @@ public abstract class Creature {
     public void setPawnSize(double width, double height){
         this.pawn.setFitWidth(width);
         this.pawn.setFitHeight(height);
+    }
+
+    public boolean isReadyForNewLevel(){
+        return this.readyForNewLevel;
+    }
+
+    public void setReadyForNewLevel(boolean readyForNewLevel){
+        this.readyForNewLevel = readyForNewLevel;
     }
 }
