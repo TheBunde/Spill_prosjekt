@@ -177,6 +177,31 @@ public class Game {
         return false;
     }
 
+    public void updatePlayersReadyForNewLevel(){
+        ArrayList<Boolean> playersReadyForNewLevel = Main.db.fetchPlayersReadyForLevel();
+        for (int i = 0; i < playersReadyForNewLevel.size(); i++){
+            this.getCharacters().get(i).setReadyForNewLevel(playersReadyForNewLevel.get(i));
+        }
+    }
+
+    public boolean playersReadyForNewLevel(){
+        boolean ready = true;
+        ArrayList<Character> characters = this.getCharacters();
+        for (Character c : characters){
+            if (!c.isReadyForNewLevel()){
+                ready = false;
+            }
+        }
+        return ready;
+    }
+
+    public void setAllPlayersReadyForNewLevel(boolean ready){
+        ArrayList<Character> characters = this.getCharacters();
+        for (Character c : characters){
+            Main.db.setReadyForNewLevel(c.getPlayerId(), ready);
+        }
+    }
+
     public boolean isPositionAvailable(int x, int y){
         boolean available = true;
         for (Creature c : this.creatures){

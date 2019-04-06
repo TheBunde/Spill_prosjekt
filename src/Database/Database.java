@@ -1369,4 +1369,60 @@ public class Database {
             return creatureIds;
         }
     }
+
+    public ArrayList<Boolean> fetchPlayersReadyForLevel(){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        ArrayList<Boolean> playersReadyForLevel = new ArrayList<>();
+        try{
+            con = this.bds.getConnection();
+            String prepString = "SELECT ready_for_new_level FROM player WHERE lobby_key = ? AND user_id IS NOT NULL";
+            prepStmt = con.prepareStatement(prepString);
+            prepStmt.setInt(1, Main.user.getLobbyKey());
+            res = prepStmt.executeQuery();
+            while(res.next()){
+                playersReadyForLevel.add(res.getBoolean(1));
+            }
+        }
+        catch (SQLException sq){
+            sq.printStackTrace();
+            playersReadyForLevel = null;
+        }
+        finally {
+            this.manager.closeRes(res);
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(con);
+            return playersReadyForLevel;
+        }
+    }
+
+    public boolean setReadyForNewLevel(int playerId, boolean ready){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        boolean status = false;
+        try{
+            con = this.bds.getConnection();
+            con.setAutoCommit(false);
+            String prepString = "UPDATE player SET ready_for_new_level = ? WHERE player_id = ?";
+            prepStmt = con.prepareStatement(prepString);
+            prepStmt.setBoolean(1, ready);
+            prepStmt.setInt(2, playerId);
+            prepStmt.executeUpdate();
+            status = true;
+            con.commit();
+        }
+        catch (SQLException sq){
+            this.manager.rollback(con);
+            sq.printStackTrace();
+            status = false;
+        }
+        finally {
+            this.manager.turnOnAutoCommit(con);
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(con);
+            return status;
+        }
+    }
+
 }
