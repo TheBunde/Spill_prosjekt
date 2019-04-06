@@ -332,6 +332,7 @@ public class BattlefieldController implements Initializable {
                         @Override
                         public void run() {
                             newLevel();
+                            TeamMatesController.updateListView();
                             if (game.getLevel().getLevelId() <= game.getAmountOfLevels()) {
                                 hideLevelTransitionVbox();
                                 transitioning = false;
