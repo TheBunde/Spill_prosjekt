@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5433b87f-63b3-4b17-aa0e-af9af3a83a58" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="282722de-e81d-4af5-a69f-914302aac6f6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Database/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Database/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/BattlefieldController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/BattlefieldController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Creature.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Creature.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sql-setup/Tables.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/sql-setup/Tables.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,7 +69,7 @@
         <entry file="file://$PROJECT_DIR$/src/game/Game.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-575">
-              <caret line="188" column="55" lean-forward="true" selection-start-line="188" selection-start-column="55" selection-end-line="188" selection-end-column="55" />
+              <caret line="188" column="55" selection-start-line="188" selection-start-column="55" selection-end-line="188" selection-end-column="55" />
               <folding>
                 <element signature="e#3796#3797#0" expanded="true" />
                 <element signature="e#3844#3845#0" expanded="true" />
@@ -138,26 +132,8 @@
       </file>
     </leaf>
   </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>createPL</find>
-      <find>player</find>
-      <find>checkforPLayerTurn</find>
-    </findStrings>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/src/sql-setup/Tables.sql" />
-        <option value="$PROJECT_DIR$/src/Database/Database.java" />
-        <option value="$PROJECT_DIR$/src/game/Creature.java" />
-        <option value="$PROJECT_DIR$/src/game/Game.java" />
-        <option value="$PROJECT_DIR$/src/GUI/BattlefieldController.java" />
-      </list>
-    </option>
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -270,7 +246,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1554551885031" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1554552139449" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -553,7 +529,7 @@
     <entry file="file://$PROJECT_DIR$/src/game/Game.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-575">
-          <caret line="188" column="55" lean-forward="true" selection-start-line="188" selection-start-column="55" selection-end-line="188" selection-end-column="55" />
+          <caret line="188" column="55" selection-start-line="188" selection-start-column="55" selection-end-line="188" selection-end-column="55" />
           <folding>
             <element signature="e#3796#3797#0" expanded="true" />
             <element signature="e#3844#3845#0" expanded="true" />
