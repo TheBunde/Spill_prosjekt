@@ -11,3 +11,7 @@
 .button-deselected{
     -fx-background-color: #cccccc;
 }
+
+.gridStyle Line{
+    -fx-stroke: rgb(70, 70, 70, 100);
+}

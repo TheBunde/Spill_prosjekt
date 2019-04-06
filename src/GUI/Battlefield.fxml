@@ -107,8 +107,8 @@
             </VBox>
             <VBox prefHeight="117.0" prefWidth="134.0">
                <children>
-                  <Label prefHeight="58.0" prefWidth="118.0" text="Sword. Very good in close courters. not so good at range tho" wrapText="true" />
-                  <Label prefHeight="60.0" prefWidth="117.0" text="The greatest trick the devil ever pullled, was making shrek 2." wrapText="true" />
+                  <Label fx:id="weaponOneLabel" prefHeight="58.0" prefWidth="118.0" text="Sword. Very good in close courters. not so good at range tho" wrapText="true" />
+                  <Label fx:id="weaponTwoLabel" prefHeight="60.0" prefWidth="117.0" text="The greatest trick the devil ever pullled, was making shrek 2." wrapText="true" />
                </children>
             </VBox>
             <VBox prefHeight="117.0" prefWidth="91.0">

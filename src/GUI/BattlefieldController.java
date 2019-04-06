@@ -56,7 +56,7 @@ public class BattlefieldController implements Initializable {
     @FXML
     public ImageView playerImage;
     @FXML
-    private Label hpLabel, acLabel;
+    private Label hpLabel, acLabel, weaponOneLabel, weaponTwoLabel;
 
     private Database db = Main.db;
     private User user = Main.user;
@@ -102,9 +102,12 @@ public class BattlefieldController implements Initializable {
 
         weaponOne.setImage(new Image("GUI/images/" + game.playerCharacter.getWeapons().get(0).getImageUrl()));
         weaponTwo.setImage(new Image("GUI/images/" + game.playerCharacter.getWeapons().get(1).getImageUrl()));
-
         weaponOne.setEffect(light);
         weaponTwo.setEffect(shadow);
+        Weapon weapon1 = game.playerCharacter.getWeapons().get(0);
+        Weapon weapon2 = game.playerCharacter.getWeapons().get(1);
+        weaponOneLabel.setText(weapon1.getName() + "\n" + "Damage: " + weapon1.getDamageDice() + "\n" + (weapon1.isRanged() ? "Ranged" : "Melee"));
+        weaponTwoLabel.setText(weapon2.getName() + "\n" + "Damage: " + weapon2.getDamageDice() + "\n" + (weapon2.isRanged() ? "Ranged" : "Melee"));
 
         mapContainer.getChildren().add(game.getLevel().backgroundImage);
         game.getLevel().backgroundImage.toBack();
@@ -114,7 +117,7 @@ public class BattlefieldController implements Initializable {
         initLevelTransitionVBox();
         initMovementPane();
 
-        refreshGameFromClient();
+        refreshViewFromGame();
         updateGame();
 
         timer = new Timer();
@@ -123,7 +126,7 @@ public class BattlefieldController implements Initializable {
             public void run() {
                 Platform.runLater(() -> {
                     update();
-                    TeamMatesController.updateListView();
+                    //TeamMatesController.updateListView();
                 });
             }
         },0 ,1200);
@@ -177,6 +180,7 @@ public class BattlefieldController implements Initializable {
     };
 
     public void attackFinished(){
+        updateGame();
         player.setAttackPressed(false);
         moveButton.setDisable(false);
         endTurnButton.setDisable(false);
@@ -187,8 +191,8 @@ public class BattlefieldController implements Initializable {
             m.hideAttackPane();
             m.attackPane.removeEventFilter(MouseEvent.MOUSE_CLICKED, attackEventHandler);
         }
+        refreshViewFromGame();
         checkForPlayerTurn();
-        refreshGameFromClient();
     }
 
     public void moveButtonPressed(){
@@ -215,17 +219,18 @@ public class BattlefieldController implements Initializable {
     };
 
     public void moveFinished(){
-        player.setMovePressed(false);
-        hideMovementPane();
         if (game.playerCharacter.moveCreature(toGrid(mapGrid.getWidth(), mouseX), toGrid(mapGrid.getHeight(), mouseY), game.getCreatures())){
             player.setMoveUsed(true);
-        };
+        }
+        updateGame();
+        player.setMovePressed(false);
+        hideMovementPane();
         closeMapMoveEventHandler();
         attackButton.setDisable(false);
         endTurnButton.setDisable(false);
         moveButton.getStyleClass().clear();
         moveButton.getStyleClass().add("button");
-        refreshGameFromClient();
+        refreshViewFromGame();
         checkForPlayerTurn();
     }
 
@@ -280,7 +285,7 @@ public class BattlefieldController implements Initializable {
         game.update();
     }
 
-    public void refreshGameFromClient(){
+    public void refreshViewFromGame(){
         for(int i = 0; i < game.getCreatures().size(); i++){
             Creature c = game.getCreatures().get(i);
             if (c.getPawn().getX() != c.getxPos() || c.getPawn().getY() != c.getyPos()) {
@@ -301,17 +306,6 @@ public class BattlefieldController implements Initializable {
         updateImage();
     }
 
-
-    public Node getNodeFromGrid(int x, int y){
-        Node result = null;
-        ObservableList<Node> nodes = mapGrid.getChildren();
-        for (Node node : nodes){
-            if (GridPane.getColumnIndex(node) == x && GridPane.getRowIndex(node) ==  y){
-                result = node;
-            }
-        }
-        return result;
-    }
 
     public boolean update(){
         if (game.isLevelCleared() && !transitioning){
@@ -344,7 +338,7 @@ public class BattlefieldController implements Initializable {
         }
 
         updateGame();
-        refreshGameFromClient();
+        refreshViewFromGame();
         checkForPlayerTurn();
         for (int i = 0; i < game.getAmountOfCreatures(); i++){
             System.out.println(game.getCreature(i).getCreatureName() + ": " + game.getCreature(i).getHp());
@@ -356,7 +350,6 @@ public class BattlefieldController implements Initializable {
 
     public void newLevel(){
         game.newLevel();
-        player.resetUsedActions();
         game.resetTurn();
         player.resetUsedActions();
     }

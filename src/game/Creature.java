@@ -96,6 +96,7 @@ public abstract class Creature {
     public boolean moveCreature(int newX, int newY, ArrayList<Creature> creatures){
         for (Creature c : creatures){
             if (newX == c.getxPos() && newY == c.getyPos()){
+                System.out.println("HELLO FROM MOVECREATURE!!!!!!!!!!!!!");
                 return false;
             }
         }

@@ -33,18 +33,17 @@ public class Game {
         }
     }
 
-    public void init(){
-
-    }
-
     public void update(){
         if (this.isPlayerTurn()){
             pushCreatureData();
         }
+        else {
+            updateCreatureData();
+        }
+        handleCreatureData();
         if(playerCharacter.getHp() <= 0 && !playerCharacter.isDead()){
             db.addChatMessage(Main.user.getUsername() + " died", true);
         }
-        updateCreatureData();
         if (Main.user.isHost()) {
             monsterAction();
         }
@@ -93,10 +92,6 @@ public class Game {
                 c.setNewPos(newPos.get(0), newPos.get(1));
             }
             c.setHp(newHp);
-            c.updateDead();
-            if (c.isDead()){
-                c.setPawnImage("gravestone.png");
-            }
         }
     }
 
@@ -108,6 +103,15 @@ public class Game {
             db.setPos(posX, posY, playerId);
             int hp = c.getHp();
             db.setHp(hp, playerId);
+        }
+    }
+
+    public void handleCreatureData(){
+        for (Creature c : this.creatures) {
+            c.updateDead();
+            if (c.isDead()) {
+                c.setPawnImage("gravestone.png");
+            }
         }
     }
 
@@ -145,7 +149,7 @@ public class Game {
     public ArrayList<Character> getCharacters(){
         ArrayList<Character> characters= new ArrayList<>();
         for(Creature i: creatures){
-            if(i instanceof Character && i != playerCharacter){
+            if(i instanceof Character){
                 characters.add((Character) i);
             }
         }
@@ -225,6 +229,9 @@ public class Game {
         }
         this.creatures = Main.db.fetchCreaturesFromLobby();
         for (Creature c : this.creatures){
+            if (c.getPlayerId() == Main.user.getPlayerId()){
+                this.playerCharacter = (game.Character)c;
+            }
             c.setPawnSize(mapGrid.getPrefWidth()/16, mapGrid.getPrefHeight()/16);
             mapGrid.add(c.getPawn(), c.getxPos(), c.getyPos());
         }
