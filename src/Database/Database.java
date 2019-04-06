@@ -621,7 +621,7 @@ public class Database {
         try {
             con = this.bds.getConnection();
             con.setAutoCommit(false);
-            String prepString = "INSERT INTO player VALUES(DEFAULT, ?, ?, READY)";
+            String prepString = "INSERT INTO player VALUES(DEFAULT, ?, ?, DEFAULT, DEFAULT )";
             prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
             prepStmt.setInt(1, Main.user.getLobbyKey());
             if (playable) {
