@@ -19,13 +19,22 @@ public class Game {
     public Level level;
 
     public Game(){
-        level = new Level(1, 16, "Forest-map.png");
-        level.updateLevel();
-
+        level = new Level(1);
+        System.out.println(Main.db.fetchBattlefieldReady(Main.user.getLobbyKey()));
         if (Main.user.isHost()){
             this.addNewMonstersToLobby(1);
+            Main.db.setBattlefieldReady(Main.user.getLobbyKey());
+
         }
+        else{
+            while (!Main.db.fetchBattlefieldReady(Main.user.getLobbyKey())){
+                System.out.println("WAAAAAAAAAAAAAAAAAAAAAAIIIIIIIIIIIIIIITTTTTTTTTIIIIIIIIINNG");
+                //Wait until battlefield is ready
+            }
+        }
+        System.out.println(Main.db.fetchBattlefieldReady(Main.user.getLobbyKey()));
         creatures = db.fetchCreaturesFromLobby();
+
         for (int i = 0; i < this.creatures.size(); i++){
             if (this.creatures.get(i).getPlayerId() == Main.user.getPlayerId()){
                 playerCharacter = (game.Character) this.creatures.get(i);
@@ -50,11 +59,10 @@ public class Game {
     }
 
     public void newLevel(){
-        if (Main.user.isHost()){
-            pushNewLevel();
-        }
         changeToNewLevel();
-
+        for (Character c : this.getCharacters()){
+            c.setReadyForNewLevel(false);
+        }
         if (this.level.getLevelId() == this.amountOfLevels){
             //Update rank for user
         }
@@ -70,7 +78,7 @@ public class Game {
 
     public void pushNewLevel(){
         addNewMonstersToLobby(this.level.getLevelId() + 1);
-        Main.db.setLevel(Main.user.getLobbyKey(), this.level.getLevelId() + 1);
+        Main.db.setLevelId(Main.user.getLobbyKey(), this.level.getLevelId() + 1);
     }
 
     public void addNewMonstersToLobby(int levelId){
@@ -180,7 +188,9 @@ public class Game {
     public void updatePlayersReadyForNewLevel(){
         ArrayList<Boolean> playersReadyForNewLevel = Main.db.fetchPlayersReadyForLevel();
         for (int i = 0; i < playersReadyForNewLevel.size(); i++){
-            this.getCharacters().get(i).setReadyForNewLevel(playersReadyForNewLevel.get(i));
+            if (this.getCharacters().get(i) != this.playerCharacter) {
+                this.getCharacters().get(i).setReadyForNewLevel(playersReadyForNewLevel.get(i));
+            }
         }
     }
 
@@ -193,6 +203,11 @@ public class Game {
             }
         }
         return ready;
+    }
+
+    public void setPlayerReadyForNewLevel(boolean ready){
+        this.playerCharacter.setReadyForNewLevel(ready);
+        Main.db.setReadyForNewLevel(this.playerCharacter.getPlayerId(), ready);
     }
 
     public void setAllPlayersReadyForNewLevel(boolean ready){
@@ -244,22 +259,37 @@ public class Game {
         return cleared;
     }
 
-    public void changeToNewLevel(){
-        this.level.setLevelId(this.level.getLevelId() + 1);
-        this.level.updateLevel();
+    public boolean newLevelAvailable(){
+        int dbLevelId = Main.db.fetchLevelId(Main.user.getLobbyKey());
+        return (this.level.getLevelId() < dbLevelId);
+    }
 
-        GridPane mapGrid = (GridPane)this.creatures.get(0).getPawn().getParent();
-        for (Creature c : this.creatures){
+    public void changeToNewLevel() {
+        int dbLevelId = Main.db.fetchLevelId(Main.user.getLobbyKey());
+        this.level.setLevelId(dbLevelId);
+        this.level.updateLevel();
+        GridPane mapGrid = (GridPane) this.creatures.get(0).getPawn().getParent();
+        for (Creature c : this.creatures) {
             mapGrid.getChildren().remove(c.getPawn());
         }
         this.creatures = Main.db.fetchCreaturesFromLobby();
-        for (Creature c : this.creatures){
-            if (c.getPlayerId() == Main.user.getPlayerId()){
-                this.playerCharacter = (game.Character)c;
+        for (Creature c : this.creatures) {
+            if (c.getPlayerId() == Main.user.getPlayerId()) {
+                this.playerCharacter = (game.Character) c;
             }
-            c.setPawnSize(mapGrid.getPrefWidth()/16, mapGrid.getPrefHeight()/16);
+            c.setPawnSize(mapGrid.getPrefWidth() / 16, mapGrid.getPrefHeight() / 16);
             mapGrid.add(c.getPawn(), c.getxPos(), c.getyPos());
         }
+    }
+
+    public boolean containsMonster(){
+        boolean containsmonster = false;
+        for (Creature c : this.creatures){
+            if (c instanceof Monster){
+                containsmonster = true;
+            }
+        }
+        return containsmonster;
     }
 
     public void monsterAction() {

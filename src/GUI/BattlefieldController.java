@@ -126,7 +126,6 @@ public class BattlefieldController implements Initializable {
             public void run() {
                 Platform.runLater(() -> {
                     update();
-                    //TeamMatesController.updateListView();
                 });
             }
         },0 ,1200);
@@ -308,13 +307,12 @@ public class BattlefieldController implements Initializable {
 
 
     public boolean update(){
-        if (game.isLevelCleared() && !transitioning) {
-            if (!game.playerCharacter.isReadyForNewLevel()){
-                Main.db.setReadyForNewLevel(game.playerCharacter.getPlayerId(), true);
-            }
-            game.updatePlayersReadyForNewLevel();
-            if (game.playersReadyForNewLevel()) {
+        if (game.isLevelCleared()) {
+            if (!transitioning){
                 transitioning = true;
+                if (Main.user.isHost()){
+                    game.pushNewLevel();
+                }
                 SFXPlayer.getInstance().setSFX(13);
                 MusicPlayer.getInstance().stopSong();
                 MusicPlayer.getInstance().changeSong(1);
@@ -339,8 +337,8 @@ public class BattlefieldController implements Initializable {
                         });
                     }
                 }).start();
-                return false;
             }
+            return false;
         }
 
         updateGame();
@@ -358,9 +356,9 @@ public class BattlefieldController implements Initializable {
         game.newLevel();
         game.resetTurn();
         player.resetUsedActions();
-        if (Main.user.isHost()) {
-            game.setAllPlayersReadyForNewLevel(false);
-        }
+        // (Main.user.isHost()) {
+        //    game.setAllPlayersReadyForNewLevel(false);
+        //}
     }
 
     public boolean checkForPlayerTurn(){

@@ -249,7 +249,7 @@ public class Database {
         try{
             con = this.bds.getConnection();
             con.setAutoCommit(false);
-            String prepString = "INSERT INTO game_lobby VALUES(DEFAULT, 0, 1, DEFAULT)";
+            String prepString = "INSERT INTO game_lobby VALUES(DEFAULT, 0, 1, DEFAULT, DEFAULT)";
             prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
             prepStmt.executeUpdate();
             res = prepStmt.getGeneratedKeys();
@@ -269,6 +269,60 @@ public class Database {
             this.manager.closeConnection(con);
             this.connectUserToGameLobby(lobbyKey);
             return status;
+        }
+    }
+
+    public boolean setBattlefieldReady(int lobbyKey){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        boolean status = true;
+        try{
+            con = this.bds.getConnection();
+            con.setAutoCommit(false);
+            String prepString = "UPDATE game_lobby SET battlefield_ready = TRUE WHERE lobby_key = ?";
+            prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
+            prepStmt.setInt(1, lobbyKey);
+            prepStmt.executeUpdate();
+            res = prepStmt.getGeneratedKeys();
+            res.next();
+            con.commit();
+        }
+        catch (SQLException sq){
+            this.manager.rollback(con);
+            sq.printStackTrace();
+            status = false;
+        }
+        finally {
+            this.manager.turnOnAutoCommit(con);
+            this.manager.closeRes(res);
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(con);
+            return status;
+        }
+    }
+
+    public boolean fetchBattlefieldReady(int lobbyKey) {
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        boolean ready = false;
+        try {
+            con = this.bds.getConnection();
+            String prepString = "SELECT battlefield_ready FROM game_lobby WHERE lobby_key = ?";
+            prepStmt = con.prepareStatement(prepString);
+            prepStmt.setInt(1, lobbyKey);
+            res = prepStmt.executeQuery();
+            res.next();
+            ready = res.getBoolean("battlefield_ready");
+        } catch (SQLException sq) {
+            sq.printStackTrace();
+            ready = false;
+        } finally {
+            this.manager.closeRes(res);
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(con);
+            return ready;
         }
     }
 
@@ -1315,7 +1369,7 @@ public class Database {
         }
     }
 
-    public boolean setLevel(int lobbyKey, int level){
+    public boolean setLevelId(int lobbyKey, int levelId){
         Connection con = null;
         PreparedStatement prepStmt = null;
         boolean status = false;
@@ -1324,7 +1378,7 @@ public class Database {
             con.setAutoCommit(false);
             String prepString = "UPDATE game_lobby SET level_id = ? WHERE lobby_key = ?";
             prepStmt = con.prepareStatement(prepString);
-            prepStmt.setInt(1, level);
+            prepStmt.setInt(1, levelId);
             prepStmt.setInt(2, lobbyKey);
             prepStmt.executeUpdate();
             status = true;
