@@ -107,8 +107,8 @@ public class BattlefieldController implements Initializable {
         player.setEquippedWeapon(0);
         Weapon weapon1 = game.playerCharacter.getWeapons().get(0);
         Weapon weapon2 = game.playerCharacter.getWeapons().get(1);
-        weaponOneLabel.setText(weapon1.getName() + "\n" + "Damage: " + weapon1.getDamageDice() + "\n" + (weapon1.isRanged() ? "Ranged" : "Melee"));
-        weaponTwoLabel.setText(weapon2.getName() + "\n" + "Damage: " + weapon2.getDamageDice() + "\n" + (weapon2.isRanged() ? "Ranged" : "Melee"));
+        weaponOneLabel.setText(weapon1.getName() + "\n" + "Avg. damage: " + (((((double)weapon1.getDamageDice()/2)+0.5)*weapon1.getDiceAmount()) + game.playerCharacter.getDamageBonus()) + "\n" + (weapon1.isRanged() ? "Ranged" : "Melee"));
+        weaponTwoLabel.setText(weapon2.getName() + "\n" + "Avg. damage: " + (((((double)weapon2.getDamageDice()/2)+0.5)*weapon2.getDiceAmount()) + game.playerCharacter.getDamageBonus()) + "\n" + (weapon2.isRanged() ? "Ranged" : "Melee"));
 
         mapContainer.getChildren().add(game.getLevel().backgroundImage);
         game.getLevel().backgroundImage.toBack();
