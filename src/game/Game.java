@@ -261,6 +261,19 @@ public class Game {
         return cleared;
     }
 
+    public boolean isGameOver(){
+        boolean gameOver = false;
+        boolean allCharactersDead = true;
+        ArrayList<Character> characters = this.getCharacters();
+        for (Character i: characters){
+            if (!i.isDead()){
+                allCharactersDead = false;
+            }
+        }
+        gameOver = allCharactersDead;
+        return gameOver;
+    }
+
     public void changeToNewLevel() {
         int dbLevelId = Main.db.fetchLevelId(Main.user.getLobbyKey());
         this.level.setLevelId(dbLevelId);

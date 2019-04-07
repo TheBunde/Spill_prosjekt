@@ -379,6 +379,34 @@ public class Database {
         return rank;
     }
 
+    public boolean setRank(int rank){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        boolean status = true;
+        try{
+            con = this.bds.getConnection();
+            con.setAutoCommit(false);
+            String prepString = "UPDATE usr SET rank = ? WHERE user_id = ?";
+            prepStmt = con.prepareStatement(prepString);
+            prepStmt.setInt(1, rank + 1);
+            prepStmt.setInt(2, Main.user.getUser_id());
+            prepStmt.executeUpdate();
+            con.commit();
+            Main.user.setRank(rank + 1);
+        }
+        catch (SQLException sq){
+            this.manager.rollback(con);
+            sq.printStackTrace();
+            status = false;
+        }
+        finally {
+            this.manager.turnOnAutoCommit(con);
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(con);
+            return status;
+        }
+    }
+
 
     public boolean userExist(String username) {
         Connection con = null;

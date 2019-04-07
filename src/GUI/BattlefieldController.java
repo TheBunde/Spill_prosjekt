@@ -145,7 +145,12 @@ public class BattlefieldController implements Initializable {
                         if (!m.isDead()) {
                             if (m.attackPane == null){
                                 m.initAttackPane(cellWidth, cellHeight);
-                                mapGrid.add(m.attackPane, m.getxPos(), m.getyPos());
+                                Platform.runLater(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        mapGrid.add(m.attackPane, m.getxPos(), m.getyPos());
+                                    }
+                                });
                             }
                             if(game.playerCharacter.getWeapons().get(player.getEquippedWeapon()).isRanged()){
                                 if(game.attackRange(m, false)) {
@@ -314,41 +319,12 @@ public class BattlefieldController implements Initializable {
 
     public boolean update(){
         if (game.isLevelCleared()) {
-            if (!transitioning){
-                transitioning = true;
-                if (Main.user.isHost()){
-                    game.pushNewLevel();
-                }
-                SFXPlayer.getInstance().setSFX(13);
-                MusicPlayer.getInstance().stopSong();
-                MusicPlayer.getInstance().changeSong(1);
-                showLevelTransitionVBox();
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            Thread.sleep(6000);
-                        } catch (InterruptedException ie) {
-                            ie.printStackTrace();
-                        }
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                newLevel();
-                                game.updatePlayerTurn();
-                                checkForPlayerTurn();
-                                if (game.getLevel().getLevelId() <= game.getAmountOfLevels()) {
-                                    hideLevelTransitionVbox();
-                                    transitioning = false;
-                                }
-                            }
-                        });
-                    }
-                }).start();
-            }
+            nextLevelTransition();
+            return false;
+        }else if(game.isGameOver()){
+            gameOverTransition();
             return false;
         }
-
         updateGame();
         refreshViewFromGame();
         checkForPlayerTurn();
@@ -466,12 +442,16 @@ public class BattlefieldController implements Initializable {
 
     public void showLevelTransitionVBox(){
         String nextLevelName = Main.db.getLevelName(game.getLevel().getLevelId() + 1);
-        if (nextLevelName != null){
+        if (nextLevelName != null && !game.isGameOver()){
             ((Label)transitionVbox.getChildren().get(1)).setText("Travelling to " + nextLevelName + "world");
+        }
+        else if(game.isGameOver()){
+            ((Label)transitionVbox.getChildren().get(0)).setText("Defeat");
         }
         else{
             ((Label)transitionVbox.getChildren().get(0)).setText("Victory!");
             ((Label)transitionVbox.getChildren().get(1)).setText("Credits");
+            db.setRank(db.fetchRank(Main.user.getUser_id()));
         }
         transitionVbox.setVisible(true);
         mapGrid.setGridLinesVisible(false);
@@ -496,5 +476,77 @@ public class BattlefieldController implements Initializable {
         moveButton.setDisable(true);
         endTurnButton.setDisable(true);
         exitButton.setDisable(true);
+    }
+
+    public void nextLevelTransition() {
+            if (!transitioning) {
+                transitioning = true;
+                if (Main.user.isHost()) {
+                    game.pushNewLevel();
+                }
+                SFXPlayer.getInstance().setSFX(13);
+                MusicPlayer.getInstance().stopSong();
+                MusicPlayer.getInstance().changeSong(1);
+                showLevelTransitionVBox();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(6000);
+                        } catch (InterruptedException ie) {
+                            ie.printStackTrace();
+                        }
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                newLevel();
+                                game.updatePlayerTurn();
+                                checkForPlayerTurn();
+                                if (game.getLevel().getLevelId() <= game.getAmountOfLevels()) {
+                                    hideLevelTransitionVbox();
+                                    transitioning = false;
+                                }
+                            }
+                        });
+                    }
+                }).start();
+            }
+    }
+
+    public void gameOverTransition(){
+        if (!transitioning) {
+            transitioning = true;
+            SFXPlayer.getInstance().setSFX(3);
+            MusicPlayer.getInstance().stopSong();
+            MusicPlayer.getInstance().changeSong(1);
+            showLevelTransitionVBox();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    chatController.timer.cancel();
+                    chatController.timer.purge();
+                    timer.cancel();
+                    timer.purge();
+                    try {
+                        Thread.sleep(6000);
+                    } catch (InterruptedException ie) {
+                        ie.printStackTrace();
+                    }
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                MusicPlayer.getInstance().changeSong(2);
+                                sceneSwitcher.switchScene(exitButton, "MainMenu.fxml");
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+                                hideLevelTransitionVbox();
+                                transitioning = false;
+                        }
+                    });
+                }
+            }).start();
+        }
     }
 }
