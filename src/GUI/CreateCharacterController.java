@@ -59,6 +59,7 @@ public class CreateCharacterController implements Initializable {
         System.out.println("View is now loaded!");
         chooseClassDropdown.getItems().addAll("Warrior","Rogue","Wizard","Ranger");
         iv.setImage(defaultImage);
+        db.createPlayer(0, true);
     }
 
     //method to display selected character
@@ -110,7 +111,7 @@ public class CreateCharacterController implements Initializable {
             return false;
         }
         SFXPlayer.getInstance().setSFX(0);
-        if(db.createPlayer(a, true)){
+        if(db.createCreature(Main.user.getPlayerId(), a)){
             System.out.println("character created");
         }else{
             System.out.println("character not created");
