@@ -95,6 +95,7 @@ public class BattlefieldController implements Initializable {
             if (c instanceof Monster){
                 ((Monster) c).initAttackPane(cellWidth, cellHeight);
                 mapGrid.add(((Monster) c).attackPane, c.getxPos(), c.getyPos());
+                ((Monster) c).attackPane.toFront();
             }
             c.setPawnSize(cellWidth, cellHeight);
             mapGrid.add(c.getPawn(), c.getxPos(), c.getyPos());
@@ -142,7 +143,10 @@ public class BattlefieldController implements Initializable {
                 public void run() {
                     for (Monster m : game.getMonsters()) {
                         if (!m.isDead()) {
-                            System.out.println(game.playerCharacter.getWeapons().get(player.getEquippedWeapon()).isRanged());
+                            if (m.attackPane == null){
+                                m.initAttackPane(cellWidth, cellHeight);
+                                mapGrid.add(m.attackPane, m.getxPos(), m.getyPos());
+                            }
                             if(game.playerCharacter.getWeapons().get(player.getEquippedWeapon()).isRanged()){
                                 if(game.attackRange(m, false)) {
                                     m.showAttackPane();
@@ -299,13 +303,7 @@ public class BattlefieldController implements Initializable {
                 mapGrid.getChildren().remove(c.getPawn());
                 mapGrid.add(c.getPawn(), c.getxPos(), c.getyPos());
                 if (c instanceof Monster){
-                    if (((Monster) c).attackPane == null){
-                        ((Monster) c).initAttackPane(cellWidth, cellHeight);
-                        mapGrid.add(((Monster) c).attackPane, c.getxPos(), c.getyPos());
-                    }
-                    else {
-                        ((Monster) c).updateAttackPane();
-                    }
+                    ((Monster) c).updateAttackPane();
                 }
             }
         }
@@ -499,6 +497,4 @@ public class BattlefieldController implements Initializable {
         endTurnButton.setDisable(true);
         exitButton.setDisable(true);
     }
-
-
 }
