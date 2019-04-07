@@ -92,13 +92,12 @@ public class BattlefieldController implements Initializable {
         cellHeight = mapGrid.getPrefHeight()/(16.0);
 
         for (Creature c : game.getCreatures()){
+            c.setPawnSize(cellWidth, cellHeight);
+            mapGrid.add(c.getPawn(), c.getxPos(), c.getyPos());
             if (c instanceof Monster){
                 ((Monster) c).initAttackPane(cellWidth, cellHeight);
                 mapGrid.add(((Monster) c).attackPane, c.getxPos(), c.getyPos());
-                ((Monster) c).attackPane.toFront();
             }
-            c.setPawnSize(cellWidth, cellHeight);
-            mapGrid.add(c.getPawn(), c.getxPos(), c.getyPos());
         }
 
         weaponOne.setImage(new Image("GUI/images/" + game.playerCharacter.getWeapons().get(0).getImageUrl()));

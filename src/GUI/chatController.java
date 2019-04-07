@@ -50,13 +50,11 @@ public class chatController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources){
         chatMessageObservableList.clear();
-        chatMessageObservableList.add(new ChatMessage("Event" ,"Welcome to the Chat! Here you can communicate with your teammates", "", true));
+        chatMessageObservableList.add(new ChatMessage(0 ,"Event" ,"Welcome to the Chat! Here you can communicate with your teammates", "", true));
         list.setItems(chatMessageObservableList);
         list.setCellFactory(chatMessageObservableList -> {
             return new ChatMessageCell();
         });
-
-
 
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {

@@ -50,14 +50,15 @@ public class Database {
             res = prepStmt.executeQuery();
             while (res.next()) {
                 if (res.getInt("user_id") == 0){
-                    chat.addMessage("Event", res.getString("message"), "", true);
+                    chat.addMessage(res.getInt("message_id"), "Event", res.getString("message"), "", true);
                 }
                 else{
-                    chat.addMessage(res.getString("username"), res.getString("message"), res.getString("time_stamp"), false);
+                    chat.addMessage(res.getInt("message_id"), res.getString("username"), res.getString("message"), res.getString("time_stamp"), false);
                 }
                 if (res.isFirst()){
                     chat.setLastSeenMessageId(res.getInt("chat_message.message_id"));
                 }
+                System.out.println("Message: " + res.getInt("message_id"));
             }
         }
         catch (SQLException sq){
