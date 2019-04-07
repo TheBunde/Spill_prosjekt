@@ -91,6 +91,10 @@ public class GameLobbyController {
         db.setHost(false);
         chatController.timer.cancel();
         chatController.timer.purge();
+        playerReadyTimer.cancel();
+        playerReadyTimer.purge();
+        limitPlayerTimer.cancel();
+        limitPlayerTimer.purge();
         this.sceneSwitcher.switchScene(backToMenuButton, "MainMenu.fxml");
     }
 

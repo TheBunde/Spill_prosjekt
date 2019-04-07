@@ -113,11 +113,11 @@ public class Game {
     }
 
     public void handleCreatureData(){
-        for (Creature c : this.creatures) {
-            c.updateDead();
-        }
         if (this.playerCharacter.getHp() <= 0 && !this.playerCharacter.isDead()){
             Main.db.addChatMessage(Main.user.getUsername() + " died", true);
+        }
+        for (Creature c : this.creatures) {
+            c.updateDead();
         }
     }
 

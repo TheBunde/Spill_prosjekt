@@ -180,23 +180,27 @@ INSERT INTO level VALUES(3, 14, "Snow-map.png", "");
 INSERT INTO level VALUES(4, 15, "Lava-map.png", "");
 INSERT INTO level VALUES(5, 11, "Mountain-map.png", "");
 
+
+INSERT INTO creatureTemplate VALUES(DEFAULT, "Warrior", 36, 18, 3, 5, 8, 2, "He be legendary warior. Yeet that goblin", "warrior.jpg", true);
+INSERT INTO creatureTemplate VALUES(DEFAULT, "Rogue", 23, 16, 3, 7, 7, 2, "she be the sneaky girl. not the one from Rogue One", "rogue.jpg", true);
+INSERT INTO creatureTemplate VALUES(DEFAULT, "Wizard", 22, 15, 3, 0, 8, 1, "Penny for your thoughts. Nothing that a little music can't help. Seagulls stop it now.", "wizard.jpg", true);
+INSERT INTO creatureTemplate VALUES(DEFAULT, "Ranger", 32, 16, 3, 5, 9, 2, "Think LOtR. pointy ears, just as sexy", "ranger.jpg", true);
+INSERT INTO creatureTemplate VALUES(DEFAULT, "Bear", 45, 15, 5, 3, 5, 1, NULL, "judge.jpg", false)
+INSERT INTO creatureTemplate VALUES(DEFAULT, "Ent", 50, 11, 3, 4, 1, 1, NULL, "Ent.png", false);
+INSERT INTO creatureTemplate VALUES(DEFAULT, "Mummy", 20, 15, 3, 3, 5, 1, NULL, "Mummi.png", false);
+INSERT INTO creatureTemplate VALUES(DEFAULT, "Ushabti", 20, 15, 3, 3, 5, 1, NULL, "Ushabti2.png", false);
+INSERT INTO creatureTemplate VALUES(DEFAULT, "Wolf", 20, 15, 3, 3, 5, 1, NULL, "judge.jpg", false);
+INSERT INTO creatureTemplate VALUES(DEFAULT, "Yeti", 20, 15, 3, 3, 5, 1, NULL, "judge.jpg", false);
+INSERT INTO creatureTemplate VALUES(DEFAULT, "Lizard", 20, 15, 3, 3, 5, 1, NULL, "judge.jpg", false);
+INSERT INTO creatureTemplate VALUES(DEFAULT, "Demon", 20, 15, 3, 3, 5, 1, NULL, "judge.jpg", false);
+INSERT INTO creatureTemplate VALUES(DEFAULT, "Dragon", 178, 18, 4, 6, 10, 3, NULL, "judge.jpg", false);
+
 INSERT INTO level_monster VALUES(DEFAULT, 1, 5);
 INSERT INTO level_monster VALUES(DEFAULT, 1, 11);
 INSERT INTO level_monster VALUES(DEFAULT, 2, 5);
 INSERT INTO level_monster VALUES(DEFAULT, 3, 5);
 INSERT INTO level_monster VALUES(DEFAULT, 4, 5);
 INSERT INTO level_monster VALUES(DEFAULT, 5, 12);
-
-INSERT INTO creatureTemplate VALUES(DEFAULT, "Warrior", 36, 18, 3, 5, 8, 2, "He be legendary warior. Yeet that goblin", "warrior.jpg", true);
-INSERT INTO creatureTemplate VALUES(DEFAULT, "Rogue", 23, 16, 3, 7, 7, 2, "she be the sneaky girl. not the one from Rogue One", "rogue.jpg", true);
-INSERT INTO creatureTemplate VALUES(DEFAULT, "Wizard", 22, 15, 3, 0, 8, 1, "Penny for your thoughts. Nothing that a little music can't help. Seagulls stop it now.", "wizard.jpg", true);
-INSERT INTO creatureTemplate VALUES(DEFAULT, "Ranger", 32, 16, 3, 5, 9, 2, "Think LOtR. pointy ears, just as sexy", "ranger.jpg", true);
-INSERT INTO creatureTemplate(creature_id,creature_name,hp,ac,movement,damage_bonus,attack_bonus,attacks_per_turn) values(5,"Hell Hound",45,15,5,3,5,1, NULL, "judge.jpg", false)
-
-INSERT INTO creatureTemplate(creature_id,creature_name,hp,ac,movement,damage_bonus,attack_bonus,attacks_per_turn) values(9,"Dragon",178,18,4,6,10,3, NULL, "judge.jpg", false);
-INSERT INTO creatureTemplate VALUES(DEFAULT, "Ushabti", 20, 15, 3, 3, 5, 1, NULL, "Ushabti2.png"));
-INSERT INTO creatureTemplate values(6,"Earth elemental",126,17,3,5,8,2, NULL, "Ent.png");
-INSERT INTO creatureTemplate VALUES(DEFAULT, "Ent", 50, 11, 3, 4, 1, 1, "Ent.png", FALSE);
 
 --weapon
 INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description,weapon_url) VALUES (1,"Longsword",1,8,"Melee","Long_sword.png");

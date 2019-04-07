@@ -1,16 +1,22 @@
 package Database;
 
 public class ChatMessage {
+    private int messageId;
     private String username;
     private String message;
     private String timestamp;
     private boolean event;
 
-    public ChatMessage(String username, String message, String timestamp, boolean event){
+    public ChatMessage(int messageId, String username, String message, String timestamp, boolean event){
+        this.messageId = messageId;
         this.username = username;
         this.message = message;
         this.timestamp = timestamp;
         this.event = event;
+    }
+
+    public int getMessageId(){
+        return messageId;
     }
 
     public String getMessage(){
@@ -20,7 +26,6 @@ public class ChatMessage {
     public String getUsername() {
         return username;
     }
-
 
     public String getTimestamp() {
         return timestamp;
