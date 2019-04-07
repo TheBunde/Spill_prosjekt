@@ -123,6 +123,7 @@ create table game_lobby(
     player_turn integer,
     level_id integer,
     joinable boolean DEFAULT TRUE,
+    battlefield_ready BOOLEAN DEFAULT FALSE,
     constraint game_lobby_pk primary key(lobby_key));
 
 create table chat_message(

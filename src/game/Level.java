@@ -18,6 +18,14 @@ public class Level {
         this.music = music;
         this.backgroundUrl = backgroundUrl;
         this.backgroundImage = new ImageView(new Image("GUI/images/" + backgroundUrl));
+    }
+
+    public Level(int levelId){
+        Level firstLevel = Main.db.fetchLevelObject(levelId);
+        this.setLevelId(firstLevel.getLevelId());
+        this.setMusic(firstLevel.getMusic());
+        this.setBackgroundUrl(firstLevel.getBackgroundUrl());
+        this.backgroundImage = new ImageView(new Image("GUI/images/" + firstLevel.getBackgroundUrl()));
         MusicPlayer.getInstance().stopSong();
         MusicPlayer.getInstance().changeSong(this.music);
     }
@@ -55,9 +63,8 @@ public class Level {
     }
 
     public void updateLevel(){
-        Level newLevel = Main.db.fetchLevelObject(this.levelId);
+        Level newLevel = Main.db.fetchLevelObject(Main.db.fetchLevelId(Main.user.getLobbyKey()));
         if (newLevel != null) {
-            this.setLevelId(newLevel.getLevelId());
             this.setMusic(newLevel.getMusic());
             this.setBackgroundUrl(newLevel.getBackgroundUrl());
             this.backgroundImage.setImage(new Image("GUI/images/" + this.getBackgroundUrl()));
