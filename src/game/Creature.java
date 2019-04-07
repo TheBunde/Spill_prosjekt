@@ -182,6 +182,7 @@ public abstract class Creature {
     public boolean updateDead(){
         if(this.hp <= 0 && !isDead()){
             SFXPlayer.getInstance().setSFX(0);
+            this.setPawnImage("gravestone.png");
             isDead = true;
         }
         return isDead;

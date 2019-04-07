@@ -50,9 +50,6 @@ public class Game {
             updateCreatureData();
         }
         handleCreatureData();
-        if(playerCharacter.getHp() <= 0 && !playerCharacter.isDead()){
-            db.addChatMessage(Main.user.getUsername() + " died", true);
-        }
         if (Main.user.isHost()) {
             monsterAction();
         }
@@ -118,9 +115,9 @@ public class Game {
     public void handleCreatureData(){
         for (Creature c : this.creatures) {
             c.updateDead();
-            if (c.isDead()) {
-                c.setPawnImage("gravestone.png");
-            }
+        }
+        if (this.playerCharacter.getHp() <= 0 && !this.playerCharacter.isDead()){
+            Main.db.addChatMessage(Main.user.getUsername() + " died", true);
         }
     }
 
