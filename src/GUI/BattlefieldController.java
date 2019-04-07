@@ -287,7 +287,7 @@ public class BattlefieldController implements Initializable {
     public void refreshViewFromGame(){
         for(int i = 0; i < game.getCreatures().size(); i++){
             Creature c = game.getCreatures().get(i);
-            if (c.getPawn().getX() != c.getxPos() || c.getPawn().getY() != c.getyPos()) {
+            if (GridPane.getColumnIndex(c.getPawn()) != c.getxPos() || GridPane.getRowIndex(c.getPawn()) != c.getyPos()) {
                 mapGrid.getChildren().remove(c.getPawn());
                 mapGrid.add(c.getPawn(), c.getxPos(), c.getyPos());
                 if (c instanceof Monster){
@@ -329,6 +329,8 @@ public class BattlefieldController implements Initializable {
                             @Override
                             public void run() {
                                 newLevel();
+                                game.updatePlayerTurn();
+                                checkForPlayerTurn();
                                 if (game.getLevel().getLevelId() <= game.getAmountOfLevels()) {
                                     hideLevelTransitionVbox();
                                     transitioning = false;
@@ -344,17 +346,12 @@ public class BattlefieldController implements Initializable {
         updateGame();
         refreshViewFromGame();
         checkForPlayerTurn();
-        for (int i = 0; i < game.getAmountOfCreatures(); i++){
-            System.out.println(game.getCreature(i).getCreatureName() + ": " + game.getCreature(i).getHp());
-        }
-        System.out.println(player.isMovePressed() + " " + player.isAttackPressed());
-        System.out.println("Player turn: " + game.isPlayerTurn());
+        System.out.println(game.toString());
         return true;
     }
 
     public void newLevel(){
         game.newLevel();
-        game.resetTurn();
         player.resetUsedActions();
         // (Main.user.isHost()) {
         //    game.setAllPlayersReadyForNewLevel(false);
@@ -470,10 +467,28 @@ public class BattlefieldController implements Initializable {
         }
         transitionVbox.setVisible(true);
         mapGrid.setGridLinesVisible(false);
+        this.disableAllButtons();
     }
 
     public void hideLevelTransitionVbox(){
         transitionVbox.setVisible(false);
         mapGrid.setGridLinesVisible(true);
+        this.enableAllButtons();
     }
+
+    public void enableAllButtons(){
+        attackButton.setDisable(false);
+        moveButton.setDisable(false);
+        endTurnButton.setDisable(false);
+        exitButton.setDisable(false);
+    }
+
+    public void disableAllButtons(){
+        attackButton.setDisable(true);
+        moveButton.setDisable(true);
+        endTurnButton.setDisable(true);
+        exitButton.setDisable(true);
+    }
+
+
 }

@@ -13,5 +13,5 @@
 }
 
 .gridStyle Line{
-    -fx-stroke: rgb(70, 70, 70, 100);
+    -fx-stroke: #00000030;
 }
