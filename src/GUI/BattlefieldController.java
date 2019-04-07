@@ -80,7 +80,7 @@ public class BattlefieldController implements Initializable {
     public static Timer timer = new Timer();
 
     public BattlefieldController(){
-        //New instance of game
+        //New instance of Game
         game = new Game();
 
     }
@@ -450,7 +450,7 @@ public class BattlefieldController implements Initializable {
         else{
             ((Label)transitionVbox.getChildren().get(0)).setText("Victory!");
             ((Label)transitionVbox.getChildren().get(1)).setText("Credits");
-            db.setRank(db.fetchRank(Main.user.getUser_id()));
+            db.setRank(db.fetchRank(Main.user.getUser_id()) + 1);
         }
         transitionVbox.setVisible(true);
         mapGrid.setGridLinesVisible(false);

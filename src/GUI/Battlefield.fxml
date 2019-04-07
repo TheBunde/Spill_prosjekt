@@ -76,7 +76,7 @@
                 <fx:include maxWidth="200.0" minWidth="200.0" prefWidth="200.0" source="chat.fxml" />
             </children>
         </Pane>
-      <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="117.0" prefWidth="801.0" GridPane.columnSpan="2" GridPane.rowIndex="1">
+      <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="116.0" prefWidth="800.0" GridPane.columnSpan="2" GridPane.rowIndex="1">
          <children>
             <VBox prefHeight="117.0" prefWidth="107.0">
                <children>
@@ -93,13 +93,13 @@
                   </HBox>
                </children>
             </VBox>
-            <VBox prefHeight="117.0" prefWidth="71.0">
+            <VBox maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="116.0" prefWidth="59.0">
                <children>
-                  <ImageView fx:id="weaponOne" fitHeight="58.0" fitWidth="76.0" onMouseClicked="#weaponOneSelected" pickOnBounds="true" smooth="false">
+                  <ImageView fx:id="weaponOne" fitHeight="58.0" fitWidth="76.0" onMouseClicked="#weaponOneSelected" pickOnBounds="true" preserveRatio="true" smooth="false">
                      <image>
                         <Image url="@images/Long_sword.png" />
                      </image></ImageView>
-                  <ImageView fx:id="weaponTwo" fitHeight="59.0" fitWidth="76.0" onMouseClicked="#weaponTwoSelected" pickOnBounds="true" smooth="false">
+                  <ImageView fx:id="weaponTwo" fitHeight="58.0" fitWidth="76.0" onMouseClicked="#weaponTwoSelected" pickOnBounds="true" preserveRatio="true" smooth="false">
                      <image>
                         <Image url="@images/Javelin.png" />
                      </image></ImageView>

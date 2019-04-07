@@ -69,15 +69,16 @@ public abstract class Creature {
         damage += Dice.roll(weapon.getDamageDice(), weapon.getDiceAmount()) + this.damageBonus;
 
         target.setHp(target.getHp() - damage);
-        String chatMessage = "";
+        String chatMessage = " rolled " + roll + " and dealt " + damage + " on ";
         if (this instanceof Character){
             SFXPlayer.getInstance().setSFX(10);
-            chatMessage += Main.db.fetchUsernameFromPlayerId(this.getPlayerId()) + " rolled " + roll + " and dealt " + damage + " to " + target.getCreatureName();
+            chatMessage = Main.db.fetchUsernameFromPlayerId(this.getPlayerId()) + chatMessage + target.getCreatureName();
         }
         else{
             SFXPlayer.getInstance().setSFX(10);
-            chatMessage += this.getCreatureName() + " rolled " + roll + " and dealt " + damage + " to " + Main.db.fetchUsernameFromPlayerId(target.getPlayerId());
+            chatMessage = this.getCreatureName() + chatMessage + Main.db.fetchUsernameFromPlayerId(target.getPlayerId());
         }
+        chatMessage += " with " + weapon.getName();
         Main.db.addChatMessage(chatMessage, true);
         return true;
     }

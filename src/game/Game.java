@@ -20,20 +20,17 @@ public class Game {
 
     public Game(){
         level = new Level(1);
-        System.out.println(Main.db.fetchBattlefieldReady(Main.user.getLobbyKey()));
         if (Main.user.isHost()){
-            this.addNewMonstersToLobby(1);
+            this.addNewMonstersToLobby(1, Main.db.fetchPlayerCount());
             Main.db.setBattlefieldReady(Main.user.getLobbyKey());
 
         }
         else{
             while (!Main.db.fetchBattlefieldReady(Main.user.getLobbyKey())){
-                System.out.println("WAAAAAAAAAAAAAAAAAAAAAAIIIIIIIIIIIIIIITTTTTTTTTIIIIIIIIINNG");
                 //Wait until battlefield is ready
             }
         }
-        System.out.println(Main.db.fetchBattlefieldReady(Main.user.getLobbyKey()));
-        creatures = db.fetchCreaturesFromLobby();
+        this.creatures = db.fetchCreaturesFromLobby();
 
         for (int i = 0; i < this.creatures.size(); i++){
             if (this.creatures.get(i).getPlayerId() == Main.user.getPlayerId()){
@@ -74,13 +71,22 @@ public class Game {
     }
 
     public void pushNewLevel(){
-        addNewMonstersToLobby(this.level.getLevelId() + 1);
+        addNewMonstersToLobby(this.level.getLevelId() + 1, this.getCharacters().size());
         Main.db.setLevelId(Main.user.getLobbyKey(), this.level.getLevelId() + 1);
+        upgradePlayerStats();
         this.resetTurn();
     }
 
-    public void addNewMonstersToLobby(int levelId){
-        ArrayList<Integer> creatureIds = Main.db.fetchMonstersFromLevel(levelId);
+    public void upgradePlayerStats(){
+        ArrayList<Character> characters = this.getCharacters();
+        for (Character c : characters){
+            Main.db.setHp((int)(c.getInitialHp()*1.25), c.getPlayerId());
+        }
+        Main.db.addChatMessage("HP upgraded!", true);
+    }
+
+    public void addNewMonstersToLobby(int levelId, int playerAmount){
+        ArrayList<Integer> creatureIds = Main.db.fetchMonstersFromLevel(levelId, playerAmount);
         for (int i = 0; i < creatureIds.size(); i++){
             Main.db.createPlayer(creatureIds.get(i), false);
         }
@@ -365,10 +371,9 @@ public class Game {
         string.append("Amount of creatures: " + this.creatures.size() + "\n");
         for (int i = 0; i < this.creatures.size(); i++){
             Creature c = this.creatures.get(i);
-            string.append("Creature " + (i+1) + ": " + c.getCreatureName() + ":\n");
-            string.append("HP: " + c.getHp() + "\n");
-            string.append("Pos: x: " + c.getxPos() + " y: " + c.getyPos() + "\n");
+            string.append("Creature " + (i+1) + ": " + c.getCreatureName() + " HP: " + c.getHp() + "\n");
         }
+        string.append("\n");
         return string.toString();
     }
 }
