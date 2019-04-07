@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="282722de-e81d-4af5-a69f-914302aac6f6" name="Default Changelist" comment="">
+    <list default="true" id="30e38872-379c-46c5-90ab-4ebf3ea82564" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/BattlefieldController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/BattlefieldController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Creature.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Creature.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Monster.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Monster.java" afterDir="false" />
     </list>
-    <ignored path="$PROJECT_DIR$/../out/" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -49,7 +45,7 @@
         <entry file="file://$PROJECT_DIR$/src/game/Monster.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="261">
-              <caret line="216" column="16" selection-start-line="216" selection-start-column="16" selection-end-line="216" selection-end-column="16" />
+              <caret line="215" column="16" selection-start-line="215" selection-start-column="16" selection-end-line="215" selection-end-column="16" />
               <folding>
                 <element signature="e#7329#7330#0" expanded="true" />
                 <element signature="e#7377#7378#0" expanded="true" />
@@ -74,7 +70,7 @@
                 <element signature="e#4534#4535#0" expanded="true" />
                 <element signature="e#9546#9547#0" expanded="true" />
                 <element signature="e#9579#9580#0" expanded="true" />
-                <element signature="e#9827#9828#0" expanded="true" />
+                <element signature="e#9828#9829#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -136,29 +132,8 @@
       </file>
     </leaf>
   </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>attack</find>
-      <find>died</find>
-      <find>initAtt</find>
-    </findStrings>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/src/game/Level.java" />
-        <option value="$PROJECT_DIR$/src/sql-setup/Tables.sql" />
-        <option value="$PROJECT_DIR$/src/Database/Database.java" />
-        <option value="$PROJECT_DIR$/src/game/Weapon.java" />
-        <option value="$PROJECT_DIR$/src/GUI/style.css" />
-        <option value="$PROJECT_DIR$/src/GUI/BattlefieldController.java" />
-        <option value="$PROJECT_DIR$/src/game/Creature.java" />
-        <option value="$PROJECT_DIR$/src/game/Game.java" />
-      </list>
-    </option>
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -271,7 +246,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1554639182212" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1554639211791" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -332,7 +307,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Image Layers" order="0" />
       <window_info id="DB Browser" order="1" />
@@ -347,12 +321,12 @@
       <window_info anchor="bottom" id="Terminal" order="0" />
       <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.111328125" side_tool="true" weight="0.32967034" />
       <window_info anchor="bottom" id="Version Control" order="2" />
-      <window_info active="true" anchor="bottom" id="Messages" order="3" sideWeight="0.4934896" visible="true" weight="0.3285968" />
+      <window_info anchor="bottom" id="Messages" order="3" sideWeight="0.4934896" weight="0.3285968" />
       <window_info anchor="bottom" id="Console" order="4" />
       <window_info anchor="bottom" id="DB Execution Console" order="5" />
       <window_info anchor="bottom" id="Message" order="6" />
       <window_info anchor="bottom" id="Find" order="7" weight="0.32967034" />
-      <window_info anchor="bottom" id="Run" order="8" sideWeight="0.8886719" weight="0.24511546" />
+      <window_info active="true" anchor="bottom" id="Run" order="8" sideWeight="0.8886719" visible="true" weight="0.24511546" />
       <window_info anchor="bottom" id="Debug" order="9" weight="0.39964476" />
       <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
@@ -435,7 +409,7 @@
     <entry file="file://$PROJECT_DIR$/src/game/Monster.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="261">
-          <caret line="216" column="16" selection-start-line="216" selection-start-column="16" selection-end-line="216" selection-end-column="16" />
+          <caret line="215" column="16" selection-start-line="215" selection-start-column="16" selection-end-line="215" selection-end-column="16" />
           <folding>
             <element signature="e#7329#7330#0" expanded="true" />
             <element signature="e#7377#7378#0" expanded="true" />
@@ -490,7 +464,7 @@
             <element signature="e#4534#4535#0" expanded="true" />
             <element signature="e#9546#9547#0" expanded="true" />
             <element signature="e#9579#9580#0" expanded="true" />
-            <element signature="e#9827#9828#0" expanded="true" />
+            <element signature="e#9828#9829#0" expanded="true" />
           </folding>
         </state>
       </provider>
