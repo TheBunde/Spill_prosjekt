@@ -39,26 +39,30 @@ public class Monster extends Creature {
                 melee = true;
             }
         }
-        if(inRange(target) && melee){
-            moveTo(target, creatures);
-        }else if(melee){
-            moveToward(target, creatures);
+        if(target != null) {
+            if (inRange(target) && melee) {
+                moveTo(target, creatures);
+            } else if (melee) {
+                moveToward(target, creatures);
+            }
         }
     }
 
     //Splitted version of monsterAction for attack
     public void monsterAttack (ArrayList<Creature> players){
         Creature target = getClosest(players);
-        if(meleeRange(target)){
-            for(Weapon i: getWeapons()){
-                if(!i.isRanged()){
-                    attackCreature(target, getWeapons().indexOf(i));
+        if(target != null) {
+            if (meleeRange(target)) {
+                for (Weapon i : getWeapons()) {
+                    if (!i.isRanged()) {
+                        attackCreature(target, getWeapons().indexOf(i));
+                    }
                 }
-            }
-        }else{
-            for(Weapon i: getWeapons()) {
-                if (i.isRanged()) {
-                    attackCreature(target, getWeapons().indexOf(i));
+            } else {
+                for (Weapon i : getWeapons()) {
+                    if (i.isRanged()) {
+                        attackCreature(target, getWeapons().indexOf(i));
+                    }
                 }
             }
         }
@@ -66,14 +70,16 @@ public class Monster extends Creature {
 
     public Creature getClosest(ArrayList<Creature> players){
         ArrayList<Creature> creatures = players;
-        Creature target = creatures.get(0);
-        int xDistance = Math.abs(getxPos() - creatures.get(0).getxPos());
-        int yDistance = Math.abs(getyPos() - creatures.get(0).getyPos());
+        Creature target = null;
+        int xDistance = 16;
+        int yDistance = 16;
 
         for (Creature i : creatures) {
-            if (i != this && i instanceof game.Character && !i.isDead()) {
-                if (Math.abs(getxPos() - i.getxPos()) < xDistance && Math.abs(getyPos() - i.getyPos()) < yDistance) {
-                    target = i;
+            if(!i.isDead()) {
+                if (i != this && i instanceof game.Character) {
+                    if (Math.abs(getxPos() - i.getxPos()) < xDistance && Math.abs(getyPos() - i.getyPos()) < yDistance) {
+                        target = i;
+                    }
                 }
             }
         }

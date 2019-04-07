@@ -707,7 +707,9 @@ public class Database {
             if (playerId < 0) {
                 status = false;
             } else {
-                createCreature(playerId, creatureId);
+                if(creatureId != 0) {
+                    createCreature(playerId, creatureId);
+                }
             }
             return status;
         }

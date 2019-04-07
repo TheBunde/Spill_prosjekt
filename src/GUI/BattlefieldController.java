@@ -104,6 +104,7 @@ public class BattlefieldController implements Initializable {
         weaponTwo.setImage(new Image("GUI/images/" + game.playerCharacter.getWeapons().get(1).getImageUrl()));
         weaponOne.setEffect(light);
         weaponTwo.setEffect(shadow);
+        player.setEquippedWeapon(0);
         Weapon weapon1 = game.playerCharacter.getWeapons().get(0);
         Weapon weapon2 = game.playerCharacter.getWeapons().get(1);
         weaponOneLabel.setText(weapon1.getName() + "\n" + "Damage: " + weapon1.getDamageDice() + "\n" + (weapon1.isRanged() ? "Ranged" : "Melee"));
@@ -141,6 +142,7 @@ public class BattlefieldController implements Initializable {
                 public void run() {
                     for (Monster m : game.getMonsters()) {
                         if (!m.isDead()) {
+                            System.out.println(game.playerCharacter.getWeapons().get(player.getEquippedWeapon()).isRanged());
                             if(game.playerCharacter.getWeapons().get(player.getEquippedWeapon()).isRanged()){
                                 if(game.attackRange(m, false)) {
                                     m.showAttackPane();
@@ -195,6 +197,9 @@ public class BattlefieldController implements Initializable {
     }
 
     public void moveButtonPressed(){
+        for(Creature i: game.getCreatures()){
+            System.out.println("\n" + i.getCreatureName() + "\nxpos: " + i.getxPos() + "\nypos: " + i.getyPos() + "\n");
+        }
         player.setMovePressed(!player.isMovePressed());
         if (player.isMovePressed()) {
             attackButton.setDisable(true);
@@ -218,6 +223,9 @@ public class BattlefieldController implements Initializable {
     };
 
     public void moveFinished(){
+        for(Creature i: game.getCreatures()){
+            System.out.println("\n" + i.getCreatureName() + "\nxpos: " + i.getxPos() + "\nypos: " + i.getyPos() + "\n");
+        }
         if (game.playerCharacter.moveCreature(toGrid(mapGrid.getWidth(), mouseX), toGrid(mapGrid.getHeight(), mouseY), game.getCreatures())){
             player.setMoveUsed(true);
         }
@@ -422,12 +430,14 @@ public class BattlefieldController implements Initializable {
         weaponOne.setEffect(light);
         weaponTwo.setEffect(shadow);
         player.setEquippedWeapon(0);
+        System.out.println("Equiped weapon: " + game.playerCharacter.getWeapons().get(player.getEquippedWeapon()). getName() + "\nRanged: " + game.playerCharacter.getWeapons().get(player.getEquippedWeapon()).isRanged());
     }
 
     public void weaponTwoSelected(){
         weaponOne.setEffect(shadow);
         weaponTwo.setEffect(light);
         player.setEquippedWeapon(1);
+        System.out.println("Equiped weapon: " + game.playerCharacter.getWeapons().get(player.getEquippedWeapon()). getName() + "\nRanged: " + game.playerCharacter.getWeapons().get(player.getEquippedWeapon()).isRanged());
     }
 
     public void updateImage() {
