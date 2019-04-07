@@ -164,12 +164,11 @@ public class Monster extends Creature {
             pos.add(newX);
             pos.add(newY + 1);
         }else if(xD == -1 && yD == 0){
-            setNewPos(newX , newY + 1);
             pos.add(newX);
             pos.add(newY + 1);
         }else if(xD == -1 && yD == -1){
-            pos.add(newX);
-            pos.add(newY - 1);
+            pos.add(newX - 1);
+            pos.add(newY);
         }else if(xD == 0 && yD == -1){
             pos.add(newX -1);
             pos.add(newY);
