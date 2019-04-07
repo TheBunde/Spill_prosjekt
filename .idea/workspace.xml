@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+<<<<<<< HEAD
   <component name="ChangeListManager">
     <list default="true" id="30e38872-379c-46c5-90ab-4ebf3ea82564" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/src/Database/Chat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Database/Chat.java" afterDir="false" />
@@ -283,21 +284,13 @@
   </component>
   <component name="PropertiesComponent">
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1554645445965" />
+=======
+  <component name="PropertiesComponent">
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1554639345624" />
+>>>>>>> 1f8b9bdf90c0edcbbbc95040d0fb83cfd6fda3d9
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
-  <component name="RunManager" selected="Application.Main">
-    <configuration name="Main" type="Application" factoryName="Application" singleton="false" nameIsGenerated="true">
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main.Main" />
       <module name="Game-development-project" />
       <extension name="coverage">
@@ -310,6 +303,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+<<<<<<< HEAD
     <configuration name="Double" type="CompoundRunConfigurationType">
       <toRun name="Main" type="Application" />
       <method v="2" />
@@ -620,5 +614,12 @@
         </state>
       </provider>
     </entry>
+=======
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+>>>>>>> 1f8b9bdf90c0edcbbbc95040d0fb83cfd6fda3d9
   </component>
 </project>
