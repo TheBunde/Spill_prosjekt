@@ -1,7 +1,7 @@
 package GUI;
 
 import Main.*;
-import Database.*;
+import database.*;
 import audio.MusicPlayer;
 import audio.SFXPlayer;
 import javafx.fxml.FXML;
@@ -10,6 +10,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class MainMenuController {
 
@@ -81,13 +86,21 @@ public class MainMenuController {
     private Button helpButton;
 
 
-    public void helpButtonPressed() throws Exception{
+    public void helpButtonPressed() throws Exception {
         new SFXPlayer("knockSFX").run();
-        Parent root = FXMLLoader.load(getClass().getResource("https://gitlab.stud.iie.ntnu.no/heleneyj/game-development-project/wikis/System/User-manual"));
-        Scene scene = new Scene(root);
-        Stage stage = (Stage)helpButton.getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+        if (Desktop.isDesktopSupported()) {
+            try {
+                Desktop.getDesktop().browse(new URI("https://gitlab.stud.iie.ntnu.no/heleneyj/game-development-project/wikis/System%20Documentation"));
+            }
+            catch (IOException ioe) {
+                System.out.println("Error with IO");
+                ioe.printStackTrace();
+            }
+            catch (URISyntaxException e) {
+                System.out.println("Error in URL");
+                e.printStackTrace();
+            }
+        }
     }
 
     @FXML

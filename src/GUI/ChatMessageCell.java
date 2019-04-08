@@ -1,17 +1,11 @@
 package GUI;
 
-import Database.ChatMessage;
+import chat.ChatMessage;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 
 
 import java.io.IOException;

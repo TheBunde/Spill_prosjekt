@@ -1,4 +1,5 @@
-package Database;
+package user;
+import database.Database;
 import Main.*;
 
 public class User {
