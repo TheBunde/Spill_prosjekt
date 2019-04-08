@@ -10,4 +10,15 @@ public class Dice {
         }
         return number;
     }
+
+    public static void main(String[] args) {
+        double sum = 0;
+        double iter = 100000;
+        for (int i = 0; i < iter; i++){
+            int roll = Dice.roll(6, 3);
+            System.out.println(roll);
+            sum += roll;
+        }
+        System.out.println(sum/iter);
+    }
 }

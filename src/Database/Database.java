@@ -389,7 +389,7 @@ public class Database {
             con.setAutoCommit(false);
             String prepString = "UPDATE usr SET rank = ? WHERE user_id = ?";
             prepStmt = con.prepareStatement(prepString);
-            prepStmt.setInt(1, rank + 1);
+            prepStmt.setInt(1, rank);
             prepStmt.setInt(2, Main.user.getUser_id());
             prepStmt.executeUpdate();
             con.commit();
@@ -860,7 +860,7 @@ public class Database {
         int count = -1;
         try{
             con = this.bds.getConnection();
-            String prepString = "SELECT COUNT(*) FROM player WHERE lobby_key = ?";
+            String prepString = "SELECT COUNT(*) FROM player WHERE lobby_key = ? AND user_id IS NOT NULL";
             prepStmt = con.prepareStatement(prepString);
             prepStmt.setInt(1, Main.user.getLobbyKey());
             res = prepStmt.executeQuery();
@@ -1428,16 +1428,17 @@ public class Database {
         }
     }
 
-    public ArrayList<Integer> fetchMonstersFromLevel(int levelId){
+    public ArrayList<Integer> fetchMonstersFromLevel(int levelId, int playerAmount){
         Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
         ArrayList<Integer> creatureIds = new ArrayList<>();
         try{
             con = this.bds.getConnection();
-            String prepString = "SELECT creature_id FROM level_monster WHERE level_id = ?";
+            String prepString = "SELECT creature_id FROM level_monster WHERE level_id = ? AND player_amount = ?";
             prepStmt = con.prepareStatement(prepString);
             prepStmt.setInt(1, levelId);
+            prepStmt.setInt(2, playerAmount);
             res = prepStmt.executeQuery();
             while(res.next()){
                 creatureIds.add(res.getInt(1));
