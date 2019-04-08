@@ -195,6 +195,10 @@ public abstract class Creature {
         return this.backstory;
     }
 
+    public void addNewWeapon(Weapon weapon){
+        this.weapons.add(weapon);
+    }
+
     public boolean updateDead(){
         if(this.hp <= 0 && !isDead()){
             SFXPlayer.getInstance().setSFX(0);
@@ -212,9 +216,9 @@ public abstract class Creature {
     public String toString() {
         String weaponNames = "";
         for(int i = 0; i < this.weapons.size(); i++){
-            weaponNames = this.weapons.get(i).getName();
+            weaponNames += this.weapons.get(i).getName() + ((i < this.weapons.size() - 1) ? ", " : "");
         }
-        return "Character: " + this.getCreatureName() + "\nHP: " + this.getHp() + "\nAC: " + this.getAc() + "\nSpeed: " + this.getMovement() +
+        return "Character: " + this.getCreatureName() + "\nHP: " + this.getHp() + "\nAC: " + this.getAc() + "\nMovement: " + this.getMovement() +
                 "\nWeapon: " + weaponNames + "\nAttack bonus: " + this.getAttackBonus() + "\nBackstory: " + this.getBackstory();
     }
 

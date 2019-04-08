@@ -16,9 +16,9 @@ public class DataSource {
         bds.setUsername("g_tdat1006_01");
         bds.setPassword("q8CeXgyy");
         bds.setMinIdle(5);
-        bds.setMaxIdle(10);
+        bds.setMaxIdle(15);
         bds.setMaxOpenPreparedStatements(100);
-        bds.setInitialSize(10);
+        bds.setInitialSize(15);
     }
 
     private static class DataSourceHolder{

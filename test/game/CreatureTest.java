@@ -22,7 +22,7 @@ class CreatureTest {
 
         ArrayList<Weapon> c2weapons = new ArrayList<>();
         Weapon c2w1 = new Weapon("Bow", 6, true, 2, "");
-        c1weapons.add(c1w1);
+        c2weapons.add(c2w1);
         Character c2 = new Character(2, 4, "Ranger", 20, 10, 3, 6, 5, "", 2, 6, null, c2weapons);
 
         ArrayList<Weapon> m1weapons = new ArrayList<>();
@@ -133,7 +133,31 @@ class CreatureTest {
     }
 
     @Test
+    void addNewWeapon(){
+        Character c1 = (Character) creatures.get(0);
+        //Weapon size starts at 1
+        assertEquals(1, c1.getWeapons().size(), "Weapon size incorrect");
+
+        Weapon weapon = new Weapon("Javelin", 8, true, 1, "");
+        c1.addNewWeapon(weapon);
+        assertEquals(2, c1.getWeapons().size(), "Weapon size incorrect");
+
+        assertEquals("Name: Javelin\nIs ranged: true\nDamageDice: 8\nDiceAmount: 1", c1.getWeapons().get(1).toString(), "New weapon not added");
+
+    }
+
+    @Test
     void toStringTest() {
+        Character c1 = (Character) creatures.get(0);
+        String expected1 = "Character: Warrior\nHP: 20\nAC: 10\nMovement: 3\nWeapon: Sword\nAttack bonus: 5\nBackstory: ";
+        assertEquals(expected1, c1.toString(), "toString method did not output correct values");
+
+        //Altering some values
+        c1.setHp(30);
+        c1.addNewWeapon(new Weapon("Javelin", 8, true, 1, ""));
+
+        String expected2 = "Character: Warrior\nHP: 30\nAC: 10\nMovement: 3\nWeapon: Sword, Javelin\nAttack bonus: 5\nBackstory: ";
+        assertEquals(expected2, c1.toString(), "toString method did not output correct values after change");
     }
 
     @Test
