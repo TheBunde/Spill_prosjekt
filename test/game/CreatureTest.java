@@ -80,10 +80,30 @@ class CreatureTest {
 
     @Test
     void hitSuccess() {
+        Character c2 = (Character) creatures.get(1);
+        Monster m2 = (Monster) creatures.get(2);
+        int hit = c2.hit();
+        boolean hitSuccess = c2.hitSuccess(hit, m2);
+        if(hitSuccess){
+            //Checking if hitSuccess is true when hit is higher than the targets ac
+            assertTrue(hit >= m2.getAc(), "Hit on higher armor class");
+        }
+        else{
+            //Checking if hitSuccess is false when hit is lower than the target ac
+            assertTrue(hit < m2.getAc(), "Miss on lower armor class");
+        }
     }
 
     @Test
     void moveCreature() {
+        Character c1 = (Character) creatures.get(0);
+        Character c2 = (Character) creatures.get(1);
+        boolean moved = c1.moveCreature(2, 6, creatures);
+        assertTrue(c1.getxPos() == 2 && c1.getyPos() == 5, "Cannot move on top of another creature");
+        moved = c1.moveCreature(2, 7, creatures);
+        assertTrue(c1.getxPos() == 2 && c1.getyPos() == 7, "Did not move to the valid space");
+        moved = c1.moveCreature(15, 15, creatures);
+        assertTrue(c1.getxPos() == 2 && c1.getyPos() == 7, "Moved out of range");
     }
 
     @Test
@@ -98,5 +118,25 @@ class CreatureTest {
         c1.updateDead();
         //Checking if isDead variable has been updated
         assertTrue(c1.isDead(), "Character not announced dead even though hp is less than 0");
+    }
+
+    @Test
+    void setHp() {
+        Character c1 = (Character) creatures.get(0);
+        c1.setHp(100);
+        // Checking if hp was updated to 100
+        assertTrue(c1.getHp() == 100, "Did not update hp");
+    }
+
+    @Test
+    void setNewPos() {
+    }
+
+    @Test
+    void toStringTest() {
+    }
+
+    @Test
+    void setReadyForNewLevel() {
     }
 }

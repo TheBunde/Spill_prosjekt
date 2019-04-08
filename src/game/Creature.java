@@ -121,10 +121,14 @@ public abstract class Creature {
             this.setNewPos(newX, newY);
             System.out.println("Moved");
             if (this instanceof Character){
-                Main.db.addChatMessage(Main.db.fetchUsernameFromPlayerId(this.getPlayerId()) + " moved to X: " + newX + " Y: " + newY, true);
+                if(Main.db != null) {
+                    Main.db.addChatMessage(Main.db.fetchUsernameFromPlayerId(this.getPlayerId()) + " moved to X: " + newX + " Y: " + newY, true);
+                }
             }
             else{
-                Main.db.addChatMessage(this.getCreatureName() + " moved to X: " + newX + " Y: " + newY, true);
+                if(Main.db != null) {
+                    Main.db.addChatMessage(this.getCreatureName() + " moved to X: " + newX + " Y: " + newY, true);
+                }
             }
             return true;
         }
@@ -203,6 +207,7 @@ public abstract class Creature {
     public boolean isDead(){
         return isDead;
     }
+
 
     public String toString() {
         String weaponNames = "";

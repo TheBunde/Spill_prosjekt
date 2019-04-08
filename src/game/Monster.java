@@ -183,24 +183,43 @@ public class Monster extends Creature {
             pos.add(newX +1);
             pos.add(newY);
         }else if(xD == 0 && yD == 1){
-            pos.add(newX +1);
-            pos.add(newY);
+            if(getxPos() == 15){
+                pos.add(newX -1);
+                pos.add(newY + 1);
+            }else {
+                pos.add(newX + 1);
+                pos.add(newY);
+            }
         }else if(xD == -1 && yD == 1){
             pos.add(newX);
             pos.add(newY + 1);
         }else if(xD == -1 && yD == 0){
-            pos.add(newX);
-            pos.add(newY + 1);
+            if(getyPos() == 15){
+                pos.add(newX - 1);
+                pos.add(newY - 1);
+            }else {
+                pos.add(newX);
+                pos.add(newY + 1);
+            }
         }else if(xD == -1 && yD == -1){
             pos.add(newX - 1);
             pos.add(newY);
         }else if(xD == 0 && yD == -1){
-            pos.add(newX -1);
-            pos.add(newY);
+            if(getxPos() == 0){
+                pos.add(newX + 1);
+                pos.add(newY - 1);
+            }else {
+                pos.add(newX - 1);
+                pos.add(newY);
+            }
         }else if(xD == 1 && yD == -1){
             pos.add(newX);
             pos.add(newY - 1);
         }else if(xD == 1 && yD == 0){
+            if(getyPos() == 0){
+                pos.add(newX + 1);
+                pos.add(newY + 1);
+            }
             pos.add(newX);
             pos.add(newY - 1);
         }
