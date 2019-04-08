@@ -32,7 +32,7 @@ class CreatureTest {
 
         ArrayList<Weapon> m2weapons = new ArrayList<>();
         Weapon m2w1 = new Weapon("Greatbow", 6, true, 2, "");
-        m1weapons.add(m1w1);
+        m2weapons.add(m2w1);
         Monster m2 = new Monster(4, 8, "Ushabti", 20, 10, 3, 6, 5, "", 8, 6, null, m2weapons);
 
         creatures = new ArrayList<>();
@@ -164,6 +164,7 @@ class CreatureTest {
         c1.addNewWeapon(new Weapon("Javelin", 8, true, 1, ""));
 
         String expected2 = "Character: Warrior\nHP: 30\nAC: 10\nMovement: 3\nWeapon: Sword, Javelin\nAttack bonus: 5\nBackstory: ";
+        //Checking for change in result
         assertEquals(expected2, c1.toString(), "toString method did not output correct values after change");
     }
 
