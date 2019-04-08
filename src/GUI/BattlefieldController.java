@@ -127,6 +127,7 @@ public class BattlefieldController implements Initializable {
             public void run() {
                 Platform.runLater(() -> {
                     update();
+                    TeamMatesController.updateListView();
                 });
             }
         },0 ,1200);
@@ -277,8 +278,8 @@ public class BattlefieldController implements Initializable {
         chatController.timer.purge();
         timer.cancel();
         timer.purge();
-        this.sceneSwitcher.switchScene(exitButton, "MainMenu.fxml");
         MusicPlayer.getInstance().stopSong();
+        this.sceneSwitcher.switchScene(exitButton, "MainMenu.fxml");
     }
 
     private int toGrid(double pixels, double pos){
@@ -333,6 +334,7 @@ public class BattlefieldController implements Initializable {
     }
 
     public void newLevel(){
+        game.playerCharacter.setHp(game.playerCharacter.getInitialHp());
         game.newLevel();
         player.resetUsedActions();
         // (Main.user.isHost()) {
@@ -449,6 +451,7 @@ public class BattlefieldController implements Initializable {
         else if(game.isGameOver()){
             SFXPlayer.getInstance().setSFX(14);
             ((Label)transitionVbox.getChildren().get(0)).setText("Defeat");
+            ((Label)transitionVbox.getChildren().get(1)).setText("git gud");
         }
         else{
             SFXPlayer.getInstance().setSFX(16);
@@ -507,6 +510,19 @@ public class BattlefieldController implements Initializable {
                                 if (game.getLevel().getLevelId() <= game.getAmountOfLevels()) {
                                     hideLevelTransitionVbox();
                                     transitioning = false;
+                                }
+                                else{
+                                    try {
+                                        MusicPlayer.getInstance().changeSong(2);
+                                        sceneSwitcher.switchScene(exitButton, "MainMenu.fxml");
+                                    }catch (Exception e){
+                                        e.printStackTrace();
+                                    }
+                                    chatController.timer.cancel();
+                                    chatController.timer.purge();
+                                    timer.cancel();
+                                    timer.purge();
+                                    Main.user.setHost(false);
                                 }
                             }
                         });

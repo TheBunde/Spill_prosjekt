@@ -95,6 +95,7 @@ public class GameLobbyController {
         playerReadyTimer.purge();
         limitPlayerTimer.cancel();
         limitPlayerTimer.purge();
+        MusicPlayer.getInstance().stopSong();
         this.sceneSwitcher.switchScene(backToMenuButton, "MainMenu.fxml");
     }
 

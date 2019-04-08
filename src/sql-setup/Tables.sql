@@ -166,7 +166,7 @@ INSERT INTO creatureTemplate VALUES(DEFAULT, "Ent", 50, 11, 3, 4, 1, 1, NULL, "E
 INSERT INTO creatureTemplate VALUES(DEFAULT, "Mummy", 20, 15, 3, 3, 5, 1, NULL, "Mummi.png", false);
 INSERT INTO creatureTemplate VALUES(DEFAULT, "Ushabti", 20, 15, 3, 3, 5, 1, NULL, "Ushabti2.png", false);
 INSERT INTO creatureTemplate VALUES(DEFAULT, "Snow Wolf", 20, 15, 3, 3, 5, 1, NULL, "wolf.png", false);
-INSERT INTO creatureTemplate VALUES(DEFAULT, "Yeti", 20, 15, 3, 3, 5, 1, NULL, "judge.jpg", false);
+INSERT INTO creatureTemplate VALUES(DEFAULT, "Yeti", 20, 15, 3, 3, 5, 1, NULL, "yeti.png", false);
 INSERT INTO creatureTemplate VALUES(DEFAULT, "Lizard", 20, 15, 3, 3, 5, 1, NULL, "lizard.png", false);
 INSERT INTO creatureTemplate VALUES(DEFAULT, "Demon", 20, 15, 3, 3, 5, 1, NULL, "demon.png", false);
 INSERT INTO creatureTemplate VALUES(DEFAULT, "Dragon", 178, 18, 4, 6, 10, 3, NULL, "dragon.png", false);

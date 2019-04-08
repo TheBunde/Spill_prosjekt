@@ -24,9 +24,17 @@ public class TeamMatesController implements Initializable {
     public static ObservableList<Character> characterObservableList;
     public static ArrayList<Character> charactersInListView;
     private Database db = Main.db;
+    public static Game game = BattlefieldController.game;
 
     public TeamMatesController(){
         charactersInListView = BattlefieldController.game.getCharacters();
+        int you = 0;
+        for(Character i: charactersInListView){
+            if(i == game.playerCharacter){
+                you = charactersInListView.indexOf(i);
+            }
+        }
+        charactersInListView.remove(you);
         characterObservableList = FXCollections.observableArrayList();
         for (Character c : charactersInListView){
             if (c != BattlefieldController.game.playerCharacter) {
@@ -50,9 +58,16 @@ public class TeamMatesController implements Initializable {
     }
 
     public static void updateListView(){
-        //charactersInListView = BattlefieldController.game.getCharacters();
-        //characterObservableList.removeAll(charactersInListView);
-        //characterObservableList.addAll(charactersInListView);
+        characterObservableList.removeAll(charactersInListView);
+        charactersInListView = BattlefieldController.game.getCharacters();
+        int you = 0;
+        for(Character i: charactersInListView){
+            if(i == game.playerCharacter){
+                you = charactersInListView.indexOf(i);
+            }
+        }
+        charactersInListView.remove(you);
+        characterObservableList.addAll(charactersInListView);
     }
 
     /*public ArrayList<Character> getCharacters(){
