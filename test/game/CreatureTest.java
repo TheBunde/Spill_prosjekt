@@ -22,7 +22,7 @@ class CreatureTest {
 
         ArrayList<Weapon> c2weapons = new ArrayList<>();
         Weapon c2w1 = new Weapon("Bow", 6, true, 2, "");
-        c1weapons.add(c1w1);
+        c2weapons.add(c2w1);
         Character c2 = new Character(2, 4, "Ranger", 20, 10, 3, 6, 5, "", 2, 6, null, c2weapons);
 
         ArrayList<Weapon> m1weapons = new ArrayList<>();
@@ -50,6 +50,18 @@ class CreatureTest {
 
     @Test
     void attackCreature() {
+        Character c1 = (Character) creatures.get(0);
+        Monster m1 = (Monster) creatures.get(2);
+        int m1InitialHp = m1.getHp();
+        //Checking if damage was dealt against the monster depending on hit or miss
+        if (c1.attackCreature(m1, 0)){
+            //Hit successful
+            assertTrue(m1.getHp() < m1InitialHp, "Successful attack did not deal damage");
+        }
+        else{
+            //Hit not successful
+            assertTrue(m1.getHp() == m1InitialHp, "Unsuccessful attack dealt damage");
+        }
 
     }
 
@@ -60,6 +72,7 @@ class CreatureTest {
             int hit = c1.hit();
             int max = 20 + c1.getAttackBonus();
             int min = 1 + c1.getAttackBonus();
+            //Checking if hit value is between minimum and maximum
             assertTrue(hit <= max, "Hit too high");
             assertTrue(hit >= min, "Hit too low");
         }
@@ -98,10 +111,16 @@ class CreatureTest {
 
     @Test
     void updateDead() {
-    }
+        Character c1 = (Character) creatures.get(0);
+        c1.updateDead();
+        //Checking if character still is not dead
+        assertTrue(c1.getHp() > 0 && !c1.isDead(), "Character is announced dead with full hp");
 
-    @Test
-    void isDead() {
+        //Killing character
+        c1.setHp(0);
+        c1.updateDead();
+        //Checking if isDead variable has been updated
+        assertTrue(c1.isDead(), "Character not announced dead even though hp is less than 0");
     }
 
     @Test
@@ -121,7 +140,31 @@ class CreatureTest {
     }
 
     @Test
+    void addNewWeapon(){
+        Character c1 = (Character) creatures.get(0);
+        //Weapon size starts at 1
+        assertEquals(1, c1.getWeapons().size(), "Weapon size incorrect");
+
+        Weapon weapon = new Weapon("Javelin", 8, true, 1, "");
+        c1.addNewWeapon(weapon);
+        assertEquals(2, c1.getWeapons().size(), "Weapon size incorrect");
+
+        assertEquals("Name: Javelin\nIs ranged: true\nDamageDice: 8\nDiceAmount: 1", c1.getWeapons().get(1).toString(), "New weapon not added");
+
+    }
+
+    @Test
     void toStringTest() {
+        Character c1 = (Character) creatures.get(0);
+        String expected1 = "Character: Warrior\nHP: 20\nAC: 10\nMovement: 3\nWeapon: Sword\nAttack bonus: 5\nBackstory: ";
+        assertEquals(expected1, c1.toString(), "toString method did not output correct values");
+
+        //Altering some values
+        c1.setHp(30);
+        c1.addNewWeapon(new Weapon("Javelin", 8, true, 1, ""));
+
+        String expected2 = "Character: Warrior\nHP: 30\nAC: 10\nMovement: 3\nWeapon: Sword, Javelin\nAttack bonus: 5\nBackstory: ";
+        assertEquals(expected2, c1.toString(), "toString method did not output correct values after change");
     }
 
     @Test

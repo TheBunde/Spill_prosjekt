@@ -4,6 +4,8 @@ import audio.MusicPlayer;
 import audio.SFXPlayer;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;

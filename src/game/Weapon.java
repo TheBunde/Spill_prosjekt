@@ -37,4 +37,9 @@ public class Weapon {
     public String getImageUrl(){
         return this.imageUrl;
     }
+
+    @Override
+    public String toString() {
+        return "Name: " + this.getName() + "\nIs ranged: " + this.isRanged() + "\nDamageDice: " + this.getDamageDice() + "\nDiceAmount: " + this.getDiceAmount();
+    }
 }
