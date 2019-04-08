@@ -27,7 +27,12 @@ public class Game {
         }
         else{
             while (!Main.db.fetchBattlefieldReady(Main.user.getLobbyKey())){
-                //Wait until battlefield is ready
+                try{
+                    Thread.sleep(300);
+                }
+                catch (InterruptedException ie){
+                    ie.printStackTrace();
+                }
             }
         }
         this.creatures = db.fetchCreaturesFromLobby();

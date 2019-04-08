@@ -13,7 +13,6 @@ public abstract class Creature {
     private int attackBonus;
     private int movement;
     private ArrayList<Weapon> weapons = new ArrayList<Weapon>();
-    private int attacksPerTurn;
     private int damageBonus;
     private int xPos;
     private int yPos;
@@ -26,7 +25,7 @@ public abstract class Creature {
     private boolean readyForNewLevel = false;
 
 
-    public Creature(int playerId, int creatureId, String creatureName, int hp, int ac, int movement, int damageBonus, int attackBonus, int attacksPerTurn, String backstory, int xPos, int yPos, String imageUrl, ArrayList weapons){
+    public Creature(int playerId, int creatureId, String creatureName, int hp, int ac, int movement, int damageBonus, int attackBonus, String backstory, int xPos, int yPos, String imageUrl, ArrayList weapons){
         this.playerId = playerId;
         this.creatureId = creatureId;
         this.creatureName = creatureName;
@@ -34,7 +33,6 @@ public abstract class Creature {
         this.ac = ac;
         this.movement = movement;
         this.attackBonus = attackBonus;
-        this.attacksPerTurn = attacksPerTurn;
         this.damageBonus = damageBonus;
         this.backstory = backstory;
         this.xPos = xPos;
@@ -43,9 +41,11 @@ public abstract class Creature {
         this.weapons = weapons;
         this.isDead = false;
 
-        Image image = new Image("GUI/images/" + this.imageUrl);
-        this.pawn = new ImageView(image);
-        this.pawn.setPreserveRatio(false);
+        if (imageUrl != null){
+            Image image = new Image("GUI/images/" + this.imageUrl);
+            this.pawn = new ImageView(image);
+            this.pawn.setPreserveRatio(false);
+        }
     }
 
     public boolean attackCreature(Creature target, int weaponIndex){
@@ -147,10 +147,6 @@ public abstract class Creature {
         return weapons;
     }
 
-    public int getAttacksPerTurn() {
-        return attacksPerTurn;
-    }
-
     public int getDamageBonus() {
         return damageBonus;
     }
@@ -199,7 +195,7 @@ public abstract class Creature {
             weaponNames = this.weapons.get(i).getName();
         }
         return "Character: " + this.getCreatureName() + "\nHP: " + this.getHp() + "\nAC: " + this.getAc() + "\nSpeed: " + this.getMovement() +
-                "\nWeapon: " + weaponNames + "\nAttack bonus: " + this.getAttackBonus() +"\nAttacks per turn: " + this.getAttacksPerTurn() + "\nBackstory: " + this.getBackstory();
+                "\nWeapon: " + weaponNames + "\nAttack bonus: " + this.getAttackBonus() + "\nBackstory: " + this.getBackstory();
     }
 
     public String getImageUrl(){
