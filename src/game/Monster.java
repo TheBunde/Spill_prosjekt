@@ -92,9 +92,7 @@ public class Monster extends Creature {
                     int yDistanceToI = Math.abs(i.getyPos() - this.getyPos());
                     int xDistanceToCurrent = Math.abs(xDistance);
                     int yDistanceToCurrent = Math.abs(yDistance );
-                    System.out.println(pytagoras(xDistance, yDistance));
-                    System.out.println(pytagoras(xDistanceToCurrent, yDistanceToCurrent));
-                    if (pytagoras(xDistanceToI, yDistanceToI) < pytagoras(xDistanceToCurrent, yDistanceToCurrent)) {
+                    if (getHypotenuse(xDistanceToI, yDistanceToI) < getHypotenuse(xDistanceToCurrent, yDistanceToCurrent)) {
                         xDistance = xDistanceToI;
                         yDistance = yDistanceToI;
                         target = i;
@@ -105,7 +103,7 @@ public class Monster extends Creature {
         return target;
     }
 
-    public double pytagoras(int x, int y){
+    public double getHypotenuse(int x, int y){
         double powX = Math.pow(x, 2);
         double powY = Math.pow(y, 2);
         return Math.sqrt(powX + powY);
@@ -144,7 +142,7 @@ public class Monster extends Creature {
     }
 
     public boolean meleeRange(Creature target){
-        if(Math.abs(getxPos() - target.getxPos()) <= 1 && Math.abs(getyPos() - target.getyPos()) <= 1){
+        if(Math.abs(target.getxPos() - getxPos()) <= 1 && Math.abs(target.getyPos() - getyPos()) <= 1){
             return true;
         }
         return false;
@@ -174,7 +172,7 @@ public class Monster extends Creature {
             }
         }
     }
-    //endre så den ikke setter pos men returner array med pos
+
     public ArrayList<Integer> dontStepOnOthers(int newX, int newY, Creature target){
         ArrayList<Integer> pos = new ArrayList<>();
         int xD = relativePos(newX, target.getxPos());

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="566e6c32-e435-4e6d-a21a-a87d661ad3f8" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/test/game/CreatureTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/game/CreatureTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Monster.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Monster.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/game/MonsterTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/game/MonsterTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -15,7 +15,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/game/Creature.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="117">
+            <state relative-caret-position="1017">
               <caret line="243" column="19" selection-start-line="243" selection-start-column="19" selection-end-line="243" selection-end-column="19" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -26,11 +26,6 @@
               </folding>
             </state>
           </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/GUI/images/Main.png">
-          <provider selected="true" editor-type-id="images" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -65,8 +60,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/test/game/MonsterTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="34" column="26" selection-start-line="34" selection-start-column="26" selection-end-line="34" selection-end-column="26" />
+            <state relative-caret-position="-71">
+              <caret line="127" column="32" selection-start-line="127" selection-start-column="32" selection-end-line="127" selection-end-column="32" />
               <folding>
                 <element signature="e#1165#1166#0" expanded="true" />
                 <element signature="e#1196#1197#0" expanded="true" />
@@ -76,10 +71,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/game/Monster.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1054">
+              <caret line="143" column="47" selection-start-line="143" selection-start-column="47" selection-end-line="143" selection-end-column="47" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/game/CreatureTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="35" column="8" selection-start-line="35" selection-start-column="8" selection-end-line="36" />
+            <state>
+              <caret line="145" column="54" lean-forward="true" selection-start-line="145" selection-start-column="54" selection-end-line="145" selection-end-column="54" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -110,6 +114,7 @@
       <list>
         <option value="$PROJECT_DIR$/test/game/CreatureTest.java" />
         <option value="$PROJECT_DIR$/test/game/MonsterTest.java" />
+        <option value="$PROJECT_DIR$/src/game/Monster.java" />
       </list>
     </option>
   </component>
@@ -228,7 +233,7 @@
     <property name="Repository.Attach.Annotations" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1554727757332" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1554731844458" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
     <property name="project.structure.last.edited" value="Libraries" />
@@ -258,7 +263,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.All in Game-development-project">
+  <component name="RunManager" selected="JUnit.MonsterTest.meleeRange">
     <configuration name="All in Game-development-project" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Game-development-project" />
       <option name="PACKAGE_NAME" value="" />
@@ -267,54 +272,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CreatureTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Game-development-project" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="game.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="game" />
-      <option name="MAIN_CLASS_NAME" value="game.CreatureTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CreatureTest.addNewWeapon" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Game-development-project" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="game.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="game" />
-      <option name="MAIN_CLASS_NAME" value="game.CreatureTest" />
-      <option name="METHOD_NAME" value="addNewWeapon" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CreatureTest.toStringTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Game-development-project" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="game.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="game" />
-      <option name="MAIN_CLASS_NAME" value="game.CreatureTest" />
-      <option name="METHOD_NAME" value="toStringTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MonsterTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="MonsterTest.getClosest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Game-development-project" />
       <extension name="coverage">
         <pattern>
@@ -324,25 +282,74 @@
       </extension>
       <option name="PACKAGE_NAME" value="game" />
       <option name="MAIN_CLASS_NAME" value="game.MonsterTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="METHOD_NAME" value="getClosest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MonsterTest.getHypotenuse" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Game-development-project" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="game.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="game" />
+      <option name="MAIN_CLASS_NAME" value="game.MonsterTest" />
+      <option name="METHOD_NAME" value="getHypotenuse" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MonsterTest.inRange" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Game-development-project" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="game.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="game" />
+      <option name="MAIN_CLASS_NAME" value="game.MonsterTest" />
+      <option name="METHOD_NAME" value="inRange" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MonsterTest.meleeRange" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Game-development-project" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="game.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="game" />
+      <option name="MAIN_CLASS_NAME" value="game.MonsterTest" />
+      <option name="METHOD_NAME" value="meleeRange" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <list>
-      <item itemvalue="JUnit.CreatureTest.toStringTest" />
-      <item itemvalue="JUnit.CreatureTest.addNewWeapon" />
       <item itemvalue="JUnit.All in Game-development-project" />
-      <item itemvalue="JUnit.CreatureTest" />
-      <item itemvalue="JUnit.MonsterTest" />
+      <item itemvalue="JUnit.MonsterTest.getClosest" />
+      <item itemvalue="JUnit.MonsterTest.getHypotenuse" />
+      <item itemvalue="JUnit.MonsterTest.inRange" />
+      <item itemvalue="JUnit.MonsterTest.meleeRange" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.MonsterTest.meleeRange" />
         <item itemvalue="JUnit.All in Game-development-project" />
-        <item itemvalue="JUnit.MonsterTest" />
-        <item itemvalue="JUnit.CreatureTest" />
-        <item itemvalue="JUnit.CreatureTest.addNewWeapon" />
-        <item itemvalue="JUnit.CreatureTest.toStringTest" />
+        <item itemvalue="JUnit.MonsterTest.inRange" />
+        <item itemvalue="JUnit.MonsterTest.getHypotenuse" />
+        <item itemvalue="JUnit.MonsterTest.getClosest" />
       </list>
     </recent_temporary>
   </component>
@@ -360,35 +367,35 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="CreatureTest_toStringTest - 2019.04.08 at 14h 23m 02s.xml">
-      <configuration name="CreatureTest.toStringTest" configurationId="JUnit" />
+    <history-entry file="MonsterTest_meleeRange - 2019.04.08 at 15h 51m 31s.xml">
+      <configuration name="MonsterTest.meleeRange" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CreatureTest_toStringTest - 2019.04.08 at 14h 24m 16s.xml">
-      <configuration name="CreatureTest.toStringTest" configurationId="JUnit" />
+    <history-entry file="MonsterTest_meleeRange - 2019.04.08 at 15h 51m 44s.xml">
+      <configuration name="MonsterTest.meleeRange" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CreatureTest_toStringTest - 2019.04.08 at 14h 24m 36s.xml">
-      <configuration name="CreatureTest.toStringTest" configurationId="JUnit" />
+    <history-entry file="MonsterTest_meleeRange - 2019.04.08 at 15h 51m 54s.xml">
+      <configuration name="MonsterTest.meleeRange" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CreatureTest_toStringTest - 2019.04.08 at 14h 24m 53s.xml">
-      <configuration name="CreatureTest.toStringTest" configurationId="JUnit" />
+    <history-entry file="MonsterTest_meleeRange - 2019.04.08 at 15h 52m 05s.xml">
+      <configuration name="MonsterTest.meleeRange" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CreatureTest_toStringTest - 2019.04.08 at 14h 25m 16s.xml">
-      <configuration name="CreatureTest.toStringTest" configurationId="JUnit" />
+    <history-entry file="MonsterTest_meleeRange - 2019.04.08 at 15h 52m 12s.xml">
+      <configuration name="MonsterTest.meleeRange" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CreatureTest_addNewWeapon - 2019.04.08 at 14h 36m 09s.xml">
-      <configuration name="CreatureTest.addNewWeapon" configurationId="JUnit" />
+    <history-entry file="MonsterTest_meleeRange - 2019.04.08 at 15h 53m 26s.xml">
+      <configuration name="MonsterTest.meleeRange" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="All_in_Game-development-project - 2019.04.08 at 14h 43m 44s.xml">
-      <configuration name="All in Game-development-project" configurationId="JUnit" />
+    <history-entry file="MonsterTest_meleeRange - 2019.04.08 at 15h 53m 52s.xml">
+      <configuration name="MonsterTest.meleeRange" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CreatureTest - 2019.04.08 at 14h 45m 17s.xml">
-      <configuration name="CreatureTest" configurationId="JUnit" />
+    <history-entry file="MonsterTest_meleeRange - 2019.04.08 at 15h 55m 44s.xml">
+      <configuration name="MonsterTest.meleeRange" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="MonsterTest - 2019.04.08 at 14h 45m 24s.xml">
-      <configuration name="MonsterTest" configurationId="JUnit" />
+    <history-entry file="MonsterTest_meleeRange - 2019.04.08 at 15h 56m 45s.xml">
+      <configuration name="MonsterTest.meleeRange" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="All_in_Game-development-project - 2019.04.08 at 14h 46m 06s.xml">
-      <configuration name="All in Game-development-project" configurationId="JUnit" />
+    <history-entry file="MonsterTest_meleeRange - 2019.04.08 at 15h 57m 26s.xml">
+      <configuration name="MonsterTest.meleeRange" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="ToolWindowManager">
@@ -428,34 +435,6 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="7" weight="0.25" />
       <window_info anchor="right" id="Maven" order="8" />
     </layout>
-    <layout-to-restore>
-      <window_info id="Image Layers" order="0" />
-      <window_info id="Designer" order="1" />
-      <window_info id="UI Designer" order="2" />
-      <window_info id="Capture Tool" order="3" />
-      <window_info id="Favorites" order="4" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="5" visible="true" weight="0.24939272" />
-      <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Version Control" order="0" />
-      <window_info anchor="bottom" id="Terminal" order="1" />
-      <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" order="3" weight="0.3285968" />
-      <window_info anchor="bottom" id="Message" order="4" />
-      <window_info anchor="bottom" id="Find" order="5" />
-      <window_info anchor="bottom" id="Run" order="6" visible="true" weight="0.3285968" />
-      <window_info anchor="bottom" id="Debug" order="7" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="10" />
-      <window_info anchor="right" id="Palette" order="0" />
-      <window_info anchor="right" id="Capture Analysis" order="1" />
-      <window_info anchor="right" id="Theme Preview" order="2" />
-      <window_info anchor="right" id="Palette&#9;" order="3" />
-      <window_info anchor="right" id="Maven" order="4" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="5" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="6" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="7" weight="0.25" />
-    </layout-to-restore>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="RECENT_FILTERS">
@@ -486,9 +465,21 @@
     <entry file="file://$PROJECT_DIR$/src/GUI/images/Long_bow.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/GUI/images/Long_sword.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GUI/images/Main.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GUI/images/Ushabti2.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GUI/images/Ushabti.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/game/Creature.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="117">
+        <state relative-caret-position="1017">
           <caret line="243" column="19" selection-start-line="243" selection-start-column="19" selection-end-line="243" selection-end-column="19" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -500,9 +491,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/images/Long_sword.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/test/game/GameTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -512,18 +500,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test/game/CreatureTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="35" column="8" selection-start-line="35" selection-start-column="8" selection-end-line="36" />
+        <state>
+          <caret line="145" column="54" lean-forward="true" selection-start-line="145" selection-start-column="54" selection-end-line="145" selection-end-column="54" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/game/Monster.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1054">
+          <caret line="143" column="47" selection-start-line="143" selection-start-column="47" selection-end-line="143" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/test/game/MonsterTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="34" column="26" selection-start-line="34" selection-start-column="26" selection-end-line="34" selection-end-column="26" />
+        <state relative-caret-position="-71">
+          <caret line="127" column="32" selection-start-line="127" selection-start-column="32" selection-end-line="127" selection-end-column="32" />
           <folding>
             <element signature="e#1165#1166#0" expanded="true" />
             <element signature="e#1196#1197#0" expanded="true" />
