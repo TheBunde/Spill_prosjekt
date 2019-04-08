@@ -127,6 +127,7 @@ public class BattlefieldController implements Initializable {
             public void run() {
                 Platform.runLater(() -> {
                     update();
+                    TeamMatesController.updateListView();
                 });
             }
         },0 ,1200);
@@ -333,6 +334,7 @@ public class BattlefieldController implements Initializable {
     }
 
     public void newLevel(){
+        game.playerCharacter.setHp(game.playerCharacter.getInitialHp());
         game.newLevel();
         player.resetUsedActions();
         // (Main.user.isHost()) {
@@ -447,6 +449,7 @@ public class BattlefieldController implements Initializable {
         }
         else if(game.isGameOver()){
             ((Label)transitionVbox.getChildren().get(0)).setText("Defeat");
+            ((Label)transitionVbox.getChildren().get(1)).setText("git gud");
         }
         else{
             ((Label)transitionVbox.getChildren().get(0)).setText("Victory!");

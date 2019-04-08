@@ -6,7 +6,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
+
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Monster extends Creature {
 
@@ -33,6 +35,7 @@ public class Monster extends Creature {
     //Splitted version of monsterAction for movement
     public void monsterMove (ArrayList<Creature> creatures){
         Creature target = getClosest(creatures);
+        System.out.println("WHAT UP BIG PIMP!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         boolean melee = false;
         for(Weapon i: getWeapons()){
             if(!i.isRanged()){
@@ -45,25 +48,34 @@ public class Monster extends Creature {
             } else if (melee) {
                 moveToward(target, creatures);
             }
+        }else{
+            System.out.println("YOUR MOM'S A HOE!!!!!!!!!!!!!!!!!!!!!!!!!! AND THE TARGET IS NULL");
         }
     }
 
     //Splitted version of monsterAction for attack
     public void monsterAttack (ArrayList<Creature> players){
+        ArrayList<Weapon> useableWeapons = new ArrayList<>();
         Creature target = getClosest(players);
         if(target != null) {
             if (meleeRange(target)) {
                 for (Weapon i : getWeapons()) {
                     if (!i.isRanged()) {
-                        attackCreature(target, getWeapons().indexOf(i));
+                        //attackCreature(target, getWeapons().indexOf(i));
+                        useableWeapons.add(i);
                     }
                 }
             } else {
                 for (Weapon i : getWeapons()) {
                     if (i.isRanged()) {
-                        attackCreature(target, getWeapons().indexOf(i));
+                        useableWeapons.add(i);
+                        //attackCreature(target, getWeapons().indexOf(i));
                     }
                 }
+            }
+            if(useableWeapons.size() != 0){
+                Random r = new Random();
+                attackCreature(target, r.nextInt((useableWeapons.size())));
             }
         }
     }
@@ -73,17 +85,30 @@ public class Monster extends Creature {
         Creature target = null;
         int xDistance = 16;
         int yDistance = 16;
-
         for (Creature i : creatures) {
             if(!i.isDead()) {
                 if (i != this && i instanceof game.Character) {
-                    if (Math.abs(getxPos() - i.getxPos()) < xDistance && Math.abs(getyPos() - i.getyPos()) < yDistance) {
+                    int xDistanceToI = Math.abs(i.getxPos() - this.getxPos());
+                    int yDistanceToI = Math.abs(i.getyPos() - this.getyPos());
+                    int xDistanceToCurrent = Math.abs(xDistance);
+                    int yDistanceToCurrent = Math.abs(yDistance );
+                    System.out.println(pytagoras(xDistance, yDistance));
+                    System.out.println(pytagoras(xDistanceToCurrent, yDistanceToCurrent));
+                    if (pytagoras(xDistanceToI, yDistanceToI) < pytagoras(xDistanceToCurrent, yDistanceToCurrent)) {
+                        xDistance = xDistanceToI;
+                        yDistance = yDistanceToI;
                         target = i;
                     }
                 }
             }
         }
         return target;
+    }
+
+    public double pytagoras(int x, int y){
+        double powX = Math.pow(x, 2);
+        double powY = Math.pow(y, 2);
+        return Math.sqrt(powX + powY);
     }
 
     public void moveToward(Creature target, ArrayList<Creature> creatures){
