@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+<<<<<<< HEAD
   <component name="ChangeListManager">
     <list default="true" id="566e6c32-e435-4e6d-a21a-a87d661ad3f8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/src/game/Monster.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Monster.java" afterDir="false" />
@@ -265,14 +266,30 @@
   </component>
   <component name="RunManager" selected="JUnit.MonsterTest.meleeRange">
     <configuration name="All in Game-development-project" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+=======
+  <component name="PropertiesComponent">
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1554727803539" />
+  </component>
+  <component name="RunManager" selected="JUnit.CreatureTest.setReadyForNewLevel">
+    <configuration name="Main" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main.Main" />
+>>>>>>> 19faeb7b8c7f36119b55379b056134ab5b6975e8
       <module name="Game-development-project" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Main.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+<<<<<<< HEAD
     <configuration name="MonsterTest.getClosest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+=======
+    <configuration name="CreatureTest.moveCreature" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+>>>>>>> 19faeb7b8c7f36119b55379b056134ab5b6975e8
       <module name="Game-development-project" />
       <extension name="coverage">
         <pattern>
@@ -281,14 +298,23 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="game" />
+<<<<<<< HEAD
       <option name="MAIN_CLASS_NAME" value="game.MonsterTest" />
       <option name="METHOD_NAME" value="getClosest" />
+=======
+      <option name="MAIN_CLASS_NAME" value="game.CreatureTest" />
+      <option name="METHOD_NAME" value="moveCreature" />
+>>>>>>> 19faeb7b8c7f36119b55379b056134ab5b6975e8
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+<<<<<<< HEAD
     <configuration name="MonsterTest.getHypotenuse" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+=======
+    <configuration name="CreatureTest.setHp" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+>>>>>>> 19faeb7b8c7f36119b55379b056134ab5b6975e8
       <module name="Game-development-project" />
       <extension name="coverage">
         <pattern>
@@ -297,14 +323,23 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="game" />
+<<<<<<< HEAD
       <option name="MAIN_CLASS_NAME" value="game.MonsterTest" />
       <option name="METHOD_NAME" value="getHypotenuse" />
+=======
+      <option name="MAIN_CLASS_NAME" value="game.CreatureTest" />
+      <option name="METHOD_NAME" value="setHp" />
+>>>>>>> 19faeb7b8c7f36119b55379b056134ab5b6975e8
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+<<<<<<< HEAD
     <configuration name="MonsterTest.inRange" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+=======
+    <configuration name="CreatureTest.setNewPos" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+>>>>>>> 19faeb7b8c7f36119b55379b056134ab5b6975e8
       <module name="Game-development-project" />
       <extension name="coverage">
         <pattern>
@@ -313,14 +348,23 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="game" />
+<<<<<<< HEAD
       <option name="MAIN_CLASS_NAME" value="game.MonsterTest" />
       <option name="METHOD_NAME" value="inRange" />
+=======
+      <option name="MAIN_CLASS_NAME" value="game.CreatureTest" />
+      <option name="METHOD_NAME" value="setNewPos" />
+>>>>>>> 19faeb7b8c7f36119b55379b056134ab5b6975e8
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+<<<<<<< HEAD
     <configuration name="MonsterTest.meleeRange" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+=======
+    <configuration name="CreatureTest.setReadyForNewLevel" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+>>>>>>> 19faeb7b8c7f36119b55379b056134ab5b6975e8
       <module name="Game-development-project" />
       <extension name="coverage">
         <pattern>
@@ -329,14 +373,20 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="game" />
+<<<<<<< HEAD
       <option name="MAIN_CLASS_NAME" value="game.MonsterTest" />
       <option name="METHOD_NAME" value="meleeRange" />
+=======
+      <option name="MAIN_CLASS_NAME" value="game.CreatureTest" />
+      <option name="METHOD_NAME" value="setReadyForNewLevel" />
+>>>>>>> 19faeb7b8c7f36119b55379b056134ab5b6975e8
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <list>
+<<<<<<< HEAD
       <item itemvalue="JUnit.All in Game-development-project" />
       <item itemvalue="JUnit.MonsterTest.getClosest" />
       <item itemvalue="JUnit.MonsterTest.getHypotenuse" />
@@ -603,4 +653,22 @@
       </state>
     </states>
   </component>
+=======
+      <item itemvalue="Application.Main" />
+      <item itemvalue="JUnit.CreatureTest.moveCreature" />
+      <item itemvalue="JUnit.CreatureTest.setHp" />
+      <item itemvalue="JUnit.CreatureTest.setNewPos" />
+      <item itemvalue="JUnit.CreatureTest.setReadyForNewLevel" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.CreatureTest.setReadyForNewLevel" />
+        <item itemvalue="JUnit.CreatureTest.setNewPos" />
+        <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.CreatureTest.setHp" />
+        <item itemvalue="JUnit.CreatureTest.moveCreature" />
+      </list>
+    </recent_temporary>
+  </component>
+>>>>>>> 19faeb7b8c7f36119b55379b056134ab5b6975e8
 </project>
