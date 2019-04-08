@@ -278,8 +278,8 @@ public class BattlefieldController implements Initializable {
         chatController.timer.purge();
         timer.cancel();
         timer.purge();
-        this.sceneSwitcher.switchScene(exitButton, "MainMenu.fxml");
         MusicPlayer.getInstance().stopSong();
+        this.sceneSwitcher.switchScene(exitButton, "MainMenu.fxml");
     }
 
     private int toGrid(double pixels, double pos){
@@ -508,6 +508,19 @@ public class BattlefieldController implements Initializable {
                                 if (game.getLevel().getLevelId() <= game.getAmountOfLevels()) {
                                     hideLevelTransitionVbox();
                                     transitioning = false;
+                                }
+                                else{
+                                    try {
+                                        MusicPlayer.getInstance().changeSong(2);
+                                        sceneSwitcher.switchScene(exitButton, "MainMenu.fxml");
+                                    }catch (Exception e){
+                                        e.printStackTrace();
+                                    }
+                                    chatController.timer.cancel();
+                                    chatController.timer.purge();
+                                    timer.cancel();
+                                    timer.purge();
+                                    Main.user.setHost(false);
                                 }
                             }
                         });
