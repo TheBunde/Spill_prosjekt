@@ -30,6 +30,7 @@ public class MainMenuController {
     public void startNewGameButtonPressed() throws Exception{
         db.createNewLobby();
         db.setHost(true);
+        db.addChatMessage(Main.user.getUsername() + " has joined the lobby as the host", true);
         SFXPlayer.getInstance().setSFX(0);
         MusicPlayer.getInstance().stopSong();
         MusicPlayer.getInstance().changeSong(3);

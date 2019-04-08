@@ -56,7 +56,7 @@ public class BattlefieldController implements Initializable {
     @FXML
     public ImageView playerImage;
     @FXML
-    private Label hpLabel, acLabel;
+    private Label hpLabel, acLabel, weaponOneLabel, weaponTwoLabel;
 
     private Database db = Main.db;
     private User user = Main.user;
@@ -80,7 +80,7 @@ public class BattlefieldController implements Initializable {
     public static Timer timer = new Timer();
 
     public BattlefieldController(){
-        //New instance of game
+        //New instance of Game
         game = new Game();
 
     }
@@ -92,19 +92,23 @@ public class BattlefieldController implements Initializable {
         cellHeight = mapGrid.getPrefHeight()/(16.0);
 
         for (Creature c : game.getCreatures()){
+            c.setPawnSize(cellWidth, cellHeight);
+            mapGrid.add(c.getPawn(), c.getxPos(), c.getyPos());
             if (c instanceof Monster){
                 ((Monster) c).initAttackPane(cellWidth, cellHeight);
                 mapGrid.add(((Monster) c).attackPane, c.getxPos(), c.getyPos());
             }
-            c.setPawnSize(cellWidth, cellHeight);
-            mapGrid.add(c.getPawn(), c.getxPos(), c.getyPos());
         }
 
         weaponOne.setImage(new Image("GUI/images/" + game.playerCharacter.getWeapons().get(0).getImageUrl()));
         weaponTwo.setImage(new Image("GUI/images/" + game.playerCharacter.getWeapons().get(1).getImageUrl()));
-
         weaponOne.setEffect(light);
         weaponTwo.setEffect(shadow);
+        player.setEquippedWeapon(0);
+        Weapon weapon1 = game.playerCharacter.getWeapons().get(0);
+        Weapon weapon2 = game.playerCharacter.getWeapons().get(1);
+        weaponOneLabel.setText(weapon1.getName() + "\n" + "Avg. damage: " + (((((double)weapon1.getDamageDice()/2)+0.5)*weapon1.getDiceAmount()) + game.playerCharacter.getDamageBonus()) + "\n" + (weapon1.isRanged() ? "Ranged" : "Melee"));
+        weaponTwoLabel.setText(weapon2.getName() + "\n" + "Avg. damage: " + (((((double)weapon2.getDamageDice()/2)+0.5)*weapon2.getDiceAmount()) + game.playerCharacter.getDamageBonus()) + "\n" + (weapon2.isRanged() ? "Ranged" : "Melee"));
 
         mapContainer.getChildren().add(game.getLevel().backgroundImage);
         game.getLevel().backgroundImage.toBack();
@@ -114,7 +118,7 @@ public class BattlefieldController implements Initializable {
         initLevelTransitionVBox();
         initMovementPane();
 
-        refreshGameFromClient();
+        refreshViewFromGame();
         updateGame();
 
         timer = new Timer();
@@ -123,7 +127,6 @@ public class BattlefieldController implements Initializable {
             public void run() {
                 Platform.runLater(() -> {
                     update();
-                    TeamMatesController.updateListView();
                 });
             }
         },0 ,1200);
@@ -139,9 +142,25 @@ public class BattlefieldController implements Initializable {
                 public void run() {
                     for (Monster m : game.getMonsters()) {
                         if (!m.isDead()) {
-                            if(!game.attackRange(m, game.playerCharacter.getWeapons().get(player.getEquippedWeapon()).isRanged())) {
-                                m.showAttackPane();
-                                m.attackPane.addEventFilter(MouseEvent.MOUSE_CLICKED, attackEventHandler);
+                            if (m.attackPane == null){
+                                m.initAttackPane(cellWidth, cellHeight);
+                                Platform.runLater(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        mapGrid.add(m.attackPane, m.getxPos(), m.getyPos());
+                                    }
+                                });
+                            }
+                            if(game.playerCharacter.getWeapons().get(player.getEquippedWeapon()).isRanged()){
+                                if(game.attackRange(m, false)) {
+                                    m.showAttackPane();
+                                    m.attackPane.addEventFilter(MouseEvent.MOUSE_CLICKED, attackEventHandler);
+                                }
+                            }else if(!game.playerCharacter.getWeapons().get(player.getEquippedWeapon()).isRanged()){
+                                if(game.attackRange(m, true)) {
+                                    m.showAttackPane();
+                                    m.attackPane.addEventFilter(MouseEvent.MOUSE_CLICKED, attackEventHandler);
+                                }
                             }
                         }
                     }
@@ -170,6 +189,7 @@ public class BattlefieldController implements Initializable {
     };
 
     public void attackFinished(){
+        updateGame();
         player.setAttackPressed(false);
         moveButton.setDisable(false);
         endTurnButton.setDisable(false);
@@ -180,11 +200,14 @@ public class BattlefieldController implements Initializable {
             m.hideAttackPane();
             m.attackPane.removeEventFilter(MouseEvent.MOUSE_CLICKED, attackEventHandler);
         }
+        refreshViewFromGame();
         checkForPlayerTurn();
-        refreshGameFromClient();
     }
 
     public void moveButtonPressed(){
+        for(Creature i: game.getCreatures()){
+            System.out.println("\n" + i.getCreatureName() + "\nxpos: " + i.getxPos() + "\nypos: " + i.getyPos() + "\n");
+        }
         player.setMovePressed(!player.isMovePressed());
         if (player.isMovePressed()) {
             attackButton.setDisable(true);
@@ -208,17 +231,21 @@ public class BattlefieldController implements Initializable {
     };
 
     public void moveFinished(){
-        player.setMovePressed(false);
-        hideMovementPane();
+        for(Creature i: game.getCreatures()){
+            System.out.println("\n" + i.getCreatureName() + "\nxpos: " + i.getxPos() + "\nypos: " + i.getyPos() + "\n");
+        }
         if (game.playerCharacter.moveCreature(toGrid(mapGrid.getWidth(), mouseX), toGrid(mapGrid.getHeight(), mouseY), game.getCreatures())){
             player.setMoveUsed(true);
-        };
+        }
+        updateGame();
+        player.setMovePressed(false);
+        hideMovementPane();
         closeMapMoveEventHandler();
         attackButton.setDisable(false);
         endTurnButton.setDisable(false);
         moveButton.getStyleClass().clear();
         moveButton.getStyleClass().add("button");
-        refreshGameFromClient();
+        refreshViewFromGame();
         checkForPlayerTurn();
     }
 
@@ -274,20 +301,14 @@ public class BattlefieldController implements Initializable {
         game.update();
     }
 
-    public void refreshGameFromClient(){
+    public void refreshViewFromGame(){
         for(int i = 0; i < game.getCreatures().size(); i++){
             Creature c = game.getCreatures().get(i);
-            if (c.getPawn().getX() != c.getxPos() || c.getPawn().getY() != c.getyPos()) {
+            if (GridPane.getColumnIndex(c.getPawn()) != c.getxPos() || GridPane.getRowIndex(c.getPawn()) != c.getyPos()) {
                 mapGrid.getChildren().remove(c.getPawn());
                 mapGrid.add(c.getPawn(), c.getxPos(), c.getyPos());
                 if (c instanceof Monster){
-                    if (((Monster) c).attackPane == null){
-                        ((Monster) c).initAttackPane(cellWidth, cellHeight);
-                        mapGrid.add(((Monster) c).attackPane, c.getxPos(), c.getyPos());
-                    }
-                    else {
-                        ((Monster) c).updateAttackPane();
-                    }
+                    ((Monster) c).updateAttackPane();
                 }
             }
         }
@@ -296,63 +317,27 @@ public class BattlefieldController implements Initializable {
     }
 
 
-    public Node getNodeFromGrid(int x, int y){
-        Node result = null;
-        ObservableList<Node> nodes = mapGrid.getChildren();
-        for (Node node : nodes){
-            if (GridPane.getColumnIndex(node) == x && GridPane.getRowIndex(node) ==  y){
-                result = node;
-            }
-        }
-        return result;
-    }
-
     public boolean update(){
-        if (game.isLevelCleared() && !transitioning){
-            transitioning = true;
-            SFXPlayer.getInstance().setSFX(13);
-            MusicPlayer.getInstance().stopSong();
-            MusicPlayer.getInstance().changeSong(1);
-            showLevelTransitionVBox();
-            new Thread(new Runnable(){
-                @Override public void run(){
-                    try{
-                        Thread.sleep(6000);
-                    }
-                    catch (InterruptedException ie){
-                        ie.printStackTrace();
-                    }
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            newLevel();
-                            if (game.getLevel().getLevelId() <= game.getAmountOfLevels()) {
-                                hideLevelTransitionVbox();
-                                transitioning = false;
-                            }
-                        }
-                    });
-                }
-            }).start();
+        if (game.isLevelCleared()) {
+            nextLevelTransition();
+            return false;
+        }else if(game.isGameOver()){
+            gameOverTransition();
             return false;
         }
-
         updateGame();
-        refreshGameFromClient();
+        refreshViewFromGame();
         checkForPlayerTurn();
-        for (int i = 0; i < game.getAmountOfCreatures(); i++){
-            System.out.println(game.getCreature(i).getCreatureName() + ": " + game.getCreature(i).getHp());
-        }
-        System.out.println(player.isMovePressed() + " " + player.isAttackPressed());
-        System.out.println("Player turn: " + game.isPlayerTurn());
+        System.out.println(game.toString());
         return true;
     }
 
     public void newLevel(){
         game.newLevel();
         player.resetUsedActions();
-        game.resetTurn();
-        player.resetUsedActions();
+        // (Main.user.isHost()) {
+        //    game.setAllPlayersReadyForNewLevel(false);
+        //}
     }
 
     public boolean checkForPlayerTurn(){
@@ -419,12 +404,14 @@ public class BattlefieldController implements Initializable {
         weaponOne.setEffect(light);
         weaponTwo.setEffect(shadow);
         player.setEquippedWeapon(0);
+        System.out.println("Equiped weapon: " + game.playerCharacter.getWeapons().get(player.getEquippedWeapon()). getName() + "\nRanged: " + game.playerCharacter.getWeapons().get(player.getEquippedWeapon()).isRanged());
     }
 
     public void weaponTwoSelected(){
         weaponOne.setEffect(shadow);
         weaponTwo.setEffect(light);
         player.setEquippedWeapon(1);
+        System.out.println("Equiped weapon: " + game.playerCharacter.getWeapons().get(player.getEquippedWeapon()). getName() + "\nRanged: " + game.playerCharacter.getWeapons().get(player.getEquippedWeapon()).isRanged());
     }
 
     public void updateImage() {
@@ -455,19 +442,111 @@ public class BattlefieldController implements Initializable {
 
     public void showLevelTransitionVBox(){
         String nextLevelName = Main.db.getLevelName(game.getLevel().getLevelId() + 1);
-        if (nextLevelName != null){
+        if (nextLevelName != null && !game.isGameOver()){
             ((Label)transitionVbox.getChildren().get(1)).setText("Travelling to " + nextLevelName + "world");
+        }
+        else if(game.isGameOver()){
+            ((Label)transitionVbox.getChildren().get(0)).setText("Defeat");
         }
         else{
             ((Label)transitionVbox.getChildren().get(0)).setText("Victory!");
             ((Label)transitionVbox.getChildren().get(1)).setText("Credits");
+            db.setRank(db.fetchRank(Main.user.getUser_id()) + 1);
         }
         transitionVbox.setVisible(true);
         mapGrid.setGridLinesVisible(false);
+        this.disableAllButtons();
     }
 
     public void hideLevelTransitionVbox(){
         transitionVbox.setVisible(false);
         mapGrid.setGridLinesVisible(true);
+        this.enableAllButtons();
+    }
+
+    public void enableAllButtons(){
+        attackButton.setDisable(false);
+        moveButton.setDisable(false);
+        endTurnButton.setDisable(false);
+        exitButton.setDisable(false);
+    }
+
+    public void disableAllButtons(){
+        attackButton.setDisable(true);
+        moveButton.setDisable(true);
+        endTurnButton.setDisable(true);
+        exitButton.setDisable(true);
+    }
+
+    public void nextLevelTransition() {
+            if (!transitioning) {
+                transitioning = true;
+                if (Main.user.isHost()) {
+                    game.pushNewLevel();
+                }
+                SFXPlayer.getInstance().setSFX(13);
+                MusicPlayer.getInstance().stopSong();
+                MusicPlayer.getInstance().changeSong(1);
+                showLevelTransitionVBox();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(6000);
+                        } catch (InterruptedException ie) {
+                            ie.printStackTrace();
+                        }
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                newLevel();
+                                game.updatePlayerTurn();
+                                checkForPlayerTurn();
+                                if (game.getLevel().getLevelId() <= game.getAmountOfLevels()) {
+                                    hideLevelTransitionVbox();
+                                    transitioning = false;
+                                }
+                            }
+                        });
+                    }
+                }).start();
+            }
+    }
+
+    public void gameOverTransition(){
+        if (!transitioning) {
+            transitioning = true;
+            SFXPlayer.getInstance().setSFX(3);
+            MusicPlayer.getInstance().stopSong();
+            MusicPlayer.getInstance().changeSong(1);
+            showLevelTransitionVBox();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    chatController.timer.cancel();
+                    chatController.timer.purge();
+                    timer.cancel();
+                    timer.purge();
+                    try {
+                        Thread.sleep(6000);
+                    } catch (InterruptedException ie) {
+                        ie.printStackTrace();
+                    }
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                MusicPlayer.getInstance().changeSong(2);
+                                sceneSwitcher.switchScene(exitButton, "MainMenu.fxml");
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+                                hideLevelTransitionVbox();
+                                transitioning = false;
+                        }
+                    });
+                }
+            }).start();
+        }
     }
 }

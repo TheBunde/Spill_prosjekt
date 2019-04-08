@@ -23,6 +23,7 @@ public abstract class Creature {
     private String imageUrl;
     private ImageView pawn;
     private boolean isDead;
+    private boolean readyForNewLevel = false;
 
 
     public Creature(int playerId, int creatureId, String creatureName, int hp, int ac, int movement, int damageBonus, int attackBonus, int attacksPerTurn, String backstory, int xPos, int yPos, String imageUrl, ArrayList weapons){
@@ -68,15 +69,16 @@ public abstract class Creature {
         damage += Dice.roll(weapon.getDamageDice(), weapon.getDiceAmount()) + this.damageBonus;
 
         target.setHp(target.getHp() - damage);
-        String chatMessage = "";
+        String chatMessage = " rolled " + roll + " and dealt " + damage + " on ";
         if (this instanceof Character){
             SFXPlayer.getInstance().setSFX(10);
-            chatMessage += Main.db.fetchUsernameFromPlayerId(this.getPlayerId()) + " rolled " + roll + " and dealt " + damage + " to " + target.getCreatureName();
+            chatMessage = Main.db.fetchUsernameFromPlayerId(this.getPlayerId()) + chatMessage + target.getCreatureName();
         }
         else{
             SFXPlayer.getInstance().setSFX(10);
-            chatMessage += this.getCreatureName() + " rolled " + roll + " and dealt " + damage + " to " + Main.db.fetchUsernameFromPlayerId(target.getPlayerId());
+            chatMessage = this.getCreatureName() + chatMessage + Main.db.fetchUsernameFromPlayerId(target.getPlayerId());
         }
+        chatMessage += " with " + weapon.getName();
         Main.db.addChatMessage(chatMessage, true);
         return true;
     }
@@ -96,6 +98,7 @@ public abstract class Creature {
     public boolean moveCreature(int newX, int newY, ArrayList<Creature> creatures){
         for (Creature c : creatures){
             if (newX == c.getxPos() && newY == c.getyPos()){
+                System.out.println("HELLO FROM MOVECREATURE!!!!!!!!!!!!!");
                 return false;
             }
         }
@@ -180,6 +183,7 @@ public abstract class Creature {
     public boolean updateDead(){
         if(this.hp <= 0 && !isDead()){
             SFXPlayer.getInstance().setSFX(0);
+            this.setPawnImage("gravestone.png");
             isDead = true;
         }
         return isDead;
@@ -213,5 +217,13 @@ public abstract class Creature {
     public void setPawnSize(double width, double height){
         this.pawn.setFitWidth(width);
         this.pawn.setFitHeight(height);
+    }
+
+    public boolean isReadyForNewLevel(){
+        return this.readyForNewLevel;
+    }
+
+    public void setReadyForNewLevel(boolean readyForNewLevel){
+        this.readyForNewLevel = readyForNewLevel;
     }
 }

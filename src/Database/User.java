@@ -48,13 +48,6 @@ public class User {
 
     public void setLobbyKey(int lobbyKey){
         this.lobbyKey = lobbyKey;
-        if (lobbyKey > 0){
-            new Thread(new Runnable(){
-                @Override public void run(){
-                    db.addChatMessage(getUsername() + " has joined the lobby", true);
-                }
-            }).start();
-        }
     }
 
     public int getPlayerId(){

@@ -50,14 +50,15 @@ public class Database {
             res = prepStmt.executeQuery();
             while (res.next()) {
                 if (res.getInt("user_id") == 0){
-                    chat.addMessage("Event", res.getString("message"), "", true);
+                    chat.addMessage(res.getInt("message_id"), "Event", res.getString("message"), "", true);
                 }
                 else{
-                    chat.addMessage(res.getString("username"), res.getString("message"), res.getString("time_stamp"), false);
+                    chat.addMessage(res.getInt("message_id"), res.getString("username"), res.getString("message"), res.getString("time_stamp"), false);
                 }
                 if (res.isFirst()){
                     chat.setLastSeenMessageId(res.getInt("chat_message.message_id"));
                 }
+                System.out.println("Message: " + res.getInt("message_id"));
             }
         }
         catch (SQLException sq){
@@ -249,7 +250,7 @@ public class Database {
         try{
             con = this.bds.getConnection();
             con.setAutoCommit(false);
-            String prepString = "INSERT INTO game_lobby VALUES(DEFAULT, 0, 1, DEFAULT)";
+            String prepString = "INSERT INTO game_lobby VALUES(DEFAULT, 0, 1, DEFAULT, DEFAULT)";
             prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
             prepStmt.executeUpdate();
             res = prepStmt.getGeneratedKeys();
@@ -269,6 +270,60 @@ public class Database {
             this.manager.closeConnection(con);
             this.connectUserToGameLobby(lobbyKey);
             return status;
+        }
+    }
+
+    public boolean setBattlefieldReady(int lobbyKey){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        boolean status = true;
+        try{
+            con = this.bds.getConnection();
+            con.setAutoCommit(false);
+            String prepString = "UPDATE game_lobby SET battlefield_ready = TRUE WHERE lobby_key = ?";
+            prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
+            prepStmt.setInt(1, lobbyKey);
+            prepStmt.executeUpdate();
+            res = prepStmt.getGeneratedKeys();
+            res.next();
+            con.commit();
+        }
+        catch (SQLException sq){
+            this.manager.rollback(con);
+            sq.printStackTrace();
+            status = false;
+        }
+        finally {
+            this.manager.turnOnAutoCommit(con);
+            this.manager.closeRes(res);
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(con);
+            return status;
+        }
+    }
+
+    public boolean fetchBattlefieldReady(int lobbyKey) {
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        boolean ready = false;
+        try {
+            con = this.bds.getConnection();
+            String prepString = "SELECT battlefield_ready FROM game_lobby WHERE lobby_key = ?";
+            prepStmt = con.prepareStatement(prepString);
+            prepStmt.setInt(1, lobbyKey);
+            res = prepStmt.executeQuery();
+            res.next();
+            ready = res.getBoolean("battlefield_ready");
+        } catch (SQLException sq) {
+            sq.printStackTrace();
+            ready = false;
+        } finally {
+            this.manager.closeRes(res);
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(con);
+            return ready;
         }
     }
 
@@ -323,6 +378,34 @@ public class Database {
             manager.closeConnection(con);
         }
         return rank;
+    }
+
+    public boolean setRank(int rank){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        boolean status = true;
+        try{
+            con = this.bds.getConnection();
+            con.setAutoCommit(false);
+            String prepString = "UPDATE usr SET rank = ? WHERE user_id = ?";
+            prepStmt = con.prepareStatement(prepString);
+            prepStmt.setInt(1, rank);
+            prepStmt.setInt(2, Main.user.getUser_id());
+            prepStmt.executeUpdate();
+            con.commit();
+            Main.user.setRank(rank + 1);
+        }
+        catch (SQLException sq){
+            this.manager.rollback(con);
+            sq.printStackTrace();
+            status = false;
+        }
+        finally {
+            this.manager.turnOnAutoCommit(con);
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(con);
+            return status;
+        }
     }
 
 
@@ -619,10 +702,9 @@ public class Database {
         boolean status = true;
         int playerId = -1;
         try {
-            System.out.println("uno");
             con = this.bds.getConnection();
             con.setAutoCommit(false);
-            String prepString = "INSERT INTO player VALUES(DEFAULT, ?, ?, READY)";
+            String prepString = "INSERT INTO player VALUES(DEFAULT, ?, ?, DEFAULT, DEFAULT )";
             prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
             prepStmt.setInt(1, Main.user.getLobbyKey());
             if (playable) {
@@ -630,7 +712,7 @@ public class Database {
             } else {
                 prepStmt.setNull(2, java.sql.Types.INTEGER);
             }
-            System.out.println(Main.user.getLobbyKey() + "\n" + Main.user.getUser_id());
+            System.out.println("Lobbykey: " + Main.user.getLobbyKey() + " Userid: " + Main.user.getUser_id());
             prepStmt.executeUpdate();
             con.commit();
 
@@ -654,7 +736,9 @@ public class Database {
             if (playerId < 0) {
                 status = false;
             } else {
-                createCreature(playerId, creatureId);
+                if(creatureId != 0) {
+                    createCreature(playerId, creatureId);
+                }
             }
             return status;
         }
@@ -776,7 +860,7 @@ public class Database {
         int count = -1;
         try{
             con = this.bds.getConnection();
-            String prepString = "SELECT COUNT(*) FROM player WHERE lobby_key = ?";
+            String prepString = "SELECT COUNT(*) FROM player WHERE lobby_key = ? AND user_id IS NOT NULL";
             prepStmt = con.prepareStatement(prepString);
             prepStmt.setInt(1, Main.user.getLobbyKey());
             res = prepStmt.executeQuery();
@@ -947,6 +1031,7 @@ public class Database {
             res = prepStmt.executeQuery();
             while (res.next()){
                 int creatureId = res.getInt("creature_id");
+                System.out.println(creatureId);
                 ArrayList<Weapon> weapons = this.fetchWeaponsFromCreature(creatureId);
                 if(res.getInt("player.user_id") <= 0) {
                     creatures.add(new Monster(res.getInt("player_id"), creatureId, res.getString("creature_name"), res.getInt("hp"), res.getInt("ac"), res.getInt("movement"), res.getInt("damage_bonus"), res.getInt("attack_bonus"), res.getInt("attacks_per_turn"), res.getString("backstory"), res.getInt("pos_x"), res.getInt("pos_y"), res.getString("image_url"), weapons));
@@ -1315,7 +1400,7 @@ public class Database {
         }
     }
 
-    public boolean setLevel(int lobbyKey, int level){
+    public boolean setLevelId(int lobbyKey, int levelId){
         Connection con = null;
         PreparedStatement prepStmt = null;
         boolean status = false;
@@ -1324,7 +1409,7 @@ public class Database {
             con.setAutoCommit(false);
             String prepString = "UPDATE game_lobby SET level_id = ? WHERE lobby_key = ?";
             prepStmt = con.prepareStatement(prepString);
-            prepStmt.setInt(1, level);
+            prepStmt.setInt(1, levelId);
             prepStmt.setInt(2, lobbyKey);
             prepStmt.executeUpdate();
             status = true;
@@ -1343,16 +1428,17 @@ public class Database {
         }
     }
 
-    public ArrayList<Integer> fetchMonstersFromLevel(int levelId){
+    public ArrayList<Integer> fetchMonstersFromLevel(int levelId, int playerAmount){
         Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
         ArrayList<Integer> creatureIds = new ArrayList<>();
         try{
             con = this.bds.getConnection();
-            String prepString = "SELECT creature_id FROM level_monster WHERE level_id = ?";
+            String prepString = "SELECT creature_id FROM level_monster WHERE level_id = ? AND player_amount = ?";
             prepStmt = con.prepareStatement(prepString);
             prepStmt.setInt(1, levelId);
+            prepStmt.setInt(2, playerAmount);
             res = prepStmt.executeQuery();
             while(res.next()){
                 creatureIds.add(res.getInt(1));
@@ -1369,4 +1455,60 @@ public class Database {
             return creatureIds;
         }
     }
+
+    public ArrayList<Boolean> fetchPlayersReadyForLevel(){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        ArrayList<Boolean> playersReadyForLevel = new ArrayList<>();
+        try{
+            con = this.bds.getConnection();
+            String prepString = "SELECT ready_for_new_level FROM player WHERE lobby_key = ? AND user_id IS NOT NULL";
+            prepStmt = con.prepareStatement(prepString);
+            prepStmt.setInt(1, Main.user.getLobbyKey());
+            res = prepStmt.executeQuery();
+            while(res.next()){
+                playersReadyForLevel.add(res.getBoolean(1));
+            }
+        }
+        catch (SQLException sq){
+            sq.printStackTrace();
+            playersReadyForLevel = null;
+        }
+        finally {
+            this.manager.closeRes(res);
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(con);
+            return playersReadyForLevel;
+        }
+    }
+
+    public boolean setReadyForNewLevel(int playerId, boolean ready){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        boolean status = false;
+        try{
+            con = this.bds.getConnection();
+            con.setAutoCommit(false);
+            String prepString = "UPDATE player SET ready_for_new_level = ? WHERE player_id = ?";
+            prepStmt = con.prepareStatement(prepString);
+            prepStmt.setBoolean(1, ready);
+            prepStmt.setInt(2, playerId);
+            prepStmt.executeUpdate();
+            status = true;
+            con.commit();
+        }
+        catch (SQLException sq){
+            this.manager.rollback(con);
+            sq.printStackTrace();
+            status = false;
+        }
+        finally {
+            this.manager.turnOnAutoCommit(con);
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(con);
+            return status;
+        }
+    }
+
 }
