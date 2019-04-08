@@ -32,7 +32,7 @@ class CreatureTest {
 
         ArrayList<Weapon> m2weapons = new ArrayList<>();
         Weapon m2w1 = new Weapon("Greatbow", 6, true, 2, "");
-        m1weapons.add(m1w1);
+        m2weapons.add(m2w1);
         Monster m2 = new Monster(4, 8, "Ushabti", 20, 10, 3, 6, 5, "", 8, 6, null, m2weapons);
 
         creatures = new ArrayList<>();
