@@ -251,6 +251,7 @@ public class BattlefieldController implements Initializable {
         timer.cancel();
         timer.purge();
         this.sceneSwitcher.switchScene(exitButton, "MainMenu.fxml");
+        MusicPlayer.getInstance().stopSong();
     }
 
     private int toGrid(double pixels, double pos){

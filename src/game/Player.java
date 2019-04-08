@@ -118,10 +118,10 @@ public class Player {
                 playerImage.setImage(new Image("GUI/images/" + BattlefieldController.game.playerCharacter.getImageUrl()));
             }
             else if(chrHP >= dmgTwo && chrHP <= dmgOne){
-                playerImage.setImage(new Image("GUI/images/ranger.jpg"));
+                playerImage.setImage(new Image("GUI/images/rangerdamaged.jpg"));
             }
             else if(chrHP < dmgOne){
-                playerImage.setImage(new Image("GUI/images/ranger.jpg"));
+                playerImage.setImage(new Image("GUI/images/rangerdamaged2.jpg"));
             }
         }
         if(chrHP <= 0){

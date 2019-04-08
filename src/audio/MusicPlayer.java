@@ -89,4 +89,9 @@ public class MusicPlayer implements Runnable {
             }
         }
     }
+    public void keepPlaying(int index){
+        if(currentSongIndex != index){
+            stopSong();
+        }
+    }
 }
