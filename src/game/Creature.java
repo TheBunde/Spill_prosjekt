@@ -1,6 +1,8 @@
 package game;
 
 import java.util.ArrayList;
+
+import Database.Database;
 import Main.*;
 import audio.SFXPlayer;
 import javafx.scene.image.Image;
@@ -23,6 +25,7 @@ public abstract class Creature {
     private ImageView pawn;
     private boolean isDead;
     private boolean readyForNewLevel = false;
+    private Database db = Main.db;
 
 
     public Creature(int playerId, int creatureId, String creatureName, int hp, int ac, int movement, int damageBonus, int attackBonus, String backstory, int xPos, int yPos, String imageUrl, ArrayList weapons){
@@ -55,13 +58,19 @@ public abstract class Creature {
             String chatMessage = "";
             if (this instanceof Character){
                 SFXPlayer.getInstance().setSFX(11);
-                chatMessage += Main.db.fetchUsernameFromPlayerId(this.getPlayerId()) + " rolled " + roll + " and missed " + target.getCreatureName();
+                if (Main.db != null) {
+                    chatMessage += Main.db.fetchUsernameFromPlayerId(this.getPlayerId()) + " rolled " + roll + " and missed " + target.getCreatureName();
+                }
             }
             else{
                 SFXPlayer.getInstance().setSFX(12);
-                chatMessage += this.getCreatureName() + " rolled " + roll + " and missed " + Main.db.fetchUsernameFromPlayerId(target.getPlayerId());
+                if (Main.db != null) {
+                    chatMessage += this.getCreatureName() + " rolled " + roll + " and missed " + Main.db.fetchUsernameFromPlayerId(target.getPlayerId());
+                }
             }
-            Main.db.addChatMessage(chatMessage, true);
+            if (Main.db != null) {
+                Main.db.addChatMessage(chatMessage, true);
+            }
             return false;
         }
 
@@ -72,14 +81,20 @@ public abstract class Creature {
         String chatMessage = " rolled " + roll + " and dealt " + damage + " on ";
         if (this instanceof Character){
             SFXPlayer.getInstance().setSFX(10);
-            chatMessage = Main.db.fetchUsernameFromPlayerId(this.getPlayerId()) + chatMessage + target.getCreatureName();
+            if (Main.db != null) {
+                chatMessage = Main.db.fetchUsernameFromPlayerId(this.getPlayerId()) + chatMessage + target.getCreatureName();
+            }
         }
         else{
             SFXPlayer.getInstance().setSFX(10);
-            chatMessage = this.getCreatureName() + chatMessage + Main.db.fetchUsernameFromPlayerId(target.getPlayerId());
+            if (Main.db != null) {
+                chatMessage = this.getCreatureName() + chatMessage + Main.db.fetchUsernameFromPlayerId(target.getPlayerId());
+            }
         }
         chatMessage += " with " + weapon.getName();
-        Main.db.addChatMessage(chatMessage, true);
+        if (Main.db != null) {
+            Main.db.addChatMessage(chatMessage, true);
+        }
         return true;
     }
 
@@ -207,7 +222,9 @@ public abstract class Creature {
     }
 
     public void setPawnImage(String imageUrl){
-        this.pawn.setImage(new Image("GUI/images/" + imageUrl));
+        if (this.pawn != null) {
+            this.pawn.setImage(new Image("GUI/images/" + imageUrl));
+        }
     }
 
     public void setPawnSize(double width, double height){
