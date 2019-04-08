@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b54dcace-a346-4a3d-ac89-a5e8003fcc91" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Game-development-project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Game-development-project.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Creature.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Creature.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/game/CreatureTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/game/CreatureTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -28,14 +25,44 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/test/game/CreatureTest.java">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Database/Database.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="78" column="82" selection-start-line="78" selection-start-column="82" selection-end-line="78" selection-end-column="82" />
+            <state relative-caret-position="139">
+              <caret line="39" selection-start-line="39" selection-end-line="39" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/test/game/CreatureTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="229">
+              <caret line="130" column="12" selection-start-line="130" selection-start-column="12" selection-end-line="130" selection-end-column="12" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/game/Game.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="139">
+              <caret line="187" selection-start-line="187" selection-end-line="187" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/GUI/BattlefieldController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="139">
+              <caret line="128" selection-start-line="128" selection-end-line="128" />
             </state>
           </provider>
         </entry>
@@ -52,7 +79,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/game/Creature.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
+            <state relative-caret-position="-315">
               <caret line="195" selection-start-line="195" selection-end-line="195" />
               <folding>
                 <element signature="e#367#375#0" expanded="true" />
@@ -264,7 +291,7 @@
     <property name="Repository.Attach.Annotations" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1554723227759" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1554726951802" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -278,7 +305,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.CreatureTest.setHp">
+  <component name="RunManager" selected="JUnit.CreatureTest.setReadyForNewLevel">
     <configuration name="Main" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main.Main" />
       <module name="Game-development-project" />
@@ -288,22 +315,6 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CreatureTest.hitSuccess" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Game-development-project" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="game.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="game" />
-      <option name="MAIN_CLASS_NAME" value="game.CreatureTest" />
-      <option name="METHOD_NAME" value="hitSuccess" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -340,18 +351,52 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="CreatureTest.setNewPos" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Game-development-project" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="game.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="game" />
+      <option name="MAIN_CLASS_NAME" value="game.CreatureTest" />
+      <option name="METHOD_NAME" value="setNewPos" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CreatureTest.setReadyForNewLevel" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Game-development-project" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="game.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="game" />
+      <option name="MAIN_CLASS_NAME" value="game.CreatureTest" />
+      <option name="METHOD_NAME" value="setReadyForNewLevel" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Application.Main" />
-      <item itemvalue="JUnit.CreatureTest.hitSuccess" />
       <item itemvalue="JUnit.CreatureTest.moveCreature" />
       <item itemvalue="JUnit.CreatureTest.setHp" />
+      <item itemvalue="JUnit.CreatureTest.setNewPos" />
+      <item itemvalue="JUnit.CreatureTest.setReadyForNewLevel" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.CreatureTest.setReadyForNewLevel" />
+        <item itemvalue="JUnit.CreatureTest.setNewPos" />
+        <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.CreatureTest.setHp" />
         <item itemvalue="JUnit.CreatureTest.moveCreature" />
-        <item itemvalue="Application.Main" />
-        <item itemvalue="JUnit.CreatureTest.hitSuccess" />
       </list>
     </recent_temporary>
   </component>
@@ -369,9 +414,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="CreatureTest_hitSuccess - 2019.04.08 at 12h 47m 27s.xml">
-      <configuration name="CreatureTest.hitSuccess" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="CreatureTest_hitSuccess - 2019.04.08 at 13h 00m 08s.xml">
       <configuration name="CreatureTest.hitSuccess" configurationId="JUnit" />
     </history-entry>
@@ -396,9 +438,15 @@
     <history-entry file="CreatureTest_setHp - 2019.04.08 at 13h 33m 56s.xml">
       <configuration name="CreatureTest.setHp" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="CreatureTest_setNewPos - 2019.04.08 at 14h 29m 20s.xml">
+      <configuration name="CreatureTest.setNewPos" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CreatureTest_setReadyForNewLevel - 2019.04.08 at 14h 31m 55s.xml">
+      <configuration name="CreatureTest.setReadyForNewLevel" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4258000" />
+    <option name="totallyTimeSpent" value="7402000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -505,13 +553,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/game/Game.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="325" selection-start-line="325" selection-end-line="325" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/GUI/InterfaceMain.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -557,13 +598,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/BattlefieldController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="280" column="26" selection-start-line="280" selection-end-line="281" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Database/User.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="249">
@@ -582,9 +616,33 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/game/Game.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="139">
+          <caret line="187" selection-start-line="187" selection-end-line="187" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GUI/BattlefieldController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="139">
+          <caret line="128" selection-start-line="128" selection-end-line="128" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Database/Database.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="139">
+          <caret line="39" selection-start-line="39" selection-end-line="39" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/game/Creature.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
+        <state relative-caret-position="-315">
           <caret line="195" selection-start-line="195" selection-end-line="195" />
           <folding>
             <element signature="e#367#375#0" expanded="true" />
@@ -622,8 +680,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test/game/CreatureTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="78" column="82" selection-start-line="78" selection-start-column="82" selection-end-line="78" selection-end-column="82" />
+        <state relative-caret-position="229">
+          <caret line="130" column="12" selection-start-line="130" selection-start-column="12" selection-end-line="130" selection-end-column="12" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

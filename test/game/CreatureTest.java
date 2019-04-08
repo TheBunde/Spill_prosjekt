@@ -86,10 +86,13 @@ class CreatureTest {
         Character c1 = (Character) creatures.get(0);
         Character c2 = (Character) creatures.get(1);
         boolean moved = c1.moveCreature(2, 6, creatures);
+        //Checking that c1 did not move on top of another Character
         assertTrue(c1.getxPos() == 2 && c1.getyPos() == 5, "Cannot move on top of another creature");
         moved = c1.moveCreature(2, 7, creatures);
+        //Checking that c1 moved to a valid position
         assertTrue(c1.getxPos() == 2 && c1.getyPos() == 7, "Did not move to the valid space");
         moved = c1.moveCreature(15, 15, creatures);
+        //Checking that c1 did not move outside its movementrange
         assertTrue(c1.getxPos() == 2 && c1.getyPos() == 7, "Moved out of range");
     }
 
@@ -111,6 +114,10 @@ class CreatureTest {
 
     @Test
     void setNewPos() {
+        Character c1 = (Character) creatures.get(0);
+        c1.setNewPos(10, 10);
+        // Checking if c1 moves to the correct possition
+        assertTrue(c1.getxPos() == 10 && c1.getyPos() == 10, "Did not move to the valid location");
     }
 
     @Test
@@ -119,5 +126,9 @@ class CreatureTest {
 
     @Test
     void setReadyForNewLevel() {
+        Character c1 = (Character) creatures.get(0);
+        c1.setReadyForNewLevel(true);
+        // Checking if c1 was set to be ready for level
+        assertTrue(c1.isReadyForNewLevel(), "Is not ready for next llevel");
     }
 }
