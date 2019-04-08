@@ -21,6 +21,8 @@ public class MainMenuController {
     private Database db = Main.db;
 
     public void initialize(){
+        MusicPlayer.getInstance().changeSong(2);
+        MusicPlayer.getInstance().keepPlaying(2);
         Main.user.setPlayerId(-1);
         db.setHost(false);
     }

@@ -43,8 +43,6 @@ public class SettingsController {
         }
         else{
             System.out.println(volumeMusic);
-            MusicPlayer.getInstance().setVolumeMusic(volumeMusic);
-            MusicPlayer.getInstance().stopSong();
         }
 
 

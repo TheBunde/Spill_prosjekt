@@ -40,22 +40,16 @@ public class AccountDetailsController {
 
     public void changeUsernameButtonPressed() throws Exception {
         SFXPlayer.getInstance().setSFX(0);
-        audio.MusicPlayer.getInstance().stopSong();
-        MusicPlayer.getInstance().changeSong(2);
         sceneSwitcher.switchScene(changeUsernameButton, "changeUsername.fxml");
     }
 
     public void changePasswordButtonPressed() throws Exception {
         SFXPlayer.getInstance().setSFX(0);
-        audio.MusicPlayer.getInstance().stopSong();
-        MusicPlayer.getInstance().changeSong(2);
         sceneSwitcher.switchScene(changePasswordButton, "changePassword.fxml");
     }
 
     public void backToMenuButtonPressed() throws Exception {
         SFXPlayer.getInstance().setSFX(0);
-        audio.MusicPlayer.getInstance().stopSong();
-        MusicPlayer.getInstance().changeSong(2);
         sceneSwitcher.switchScene(backButton, "MainMenu.fxml");
     }
 }
