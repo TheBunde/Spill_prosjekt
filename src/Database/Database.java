@@ -19,17 +19,13 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class Database {
-    private String url;
-    private String password;
     private ManageConnection manager;
     private BasicDataSource bds;
     public Chat chat;
     private Alert alert;
 
     //Setup for database
-    public Database(String url, String password){
-        this.url = url;
-        this.password = password;
+    public Database(){
         this.manager = new ManageConnection();
         this.bds = DataSource.getInstance().getBds();
         this.chat = new Chat();
@@ -1034,10 +1030,10 @@ public class Database {
                 System.out.println(creatureId);
                 ArrayList<Weapon> weapons = this.fetchWeaponsFromCreature(creatureId);
                 if(res.getInt("player.user_id") <= 0) {
-                    creatures.add(new Monster(res.getInt("player_id"), creatureId, res.getString("creature_name"), res.getInt("hp"), res.getInt("ac"), res.getInt("movement"), res.getInt("damage_bonus"), res.getInt("attack_bonus"), res.getInt("attacks_per_turn"), res.getString("backstory"), res.getInt("pos_x"), res.getInt("pos_y"), res.getString("image_url"), weapons));
+                    creatures.add(new Monster(res.getInt("player_id"), creatureId, res.getString("creature_name"), res.getInt("hp"), res.getInt("ac"), res.getInt("movement"), res.getInt("damage_bonus"), res.getInt("attack_bonus"), res.getString("backstory"), res.getInt("pos_x"), res.getInt("pos_y"), res.getString("image_url"), weapons));
                 }
                 else{
-                    creatures.add(new game.Character(res.getInt("player_id"), creatureId, res.getString("creature_name"), res.getInt("hp"), res.getInt("ac"), res.getInt("movement"), res.getInt("damage_bonus"), res.getInt("attack_bonus"), res.getInt("attacks_per_turn"), res.getString("backstory"), res.getInt("pos_x"), res.getInt("pos_y"), res.getString("image_url"), weapons));
+                    creatures.add(new game.Character(res.getInt("player_id"), creatureId, res.getString("creature_name"), res.getInt("hp"), res.getInt("ac"), res.getInt("movement"), res.getInt("damage_bonus"), res.getInt("attack_bonus"), res.getString("backstory"), res.getInt("pos_x"), res.getInt("pos_y"), res.getString("image_url"), weapons));
                 }
             }
         }
