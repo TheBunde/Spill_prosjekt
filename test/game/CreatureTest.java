@@ -173,6 +173,6 @@ class CreatureTest {
         Character c1 = (Character) creatures.get(0);
         c1.setReadyForNewLevel(true);
         // Checking if c1 was set to be ready for level
-        assertTrue(c1.isReadyForNewLevel(), "Is not ready for next llevel");
+        assertTrue(c1.isReadyForNewLevel(), "Is not ready for next level");
     }
 }
