@@ -103,6 +103,7 @@ public abstract class Creature {
             }
         }
         if ((Math.abs(newX - this.getxPos()) <= this.movement && Math.abs(newY - this.getyPos()) <= this.movement)){
+            SFXPlayer.getInstance().setSFX(15);
             this.setNewPos(newX, newY);
             System.out.println("Moved");
             if (this instanceof Character){

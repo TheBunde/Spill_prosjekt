@@ -1,18 +1,15 @@
 package audio;
 
-import java.io.File;
 import java.util.ArrayList;
-
-import javax.sound.sampled.*;
 
 
 public class MusicPlayer implements Runnable {
 
-    private ArrayList<AudioFile> musicFiles;
+    private ArrayList<AudioFile> fileList;
     private int currentSongIndex;
-    private boolean running;
-    private boolean stopSong;
-    private float volumeMusic;
+    private boolean run;
+    private boolean stop;
+    private float volMusic;
 
     private static MusicPlayer thisInstance = new MusicPlayer("testintro","pause", "mainmenu", "battlesongone",
             "warriorSong2","rogueSong","wizardSong","desertwalk","pianosong","pianosong2","testintro3",
@@ -43,13 +40,13 @@ public class MusicPlayer implements Runnable {
      */
 
     public MusicPlayer(String... files) {
-        musicFiles = new ArrayList<AudioFile>();
+        fileList = new ArrayList<AudioFile>();
         for(String file : files)
-            musicFiles.add(new AudioFile("src/audio/music/" + file + ".wav"));
+            fileList.add(new AudioFile("src/audio/music/" + file + ".wav"));
     }
 
     public void stopSong(){
-        stopSong = true;
+        stop = true;
     }
 
     public void changeSong(int currentSongIndex){
@@ -58,29 +55,28 @@ public class MusicPlayer implements Runnable {
         }catch (Exception e){
             e.printStackTrace();
         }
-
     }
 
-    public void setVolumeMusic(float volumeMusic){
-        this.volumeMusic = volumeMusic;
+    public void setVolMusic(float volMusic){
+        this.volMusic = volMusic;
     }
 
     @Override
     public void run() {
-        running = true;
-        stopSong = false;
-        AudioFile song = musicFiles.get(currentSongIndex);
-        song.play(volumeMusic);
-        while(running) {
-            if(stopSong){
+        run = true;
+        stop = false;
+        AudioFile song = fileList.get(currentSongIndex);
+        song.play(volMusic);
+        while(run) {
+            if(stop){
                 song.stopMusic();
-                stopSong = false;
+                stop = false;
             }
             if(!song.isPlaying()) {
-                if(currentSongIndex >= musicFiles.size())
+                if(currentSongIndex >= fileList.size())
                     currentSongIndex = 0;
-                song = musicFiles.get(currentSongIndex);
-                song.play(volumeMusic);
+                song = fileList.get(currentSongIndex);
+                song.play(volMusic);
             }
             try {
                 Thread.sleep(1);
