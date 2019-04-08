@@ -77,13 +77,27 @@ public class Monster extends Creature {
         for (Creature i : creatures) {
             if(!i.isDead()) {
                 if (i != this && i instanceof game.Character) {
-                    if (Math.abs(getxPos() - i.getxPos()) < xDistance && Math.abs(getyPos() - i.getyPos()) < yDistance) {
+                    System.out.println("\n" + i.getCreatureName() + ": " + Math.sqrt(Math.pow(Math.abs(i.getxPos() - getxPos()), 2) + Math.pow(Math.abs(i.getyPos() - getyPos()), 2)));
+                    System.out.println("\n" + "target: " + Math.sqrt(Math.pow(Math.abs(xDistance - getxPos()), 2) + Math.pow(Math.abs(yDistance - getyPos()), 2)));
+                    int xDistanceToI = Math.abs(i.getxPos() - this.getxPos());
+                    int yDistanceToI = Math.abs(i.getyPos() - this.getyPos());
+                    int xDistanceToCurrent = Math.abs(xDistance - this.getxPos());
+                    int yDistanceToCurrent = Math.abs(yDistance - this.getyPos());
+                    if (pytagoras(xDistance, yDistance) < pytagoras(xDistanceToCurrent, yDistanceToCurrent)) {
+                        xDistance = xDistanceToI;
+                        yDistance = yDistanceToI;
                         target = i;
                     }
                 }
             }
         }
         return target;
+    }
+
+    public double pytagoras(int x, int y){
+        double powX = Math.pow(x, 2);
+        double powY = Math.pow(y, 2);
+        return Math.sqrt(powX + powY);
     }
 
     public void moveToward(Creature target, ArrayList<Creature> creatures){
