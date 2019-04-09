@@ -33,7 +33,7 @@ public class LoginController {
     }
   /**
      * This method checking the username if it exists in database by call method findUsername() from database.java
-     * @return
+     * @return true if the username exist
      */
     public boolean checkUsername() {
         if (Main.db.findUsername(username.getText())) {
@@ -45,7 +45,7 @@ public class LoginController {
     
   /**
      * This method checking if the password entered by user is identical with the one which is registered in database
-     * @return
+     * @return true if the password identical
      */
     public boolean checkPassword() {
         if (Main.db.fetchHash(username.getText()).equals(pw.getHash(password.getText(), Main.db.fetchSalt(username.getText())))) {
@@ -55,8 +55,8 @@ public class LoginController {
     }
    /**
      * This method performes when login button is pressed
-     * @return
-     * @throws Exception
+     * @return false if there is something went wrong
+     * @throws Exception 
      */
     public boolean loginButtonPressed() throws Exception {
        // checks if usernamer or password field is empty, and if it is display a warning message
