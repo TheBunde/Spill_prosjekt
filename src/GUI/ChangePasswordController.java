@@ -26,16 +26,25 @@ public class ChangePasswordController {
     public ChangePasswordController(){
         sceneSwitcher = new SceneSwitcher();
     }
+    /**
+     *   This method performes when confirm button in changePassword page pressed
+     * @throws Exception
+     */
 
     public void confirmButtonPressed()throws Exception{
         SFXPlayer.getInstance().setSFX(0);
-
+        /**
+         * check wether oldPassword-, newPassword or reNewPassword is empty
+         */
         if(oldPassword.getText().isEmpty() || newPassword.getText().isEmpty() || reNewPassword.getText().isEmpty()) {
             alert.setTitle("Empty Field");
             alert.setHeaderText(null);
             alert.setContentText("Fill in all fields.");
             alert.showAndWait();
         }
+         /**
+         * check if the newPassword is equals to reNewPassword
+         */
 
         else if(!newPassword.getText().equals(reNewPassword.getText())){
             alert.setTitle("Not match Password");
@@ -43,6 +52,9 @@ public class ChangePasswordController {
             alert.setContentText("The passwords do not match, try again!");
             alert.showAndWait();
         } else {
+            /**
+             * if everything is ok update the password
+             */
 
             setNewPassword();
             alert.setTitle("Password changed");
@@ -52,11 +64,19 @@ public class ChangePasswordController {
             sceneSwitcher.switchScene(confirmButton, "AccountDetails.fxml");
         }
     }
+    /**
+     * updating the password by deleting the old one by calling the method deleteOldPassword() from database.java
+     * and adding the new one by calling addPassword() method
+     */
 
     public void setNewPassword(){
         db.deleteOldPassword(oldPassword.getText().trim());
         db.addPassword(newPassword.getText().trim());
     }
+     /**
+     * get back to Account Details page if you want to cancle changing the password
+     * @throws Exception
+     */
 
     public void backToMenu() throws Exception{
         SFXPlayer.getInstance().setSFX(0);
