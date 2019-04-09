@@ -1,7 +1,7 @@
 package GUI;
 
 import database.Database;
-import main.Main;
+import main.*;
 import game.Character;
 import game.Game;
 import javafx.collections.FXCollections;
@@ -22,7 +22,6 @@ public class TeamMatesController implements Initializable {
 
     public static ObservableList<Character> characterObservableList;
     public static ArrayList<Character> charactersInListView;
-    private Database db = Main.db;
     public static Game game = BattlefieldController.game;
 
     public TeamMatesController(){

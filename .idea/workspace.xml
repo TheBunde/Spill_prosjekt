@@ -290,6 +290,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+<<<<<<< HEAD
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1554815741785" />
   </component>
   <component name="RecentsManager">
@@ -311,9 +312,12 @@
         </RuleState>
       </list>
     </option>
+=======
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1554815875089" />
+>>>>>>> 2cef073591e5167a3c502c690500dd790f9a13ad
   </component>
-  <component name="RunManager" selected="Application.Main">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Application.Main (1)">
+    <configuration name="Main (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main.Main" />
       <module name="Game-development-project" />
       <extension name="coverage">
@@ -326,76 +330,23 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="All in Game-development-project" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Game-development-project" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="GameTest.getCharacters" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main.Main" />
       <module name="Game-development-project" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="game.*" />
+          <option name="PATTERN" value="Main.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="game" />
-      <option name="MAIN_CLASS_NAME" value="game.GameTest" />
-      <option name="METHOD_NAME" value="getCharacters" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GameTest.getMonsters" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Game-development-project" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="game.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="game" />
-      <option name="MAIN_CLASS_NAME" value="game.GameTest" />
-      <option name="METHOD_NAME" value="getMonsters" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="GameTest.isGameOver" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Game-development-project" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="game.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="game" />
-      <option name="MAIN_CLASS_NAME" value="game.GameTest" />
-      <option name="METHOD_NAME" value="isGameOver" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <list>
-      <item itemvalue="JUnit.GameTest.isGameOver" />
-      <item itemvalue="Application.Main" />
-      <item itemvalue="JUnit.GameTest.getCharacters" />
-      <item itemvalue="JUnit.GameTest.getMonsters" />
-      <item itemvalue="JUnit.All in Game-development-project" />
-    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main (1)" />
         <item itemvalue="Application.Main" />
-        <item itemvalue="JUnit.All in Game-development-project" />
-        <item itemvalue="JUnit.GameTest.getMonsters" />
-        <item itemvalue="JUnit.GameTest.getCharacters" />
-        <item itemvalue="JUnit.GameTest.isGameOver" />
       </list>
     </recent_temporary>
   </component>

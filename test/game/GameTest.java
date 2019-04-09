@@ -135,16 +135,59 @@ public class GameTest {
         Character c1 = (Character) creatures.get(0);
         Monster m1 = (Monster) creatures.get(2);
 
-        //Checking if monster does not move when dead
-        m1.setHp(0);
-        m1.updateDead();
+        // Checking if m1 moves when it is its turn
+        game.setPlayerTurn(2);
         m1.setNewPos(1, 1);
         c1.setNewPos(1,3);
         game.monsterAction();
+        try {
+            Thread.sleep(300); // Must use Thread.sleep() because monsterAction() starts a new thread
+        }catch (InterruptedException ie){
+            ie.printStackTrace();
+        }
+        assertTrue(m1.getxPos() == 1 && m1.getyPos() == 2, "m1 did not move correctly");
+
+        // Checking if m1 attacks when it is its turn and Character is in range
+        for(int i = 0; i < 20; i++){
+            game.monsterAction();
+            try {
+                Thread.sleep(100);
+            }catch (InterruptedException ie){
+                ie.printStackTrace();
+            }
+        }
+        assertTrue(c1.getHp() < c1.getInitialHp(), "m1 did not attack");
     }
 
     @Test
     void attackRange() {
+        Character c1 = (Character) creatures.get(0);
+        Character c2 = (Character) creatures.get(1);
+        Monster m1 = (Monster) creatures.get(2);
+
+        //Checking if attackRange() is true when m1 is adjacent to c1, and c1 has melee weapon
+        m1.setNewPos(13, 13);
+        c1.setNewPos(13, 14);
+        game.setPlayerCharacter(c1);
+        boolean inRange = game.attackRange(m1, true);
+        assertTrue(inRange, "attackRange() false when in attack range");
+
+        //Checking if attackRange() is false when m1 is not adjacent to c1, and c1 has melee weapon
+        c1.setNewPos(13, 15);
+        inRange = game.attackRange(m1, true);
+        assertFalse(inRange, "attackRange() true when out of range");
+
+        //Checking if attackRange() is true when m1 is not adjacent to c2, and c2 has ranged weapon
+        c2.setNewPos(11, 13);
+        m1.setNewPos(13, 13);
+        game.setPlayerCharacter(c2);
+        inRange = game.attackRange(m1, false);
+        assertTrue(inRange, "attackRange() false when in attack range with ranged weapon");
+
+        //Checking if attackRange() is false when m1 is adjacent to c2, and c2 has ranged weapon
+        c2.setNewPos(12, 13);
+        inRange = game.attackRange(m1, false);
+        assertFalse(inRange, "attackRange() true when too close to target");
     }
 
     @Test
