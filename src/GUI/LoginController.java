@@ -17,6 +17,12 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * LoginController.java
+ * The program handles the components in Login-scene.
+ * @author saramoh, shahedsa
+ */
+
 
 public class LoginController {
 
