@@ -1,13 +1,9 @@
 package game;
 
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
-import GUI.BattlefieldController;
 import Main.*;
 import Database.*;
-import audio.SFXPlayer;
-import javafx.application.Platform;
 import javafx.scene.layout.GridPane;
 
 public class Game {
@@ -57,28 +53,25 @@ public class Game {
         }
     }
 
-    public void newLevel(){
-        changeToNewLevel();
-        for (Character c : this.getCharacters()){
-            c.setReadyForNewLevel(false);
-        }
-        if (this.level.getLevelId() == this.amountOfLevels){
-            //Update rank for user
-        }
-    }
-
     public void resetTurn(){
         if (Main.user.isHost()){
             Main.db.incrementPlayerTurn(0);
         }
         turn = 0;
-        //turn = turn%this.getCharacters().size();
     }
 
     public void pushNewLevel(){
-        addNewMonstersToLobby(this.level.getLevelId() + 1, this.getCharacters().size());
+        int playerAmount = this.getCharacters().size();
+        addNewMonstersToLobby(this.level.getLevelId() + 1, playerAmount);
         Main.db.setLevelId(Main.user.getLobbyKey(), this.level.getLevelId() + 1);
-        upgradePlayerStats();
+        if (this.level.getLevelId() + 1 <= this.getAmountOfLevels()) {
+            if (this.level.getLevelId() + 1 == this.getAmountOfLevels()){
+                for (int i = 0; i < playerAmount; i++){
+                    Main.db.setPos(7 - (int)Math.round(playerAmount/2) + 2*i, 13, this.getCharacters().get(i).getPlayerId());
+                }
+            }
+            upgradePlayerStats();
+        }
         this.resetTurn();
     }
 
@@ -86,14 +79,22 @@ public class Game {
         ArrayList<Character> characters = this.getCharacters();
         for (Character c : characters){
             Main.db.setHp((int)(c.getInitialHp()*1.25), c.getPlayerId());
+            Main.db.setDamageBonus((int)(c.getDamageBonus()*1.25), c.getPlayerId());
         }
-        Main.db.addChatMessage("HP upgraded!", true);
+        Main.db.addChatMessage("You feel the energy from this battle, you are now more powerful!", true);
     }
 
     public void addNewMonstersToLobby(int levelId, int playerAmount){
         ArrayList<Integer> creatureIds = Main.db.fetchMonstersFromLevel(levelId, playerAmount);
         for (int i = 0; i < creatureIds.size(); i++){
-            Main.db.createPlayer(creatureIds.get(i), false);
+            int playerId = Main.db.createPlayer(creatureIds.get(i), false);
+            int posX = (int)Math.floor(Math.random()*16);
+            int posY = (int)Math.floor(Math.random()*16);
+            if (creatureIds.get(i) >= 13){
+                posX = 8;
+                posY = 7;
+            }
+            Main.db.createCreature(playerId, creatureIds.get(i), posX, posY);
         }
     }
 
@@ -207,7 +208,8 @@ public class Game {
         }
     }
 
-    public boolean playersReadyForNewLevel(){
+    public boolean allPlayersReadyForNewLevel(){
+        this.updatePlayersReadyForNewLevel();
         boolean ready = true;
         ArrayList<Character> characters = this.getCharacters();
         for (Character c : characters){
@@ -221,32 +223,6 @@ public class Game {
     public void setPlayerReadyForNewLevel(boolean ready){
         this.playerCharacter.setReadyForNewLevel(ready);
         Main.db.setReadyForNewLevel(this.playerCharacter.getPlayerId(), ready);
-    }
-
-    public void setAllPlayersReadyForNewLevel(boolean ready){
-        ArrayList<Character> characters = this.getCharacters();
-        for (Character c : characters){
-            Main.db.setReadyForNewLevel(c.getPlayerId(), ready);
-        }
-    }
-
-    public boolean isPositionAvailable(int x, int y){
-        boolean available = true;
-        for (Creature c : this.creatures){
-            if (c.getxPos() == x && c.getyPos() == y){
-                available = false;
-            }
-        }
-        return available;
-    }
-
-    public Creature getCreatureFromPosition(int x, int y){
-        for (Creature c : this.creatures){
-            if (c.getxPos() == x && c.getyPos() == y){
-                return c;
-            }
-        }
-        return null;
     }
 
     public ArrayList<Monster> getMonsters(){
@@ -286,6 +262,7 @@ public class Game {
     }
 
     public void changeToNewLevel() {
+        this.setPlayerReadyForNewLevel(false);
         int dbLevelId = Main.db.fetchLevelId(Main.user.getLobbyKey());
         this.level.setLevelId(dbLevelId);
         this.level.updateLevel();
@@ -300,6 +277,12 @@ public class Game {
             }
             c.setPawnSize(mapGrid.getPrefWidth() / 16, mapGrid.getPrefHeight() / 16);
             mapGrid.add(c.getPawn(), c.getxPos(), c.getyPos());
+        }
+        for (Character c : this.getCharacters()){
+            c.setReadyForNewLevel(false);
+        }
+        if (this.level.getLevelId() == this.amountOfLevels){
+            //Update rank for user
         }
     }
 

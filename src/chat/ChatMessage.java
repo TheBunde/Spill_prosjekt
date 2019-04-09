@@ -1,4 +1,4 @@
-package Database;
+package chat;
 
 public class ChatMessage {
     private int messageId;

@@ -1,14 +1,13 @@
 package GUI;
 
 import Main.*;
-import Database.*;
+import database.*;
 import audio.MusicPlayer;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
+import user.User;
 
 import java.util.ArrayList;
 import java.util.Timer;

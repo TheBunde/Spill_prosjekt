@@ -1,10 +1,8 @@
-package Database;
+package database;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 
-import javax.xml.crypto.Data;
 import java.sql.Connection;
-import java.sql.SQLException;
 
 
 public class DataSource {

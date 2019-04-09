@@ -1,20 +1,20 @@
-package Database;
+package database;
 
 
 import Main.*;
-import com.mysql.cj.protocol.Resultset;
+import chat.Chat;
 import game.Creature;
 import game.Level;
 import game.Monster;
 import game.Weapon;
 import javafx.scene.control.Alert;
-import login.Password;
+import user.Password;
 import org.apache.commons.dbcp2.BasicDataSource;
+import user.User;
 //
 //
 // import org.apache.commons.dbcp2.BasicDataSource;
 
-import javax.xml.bind.annotation.XmlType;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -54,7 +54,6 @@ public class Database {
                 if (res.isFirst()){
                     chat.setLastSeenMessageId(res.getInt("chat_message.message_id"));
                 }
-                System.out.println("Message: " + res.getInt("message_id"));
             }
         }
         catch (SQLException sq){
@@ -691,11 +690,10 @@ public class Database {
 
 
 
-    public boolean createPlayer(int creatureId, boolean playable) {
+    public int createPlayer(int creatureId, boolean playable) {
         Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
-        boolean status = true;
         int playerId = -1;
         try {
             con = this.bds.getConnection();
@@ -708,7 +706,6 @@ public class Database {
             } else {
                 prepStmt.setNull(2, java.sql.Types.INTEGER);
             }
-            System.out.println("Lobbykey: " + Main.user.getLobbyKey() + " Userid: " + Main.user.getUser_id());
             prepStmt.executeUpdate();
             con.commit();
 
@@ -723,12 +720,13 @@ public class Database {
         } catch (SQLException sq) {
             this.manager.rollback(con);
             sq.printStackTrace();
-            status = false;
+            playerId = -1;
         } finally {
             this.manager.turnOnAutoCommit(con);
             this.manager.closeRes(res);
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con);
+            /*
             if (playerId < 0) {
                 status = false;
             } else {
@@ -737,11 +735,13 @@ public class Database {
                 }
             }
             return status;
+            */
+            return playerId;
         }
     }
 
 
-    public boolean createCreature(int playerId, int creatureId) {
+    public boolean createCreature(int playerId, int creatureId, int posX, int posY) {
         Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
@@ -753,8 +753,8 @@ public class Database {
             prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
             prepStmt.setInt(1, playerId);
             prepStmt.setInt(2, creatureId);
-            prepStmt.setInt(3, (int) Math.floor(Math.random() * 16));
-            prepStmt.setInt(4, (int) Math.floor(Math.random() * 16));
+            prepStmt.setInt(3, posX);
+            prepStmt.setInt(4, posY);
             prepStmt.setInt(5, creatureId);
             prepStmt.executeUpdate();
             con.commit();
@@ -1116,6 +1116,33 @@ public class Database {
             String prepString = "UPDATE creature SET hp = ? WHERE player_id = ?";
             prepStmt = con.prepareStatement(prepString);
             prepStmt.setInt(1, hp);
+            prepStmt.setInt(2, playerId);
+            prepStmt.executeUpdate();
+            con.commit();
+        }
+        catch (SQLException sq){
+            this.manager.rollback(con);
+            sq.printStackTrace();
+            status = false;
+        }
+        finally {
+            this.manager.turnOnAutoCommit(con);
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(con);
+            return status;
+        }
+    }
+
+    public boolean setDamageBonus(int damageBonus, int playerId){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        boolean status = true;
+        try{
+            con = this.bds.getConnection();
+            con.setAutoCommit(false);
+            String prepString = "UPDATE creature SET damage_bonus = ? WHERE player_id = ?";
+            prepStmt = con.prepareStatement(prepString);
+            prepStmt.setInt(1, damageBonus);
             prepStmt.setInt(2, playerId);
             prepStmt.executeUpdate();
             con.commit();
