@@ -10,7 +10,7 @@ public class Game {
     private ArrayList<Creature> creatures = new ArrayList<>();
     public game.Character playerCharacter;
     private Database db = Main.db;
-    private int turn = 0;
+    private int playerTurn = 0;
     private int amountOfLevels;
     public Level level;
 
@@ -42,7 +42,7 @@ public class Game {
     }
 
     public void update(){
-        if (this.isPlayerTurn()){
+        if (this.isPlayerCharacterTurn()){
             pushCreatureData();
         }
         else {
@@ -54,11 +54,11 @@ public class Game {
         }
     }
 
-    public void resetTurn(){
+    public void resetPlayerTurn(){
         if (Main.user.isHost()){
             Main.db.incrementPlayerTurn(0);
         }
-        turn = 0;
+        this.setPlayerTurn(0);
     }
 
     public void pushNewLevel(){
@@ -73,7 +73,7 @@ public class Game {
             }
             upgradePlayerStats();
         }
-        this.resetTurn();
+        this.resetPlayerTurn();
     }
 
     public void upgradePlayerStats(){
@@ -135,7 +135,7 @@ public class Game {
     }
 
     public void updatePlayerTurn(){
-        this.turn = db.fetchPlayerTurn();
+        this.setPlayerTurn(db.fetchPlayerTurn());
     }
 
     public ArrayList<Creature> getCreatures(){
@@ -152,15 +152,15 @@ public class Game {
         return characters;
     }
 
-    public boolean isPlayerTurn(){
-        if(creatures.get(turn % creatures.size()).getPlayerId() == Main.user.getPlayerId()){
+    public boolean isPlayerCharacterTurn(){
+        if(creatures.get(playerTurn % creatures.size()).getPlayerId() == Main.user.getPlayerId()){
             return true;
         }
         return false;
     }
 
     public boolean isMonsterTurn(){
-        if(creatures.get(turn % creatures.size()) instanceof Monster){
+        if(creatures.get(playerTurn % creatures.size()) instanceof Monster){
             return true;
         }
         return false;
@@ -258,7 +258,7 @@ public class Game {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    Monster monster = ((Monster) creatures.get(turn % creatures.size()));
+                    Monster monster = ((Monster) creatures.get(playerTurn % creatures.size()));
                     if (monster.isDead()) {
                         endTurn();
                     } else {
@@ -273,8 +273,8 @@ public class Game {
     }
 
     public void endTurn(){
-        turn++;
-        db.incrementPlayerTurn(turn);
+        this.incrementPlayerTurn();
+        db.incrementPlayerTurn(playerTurn);
     }
 
     public Level getLevel(){
@@ -299,10 +299,30 @@ public class Game {
         return false;
     }
 
+    public void setCreatures(ArrayList<Creature> creatureList){
+        creatures = creatureList;
+    }
+
+    public void setLevel(Level level){
+        this.level = level;
+    }
+
+    public void incrementPlayerTurn(){
+        this.setPlayerTurn(this.getPlayerTurn() + 1);
+    }
+
+    public int getPlayerTurn(){
+        return this.playerTurn;
+    }
+
+    public void setPlayerTurn(int playerTurn){
+        this.playerTurn = playerTurn;
+    }
+
     public String toString(){
         StringBuilder string = new StringBuilder("");
         string.append("User host: " + Main.user.isHost() + "\n");
-        string.append("Player turn: " + this.isPlayerTurn() + "\n");
+        string.append("Player turn: " + this.isPlayerCharacterTurn() + "\n");
         string.append("Amount of creatures: " + this.creatures.size() + "\n");
         for (int i = 0; i < this.creatures.size(); i++){
             Creature c = this.creatures.get(i);
@@ -310,13 +330,5 @@ public class Game {
         }
         string.append("\n");
         return string.toString();
-    }
-
-    public void setCreatures(ArrayList<Creature> creatureList){
-        creatures = creatureList;
-    }
-
-    public void setLevel(Level level){
-        this.level = level;
     }
 }

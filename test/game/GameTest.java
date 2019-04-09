@@ -61,6 +61,13 @@ public class GameTest {
 
     @Test
     void isMonsterTurn() {
+        game.incrementPlayerTurn();
+        //Turn is 1
+        assertFalse(game.isMonsterTurn(), "Error, not yet monsters turn");
+
+        game.incrementPlayerTurn();
+        //Turn is 2
+        assertTrue(game.isMonsterTurn(), "Error, is monsters turn, but returned false");
     }
 
     @Test
@@ -69,10 +76,40 @@ public class GameTest {
 
     @Test
     void isLevelCleared() {
+        Character c1 = (Character) game.getCreatures().get(0);
+        Character c2 = (Character) game.getCreatures().get(1);
+        Monster m1 = (Monster) game.getCreatures().get(2);
+        Monster m2 = (Monster) game.getCreatures().get(3);
+
+        //Level is cleared when all monsters are dead
+        m1.setHp(0);
+        m1.updateDead();
+        //One of two monsters are dead
+        assertFalse(game.isLevelCleared(), "Method returns true when not all monsters are dead");
+
+        m2.setHp(0);
+        m2.updateDead();
+        //Both monsters are dead
+        assertTrue(game.isLevelCleared(), "Method returns false even though all monsters are dead");
     }
 
     @Test
     void isGameOver() {
+        Character c1 = (Character) game.getCreatures().get(0);
+        Character c2 = (Character) game.getCreatures().get(1);
+        Monster m1 = (Monster) game.getCreatures().get(2);
+        Monster m2 = (Monster) game.getCreatures().get(3);
+
+        //Game over when all characters are dead
+        c1.setHp(0);
+        c1.updateDead();
+        //One of two character are dead
+        assertFalse(game.isGameOver(), "Method returns true when not all characters");
+
+        c2.setHp(0);
+        c2.updateDead();
+        //Both characters are dead
+        assertTrue(game.isGameOver(), "Method returns false even though all characters are dead");
     }
 
     @Test
