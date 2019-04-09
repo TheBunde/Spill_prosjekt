@@ -10,7 +10,6 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 
 public class AccountDetailsController {
-    private Database db = Main.db;
     private SceneSwitcher sceneSwitcher;
 
     @FXML
@@ -29,8 +28,9 @@ public class AccountDetailsController {
     }
 
     public void getInfo() throws Exception {
-        usernameOutput.setText(db.fetchUsername());
-        rankOutput.setText("Rank: " + (db.fetchRank(Main.user.getUser_id())));
+        usernameOutput.setText(Main.db.fetchUsername());
+        rankOutput.setText("Rank: " + Main.db.fetchRank(Main.user.getUser_id()));
+
     }
 
     public void changeUsernameButtonPressed() throws Exception {

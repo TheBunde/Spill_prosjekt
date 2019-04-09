@@ -1,3 +1,7 @@
+/**
+ * Both monsters and playable characters are creatures
+ * @authors (Hvem andre?) & Helene Jonson
+ */
 package game;
 
 import java.util.ArrayList;

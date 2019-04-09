@@ -4,7 +4,6 @@ import main.*;
 import database.Database;
 
 public class User {
-    private Database db = Main.db;
     private int user_id;
     private String username;
     private int rank;

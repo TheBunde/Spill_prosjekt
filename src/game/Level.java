@@ -9,9 +9,7 @@ public class Level {
     private int levelId;
     private int music;
     private String backgroundUrl;
-    private boolean readyForNewLevel = false;
     public ImageView backgroundImage;
-    private String nextLevelName;
 
     public Level(int levelId, int music, String backgroundUrl){
         this.levelId = levelId;
@@ -56,14 +54,6 @@ public class Level {
         this.backgroundUrl = backgroundUrl;
     }
 
-    public boolean isReadyForNewLevel() {
-        return readyForNewLevel;
-    }
-
-    public void setReadyForNewLevel(boolean readyForNewLevel) {
-        this.readyForNewLevel = readyForNewLevel;
-    }
-
     public void updateLevel(){
         Level newLevel = Main.db.fetchLevelObject(Main.db.fetchLevelId(Main.user.getLobbyKey()));
         if (newLevel != null) {
@@ -76,10 +66,5 @@ public class Level {
         else {
             this.setLevelId(this.getLevelId() + 1);
         }
-    }
-
-    public String getLevelName(){
-        String[] urlParts = this.getBackgroundUrl().split("-");
-        return urlParts[0];
     }
 }

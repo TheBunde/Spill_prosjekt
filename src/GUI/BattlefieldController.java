@@ -50,19 +50,17 @@ public class BattlefieldController{
     @FXML
     private ImageView weaponOne, weaponTwo;
     @FXML
-    public ImageView playerImage;
+    private ImageView playerImage;
     @FXML
     private Label hpLabel, acLabel, weaponOneLabel, weaponTwoLabel;
 
-    private Database db = Main.db;
-    private User user = Main.user;
     private SceneSwitcher sceneSwitcher = new SceneSwitcher();
 
     private double mouseX;
     private double mouseY;
     public double cellWidth;
     public double cellHeight;
-    private boolean transitioning;
+    private boolean transitioningToNewLevel;
 
     private Pane movementPane;
     private VBox transitionVbox;
@@ -75,8 +73,10 @@ public class BattlefieldController{
 
     public static Timer timer = new Timer();
 
+
     public BattlefieldController(){
         //New instance of Game
+
         game = new Game();
 
     }
@@ -110,7 +110,7 @@ public class BattlefieldController{
 
         acLabel.setText("AC: " + game.getPlayerCharacter().getAc());
 
-        initLevelTransitionVBox();
+        initLevelTransitionVbox();
         initMovementPane();
 
         refreshViewFromGame();
@@ -267,8 +267,8 @@ public class BattlefieldController{
     }
 
     public void exitButtonPressed() throws Exception {
-        System.out.println(db.addChatMessage(user.getUsername() + " has left the lobby", true));
-        db.disconnectUserFromGameLobby();
+        System.out.println(Main.db.addChatMessage(Main.user.getUsername() + " has left the lobby", true));
+        Main.db.disconnectUserFromGameLobby();
         chatController.timer.cancel();
         chatController.timer.purge();
         timer.cancel();
@@ -431,7 +431,7 @@ public class BattlefieldController{
         player.imageUpdate();
     }
 
-    public void initLevelTransitionVBox(){
+    public void initLevelTransitionVbox(){
         transitionVbox = new VBox();
         VBox vbox = transitionVbox;
         vbox.setPrefWidth(mapGrid.getPrefWidth());
@@ -453,7 +453,7 @@ public class BattlefieldController{
         battlefieldUI.getChildren().add(vbox);
     }
 
-    public void showLevelTransitionVBox(){
+    public void showLevelTransitionVbox(){
         String nextLevelName = Main.db.getLevelName(game.getLevel().getLevelId() + 1);
         if (nextLevelName != null && !game.isGameOver()){
             SFXPlayer.getInstance().setSFX(13);
@@ -469,7 +469,7 @@ public class BattlefieldController{
             ((Label)transitionVbox.getChildren().get(0)).setText("Victory!");
             ((Label)transitionVbox.getChildren().get(1)).setAlignment(Pos.CENTER);
             ((Label)transitionVbox.getChildren().get(1)).setText("Made by:\nTeam 3");
-            db.setRank(db.fetchRank(Main.user.getUser_id()) + 1);
+            Main.db.setRank(Main.db.fetchRank(Main.user.getUser_id()) + 1);
         }
         transitionVbox.setVisible(true);
         mapGrid.setGridLinesVisible(false);
@@ -497,11 +497,11 @@ public class BattlefieldController{
     }
 
     public void nextLevelTransition() {
-            if (!transitioning) {
-                transitioning = true;
+            if (!transitioningToNewLevel) {
+                transitioningToNewLevel = true;
                 MusicPlayer.getInstance().stopSong();
                 MusicPlayer.getInstance().changeSong(1);
-                showLevelTransitionVBox();
+                showLevelTransitionVbox();
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -518,7 +518,7 @@ public class BattlefieldController{
                                 checkForPlayerTurn();
                                 if (game.getLevel().getLevelId() <= game.getAmountOfLevels()) {
                                     hideLevelTransitionVbox();
-                                    transitioning = false;
+                                    transitioningToNewLevel = false;
                                 }
                                 else{
                                     try {
@@ -543,12 +543,12 @@ public class BattlefieldController{
     }
 
     public void gameOverTransition(){
-        if (!transitioning) {
-            transitioning = true;
+        if (!transitioningToNewLevel) {
+            transitioningToNewLevel = true;
             SFXPlayer.getInstance().setSFX(3);
             MusicPlayer.getInstance().stopSong();
             MusicPlayer.getInstance().changeSong(1);
-            showLevelTransitionVBox();
+            showLevelTransitionVbox();
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -571,7 +571,7 @@ public class BattlefieldController{
                                 e.printStackTrace();
                             }
                                 hideLevelTransitionVbox();
-                                transitioning = false;
+                                transitioningToNewLevel = false;
                         }
                     });
                 }
