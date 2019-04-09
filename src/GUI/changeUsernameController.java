@@ -25,11 +25,21 @@ public class changeUsernameController {
     public changeUsernameController(){
         sceneSwitcher = new SceneSwitcher();
     }
+    
+     /**
+     * Update the username
+     * @throws Exception
+     */
 
     public void setNewUsername()throws Exception{
         db.setNewUsername(newUsername.getText().trim());
     }
-
+    
+    
+    /**
+     * This method performes when the ok button is pressed to change the username
+     * @throws Exception
+     */
     public void okButtonPressed() throws Exception{
         boolean enable;
         if(newUsername.getText().isEmpty()){
@@ -42,7 +52,11 @@ public class changeUsernameController {
             sceneSwitcher.switchScene(ok, "AccountDetails.fxml");
         }
     }
-
+    
+    /**
+     * cancel changing and return to Account details page
+     * @throws Exception
+     */
     public void cancelButtonPressed() throws Exception{
         SFXPlayer.getInstance().setSFX(0);
         sceneSwitcher.switchScene(cancel, "AccountDetails.fxml");
