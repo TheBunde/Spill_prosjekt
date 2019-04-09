@@ -1,7 +1,7 @@
 package GUI;
 
-import Main.*;
-import Database.*;
+import main.*;
+import database.*;
 import audio.MusicPlayer;
 import audio.SFXPlayer;
 import javafx.fxml.FXML;

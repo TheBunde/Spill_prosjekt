@@ -1,18 +1,17 @@
 package GUI;
 
-import Main.*;
-import Database.*;
+import database.*;
 import audio.MusicPlayer;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
+import user.User;
 
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+import main.*;
 
 public class GameLobbyController {
     @FXML
@@ -86,7 +85,11 @@ public class GameLobbyController {
     }
 
     public void backToMenuButtonPressed() throws Exception{
+        if (Main.db.fetchPlayerCount() == 1){
+            Main.db.setJoinable(false);
+        }
         db.addChatMessage(user.getUsername() + " has left the lobby", true);
+        db.disconnectPlayerFromLobby(Main.db.fetchPlayerId());
         db.disconnectUserFromGameLobby();
         db.setHost(false);
         chatController.timer.cancel();
@@ -109,7 +112,7 @@ public class GameLobbyController {
         }
         readyCounter.setText("Players Ready: " + playersReady + " / " + players.size());
 
-        if(playersReady == players.size()){
+        if(playersReady == players.size() && playersReady != 0){
             chatController.timer.cancel();
             chatController.timer.purge();
             playerReadyTimer.cancel();

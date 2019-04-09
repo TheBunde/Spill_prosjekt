@@ -1,9 +1,8 @@
 package GUI;
 
-import Database.Database;
-import Main.Main;
+import database.Database;
+import main.Main;
 import game.Character;
-import game.Creature;
 import game.Game;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

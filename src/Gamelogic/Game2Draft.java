@@ -1,7 +1,7 @@
 
 /*
 package Gamelogic;
-import Database.*;
+import database.*;
 import com.mysql.cj.protocol.Resultset;
 <<<<<<< HEAD
 

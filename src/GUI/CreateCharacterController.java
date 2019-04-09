@@ -1,7 +1,7 @@
 package GUI;
 
-import Main.*;
-import Database.*;
+import main.*;
+import database.*;
 import audio.MusicPlayer;
 import audio.SFXPlayer;
 import javafx.fxml.FXML;
@@ -111,7 +111,7 @@ public class CreateCharacterController implements Initializable {
             return false;
         }
         SFXPlayer.getInstance().setSFX(0);
-        if(Main.db.createCreature(Main.user.getPlayerId(), a)){
+        if(Main.db.createCreature(Main.user.getPlayerId(), a, (int)Math.floor(Math.random()*16), (int)Math.floor(Math.random()*16))){
             Main.db.addChatMessage(Main.user.getUsername() + " will play as " + chooseClassDropdown.getValue(), true);
             System.out.println("character created");
         }else{

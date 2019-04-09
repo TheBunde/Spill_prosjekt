@@ -1,9 +1,10 @@
 package GUI;
 
-import Main.*;
-import Database.*;
+import database.*;
 
 
+import main.*;
+import chat.ChatMessage;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.collections.ObservableList;
@@ -15,10 +16,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import user.User;
 
 import java.net.URL;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;

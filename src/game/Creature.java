@@ -2,8 +2,8 @@ package game;
 
 import java.util.ArrayList;
 
-import Database.Database;
-import Main.*;
+import main.*;
+import database.Database;
 import audio.SFXPlayer;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -114,6 +114,7 @@ public abstract class Creature {
         for (Creature c : creatures){
             if (newX == c.getxPos() && newY == c.getyPos()){
                 System.out.println("HELLO FROM MOVECREATURE!!!!!!!!!!!!!");
+                this.setNewPos(newX, newY);
                 return false;
             }
         }

@@ -1,20 +1,16 @@
 package GUI;
 
 
-import Database.*;
-import Main.*;
+import main.*;
+import database.*;
 import audio.MusicPlayer;
 import audio.SFXPlayer;
 import game.*;
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.*;
@@ -28,6 +24,7 @@ import javafx.scene.paint.Color;
 
 import javafx.event.EventHandler;
 import javafx.scene.text.Font;
+import user.User;
 
 import java.awt.*;
 import java.io.IOException;
@@ -37,10 +34,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 
-public class BattlefieldController implements Initializable {
+public class BattlefieldController{
 
     // https://stackoverflow.com/questions/41081905/javafx-getting-the-location-of-a-click-on-a-gridpane
     @FXML
@@ -85,8 +81,7 @@ public class BattlefieldController implements Initializable {
 
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize() {
         player = new Player(playerImage);
         cellWidth = mapGrid.getPrefWidth()/(16.0);
         cellHeight = mapGrid.getPrefHeight()/(16.0);
@@ -313,6 +308,11 @@ public class BattlefieldController implements Initializable {
                 }
             }
         }
+        Weapon weapon1 = game.playerCharacter.getWeapons().get(0);
+        Weapon weapon2 = game.playerCharacter.getWeapons().get(1);
+        weaponOneLabel.setText(weapon1.getName() + "\n" + "Avg. damage: " + (((((double)weapon1.getDamageDice()/2)+0.5)*weapon1.getDiceAmount()) + game.playerCharacter.getDamageBonus()) + "\n" + (weapon1.isRanged() ? "Ranged" : "Melee"));
+        weaponTwoLabel.setText(weapon2.getName() + "\n" + "Avg. damage: " + (((((double)weapon2.getDamageDice()/2)+0.5)*weapon2.getDiceAmount()) + game.playerCharacter.getDamageBonus()) + "\n" + (weapon2.isRanged() ? "Ranged" : "Melee"));
+
         hpLabel.setText("HP: " + Math.max(0, game.playerCharacter.getHp()) + "/" + game.playerCharacter.getInitialHp());
         updateImage();
     }
@@ -320,9 +320,25 @@ public class BattlefieldController implements Initializable {
 
     public boolean update(){
         if (game.isLevelCleared()) {
+            if (!game.playerCharacter.isReadyForNewLevel()){
+                if (Main.user.isHost()){
+                    game.pushNewLevel();
+                }
+                game.setPlayerReadyForNewLevel(true);
+            }
+            while(!game.allPlayersReadyForNewLevel()){
+                System.out.println("Hello");
+                try{
+                    Thread.sleep(200);
+                }
+                catch(InterruptedException ie){
+                    ie.printStackTrace();
+                }
+            }
             nextLevelTransition();
             return false;
-        }else if(game.isGameOver()){
+        }
+        else if(game.isGameOver()){
             gameOverTransition();
             return false;
         }
@@ -334,16 +350,13 @@ public class BattlefieldController implements Initializable {
     }
 
     public void newLevel(){
-        game.playerCharacter.setHp(game.playerCharacter.getInitialHp());
-        game.newLevel();
+        //game.playerCharacter.setHp(game.playerCharacter.getInitialHp());
+        game.changeToNewLevel();
         player.resetUsedActions();
-        // (Main.user.isHost()) {
-        //    game.setAllPlayersReadyForNewLevel(false);
-        //}
     }
 
     public boolean checkForPlayerTurn(){
-        if(!game.isPlayerTurn()){
+        if(!game.isPlayerCharacterTurn()){
             moveButton.setDisable(true);
             attackButton.setDisable(true);
             endTurnButton.setDisable(true);
@@ -487,9 +500,13 @@ public class BattlefieldController implements Initializable {
     public void nextLevelTransition() {
             if (!transitioning) {
                 transitioning = true;
+<<<<<<< HEAD
                 if (Main.user.isHost()) {
                     game.pushNewLevel();
                 }
+=======
+                SFXPlayer.getInstance().setSFX(13);
+>>>>>>> cbdb794e22e6de8cf3be81a4a7468e325be565c0
                 MusicPlayer.getInstance().stopSong();
                 MusicPlayer.getInstance().changeSong(1);
                 showLevelTransitionVBox();

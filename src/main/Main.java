@@ -1,11 +1,10 @@
-package Main;
+package main;
 
 import GUI.InterfaceMain;
 import audio.MusicPlayer;
-import audio.SFXPlayer;
 import audio.ThreadPool;
-import Database.*;
-import GUI.*;
+import database.*;
+import user.User;
 
 public class Main {
 

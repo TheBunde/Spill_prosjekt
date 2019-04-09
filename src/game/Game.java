@@ -1,51 +1,55 @@
 package game;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
-import GUI.BattlefieldController;
-import Main.*;
-import Database.*;
-import audio.SFXPlayer;
-import javafx.application.Platform;
+import database.*;
 import javafx.scene.layout.GridPane;
+import main.*;
+
+/**
+ * Game.java
+ *
+ * This class
+ */
 
 public class Game {
     private ArrayList<Creature> creatures = new ArrayList<>();
     public game.Character playerCharacter;
     private Database db = Main.db;
-    private int turn = 0;
-    private int amountOfLevels = Main.db.fetchAmountOfLevels();
+    private int playerTurn = 0;
+    private int amountOfLevels;
     public Level level;
 
     public Game(){
-        level = new Level(1);
-        if (Main.user.isHost()){
-            this.addNewMonstersToLobby(1, Main.db.fetchPlayerCount());
-            Main.db.setBattlefieldReady(Main.user.getLobbyKey());
+        if(db != null) {
+            amountOfLevels = Main.db.fetchAmountOfLevels();
+            level = new Level(1);
+            if (Main.user.isHost()) {
+                this.addNewMonstersToLobby(1, Main.db.fetchPlayerCount());
+                Main.db.setBattlefieldReady(Main.user.getLobbyKey());
 
-        }
-        else{
-            while (!Main.db.fetchBattlefieldReady(Main.user.getLobbyKey())){
-                try{
-                    Thread.sleep(300);
-                }
-                catch (InterruptedException ie){
-                    ie.printStackTrace();
+            } else {
+                while (!Main.db.fetchBattlefieldReady(Main.user.getLobbyKey())) {
+                    try {
+                        Thread.sleep(300);
+                    } catch (InterruptedException ie) {
+                        ie.printStackTrace();
+                    }
                 }
             }
-        }
-        this.creatures = db.fetchCreaturesFromLobby();
+            this.creatures = db.fetchCreaturesFromLobby();
 
-        for (int i = 0; i < this.creatures.size(); i++){
-            if (this.creatures.get(i).getPlayerId() == Main.user.getPlayerId()){
-                playerCharacter = (game.Character) this.creatures.get(i);
+            for (int i = 0; i < this.creatures.size(); i++) {
+                if (this.creatures.get(i).getPlayerId() == Main.user.getPlayerId()) {
+                    playerCharacter = (game.Character) this.creatures.get(i);
+                }
             }
         }
     }
 
     public void update(){
-        if (this.isPlayerTurn()){
+        if (this.isPlayerCharacterTurn()){
             pushCreatureData();
         }
         else {
@@ -57,43 +61,82 @@ public class Game {
         }
     }
 
-    public void newLevel(){
-        changeToNewLevel();
-        for (Character c : this.getCharacters()){
-            c.setReadyForNewLevel(false);
-        }
-        if (this.level.getLevelId() == this.amountOfLevels){
-            //Update rank for user
-        }
-    }
-
-    public void resetTurn(){
+    public void resetPlayerTurn(){
         if (Main.user.isHost()){
             Main.db.incrementPlayerTurn(0);
         }
-        turn = 0;
-        //turn = turn%this.getCharacters().size();
+        this.setPlayerTurn(0);
     }
 
     public void pushNewLevel(){
-        addNewMonstersToLobby(this.level.getLevelId() + 1, this.getCharacters().size());
+        int playerAmount = this.getCharacters().size();
+        addNewMonstersToLobby(this.level.getLevelId() + 1, playerAmount);
         Main.db.setLevelId(Main.user.getLobbyKey(), this.level.getLevelId() + 1);
-        upgradePlayerStats();
-        this.resetTurn();
+        if (this.level.getLevelId() + 1 <= this.getAmountOfLevels()) {
+            if (this.level.getLevelId() + 1 == this.getAmountOfLevels()){
+                for (int i = 0; i < playerAmount; i++){
+                    Main.db.setPos(7 - (int)Math.round(playerAmount/2) + 2*i, 13, this.getCharacters().get(i).getPlayerId());
+                }
+            }
+            else {
+                assureNoOverlap();
+            }
+            upgradePlayerStats();
+        }
+        this.resetPlayerTurn();
+    }
+
+    public void assureNoOverlap(){
+        ArrayList<Creature> newCreatures = Main.db.fetchCreaturesFromLobby();
+        for (int i = 0; i < newCreatures.size(); i++){
+            for (int j = i + 1; j < newCreatures.size(); j++){
+                Creature c1 = newCreatures.get(i);
+                Creature c2 = newCreatures.get(j);
+                if (c1.getxPos() == c2.getxPos() && c1.getyPos() == c2.getyPos()){
+                    int newX = (int)Math.floor(Math.random()*16);
+                    int newY = (int)Math.floor(Math.random()*16);
+                    boolean overlapsAgain = true;
+                    while(overlapsAgain){
+                        overlapsAgain = false;
+                        newX = (int)Math.floor(Math.random()*16);
+                        newY = (int)Math.floor(Math.random()*16);
+                        for (int k = 0; k < newCreatures.size(); k++){
+                            Creature c = newCreatures.get(k);
+                            if (newX == c.getxPos() && newY == c.getyPos()){
+                                overlapsAgain = true;
+                            }
+                        }
+                    }
+                    c1.setNewPos(newX, newY);
+                }
+            }
+        }
+        for (Creature c : creatures){
+            Main.db.setPos(c.getxPos(), c.getyPos(), c.getPlayerId());
+        }
     }
 
     public void upgradePlayerStats(){
         ArrayList<Character> characters = this.getCharacters();
         for (Character c : characters){
             Main.db.setHp((int)(c.getInitialHp()*1.25), c.getPlayerId());
+            Main.db.setDamageBonus((int)(c.getDamageBonus()*1.25), c.getPlayerId());
         }
-        Main.db.addChatMessage("HP upgraded!", true);
+        Main.db.addChatMessage("You feel the energy from this battle, you are now more powerful!", true);
     }
+
 
     public void addNewMonstersToLobby(int levelId, int playerAmount){
         ArrayList<Integer> creatureIds = Main.db.fetchMonstersFromLevel(levelId, playerAmount);
         for (int i = 0; i < creatureIds.size(); i++){
-            Main.db.createPlayer(creatureIds.get(i), false);
+            int playerId = Main.db.createPlayer(creatureIds.get(i), false);
+            int posX = (int)Math.floor(Math.random()*16);
+            int posY = (int)Math.floor(Math.random()*16);
+            if (creatureIds.get(i) >= 13){
+                posX = 8;
+                posY = 7;
+            }
+            Main.db.createCreature(playerId, creatureIds.get(i), posX, posY);
         }
     }
 
@@ -133,34 +176,7 @@ public class Game {
     }
 
     public void updatePlayerTurn(){
-        this.turn = db.fetchPlayerTurn();
-    }
-
-    public ArrayList<Integer> getMonstersIndex(){
-        ArrayList<Integer> monstersIndex = new ArrayList<>();
-        for (int i = 0; i < this.creatures.size(); i++){
-            if (this.creatures.get(i) instanceof Monster && !(this.creatures.get(i).isDead())){
-                monstersIndex.add(i);
-            }
-        }
-        return monstersIndex;
-    }
-
-    public Creature getCreature(int index){
-        return this.creatures.get(index);
-    }
-
-    public Creature getYourCreature(){
-        for(Creature i: creatures){
-            if(i.getPlayerId() == Main.user.getPlayerId()){
-                return i;
-            }
-        }
-        return null;
-    }
-
-    public int getAmountOfCreatures(){
-        return this.creatures.size();
+        this.setPlayerTurn(db.fetchPlayerTurn());
     }
 
     public ArrayList<Creature> getCreatures(){
@@ -177,22 +193,15 @@ public class Game {
         return characters;
     }
 
-    public ArrayList<Integer> getPos(int index){
-        ArrayList<Integer> pos = new ArrayList<>();
-        pos.add(this.creatures.get(index).getxPos());
-        pos.add(this.creatures.get(index).getyPos());
-        return pos;
-    }
-
-    public boolean isPlayerTurn(){
-        if(creatures.get(turn % creatures.size()).getPlayerId() == Main.user.getPlayerId()){
+    public boolean isPlayerCharacterTurn(){
+        if(creatures.get(playerTurn % creatures.size()).getPlayerId() == Main.user.getPlayerId()){
             return true;
         }
         return false;
     }
 
     public boolean isMonsterTurn(){
-        if(creatures.get(turn % creatures.size()) instanceof Monster){
+        if(creatures.get(playerTurn % creatures.size()) instanceof Monster){
             return true;
         }
         return false;
@@ -207,7 +216,10 @@ public class Game {
         }
     }
 
-    public boolean playersReadyForNewLevel(){
+    public boolean allPlayersReadyForNewLevel(){
+        if(db != null) {
+            this.updatePlayersReadyForNewLevel();
+        }
         boolean ready = true;
         ArrayList<Character> characters = this.getCharacters();
         for (Character c : characters){
@@ -221,32 +233,6 @@ public class Game {
     public void setPlayerReadyForNewLevel(boolean ready){
         this.playerCharacter.setReadyForNewLevel(ready);
         Main.db.setReadyForNewLevel(this.playerCharacter.getPlayerId(), ready);
-    }
-
-    public void setAllPlayersReadyForNewLevel(boolean ready){
-        ArrayList<Character> characters = this.getCharacters();
-        for (Character c : characters){
-            Main.db.setReadyForNewLevel(c.getPlayerId(), ready);
-        }
-    }
-
-    public boolean isPositionAvailable(int x, int y){
-        boolean available = true;
-        for (Creature c : this.creatures){
-            if (c.getxPos() == x && c.getyPos() == y){
-                available = false;
-            }
-        }
-        return available;
-    }
-
-    public Creature getCreatureFromPosition(int x, int y){
-        for (Creature c : this.creatures){
-            if (c.getxPos() == x && c.getyPos() == y){
-                return c;
-            }
-        }
-        return null;
     }
 
     public ArrayList<Monster> getMonsters(){
@@ -286,6 +272,7 @@ public class Game {
     }
 
     public void changeToNewLevel() {
+        this.setPlayerReadyForNewLevel(false);
         int dbLevelId = Main.db.fetchLevelId(Main.user.getLobbyKey());
         this.level.setLevelId(dbLevelId);
         this.level.updateLevel();
@@ -301,16 +288,9 @@ public class Game {
             c.setPawnSize(mapGrid.getPrefWidth() / 16, mapGrid.getPrefHeight() / 16);
             mapGrid.add(c.getPawn(), c.getxPos(), c.getyPos());
         }
-    }
-
-    public boolean containsMonster(){
-        boolean containsmonster = false;
-        for (Creature c : this.creatures){
-            if (c instanceof Monster){
-                containsmonster = true;
-            }
+        for (Character c : this.getCharacters()){
+            c.setReadyForNewLevel(false);
         }
-        return containsmonster;
     }
 
     public void monsterAction() {
@@ -318,14 +298,18 @@ public class Game {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    Monster monster = ((Monster) creatures.get(turn % creatures.size()));
+                    Monster monster = ((Monster) creatures.get(playerTurn % creatures.size()));
                     if (monster.isDead()) {
-                        endTurn();
+                        if(db != null) {
+                            endTurn();
+                        }
                     } else {
                         monster.monsterMove(creatures);
                         monster.monsterAttack(creatures);
-                        pushCreatureData();
-                        endTurn();
+                        if(db != null) {
+                            pushCreatureData();
+                            endTurn();
+                        }
                     }
                 }
             }).start();
@@ -333,8 +317,8 @@ public class Game {
     }
 
     public void endTurn(){
-        turn++;
-        db.incrementPlayerTurn(turn);
+        this.incrementPlayerTurn();
+        db.incrementPlayerTurn(playerTurn);
     }
 
     public Level getLevel(){
@@ -346,33 +330,43 @@ public class Game {
     }
 
     public boolean attackRange(Monster monster, boolean melee){
-        /*if(melee && Math.abs(playerCharacter.getxPos() - monster.getxPos()) == 1 && Math.abs(playerCharacter.getyPos() - monster.getyPos()) == 1){
-            return true;
-        }else if(!melee && Math.abs(playerCharacter.getxPos() - monster.getxPos()) > 1 || Math.abs(playerCharacter.getyPos() - monster.getyPos()) > 1){
-            return true;
-        }else{
-            return false;
-        }*/
         if(melee) {
             if ((Math.abs(playerCharacter.getxPos() - monster.getxPos()) <= 1) && (Math.abs(playerCharacter.getyPos() - monster.getyPos()) <= 1)) {
-                System.out.println("\nx distance: " + (Math.abs(playerCharacter.getxPos() - monster.getxPos()) <= 1) + "\n");
-                System.out.println("\ny distance: " + (Math.abs(playerCharacter.getyPos() - monster.getyPos()) <= 1) + "\n");
                 return true;
             }
         }
         else if(!melee) {
             if ((Math.abs(playerCharacter.getxPos() - monster.getxPos()) > 1) || (Math.abs(playerCharacter.getyPos() - monster.getyPos())) > 1) {
-                System.out.println("holaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
                 return true;
             }
         }
         return false;
     }
 
+    public void setCreatures(ArrayList<Creature> creatureList){
+        creatures = creatureList;
+    }
+
+    public void setLevel(Level level){
+        this.level = level;
+    }
+
+    public void incrementPlayerTurn(){
+        this.setPlayerTurn(this.getPlayerTurn() + 1);
+    }
+
+    public int getPlayerTurn(){
+        return this.playerTurn;
+    }
+
+    public void setPlayerTurn(int playerTurn){
+        this.playerTurn = playerTurn;
+    }
+
     public String toString(){
         StringBuilder string = new StringBuilder("");
         string.append("User host: " + Main.user.isHost() + "\n");
-        string.append("Player turn: " + this.isPlayerTurn() + "\n");
+        string.append("Is playerCharacterTurn: " + this.isPlayerCharacterTurn() + "\n");
         string.append("Amount of creatures: " + this.creatures.size() + "\n");
         for (int i = 0; i < this.creatures.size(); i++){
             Creature c = this.creatures.get(i);

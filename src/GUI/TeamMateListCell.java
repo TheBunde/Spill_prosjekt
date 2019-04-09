@@ -1,9 +1,8 @@
 package GUI;
 
-import Database.Database;
-import Main.Main;
+import database.Database;
+import main.Main;
 import game.Character;
-import game.Creature;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
