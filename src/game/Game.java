@@ -322,7 +322,7 @@ public class Game {
     public String toString(){
         StringBuilder string = new StringBuilder("");
         string.append("User host: " + Main.user.isHost() + "\n");
-        string.append("Player turn: " + this.isPlayerCharacterTurn() + "\n");
+        string.append("Is playerCharacterTurn: " + this.isPlayerCharacterTurn() + "\n");
         string.append("Amount of creatures: " + this.creatures.size() + "\n");
         for (int i = 0; i < this.creatures.size(); i++){
             Creature c = this.creatures.get(i);
