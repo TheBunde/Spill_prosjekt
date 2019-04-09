@@ -22,10 +22,6 @@ public class GameTest {
     }
 
     @Test
-    void resetTurn() {
-    }
-
-    @Test
     void isPlayerTurn() {
     }
 
