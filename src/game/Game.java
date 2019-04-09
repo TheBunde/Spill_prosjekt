@@ -176,7 +176,9 @@ public class Game {
     }
 
     public boolean allPlayersReadyForNewLevel(){
-        this.updatePlayersReadyForNewLevel();
+        if(db != null) {
+            this.updatePlayersReadyForNewLevel();
+        }
         boolean ready = true;
         ArrayList<Character> characters = this.getCharacters();
         for (Character c : characters){
@@ -260,12 +262,16 @@ public class Game {
                 public void run() {
                     Monster monster = ((Monster) creatures.get(turn % creatures.size()));
                     if (monster.isDead()) {
-                        endTurn();
+                        if(db != null) {
+                            endTurn();
+                        }
                     } else {
                         monster.monsterMove(creatures);
                         monster.monsterAttack(creatures);
-                        pushCreatureData();
-                        endTurn();
+                        if(db != null) {
+                            pushCreatureData();
+                            endTurn();
+                        }
                     }
                 }
             }).start();

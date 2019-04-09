@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 public class GameTest {
+    ArrayList<Creature> creatures;
     Game game;
     @BeforeEach
     void setUp() {
@@ -36,7 +37,7 @@ public class GameTest {
         m2weapons.add(m2w1);
         Monster m2 = new Monster(4, 8, "Ushabti", 20, 10, 3, 6, 5, "", 8, 6, null, m2weapons);
 
-        ArrayList<Creature> creatures = new ArrayList<>();
+        creatures = new ArrayList<>();
         creatures.add(c1);
         creatures.add(c2);
         creatures.add(m1);
@@ -53,6 +54,7 @@ public class GameTest {
     @AfterEach
     void tearDown() {
         game = null;
+        creatures = null;
     }
 
     @Test
@@ -65,6 +67,21 @@ public class GameTest {
 
     @Test
     void allPlayersReadyForNewLevel() {
+        Character c1 = (Character) creatures.get(0);
+        Character c2 = (Character) creatures.get(1);
+        Monster m1 = (Monster) creatures.get(2);
+
+        //Checking if allPlayersReadyForNewLevel is true when all Creatures are ready
+        c1.setReadyForNewLevel(true);
+        c2.setReadyForNewLevel(true);
+        m1.setReadyForNewLevel(true);
+        boolean allReady = game.allPlayersReadyForNewLevel();
+        assertTrue(allReady, "allReady not true when all Creatures are");
+
+        //Checking if allPlayersReadyForNewLevel is false when not all Creatures are ready
+        c2.setReadyForNewLevel(false);
+        allReady = game.allPlayersReadyForNewLevel();
+        assertFalse(allReady, "allReady is true when not all Creatures a");
     }
 
     @Test
@@ -77,6 +94,15 @@ public class GameTest {
 
     @Test
     void monsterAction() {
+        Character c1 = (Character) creatures.get(0);
+        Monster m1 = (Monster) creatures.get(2);
+
+        //Checking if monster does not move when dead
+        m1.setHp(0);
+        m1.updateDead();
+        m1.setNewPos(1, 1);
+        c1.setNewPos(1,3);
+        game.monsterAction();
     }
 
     @Test
