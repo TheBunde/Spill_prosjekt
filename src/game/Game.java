@@ -11,31 +11,32 @@ public class Game {
     public game.Character playerCharacter;
     private Database db = Main.db;
     private int turn = 0;
-    private int amountOfLevels = Main.db.fetchAmountOfLevels();
+    private int amountOfLevels;
     public Level level;
 
     public Game(){
-        level = new Level(1);
-        if (Main.user.isHost()){
-            this.addNewMonstersToLobby(1, Main.db.fetchPlayerCount());
-            Main.db.setBattlefieldReady(Main.user.getLobbyKey());
+        if(db != null) {
+            amountOfLevels = Main.db.fetchAmountOfLevels();
+            level = new Level(1);
+            if (Main.user.isHost()) {
+                this.addNewMonstersToLobby(1, Main.db.fetchPlayerCount());
+                Main.db.setBattlefieldReady(Main.user.getLobbyKey());
 
-        }
-        else{
-            while (!Main.db.fetchBattlefieldReady(Main.user.getLobbyKey())){
-                try{
-                    Thread.sleep(300);
-                }
-                catch (InterruptedException ie){
-                    ie.printStackTrace();
+            } else {
+                while (!Main.db.fetchBattlefieldReady(Main.user.getLobbyKey())) {
+                    try {
+                        Thread.sleep(300);
+                    } catch (InterruptedException ie) {
+                        ie.printStackTrace();
+                    }
                 }
             }
-        }
-        this.creatures = db.fetchCreaturesFromLobby();
+            this.creatures = db.fetchCreaturesFromLobby();
 
-        for (int i = 0; i < this.creatures.size(); i++){
-            if (this.creatures.get(i).getPlayerId() == Main.user.getPlayerId()){
-                playerCharacter = (game.Character) this.creatures.get(i);
+            for (int i = 0; i < this.creatures.size(); i++) {
+                if (this.creatures.get(i).getPlayerId() == Main.user.getPlayerId()) {
+                    playerCharacter = (game.Character) this.creatures.get(i);
+                }
             }
         }
     }
@@ -137,33 +138,6 @@ public class Game {
         this.turn = db.fetchPlayerTurn();
     }
 
-    public ArrayList<Integer> getMonstersIndex(){
-        ArrayList<Integer> monstersIndex = new ArrayList<>();
-        for (int i = 0; i < this.creatures.size(); i++){
-            if (this.creatures.get(i) instanceof Monster && !(this.creatures.get(i).isDead())){
-                monstersIndex.add(i);
-            }
-        }
-        return monstersIndex;
-    }
-
-    public Creature getCreature(int index){
-        return this.creatures.get(index);
-    }
-
-    public Creature getYourCreature(){
-        for(Creature i: creatures){
-            if(i.getPlayerId() == Main.user.getPlayerId()){
-                return i;
-            }
-        }
-        return null;
-    }
-
-    public int getAmountOfCreatures(){
-        return this.creatures.size();
-    }
-
     public ArrayList<Creature> getCreatures(){
         return this.creatures;
     }
@@ -176,13 +150,6 @@ public class Game {
             }
         }
         return characters;
-    }
-
-    public ArrayList<Integer> getPos(int index){
-        ArrayList<Integer> pos = new ArrayList<>();
-        pos.add(this.creatures.get(index).getxPos());
-        pos.add(this.creatures.get(index).getyPos());
-        return pos;
     }
 
     public boolean isPlayerTurn(){
@@ -286,16 +253,6 @@ public class Game {
         }
     }
 
-    public boolean containsMonster(){
-        boolean containsmonster = false;
-        for (Creature c : this.creatures){
-            if (c instanceof Monster){
-                containsmonster = true;
-            }
-        }
-        return containsmonster;
-    }
-
     public void monsterAction() {
         if (isMonsterTurn()) {
             new Thread(new Runnable() {
@@ -363,5 +320,13 @@ public class Game {
         }
         string.append("\n");
         return string.toString();
+    }
+
+    public void setCreatures(ArrayList<Creature> creatureList){
+        creatures = creatureList;
+    }
+
+    public void setLevel(Level level){
+        this.level = level;
     }
 }
