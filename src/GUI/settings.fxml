@@ -21,7 +21,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label text="SFX" />
+            <Label text="Sound Effects" />
             <Slider fx:id="sfxSlider" blockIncrement="1.0" max="6.0" maxHeight="-Infinity" maxWidth="-Infinity" min="-34.0" minHeight="-Infinity" minWidth="-Infinity" minorTickCount="1" onMouseReleased="#changeVolumeSFX" prefHeight="14.0" prefWidth="150.0" value="-4.0" />
             <Label text="Music" />
             <Slider fx:id="musicSlider" blockIncrement="1.0" max="6.0" maxHeight="-Infinity" maxWidth="-Infinity" min="-34.0" minHeight="-Infinity" minWidth="-Infinity" minorTickCount="1" onMouseReleased="#changeVolumeMusic" prefHeight="14.0" prefWidth="150.0" value="-4.0">

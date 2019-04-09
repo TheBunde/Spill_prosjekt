@@ -4,28 +4,28 @@ package audio;
 
 public class PooledThread extends Thread {
 
-    private static IDAssigner threadID = new IDAssigner(1);
+    private static IDAssigner thrID = new IDAssigner(1);
 
-    private ThreadPool pool;
+    private ThreadPool thrPool;
 
-    public PooledThread(ThreadPool pool) {
-        super(pool, "Pool:" + threadID.next());
-        this.pool = pool;
+    public PooledThread(ThreadPool thrPool) {
+        super(thrPool, "Pool:" + thrID.next());
+        this.thrPool = thrPool;
     }
     @Override
     public void run() {
         while (!isInterrupted()) {
-            Runnable task = null;
+            Runnable threadTask = null;
             try {
-                task = pool.getTask();
+                threadTask = thrPool.getThreadTask();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if(task == null) return;
+            if(threadTask == null) return;
             try {
-                task.run();
-            } catch(Throwable t){
-                pool.uncaughtException(this, t);
+                threadTask.run();
+            } catch(Throwable thr){
+                thrPool.uncaughtException(this, thr);
             }
 
         }

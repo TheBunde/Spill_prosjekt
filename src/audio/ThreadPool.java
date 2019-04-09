@@ -5,60 +5,58 @@ import java.util.List;
 
 public class ThreadPool extends ThreadGroup {
 
-    private static IDAssigner poolID = new IDAssigner(1);
-
-    private boolean alive;
-    private List<Runnable> taskQueue;
-    private int id;
-    private static ThreadPool thisInstance = new ThreadPool(10);
+    private static IDAssigner thrPoolID = new IDAssigner(1);
+    private List<Runnable> queue;
+    private int thrID;
+    private static ThreadPool thisInstance = new ThreadPool(11);
+    private boolean living;
 
     public static ThreadPool getInstance(){
         return thisInstance;
     }
 
-    public ThreadPool(int numThreads) {
+    public ThreadPool(int numberOfThreads) {
         super("Pool");
-        this.id = poolID.getCurrentID();
+        this.thrID = thrPoolID.getID();
         setDaemon(true);
-        taskQueue = new LinkedList<Runnable>();
-        alive = true;
-        for(int i = 0; i < numThreads; i++) {
+        queue = new LinkedList<Runnable>();
+        living = true;
+        for(int i = 0; i < numberOfThreads; i++) {
             new PooledThread(this).start();
         }
     }
-    public synchronized void runTask(Runnable task) {
-        if(!alive) throw new IllegalStateException("Pool:" + id + " done");
-        if(task != null) {
-            taskQueue.add(task);
+    public synchronized void runTask(Runnable threadTask) {
+        if(!living) throw new IllegalStateException("Pool:" + thrID + " done");
+        if(threadTask != null) {
+            queue.add(threadTask);
             notify();
         }
     }
     public synchronized void close() {
-        if(!alive) return;
-        alive = false;
-        taskQueue.clear();
+        if(!living) return;
+        living = false;
+        queue.clear();
         interrupt();
     }
     public void join() {
         synchronized(this) {
-            //alive = false;
             notifyAll();
         }
-        Thread[] threads = new Thread[activeCount()];
-        int count = enumerate(threads);
-        for(int i = 0; i < count; i++) {
+        Thread[] threadList = new Thread[activeCount()];
+        int number = enumerate(threadList);
+        for(int i = 0; i < number; i++) {
             try {
-                threads[i].join();
+                threadList[i].join();
             }catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
     }
-    protected synchronized Runnable getTask() throws InterruptedException{
-        while(taskQueue.size() == 0) {
-            if (!alive) return null;
+    protected synchronized Runnable getThreadTask() throws InterruptedException{
+        while(queue.size() == 0) {
+            if (!living) return null;
             wait();
         }
-        return taskQueue.remove(0);
+        return queue.remove(0);
     }
 }

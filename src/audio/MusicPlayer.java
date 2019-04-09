@@ -1,18 +1,17 @@
 package audio;
 
-import java.io.File;
 import java.util.ArrayList;
-
-import javax.sound.sampled.*;
 
 
 public class MusicPlayer implements Runnable {
 
-    private ArrayList<AudioFile> musicFiles;
-    private int currentSongIndex;
-    private boolean running;
-    private boolean stopSong;
-    private float volumeMusic;
+    private ArrayList<AudioFile> fileList;
+    private int currentMusicIndex;
+    private boolean run;
+    private boolean stop;
+    private float volMusic;
+    //private ArrayList<URL> urlLIST();
+
 
     private static MusicPlayer thisInstance = new MusicPlayer("testintro","pause", "mainmenu", "battlesongone",
             "warriorSong2","rogueSong","wizardSong","desertwalk","pianosong","pianosong2","testintro3",
@@ -42,45 +41,43 @@ public class MusicPlayer implements Runnable {
     16: "forestSong"
      */
 
-    public MusicPlayer(String... files) {
-        musicFiles = new ArrayList<AudioFile>();
-        for(String file : files)
-            musicFiles.add(new AudioFile("src/audio/music/" + file + ".wav"));
+    public MusicPlayer(String... musicFiles) {
+        fileList = new ArrayList<AudioFile>();
+        for(String musicFile : musicFiles)
+            fileList.add(new AudioFile(musicFile + ".wav"));
     }
-
     public void stopSong(){
-        stopSong = true;
+        stop = true;
     }
 
-    public void changeSong(int currentSongIndex){
+    public void changeSong(int currentMusicIndex){
         try{
-            this.currentSongIndex = currentSongIndex;
-        }catch (Exception e){
-            e.printStackTrace();
+            this.currentMusicIndex = currentMusicIndex;
+        }catch (Exception exc){
+            exc.printStackTrace();
         }
-
     }
 
-    public void setVolumeMusic(float volumeMusic){
-        this.volumeMusic = volumeMusic;
+    public void setVolMusic(float volMusic){
+        this.volMusic = volMusic;
     }
 
     @Override
     public void run() {
-        running = true;
-        stopSong = false;
-        AudioFile song = musicFiles.get(currentSongIndex);
-        song.play(volumeMusic);
-        while(running) {
-            if(stopSong){
+        run = true;
+        stop = false;
+        AudioFile song = fileList.get(currentMusicIndex);
+        song.play(volMusic);
+        while(run) {
+            if(stop){
                 song.stopMusic();
-                stopSong = false;
+                stop = false;
             }
-            if(!song.isPlaying()) {
-                if(currentSongIndex >= musicFiles.size())
-                    currentSongIndex = 0;
-                song = musicFiles.get(currentSongIndex);
-                song.play(volumeMusic);
+            if(!song.isPlay()) {
+                if(currentMusicIndex >= fileList.size())
+                    currentMusicIndex = 0;
+                song = fileList.get(currentMusicIndex);
+                song.play(volMusic);
             }
             try {
                 Thread.sleep(1);
@@ -90,7 +87,7 @@ public class MusicPlayer implements Runnable {
         }
     }
     public void keepPlaying(int index){
-        if(currentSongIndex != index){
+        if(currentMusicIndex != index){
             stopSong();
         }
     }

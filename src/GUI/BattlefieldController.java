@@ -458,13 +458,16 @@ public class BattlefieldController{
     public void showLevelTransitionVBox(){
         String nextLevelName = Main.db.getLevelName(game.getLevel().getLevelId() + 1);
         if (nextLevelName != null && !game.isGameOver()){
+            SFXPlayer.getInstance().setSFX(13);
             ((Label)transitionVbox.getChildren().get(1)).setText("Travelling to " + nextLevelName + "world");
         }
         else if(game.isGameOver()){
+            SFXPlayer.getInstance().setSFX(14);
             ((Label)transitionVbox.getChildren().get(0)).setText("Defeat");
             ((Label)transitionVbox.getChildren().get(1)).setText("git gud");
         }
         else{
+            SFXPlayer.getInstance().setSFX(16);
             ((Label)transitionVbox.getChildren().get(0)).setText("Victory!");
             ((Label)transitionVbox.getChildren().get(1)).setText("Credits");
             db.setRank(db.fetchRank(Main.user.getUser_id()) + 1);
@@ -497,6 +500,9 @@ public class BattlefieldController{
     public void nextLevelTransition() {
             if (!transitioning) {
                 transitioning = true;
+                if (Main.user.isHost()) {
+                    game.pushNewLevel();
+                }
                 SFXPlayer.getInstance().setSFX(13);
                 MusicPlayer.getInstance().stopSong();
                 MusicPlayer.getInstance().changeSong(1);
@@ -521,6 +527,8 @@ public class BattlefieldController{
                                 }
                                 else{
                                     try {
+                                        Thread.sleep(7000);
+                                        MusicPlayer.getInstance().stopSong();
                                         MusicPlayer.getInstance().changeSong(2);
                                         sceneSwitcher.switchScene(exitButton, "MainMenu.fxml");
                                     }catch (Exception e){
