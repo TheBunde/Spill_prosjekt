@@ -34,7 +34,7 @@ public class GameTest {
     }
 
     @Test
-    void playersReadyForNewLevel() {
+    void allPlayersReadyForNewLevel() {
     }
 
     @Test
@@ -55,5 +55,13 @@ public class GameTest {
 
     @Test
     void toStringTest() {
+    }
+
+    @Test
+    void getCharacters() {
+    }
+
+    @Test
+    void getMonsters() {
     }
 }
