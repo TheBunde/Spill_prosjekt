@@ -35,7 +35,6 @@ public class Monster extends Creature {
     //Splitted version of monsterAction for movement
     public void monsterMove (ArrayList<Creature> creatures){
         Creature target = getClosest(creatures);
-        System.out.println("WHAT UP BIG PIMP!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         boolean melee = false;
         for(Weapon i: getWeapons()){
             if(!i.isRanged()){
@@ -48,8 +47,6 @@ public class Monster extends Creature {
             } else if (melee) {
                 moveToward(target, creatures);
             }
-        }else{
-            System.out.println("YOUR MOM'S A HOE!!!!!!!!!!!!!!!!!!!!!!!!!! AND THE TARGET IS NULL");
         }
     }
 
@@ -158,7 +155,7 @@ public class Monster extends Creature {
         }
         if(yPos < target.getyPos()){
             yPos = target.getyPos() -1;
-        }else if(xPos > target.getyPos()){
+        }else if(yPos > target.getyPos()){
             yPos = target.getyPos() + 1;
         }
         boolean validPos = false;
