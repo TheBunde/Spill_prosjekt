@@ -1,67 +1,112 @@
 package game;
+//import com.sun.java.util.jar.pack.Instruction;
 import game.Creature;
+import javafx.scene.Cursor;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Monster extends Creature {
 
-    public Monster(int playerId, int creatureId, String creatureName, int hp, int ac, int movement, int damageBonus, int attackBonus, int attacksPerTurn, String backstory, int xPos, int yPos, String imageUrl, ArrayList weapons){
-        super(playerId, creatureId, creatureName, hp, ac, movement, damageBonus, attackBonus, attacksPerTurn, backstory, xPos, yPos, imageUrl, weapons);
+    public Pane attackPane;
+    public Monster(int playerId, int creatureId, String creatureName, int hp, int ac, int movement, int damageBonus, int attackBonus, String backstory, int xPos, int yPos, String imageUrl, ArrayList weapons){
+        super(playerId, creatureId, creatureName, hp, ac, movement, damageBonus, attackBonus, backstory, xPos, yPos, imageUrl, weapons);
     }
 
     public String toString() {
         return super.toString();
     }
 
-    public void monsterAction (ArrayList<Creature> players){
-        Creature target = getClosest(players);
+    public void monsterAction (ArrayList<Creature> creatures){
+        Creature target = getClosest(creatures);
         if(inRange(target)){
-            moveTo(target);
+            moveTo(target, creatures);
             attackCreature(target, 0);
         }else{
-            moveToward(target);
+            moveToward(target, creatures);
             attackCreature(target, 1);
         }
     }
 
     //Splitted version of monsterAction for movement
-    public void monsterMove (ArrayList<Creature> players){
-        Creature target = getClosest(players);
-        if(inRange(target)){
-            moveTo(target);
-        }else{
-            moveToward(target);
+    public void monsterMove (ArrayList<Creature> creatures){
+        Creature target = getClosest(creatures);
+        boolean melee = false;
+        for(Weapon i: getWeapons()){
+            if(!i.isRanged()){
+                melee = true;
+            }
+        }
+        if(target != null) {
+            if (inRange(target) && melee) {
+                moveTo(target, creatures);
+            } else if (melee) {
+                moveToward(target, creatures);
+            }
         }
     }
 
     //Splitted version of monsterAction for attack
     public void monsterAttack (ArrayList<Creature> players){
+        ArrayList<Weapon> useableWeapons = new ArrayList<>();
         Creature target = getClosest(players);
-        if(inRange(target)){
-            attackCreature(target, 0);
-        }else{
-            attackCreature(target, 1);
+        if(target != null) {
+            if (meleeRange(target)) {
+                for (Weapon i : getWeapons()) {
+                    if (!i.isRanged()) {
+                        //attackCreature(target, getWeapons().indexOf(i));
+                        useableWeapons.add(i);
+                    }
+                }
+            } else {
+                for (Weapon i : getWeapons()) {
+                    if (i.isRanged()) {
+                        useableWeapons.add(i);
+                        //attackCreature(target, getWeapons().indexOf(i));
+                    }
+                }
+            }
+            if(useableWeapons.size() != 0){
+                Random r = new Random();
+                attackCreature(target, r.nextInt((useableWeapons.size())));
+            }
         }
     }
 
     public Creature getClosest(ArrayList<Creature> players){
         ArrayList<Creature> creatures = players;
-        Creature target = creatures.get(0);
-        int xDistance = Math.abs(getxPos() - creatures.get(0).getxPos());
-        int yDistance = Math.abs(getyPos() - creatures.get(0).getyPos());
-
+        Creature target = null;
+        int xDistance = 16;
+        int yDistance = 16;
         for (Creature i : creatures) {
-            if (i != this && i instanceof game.Character && !i.isDead()) {
-                if (Math.abs(getxPos() - i.getxPos()) < xDistance && Math.abs(getyPos() - i.getyPos()) < yDistance) {
-                    target = i;
+            if(!i.isDead()) {
+                if (i != this && i instanceof game.Character) {
+                    int xDistanceToI = Math.abs(i.getxPos() - this.getxPos());
+                    int yDistanceToI = Math.abs(i.getyPos() - this.getyPos());
+                    int xDistanceToCurrent = Math.abs(xDistance);
+                    int yDistanceToCurrent = Math.abs(yDistance );
+                    if (getHypotenuse(xDistanceToI, yDistanceToI) < getHypotenuse(xDistanceToCurrent, yDistanceToCurrent)) {
+                        xDistance = xDistanceToI;
+                        yDistance = yDistanceToI;
+                        target = i;
+                    }
                 }
             }
         }
         return target;
     }
 
-    public void moveToward(Creature target){
+    public double getHypotenuse(int x, int y){
+        double powX = Math.pow(x, 2);
+        double powY = Math.pow(y, 2);
+        return Math.sqrt(powX + powY);
+    }
+
+    public void moveToward(Creature target, ArrayList<Creature> creatures){
         int xPos = getxPos();
         int yPos = getyPos();
         if(Math.abs(xPos -target.getxPos()) > getMovement()){
@@ -74,7 +119,16 @@ public class Monster extends Creature {
         }else if(Math.abs(yPos -target.getyPos()) < getMovement()){
             yPos = target.getyPos() - 1 * direction(yPos, target.getyPos());
         }
-        moveCreature(xPos, yPos);
+        boolean validPos = false;
+        while(!validPos){
+            if (!moveCreature(xPos, yPos, creatures)){
+                ArrayList<Integer> newPos = dontStepOnOthers(xPos, yPos, target);
+                xPos = newPos.get(0);
+                yPos = newPos.get(1);
+            }else{
+                validPos = true;
+            }
+        }
     }
 
     public boolean inRange(Creature target){
@@ -84,7 +138,14 @@ public class Monster extends Creature {
         return false;
     }
 
-    public void moveTo(Creature target){
+    public boolean meleeRange(Creature target){
+        if(Math.abs(target.getxPos() - getxPos()) <= 1 && Math.abs(target.getyPos() - getyPos()) <= 1){
+            return true;
+        }
+        return false;
+    }
+
+    public void moveTo(Creature target, ArrayList<Creature> creatures){
         int xPos = getxPos();
         int yPos = getyPos();
         if(xPos < target.getxPos()){
@@ -94,10 +155,70 @@ public class Monster extends Creature {
         }
         if(yPos < target.getyPos()){
             yPos = target.getyPos() -1;
-        }else if(xPos > target.getyPos()){
+        }else if(yPos > target.getyPos()){
             yPos = target.getyPos() + 1;
         }
-        moveCreature(xPos, yPos);
+        boolean validPos = false;
+        while(!validPos){
+            if (!moveCreature(xPos, yPos, creatures)){
+                ArrayList<Integer> newPos = dontStepOnOthers(xPos, yPos, target);
+                xPos = newPos.get(0);
+                yPos = newPos.get(1);
+            }else{
+                validPos = true;
+            }
+        }
+    }
+
+    public ArrayList<Integer> dontStepOnOthers(int newX, int newY, Creature target){
+        ArrayList<Integer> pos = new ArrayList<>();
+        int xD = relativePos(newX, target.getxPos());
+        int yD = relativePos(newY, target.getyPos());
+        if(xD == 1 && yD == 1){
+            pos.add(newX +1);
+            pos.add(newY);
+        }else if(xD == 0 && yD == 1){
+            if(getxPos() == 15){
+                pos.add(newX -1);
+                pos.add(newY + 1);
+            }else {
+                pos.add(newX + 1);
+                pos.add(newY);
+            }
+        }else if(xD == -1 && yD == 1){
+            pos.add(newX);
+            pos.add(newY + 1);
+        }else if(xD == -1 && yD == 0){
+            if(getyPos() == 15){
+                pos.add(newX - 1);
+                pos.add(newY - 1);
+            }else {
+                pos.add(newX);
+                pos.add(newY + 1);
+            }
+        }else if(xD == -1 && yD == -1){
+            pos.add(newX - 1);
+            pos.add(newY);
+        }else if(xD == 0 && yD == -1){
+            if(getxPos() == 0){
+                pos.add(newX + 1);
+                pos.add(newY - 1);
+            }else {
+                pos.add(newX - 1);
+                pos.add(newY);
+            }
+        }else if(xD == 1 && yD == -1){
+            pos.add(newX);
+            pos.add(newY - 1);
+        }else if(xD == 1 && yD == 0){
+            if(getyPos() == 0){
+                pos.add(newX + 1);
+                pos.add(newY + 1);
+            }
+            pos.add(newX);
+            pos.add(newY - 1);
+        }
+        return pos;
     }
 
     public int direction(int pos, int targetPos){
@@ -105,5 +226,37 @@ public class Monster extends Creature {
             return -1;
         }
         return 1;
+    }
+
+    public int relativePos(int pos, int targetPos){
+        if(targetPos - pos< 0){
+            return -1;
+        }else if(targetPos - pos == 0){
+            return 0;
+        }
+        return 1;
+    }
+
+    public void updateAttackPane(){
+        GridPane parent = (GridPane) this.attackPane.getParent();
+        parent.getChildren().remove(this.attackPane);
+        parent.add(this.attackPane, this.getxPos(), this.getyPos());
+    }
+
+    public void initAttackPane(double cellWidth, double cellHeight){
+        this.attackPane = new Pane();
+        this.attackPane.setPrefWidth(cellWidth);
+        this.attackPane.setPrefHeight(cellHeight);
+        this.attackPane.setStyle("-fx-background-color: rgb(252, 91, 55, 0.7)");
+        this.attackPane.setVisible(false);
+        this.attackPane.setCursor(Cursor.CROSSHAIR);
+    }
+
+    public void showAttackPane(){
+        this.attackPane.setVisible(true);
+    }
+
+    public void hideAttackPane(){
+        this.attackPane.setVisible(false);
     }
 }

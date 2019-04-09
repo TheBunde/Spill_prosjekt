@@ -1,9 +1,10 @@
 package GUI;
 
-import Main.*;
-import Database.*;
+import database.*;
 
 
+import main.*;
+import chat.ChatMessage;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.collections.ObservableList;
@@ -15,10 +16,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import user.User;
 
 import java.net.URL;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -50,15 +50,11 @@ public class chatController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources){
         chatMessageObservableList.clear();
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
-        LocalDateTime now = LocalDateTime.now();
-        chatMessageObservableList.add(new ChatMessage("Event" ,"Welcome to the Chat! Here you can communicate with your teammates", dtf.format(now), true));
+        chatMessageObservableList.add(new ChatMessage(0 ,"Event" ,"Welcome to the Chat! Here you can communicate with your teammates", "", true));
         list.setItems(chatMessageObservableList);
         list.setCellFactory(chatMessageObservableList -> {
             return new ChatMessageCell();
         });
-
-
 
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
@@ -78,8 +74,11 @@ public class chatController implements Initializable {
         }
     }
 
-    public void sendMessage(){
+    public boolean sendMessage(){
         String text = messageInput.getText();
+        if (text.length() == 0){
+            return false;
+        }
         new Thread(new Runnable(){
             @Override public void run(){
                 disableChat();
@@ -92,6 +91,7 @@ public class chatController implements Initializable {
                 }
                 messageInput.setText("");
                 enableChat();
+                list.scrollTo(list.getItems().size());
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
@@ -100,11 +100,11 @@ public class chatController implements Initializable {
                 });
             }
         }).start();
+        return true;
     }
 
     public void updateChat(){
         this.db.getMessagesFromChat();
-        list.scrollTo(list.getItems().size());
     }
 
     public void disableChat(){

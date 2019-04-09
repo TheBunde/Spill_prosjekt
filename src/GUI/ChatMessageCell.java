@@ -1,18 +1,11 @@
 package GUI;
 
-import Database.Chat;
-import Database.ChatMessage;
+import chat.ChatMessage;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 
 
 import java.io.IOException;
@@ -23,8 +16,6 @@ public class ChatMessageCell extends ListCell<ChatMessage> {
     @FXML
     private Label messageLabel;
 
-    @FXML
-    private HBox hbox;
 
     @Override
     protected void updateItem(ChatMessage chatmessage, boolean empty){
@@ -47,18 +38,19 @@ public class ChatMessageCell extends ListCell<ChatMessage> {
 
 
             if (chatmessage.isEvent()){
-                messageLabel.setTextFill(Color.color(55.0/255.0, 126.0/255.0, 219.0/255.0));
-                messageLabel.setText(chatmessage.getMessage());
-                messageLabel.setStyle("-fx-font-weight: bold");
+                setTextFill(Color.color(55.0/255.0, 126.0/255.0, 219.0/255.0));
+                setText(chatmessage.getMessage());
+                setStyle("-fx-font-weight: bold;");
 
             }
             else{
-                messageLabel.setText(chatmessage.getUsername() + ": " + chatmessage.getMessage() + " | " + chatmessage.getTimestamp());
-                messageLabel.setTextFill(Color.BLACK);
-                messageLabel.setStyle("-fx-font-weight: regular");
+                setText(chatmessage.getUsername() + ": " + chatmessage.getMessage() + " | " + chatmessage.getTimestamp());
+                setTextFill(Color.BLACK);
+                setStyle("-fx-font-weight: normal;");
             }
-            setText(null);
-            setGraphic(hbox);
+
+            //setText(null);
+            //setGraphic(messageLabel);
         }
     }
 }

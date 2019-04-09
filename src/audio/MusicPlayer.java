@@ -40,7 +40,6 @@ public class MusicPlayer implements Runnable {
     14: "snowSong(2)"
     15: "lavaSong"
     16: "forestSong"
-
      */
 
     public MusicPlayer(String... files) {
@@ -88,6 +87,11 @@ public class MusicPlayer implements Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+        }
+    }
+    public void keepPlaying(int index){
+        if(currentSongIndex != index){
+            stopSong();
         }
     }
 }

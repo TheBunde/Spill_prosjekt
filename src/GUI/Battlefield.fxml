@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -29,7 +28,7 @@
             <children>
             <Pane fx:id="mapContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="381.0" prefWidth="545.0">
                <children>
-                      <GridPane fx:id="mapGrid" gridLinesVisible="true" prefHeight="381.0" prefWidth="545.0">
+                      <GridPane fx:id="mapGrid" gridLinesVisible="true" prefHeight="381.0" prefWidth="545.0" styleClass="gridStyle" stylesheets="@style.css">
       
                           <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -77,7 +76,7 @@
                 <fx:include maxWidth="200.0" minWidth="200.0" prefWidth="200.0" source="chat.fxml" />
             </children>
         </Pane>
-      <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="117.0" prefWidth="801.0" GridPane.columnSpan="2" GridPane.rowIndex="1">
+      <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="116.0" prefWidth="800.0" GridPane.columnSpan="2" GridPane.rowIndex="1">
          <children>
             <VBox prefHeight="117.0" prefWidth="107.0">
                <children>
@@ -94,13 +93,13 @@
                   </HBox>
                </children>
             </VBox>
-            <VBox prefHeight="117.0" prefWidth="71.0">
+            <VBox maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="116.0" prefWidth="59.0">
                <children>
-                  <ImageView fx:id="weaponOne" fitHeight="58.0" fitWidth="76.0" onMouseClicked="#weaponOneSelected" pickOnBounds="true" smooth="false">
+                  <ImageView fx:id="weaponOne" fitHeight="58.0" fitWidth="76.0" onMouseClicked="#weaponOneSelected" pickOnBounds="true" preserveRatio="true" smooth="false">
                      <image>
                         <Image url="@images/Long_sword.png" />
                      </image></ImageView>
-                  <ImageView fx:id="weaponTwo" fitHeight="59.0" fitWidth="76.0" onMouseClicked="#weaponTwoSelected" pickOnBounds="true" smooth="false">
+                  <ImageView fx:id="weaponTwo" fitHeight="58.0" fitWidth="76.0" onMouseClicked="#weaponTwoSelected" pickOnBounds="true" preserveRatio="true" smooth="false">
                      <image>
                         <Image url="@images/Javelin.png" />
                      </image></ImageView>
@@ -108,18 +107,18 @@
             </VBox>
             <VBox prefHeight="117.0" prefWidth="134.0">
                <children>
-                  <Label prefHeight="58.0" prefWidth="118.0" text="Sword. Very good in close courters. not so good at range tho" wrapText="true" />
-                  <Label prefHeight="60.0" prefWidth="117.0" text="The greatest trick the devil ever pullled, was making shrek 2." wrapText="true" />
+                  <Label fx:id="weaponOneLabel" prefHeight="58.0" prefWidth="118.0" text="Sword. Very good in close courters. not so good at range tho" wrapText="true" />
+                  <Label fx:id="weaponTwoLabel" prefHeight="60.0" prefWidth="117.0" text="The greatest trick the devil ever pullled, was making shrek 2." wrapText="true" />
                </children>
             </VBox>
-            <VBox prefHeight="200.0" prefWidth="100.0">
+            <VBox prefHeight="117.0" prefWidth="91.0">
                <children>
-                  <Button fx:id="attackButton" mnemonicParsing="false" onAction="#attackButtonPressed" prefHeight="77.0" prefWidth="100.0" text="Attack">
+                  <Button fx:id="attackButton" mnemonicParsing="false" onAction="#attackButtonPressed" prefHeight="77.0" prefWidth="90.0" text="Attack">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Button>
-                  <Button fx:id="moveButton" mnemonicParsing="false" onAction="#moveButtonPressed" prefHeight="77.0" prefWidth="151.0" text="Move">
+                  <Button fx:id="moveButton" mnemonicParsing="false" onAction="#moveButtonPressed" prefHeight="74.0" prefWidth="91.0" text="Move">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -129,19 +128,19 @@
             <VBox prefHeight="117.0" prefWidth="98.0">
                <children>
                   <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="100.0" />
-                  <Button fx:id="endTurnButton" mnemonicParsing="false" onAction="#endTurnButtonPressed" prefHeight="58.0" prefWidth="101.0" text="End Turn">
+                  <Button fx:id="endTurnButton" mnemonicParsing="false" onAction="#endTurnButtonPressed" prefHeight="58.0" prefWidth="105.0" text="End Turn">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Button>
                </children>
             </VBox>
-            <ListView prefHeight="117.0" prefWidth="179.0" />
-            <VBox prefHeight="117.0" prefWidth="96.0">
+            <fx:include source="TeamMates.fxml" />
+            <VBox prefHeight="117.0" prefWidth="90.0">
                <children>
                   <Button fx:id="helpButton" mnemonicParsing="false" onAction="#helpButtonPressed" prefHeight="45.0" prefWidth="80.0" text="Help">
                      <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" top="10.0" />
+                        <Insets bottom="10.0" left="5.0" top="10.0" />
                      </VBox.margin>
                      <font>
                         <Font size="18.0" />
@@ -149,7 +148,7 @@
                   </Button>
                   <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exitButtonPressed" prefHeight="42.0" prefWidth="79.0" text="Exit">
                      <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" />
+                        <Insets bottom="10.0" left="5.0" />
                      </VBox.margin>
                      <font>
                         <Font size="18.0" />

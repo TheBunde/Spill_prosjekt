@@ -1,9 +1,8 @@
 package GUI;
 
-import Database.Database;
-import Main.Main;
+import database.Database;
+import main.Main;
 import game.Character;
-import game.Creature;
 import game.Game;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,25 +20,56 @@ public class TeamMatesController implements Initializable {
     @FXML
     private ListView<Character> listView;
 
-    private ObservableList<Character> characterObservableList;
-    private ArrayList<Character> characters;
+    public static ObservableList<Character> characterObservableList;
+    public static ArrayList<Character> charactersInListView;
     private Database db = Main.db;
+    public static Game game = BattlefieldController.game;
 
     public TeamMatesController(){
-        characters = getCharacters();
-        characterObservableList = FXCollections.observableArrayList();
-        for(Character i: characters){
-            characterObservableList.add(i);
+        charactersInListView = BattlefieldController.game.getCharacters();
+        int you = 0;
+        for(Character i: charactersInListView){
+            if(i == game.playerCharacter){
+                you = charactersInListView.indexOf(i);
+            }
         }
+        charactersInListView.remove(you);
+        characterObservableList = FXCollections.observableArrayList();
+        for (Character c : charactersInListView){
+            if (c != BattlefieldController.game.playerCharacter) {
+                characterObservableList.add(c);
+            }
+        }
+
+        /*for(Character i: characters){
+            characterObservableList.add(i);
+        }*/
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
+       // characterObservableList.add(new Character(10000, 1, "Warrior", 20, 15, 3, 3, 4, 1, "yas", 3, 3, "warrior.jpg", null));
+
         listView.setItems(characterObservableList);
-        listView.setCellFactory(characterListView -> new TeamMateCellController());
+        listView.setCellFactory(characterListView -> {
+            return new TeamMateListCell();
+        });
     }
 
-    public ArrayList<Character> getCharacters(){
+    public static void updateListView(){
+        characterObservableList.removeAll(charactersInListView);
+        charactersInListView = BattlefieldController.game.getCharacters();
+        int you = 0;
+        for(Character i: charactersInListView){
+            if(i == game.playerCharacter){
+                you = charactersInListView.indexOf(i);
+            }
+        }
+        charactersInListView.remove(you);
+        characterObservableList.addAll(charactersInListView);
+    }
+
+    /*public ArrayList<Character> getCharacters(){
         ArrayList<Creature> creatures = db.fetchCreaturesFromLobby();
         ArrayList<Character> characters = new ArrayList<>();
         for(int i = 0; i < creatures.size(); i++){
@@ -48,7 +78,7 @@ public class TeamMatesController implements Initializable {
             }
         }
         return characters;
-    }
+    }*/
 
 
 }

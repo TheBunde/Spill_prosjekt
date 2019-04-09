@@ -1,7 +1,10 @@
 package game;
 
 import java.util.ArrayList;
-import Main.*;
+
+import main.*;
+import database.Database;
+import audio.SFXPlayer;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -12,7 +15,6 @@ public abstract class Creature {
     private int attackBonus;
     private int movement;
     private ArrayList<Weapon> weapons = new ArrayList<Weapon>();
-    private int attacksPerTurn;
     private int damageBonus;
     private int xPos;
     private int yPos;
@@ -22,9 +24,11 @@ public abstract class Creature {
     private String imageUrl;
     private ImageView pawn;
     private boolean isDead;
+    private boolean readyForNewLevel = false;
+    private Database db = Main.db;
 
 
-    public Creature(int playerId, int creatureId, String creatureName, int hp, int ac, int movement, int damageBonus, int attackBonus, int attacksPerTurn, String backstory, int xPos, int yPos, String imageUrl, ArrayList weapons){
+    public Creature(int playerId, int creatureId, String creatureName, int hp, int ac, int movement, int damageBonus, int attackBonus, String backstory, int xPos, int yPos, String imageUrl, ArrayList weapons){
         this.playerId = playerId;
         this.creatureId = creatureId;
         this.creatureName = creatureName;
@@ -32,7 +36,6 @@ public abstract class Creature {
         this.ac = ac;
         this.movement = movement;
         this.attackBonus = attackBonus;
-        this.attacksPerTurn = attacksPerTurn;
         this.damageBonus = damageBonus;
         this.backstory = backstory;
         this.xPos = xPos;
@@ -41,9 +44,11 @@ public abstract class Creature {
         this.weapons = weapons;
         this.isDead = false;
 
-        Image image = new Image("GUI/images/" + this.imageUrl);
-        this.pawn = new ImageView(image);
-        this.pawn.setPreserveRatio(false);
+        if (imageUrl != null){
+            Image image = new Image("GUI/images/" + this.imageUrl);
+            this.pawn = new ImageView(image);
+            this.pawn.setPreserveRatio(false);
+        }
     }
 
     public boolean attackCreature(Creature target, int weaponIndex){
@@ -52,12 +57,20 @@ public abstract class Creature {
         if (!hitSuccess(roll, target)){
             String chatMessage = "";
             if (this instanceof Character){
-                chatMessage += Main.db.fetchUsernameFromPlayerId(this.getPlayerId()) + " rolled " + roll + " and missed " + target.getCreatureName();
+                SFXPlayer.getInstance().setSFX(11);
+                if (Main.db != null) {
+                    chatMessage += Main.db.fetchUsernameFromPlayerId(this.getPlayerId()) + " rolled " + roll + " and missed " + target.getCreatureName();
+                }
             }
             else{
-                chatMessage += this.getCreatureName() + " rolled " + roll + " and missed " + Main.db.fetchUsernameFromPlayerId(target.getPlayerId());
+                SFXPlayer.getInstance().setSFX(12);
+                if (Main.db != null) {
+                    chatMessage += this.getCreatureName() + " rolled " + roll + " and missed " + Main.db.fetchUsernameFromPlayerId(target.getPlayerId());
+                }
             }
-            Main.db.addChatMessage(chatMessage, true);
+            if (Main.db != null) {
+                Main.db.addChatMessage(chatMessage, true);
+            }
             return false;
         }
 
@@ -65,14 +78,23 @@ public abstract class Creature {
         damage += Dice.roll(weapon.getDamageDice(), weapon.getDiceAmount()) + this.damageBonus;
 
         target.setHp(target.getHp() - damage);
-        String chatMessage = "";
+        String chatMessage = " rolled " + roll + " and dealt " + damage + " on ";
         if (this instanceof Character){
-            chatMessage += Main.db.fetchUsernameFromPlayerId(this.getPlayerId()) + " rolled " + roll + " and dealt " + damage + " to " + target.getCreatureName();
+            SFXPlayer.getInstance().setSFX(10);
+            if (Main.db != null) {
+                chatMessage = Main.db.fetchUsernameFromPlayerId(this.getPlayerId()) + chatMessage + target.getCreatureName();
+            }
         }
         else{
-            chatMessage += this.getCreatureName() + " rolled " + roll + " and dealt " + damage + " to " + Main.db.fetchUsernameFromPlayerId(target.getPlayerId());
+            SFXPlayer.getInstance().setSFX(10);
+            if (Main.db != null) {
+                chatMessage = this.getCreatureName() + chatMessage + Main.db.fetchUsernameFromPlayerId(target.getPlayerId());
+            }
         }
-        Main.db.addChatMessage(chatMessage, true);
+        chatMessage += " with " + weapon.getName();
+        if (Main.db != null) {
+            Main.db.addChatMessage(chatMessage, true);
+        }
         return true;
     }
 
@@ -88,18 +110,26 @@ public abstract class Creature {
         return false;
     }
 
-    public boolean moveCreature(int newX, int newY){
-        System.out.println("NewX: " + newX + "\nNewY: " + newY + "\nMovement: " + this.movement);
-        System.out.println("Math.abs(newX - this.getxPos()): " + Math.abs(newX - this.getxPos()));
-        System.out.println("Math.abs(newY - this.getyPos()): " + Math.abs(newY - this.getyPos()));
+    public boolean moveCreature(int newX, int newY, ArrayList<Creature> creatures){
+        for (Creature c : creatures){
+            if (newX == c.getxPos() && newY == c.getyPos()){
+                System.out.println("HELLO FROM MOVECREATURE!!!!!!!!!!!!!");
+                this.setNewPos(newX, newY);
+                return false;
+            }
+        }
         if ((Math.abs(newX - this.getxPos()) <= this.movement && Math.abs(newY - this.getyPos()) <= this.movement)){
             this.setNewPos(newX, newY);
             System.out.println("Moved");
             if (this instanceof Character){
-                Main.db.addChatMessage(Main.db.fetchUsernameFromPlayerId(this.getPlayerId()) + " moved to X: " + newX + " Y: " + newY, true);
+                if(Main.db != null) {
+                    Main.db.addChatMessage(Main.db.fetchUsernameFromPlayerId(this.getPlayerId()) + " moved to X: " + newX + " Y: " + newY, true);
+                }
             }
             else{
-                Main.db.addChatMessage(this.getCreatureName() + " moved to X: " + newX + " Y: " + newY, true);
+                if(Main.db != null) {
+                    Main.db.addChatMessage(this.getCreatureName() + " moved to X: " + newX + " Y: " + newY, true);
+                }
             }
             return true;
         }
@@ -137,10 +167,6 @@ public abstract class Creature {
         return weapons;
     }
 
-    public int getAttacksPerTurn() {
-        return attacksPerTurn;
-    }
-
     public int getDamageBonus() {
         return damageBonus;
     }
@@ -170,8 +196,16 @@ public abstract class Creature {
         return this.backstory;
     }
 
+    public void addNewWeapon(Weapon weapon){
+        this.weapons.add(weapon);
+    }
+
     public boolean updateDead(){
-        isDead = (this.hp <= 0);
+        if(this.hp <= 0 && !isDead()){
+            SFXPlayer.getInstance().setSFX(0);
+            this.setPawnImage("gravestone.png");
+            isDead = true;
+        }
         return isDead;
     }
 
@@ -179,13 +213,14 @@ public abstract class Creature {
         return isDead;
     }
 
+
     public String toString() {
         String weaponNames = "";
         for(int i = 0; i < this.weapons.size(); i++){
-            weaponNames = this.weapons.get(i).getName();
+            weaponNames += this.weapons.get(i).getName() + ((i < this.weapons.size() - 1) ? ", " : "");
         }
-        return "Character: " + this.getCreatureName() + "\nHP: " + this.getHp() + "\nAC: " + this.getAc() + "\nSpeed: " + this.getMovement() +
-                "\nWeapon: " + weaponNames + "\nAttack bonus: " + this.getAttackBonus() +"\nAttacks per turn: " + this.getAttacksPerTurn() + "\nBackstory: " + this.getBackstory();
+        return "Character: " + this.getCreatureName() + "\nHP: " + this.getHp() + "\nAC: " + this.getAc() + "\nMovement: " + this.getMovement() +
+                "\nWeapon: " + weaponNames + "\nAttack bonus: " + this.getAttackBonus() + "\nBackstory: " + this.getBackstory();
     }
 
     public String getImageUrl(){
@@ -197,11 +232,21 @@ public abstract class Creature {
     }
 
     public void setPawnImage(String imageUrl){
-        this.pawn.setImage(new Image("GUI/images/" + imageUrl));
+        if (this.pawn != null) {
+            this.pawn.setImage(new Image("GUI/images/" + imageUrl));
+        }
     }
 
     public void setPawnSize(double width, double height){
         this.pawn.setFitWidth(width);
         this.pawn.setFitHeight(height);
+    }
+
+    public boolean isReadyForNewLevel(){
+        return this.readyForNewLevel;
+    }
+
+    public void setReadyForNewLevel(boolean readyForNewLevel){
+        this.readyForNewLevel = readyForNewLevel;
     }
 }

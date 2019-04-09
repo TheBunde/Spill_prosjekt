@@ -1,15 +1,11 @@
 package GUI;
-import Main.Main;
-import Database.Database;
+import main.Main;
+import database.Database;
 import audio.MusicPlayer;
 import audio.SFXPlayer;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 public class changeUsernameController {
 

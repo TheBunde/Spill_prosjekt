@@ -1,7 +1,7 @@
 package GUI;
 
-import Main.*;
-import Database.*;
+import main.*;
+import database.*;
 import audio.MusicPlayer;
 import audio.SFXPlayer;
 import javafx.fxml.FXML;
@@ -11,6 +11,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+
 public class MainMenuController {
 
 
@@ -19,8 +24,10 @@ public class MainMenuController {
 
 
     private Database db = Main.db;
-
+    
     public void initialize(){
+        MusicPlayer.getInstance().changeSong(2);
+        MusicPlayer.getInstance().keepPlaying(2);
         Main.user.setPlayerId(-1);
         db.setHost(false);
     }
@@ -28,7 +35,8 @@ public class MainMenuController {
     public void startNewGameButtonPressed() throws Exception{
         db.createNewLobby();
         db.setHost(true);
-        new SFXPlayer("knockSFX").run();
+        db.addChatMessage(Main.user.getUsername() + " has joined the lobby as the host", true);
+        SFXPlayer.getInstance().setSFX(0);
         MusicPlayer.getInstance().stopSong();
         MusicPlayer.getInstance().changeSong(3);
         Parent root = FXMLLoader.load(getClass().getResource("createcharacter.fxml"));
@@ -78,13 +86,21 @@ public class MainMenuController {
     private Button helpButton;
 
 
-    public void helpButtonPressed() throws Exception{
+    public void helpButtonPressed() throws Exception {
         new SFXPlayer("knockSFX").run();
-        Parent root = FXMLLoader.load(getClass().getResource("https://gitlab.stud.iie.ntnu.no/heleneyj/game-development-project/wikis/System/User-manual"));
-        Scene scene = new Scene(root);
-        Stage stage = (Stage)helpButton.getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+        if (Desktop.isDesktopSupported()) {
+            try {
+                Desktop.getDesktop().browse(new URI("https://gitlab.stud.iie.ntnu.no/heleneyj/game-development-project/wikis/System%20Documentation"));
+            }
+            catch (IOException ioe) {
+                System.out.println("Error with IO");
+                ioe.printStackTrace();
+            }
+            catch (URISyntaxException e) {
+                System.out.println("Error in URL");
+                e.printStackTrace();
+            }
+        }
     }
 
     @FXML
