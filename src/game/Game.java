@@ -261,11 +261,13 @@ public class Game {
                 @Override
                 public void run() {
                     Monster monster = ((Monster) creatures.get(playerTurn % creatures.size()));
+                    System.out.println(monster.getCreatureName());
                     if (monster.isDead()) {
                         if(db != null) {
                             endTurn();
                         }
                     } else {
+                        System.out.println("heihei");
                         monster.monsterMove(creatures);
                         monster.monsterAttack(creatures);
                         if(db != null) {
@@ -336,5 +338,9 @@ public class Game {
         }
         string.append("\n");
         return string.toString();
+    }
+
+    public void setPlayerCharacter(Character i){
+        playerCharacter = i;
     }
 }

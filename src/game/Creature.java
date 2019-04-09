@@ -114,7 +114,9 @@ public abstract class Creature {
         for (Creature c : creatures){
             if (newX == c.getxPos() && newY == c.getyPos()){
                 System.out.println("HELLO FROM MOVECREATURE!!!!!!!!!!!!!");
-                this.setNewPos(newX, newY);
+                if(this instanceof Monster) {
+                    this.setNewPos(newX, newY);
+                }
                 return false;
             }
         }
