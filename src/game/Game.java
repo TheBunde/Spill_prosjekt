@@ -329,23 +329,13 @@ public class Game {
     }
 
     public boolean attackRange(Monster monster, boolean melee){
-        /*if(melee && Math.abs(playerCharacter.getxPos() - monster.getxPos()) == 1 && Math.abs(playerCharacter.getyPos() - monster.getyPos()) == 1){
-            return true;
-        }else if(!melee && Math.abs(playerCharacter.getxPos() - monster.getxPos()) > 1 || Math.abs(playerCharacter.getyPos() - monster.getyPos()) > 1){
-            return true;
-        }else{
-            return false;
-        }*/
         if(melee) {
             if ((Math.abs(playerCharacter.getxPos() - monster.getxPos()) <= 1) && (Math.abs(playerCharacter.getyPos() - monster.getyPos()) <= 1)) {
-                System.out.println("\nx distance: " + (Math.abs(playerCharacter.getxPos() - monster.getxPos()) <= 1) + "\n");
-                System.out.println("\ny distance: " + (Math.abs(playerCharacter.getyPos() - monster.getyPos()) <= 1) + "\n");
                 return true;
             }
         }
         else if(!melee) {
             if ((Math.abs(playerCharacter.getxPos() - monster.getxPos()) > 1) || (Math.abs(playerCharacter.getyPos() - monster.getyPos())) > 1) {
-                System.out.println("holaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
                 return true;
             }
         }
