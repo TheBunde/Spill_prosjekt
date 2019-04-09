@@ -13,7 +13,7 @@ import user.*;
  * LoginController.java
  * The program handles the components in Login-scene.
  * @author saramoh, shahedsa
- *
+ */
 
 public class LoginController {
 
