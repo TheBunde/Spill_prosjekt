@@ -13,6 +13,7 @@ public class GameTest {
     @BeforeEach
     void setUp() {
         game = new Game();
+
     }
 
     @AfterEach
