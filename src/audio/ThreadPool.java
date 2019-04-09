@@ -6,11 +6,9 @@ import java.util.List;
 public class ThreadPool extends ThreadGroup {
 
     private static IDAssigner thrPoolID = new IDAssigner(1);
-
-
     private List<Runnable> queue;
     private int thrID;
-    private static ThreadPool thisInstance = new ThreadPool(10);
+    private static ThreadPool thisInstance = new ThreadPool(11);
     private boolean living;
 
     public static ThreadPool getInstance(){
@@ -27,10 +25,10 @@ public class ThreadPool extends ThreadGroup {
             new PooledThread(this).start();
         }
     }
-    public synchronized void runTask(Runnable task) {
+    public synchronized void runTask(Runnable threadTask) {
         if(!living) throw new IllegalStateException("Pool:" + thrID + " done");
-        if(task != null) {
-            queue.add(task);
+        if(threadTask != null) {
+            queue.add(threadTask);
             notify();
         }
     }
@@ -44,17 +42,17 @@ public class ThreadPool extends ThreadGroup {
         synchronized(this) {
             notifyAll();
         }
-        Thread[] threads = new Thread[activeCount()];
-        int count = enumerate(threads);
-        for(int i = 0; i < count; i++) {
+        Thread[] threadList = new Thread[activeCount()];
+        int number = enumerate(threadList);
+        for(int i = 0; i < number; i++) {
             try {
-                threads[i].join();
+                threadList[i].join();
             }catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
     }
-    protected synchronized Runnable getTask() throws InterruptedException{
+    protected synchronized Runnable getThreadTask() throws InterruptedException{
         while(queue.size() == 0) {
             if (!living) return null;
             wait();

@@ -41,7 +41,7 @@ public class SFXPlayer implements Runnable{
     public SFXPlayer(String... files){
         fileList = new ArrayList<AudioFile>();
         for(String file : files)
-            fileList.add(new AudioFile("src/audio/SFX/" + file + ".wav"));
+            fileList.add(new AudioFile(file + ".wav"));
     }
 
     public void setVolSFX(float volSFX){

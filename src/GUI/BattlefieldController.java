@@ -513,6 +513,8 @@ public class BattlefieldController implements Initializable {
                                 }
                                 else{
                                     try {
+                                        Thread.sleep(7000);
+                                        MusicPlayer.getInstance().stopSong();
                                         MusicPlayer.getInstance().changeSong(2);
                                         sceneSwitcher.switchScene(exitButton, "MainMenu.fxml");
                                     }catch (Exception e){

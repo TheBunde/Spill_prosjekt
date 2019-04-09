@@ -15,17 +15,17 @@ public class PooledThread extends Thread {
     @Override
     public void run() {
         while (!isInterrupted()) {
-            Runnable task = null;
+            Runnable threadTask = null;
             try {
-                task = thrPool.getTask();
+                threadTask = thrPool.getThreadTask();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if(task == null) return;
+            if(threadTask == null) return;
             try {
-                task.run();
-            } catch(Throwable t){
-                thrPool.uncaughtException(this, t);
+                threadTask.run();
+            } catch(Throwable thr){
+                thrPool.uncaughtException(this, thr);
             }
 
         }

@@ -6,10 +6,12 @@ import java.util.ArrayList;
 public class MusicPlayer implements Runnable {
 
     private ArrayList<AudioFile> fileList;
-    private int currentSongIndex;
+    private int currentMusicIndex;
     private boolean run;
     private boolean stop;
     private float volMusic;
+    //private ArrayList<URL> urlLIST();
+
 
     private static MusicPlayer thisInstance = new MusicPlayer("testintro","pause", "mainmenu", "battlesongone",
             "warriorSong2","rogueSong","wizardSong","desertwalk","pianosong","pianosong2","testintro3",
@@ -39,21 +41,20 @@ public class MusicPlayer implements Runnable {
     16: "forestSong"
      */
 
-    public MusicPlayer(String... files) {
+    public MusicPlayer(String... musicFiles) {
         fileList = new ArrayList<AudioFile>();
-        for(String file : files)
-            fileList.add(new AudioFile("src/audio/music/" + file + ".wav"));
+        for(String musicFile : musicFiles)
+            fileList.add(new AudioFile(musicFile + ".wav"));
     }
-
     public void stopSong(){
         stop = true;
     }
 
-    public void changeSong(int currentSongIndex){
+    public void changeSong(int currentMusicIndex){
         try{
-            this.currentSongIndex = currentSongIndex;
-        }catch (Exception e){
-            e.printStackTrace();
+            this.currentMusicIndex = currentMusicIndex;
+        }catch (Exception exc){
+            exc.printStackTrace();
         }
     }
 
@@ -65,17 +66,17 @@ public class MusicPlayer implements Runnable {
     public void run() {
         run = true;
         stop = false;
-        AudioFile song = fileList.get(currentSongIndex);
+        AudioFile song = fileList.get(currentMusicIndex);
         song.play(volMusic);
         while(run) {
             if(stop){
                 song.stopMusic();
                 stop = false;
             }
-            if(!song.isPlaying()) {
-                if(currentSongIndex >= fileList.size())
-                    currentSongIndex = 0;
-                song = fileList.get(currentSongIndex);
+            if(!song.isPlay()) {
+                if(currentMusicIndex >= fileList.size())
+                    currentMusicIndex = 0;
+                song = fileList.get(currentMusicIndex);
                 song.play(volMusic);
             }
             try {
@@ -86,7 +87,7 @@ public class MusicPlayer implements Runnable {
         }
     }
     public void keepPlaying(int index){
-        if(currentSongIndex != index){
+        if(currentMusicIndex != index){
             stopSong();
         }
     }

@@ -28,6 +28,11 @@ public class InterfaceMain extends Application implements Runnable {
         primaryStage.setScene(new Scene(root, 800, 500));
         primaryStage.getIcons().add(new Image("GUI/images/icontransparent.png"));
         primaryStage.show();
+
+        primaryStage.setOnCloseRequest(event ->{
+            MusicPlayer.getInstance().stopSong();
+            MusicPlayer.getInstance().changeSong(1);
+        });
     }
 
 
