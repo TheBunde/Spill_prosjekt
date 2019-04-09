@@ -22,7 +22,6 @@ public class TeamMateListCell extends ListCell<Character> {
     private ImageView characterIV;
     @FXML
     private HBox hBox;
-    private Database db = Main.db;
 
     @Override
     protected void updateItem(Character character, boolean empty){
@@ -45,7 +44,7 @@ public class TeamMateListCell extends ListCell<Character> {
 
             Image image = new Image("GUI/images/" + character.getImageUrl());
             characterIV.setImage(image);
-            nameLabel.setText(db.fetchUsernameFromPlayerId(character.getPlayerId()));
+            nameLabel.setText(Main.db.fetchUsernameFromPlayerId(character.getPlayerId()));
             hpLabel.setText("HP: " + character.getHp() + " / " + character.getInitialHp());  //bytt ut med initialhp
             acLabel.setText("AC: " + character.getAc());
             setText(null);

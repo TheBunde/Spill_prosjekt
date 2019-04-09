@@ -23,8 +23,6 @@ public class GameLobbyController {
 
     private SceneSwitcher sceneSwitcher = new SceneSwitcher();
 
-    private Database db = Main.db;
-    private User user = Main.user;
     private boolean ready = false;
     public static Timer playerReadyTimer = new Timer();
     public static Timer limitPlayerTimer = new Timer();
@@ -33,7 +31,7 @@ public class GameLobbyController {
     private boolean joinable = true;
 
     public void initialize(){
-        lobbyKeyLabel.setText("" + user.getLobbyKey());
+        lobbyKeyLabel.setText("" + Main.user.getLobbyKey());
         MusicPlayer.getInstance().stopSong();
         MusicPlayer.getInstance().changeSong(10);
         playerReadyTimer = new Timer();
@@ -74,13 +72,13 @@ public class GameLobbyController {
         if(!ready){
             readyButton.setStyle("-fx-background-color: #2ecc71;");
             ready = true;
-            db.addChatMessage(Main.user.getUsername() + " is ready", true);
-            db.isReady(true);
+            Main.db.addChatMessage(Main.user.getUsername() + " is ready", true);
+            Main.db.isReady(true);
         }else if(ready){
             readyButton.setStyle("-fx-background-color: #cccccc;");
             ready = false;
-            db.addChatMessage(Main.user.getUsername() + " is not ready", true);
-            db.isReady(false);
+            Main.db.addChatMessage(Main.user.getUsername() + " is not ready", true);
+            Main.db.isReady(false);
         }
     }
 
@@ -88,10 +86,10 @@ public class GameLobbyController {
         if (Main.db.fetchPlayerCount() == 1){
             Main.db.setJoinable(false);
         }
-        db.addChatMessage(user.getUsername() + " has left the lobby", true);
-        db.disconnectPlayerFromLobby(Main.db.fetchPlayerId());
-        db.disconnectUserFromGameLobby();
-        db.setHost(false);
+        Main.db.addChatMessage(Main.user.getUsername() + " has left the lobby", true);
+        Main.db.disconnectPlayerFromLobby(Main.db.fetchPlayerId());
+        Main.db.disconnectUserFromGameLobby();
+        Main.db.setHost(false);
         chatController.timer.cancel();
         chatController.timer.purge();
         playerReadyTimer.cancel();
@@ -104,7 +102,7 @@ public class GameLobbyController {
 
     public void playersReady() throws Exception{
         playersReady = 0;
-        ArrayList<Boolean> players = db.everyoneIsReady();
+        ArrayList<Boolean> players = Main.db.everyoneIsReady();
         for(int i = 0; i < players.size(); i++){
             if(players.get(i)){
                playersReady++;
@@ -119,7 +117,7 @@ public class GameLobbyController {
             playerReadyTimer.purge();
             limitPlayerTimer.cancel();
             limitPlayerTimer.purge();
-            db.setJoinable(false);
+            Main.db.setJoinable(false);
             this.sceneSwitcher.switchScene(readyButton , "Battlefield.fxml");
         }
     }

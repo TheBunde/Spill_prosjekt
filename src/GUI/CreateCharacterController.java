@@ -24,14 +24,10 @@ public class CreateCharacterController implements Initializable {
     @FXML
     private ImageView iv;
     @FXML
-    private Image img;
-    @FXML
     private TextArea text;
 
     @FXML
     private SceneSwitcher sceneSwitcher;
-
-    private Database db = Main.db;
 
    // private String a = chooseClassDropdown.getValue();
 
@@ -59,7 +55,7 @@ public class CreateCharacterController implements Initializable {
         System.out.println("View is now loaded!");
         chooseClassDropdown.getItems().addAll("Warrior","Rogue","Wizard","Ranger");
         iv.setImage(defaultImage);
-        db.createPlayer(true);
+        Main.db.createPlayer(true);
     }
 
     //method to display selected character

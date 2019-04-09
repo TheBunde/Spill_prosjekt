@@ -13,10 +13,6 @@ import java.io.IOException;
 
 public class ChatMessageCell extends ListCell<ChatMessage> {
 
-    @FXML
-    private Label messageLabel;
-
-
     @Override
     protected void updateItem(ChatMessage chatmessage, boolean empty){
         super.updateItem(chatmessage, empty);

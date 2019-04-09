@@ -15,20 +15,20 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 
-public class TeamMatesController implements Initializable {
+public class TeamMatesController {
 
     @FXML
     private ListView<Character> listView;
 
     public static ObservableList<Character> characterObservableList;
     public static ArrayList<Character> charactersInListView;
-    public static Game game = BattlefieldController.game;
+   // public static Game game = BattlefieldController.game;
 
     public TeamMatesController(){
         charactersInListView = BattlefieldController.game.getCharacters();
         int you = 0;
         for(Character i: charactersInListView){
-            if(i == game.playerCharacter){
+            if(i == BattlefieldController.getGame().getPlayerCharacter()){
                 you = charactersInListView.indexOf(i);
             }
         }
@@ -45,8 +45,7 @@ public class TeamMatesController implements Initializable {
         }*/
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources){
+    public void initialize(){
        // characterObservableList.add(new Character(10000, 1, "Warrior", 20, 15, 3, 3, 4, 1, "yas", 3, 3, "warrior.jpg", null));
 
         listView.setItems(characterObservableList);
@@ -60,7 +59,7 @@ public class TeamMatesController implements Initializable {
         charactersInListView = BattlefieldController.game.getCharacters();
         int you = 0;
         for(Character i: charactersInListView){
-            if(i == game.playerCharacter){
+            if(i == BattlefieldController.getGame().playerCharacter){
                 you = charactersInListView.indexOf(i);
             }
         }

@@ -37,14 +37,11 @@ public class chatController implements Initializable {
 
     @FXML
     private TextField messageInput;
-    private AnchorPane anchorPane;
 
-    private Database db = Main.db;
-    private User user = Main.user;
     public static Timer timer = new Timer();
 
     public chatController(){
-        chatMessageObservableList = db.chat.messages;
+        chatMessageObservableList = Main.db.chat.messages;
     }
 
     @Override
@@ -104,7 +101,7 @@ public class chatController implements Initializable {
     }
 
     public void updateChat(){
-        this.db.getMessagesFromChat();
+        Main.db.getMessagesFromChat();
     }
 
     public void disableChat(){

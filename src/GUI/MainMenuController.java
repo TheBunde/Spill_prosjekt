@@ -22,22 +22,33 @@ public class MainMenuController {
     @FXML
     private Button startNewGameButton;
 
+    @FXML
+    private Button joinLobbyButton;
 
-    private Database db = Main.db;
+    @FXML
+    private Button viewAccountButton;
 
+    @FXML
+    private Button settingsButton;
+
+    @FXML
+    private Button helpButton;
+
+    @FXML
+    private Button signOutButton;
 
     public void initialize(){
 
         MusicPlayer.getInstance().changeSong(2);
         MusicPlayer.getInstance().keepPlaying(2);
         Main.user.setPlayerId(-1);
-        db.setHost(false);
+        Main.db.setHost(false);
     }
 
     public void startNewGameButtonPressed() throws Exception{
-        db.createNewLobby();
-        db.setHost(true);
-        db.addChatMessage(Main.user.getUsername() + " has joined the lobby as the host", true);
+        Main.db.createNewLobby();
+        Main.db.setHost(true);
+        Main.db.addChatMessage(Main.user.getUsername() + " has joined the lobby as the host", true);
         SFXPlayer.getInstance().setSFX(0);
         MusicPlayer.getInstance().stopSong();
         MusicPlayer.getInstance().changeSong(3);
@@ -48,9 +59,6 @@ public class MainMenuController {
         stage.show();
     }
 
-    @FXML
-    private Button joinLobbyButton;
-
     public void joinLobbyButtonPressed() throws Exception{
         SFXPlayer.getInstance().setSFX(0);
         Parent root = FXMLLoader.load(getClass().getResource("FindLobby.fxml"));
@@ -59,9 +67,6 @@ public class MainMenuController {
         stage.setScene(scene);
         stage.show();
     }
-
-    @FXML
-    private Button viewAccountButton;
 
     public void viewAccountButtonPressed() throws Exception{
         SFXPlayer.getInstance().setSFX(0);
@@ -72,9 +77,6 @@ public class MainMenuController {
         stage.show();
     }
 
-    @FXML
-    private Button settingsButton;
-
     public void settingsButtonPressed() throws Exception{
         SFXPlayer.getInstance().setSFX(0);
         Parent root = FXMLLoader.load(getClass().getResource("settings.fxml"));
@@ -83,10 +85,6 @@ public class MainMenuController {
         stage.setScene(scene);
         stage.show();
     }
-
-    @FXML
-    private Button helpButton;
-
 
     public void helpButtonPressed() throws Exception {
         new SFXPlayer("knockSFX").run();
@@ -104,9 +102,6 @@ public class MainMenuController {
             }
         }
     }
-
-    @FXML
-    private Button signOutButton;
 
     public void signOutButtonPressed() throws Exception{
         SFXPlayer.getInstance().setSFX(0);

@@ -10,9 +10,8 @@ import javafx.scene.control.TextField;
 
 public class ChangePasswordController {
 
-    Alert alert = new Alert(Alert.AlertType.WARNING);
+    private Alert alert = new Alert(Alert.AlertType.WARNING);
     private SceneSwitcher sceneSwitcher;
-    private Database db = Main.db;
 
     @FXML
     private TextField oldPassword, newPassword, reNewPassword;
@@ -53,8 +52,8 @@ public class ChangePasswordController {
     }
 
     public void setNewPassword(){
-        db.deleteOldPassword(oldPassword.getText().trim());
-        db.addPassword(newPassword.getText().trim());
+        Main.db.deleteOldPassword(oldPassword.getText().trim());
+        Main.db.addPassword(newPassword.getText().trim());
     }
 
     public void backToMenu() throws Exception{
