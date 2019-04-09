@@ -28,7 +28,7 @@
             <children>
             <Pane fx:id="mapContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="381.0" prefWidth="545.0">
                <children>
-                      <GridPane fx:id="mapGrid" gridLinesVisible="true" prefHeight="381.0" prefWidth="545.0" styleClass="gridStyle" stylesheets="@style.css">
+                      <GridPane fx:id="mapGrid" gridLinesVisible="true" prefHeight="381.0" prefWidth="545.0">
       
                           <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

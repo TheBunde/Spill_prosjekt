@@ -1,18 +1,17 @@
 package audio;
 
-import javax.sound.sampled.*;
-import java.io.File;
 import java.util.ArrayList;
 
 public class SFXPlayer implements Runnable{
 
-    private ArrayList<AudioFile> soundFiles;
+    private ArrayList<AudioFile> fileList;
 
     private int currentSFXIndex;
-    private float volumeSFX;
+    private float volSFX;
 
     private static SFXPlayer thisInstance = new SFXPlayer("knockSFX", "splashSFX","warriorSFX","rogueSFX2","wizardSFX",
-        "noKeySFX","wrongKeySFX","correctKeySFX","rangerSFX","arrowSFX","enmhitSFX","enmmissSFX","pdefSFX","victory1SFX" );
+        "noKeySFX","wrongKeySFX","correctKeySFX","rangerSFX","arrowSFX","enmhitSFX","enmmissSFX","pdefSFX","victory1SFX"
+    ,"defeat", "moveSFX","gameWonSFX");
 
     public static SFXPlayer getInstance(){
         return thisInstance;
@@ -34,25 +33,28 @@ public class SFXPlayer implements Runnable{
     11: "enmmissSFX"
     12: "pdefSFX"
     13: "victory1SFX"
+    14: "defeat"
+    15: "moveSFX"
+    16: "gameWonSFX"
      */
 
     public SFXPlayer(String... files){
-        soundFiles = new ArrayList<AudioFile>();
+        fileList = new ArrayList<AudioFile>();
         for(String file : files)
-            soundFiles.add(new AudioFile("src/audio/SFX/" + file + ".wav"));
+            fileList.add(new AudioFile(file + ".wav"));
     }
 
-    public void setVolumeSFX(float volumeSFX){
-        this.volumeSFX = volumeSFX;
+    public void setVolSFX(float volSFX){
+        this.volSFX = volSFX;
     }
 
     public void setSFX(int currentSFXIndex){
-        AudioFile sfx = soundFiles.get(currentSFXIndex);
-        sfx.play(volumeSFX);
+        AudioFile sfx = fileList.get(currentSFXIndex);
+        sfx.play(volSFX);
     }
     @Override
     public void run(){
-        AudioFile soundEffect = soundFiles.get(currentSFXIndex);
-        soundEffect.play(volumeSFX);
+        AudioFile soundEffect = fileList.get(currentSFXIndex);
+        soundEffect.play(volSFX);
     }
 }

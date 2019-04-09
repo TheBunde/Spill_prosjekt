@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -191,13 +192,26 @@ public class GameTest {
 
     @Test
     void toStringTest() {
+
     }
 
     @Test
     void getCharacters() {
+        //The two first elements of the game.getCreatures()-arraylist are characters
+        ArrayList<Character> characters = game.getCharacters();
+        for (int i = 0; i < characters.size(); i++){
+            Character c = characters.get(i);
+            assertTrue(c == game.getCreatures().get(i), "The characters returned are either monsters or returned in the wrong order");
+        }
     }
 
     @Test
     void getMonsters() {
+        //The two last elements of the game.getCreatures()-arraylist are monsters
+        ArrayList<Monster> monsters = game.getMonsters();
+        for (int i = 0; i < monsters.size(); i++){
+            Monster m = monsters.get(i);
+            assertTrue(m == game.getCreatures().get(i + 2), "The characters returned are either monsters or returned in the wrong order");
+        }
     }
 }
