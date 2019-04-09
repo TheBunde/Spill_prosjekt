@@ -1,4 +1,7 @@
-
+/**
+ * Character are what the players can be
+ * @author Helene Jonson
+ */
 package game;
 
 import javafx.scene.layout.Pane;
@@ -13,10 +16,18 @@ public class Character extends Creature{
         this.initialHp = hp;
     }
 
+    /**
+     *
+     * @return initalHp   the standard hp for the character
+     */
     public int getInitialHp() {
         return initialHp;
     }
 
+    /**
+     *
+     * @return res     a string of all information
+     */
     public String toString(){
         String res = super.toString();
         return res;
