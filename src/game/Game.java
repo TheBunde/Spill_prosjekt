@@ -1,10 +1,17 @@
 package game;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import database.*;
 import javafx.scene.layout.GridPane;
 import main.*;
+
+/**
+ * Game.java
+ *
+ * This class
+ */
 
 public class Game {
     private ArrayList<Creature> creatures = new ArrayList<>();
@@ -71,9 +78,42 @@ public class Game {
                     Main.db.setPos(7 - (int)Math.round(playerAmount/2) + 2*i, 13, this.getCharacters().get(i).getPlayerId());
                 }
             }
+            else {
+                assureNoOverlap();
+            }
             upgradePlayerStats();
         }
         this.resetPlayerTurn();
+    }
+
+    public void assureNoOverlap(){
+        ArrayList<Creature> newCreatures = Main.db.fetchCreaturesFromLobby();
+        for (int i = 0; i < newCreatures.size(); i++){
+            for (int j = i + 1; j < newCreatures.size(); j++){
+                Creature c1 = newCreatures.get(i);
+                Creature c2 = newCreatures.get(j);
+                if (c1.getxPos() == c2.getxPos() && c1.getyPos() == c2.getyPos()){
+                    int newX = (int)Math.floor(Math.random()*16);
+                    int newY = (int)Math.floor(Math.random()*16);
+                    boolean overlapsAgain = true;
+                    while(overlapsAgain){
+                        overlapsAgain = false;
+                        newX = (int)Math.floor(Math.random()*16);
+                        newY = (int)Math.floor(Math.random()*16);
+                        for (int k = 0; k < newCreatures.size(); k++){
+                            Creature c = newCreatures.get(k);
+                            if (newX == c.getxPos() && newY == c.getyPos()){
+                                overlapsAgain = true;
+                            }
+                        }
+                    }
+                    c1.setNewPos(newX, newY);
+                }
+            }
+        }
+        for (Creature c : creatures){
+            Main.db.setPos(c.getxPos(), c.getyPos(), c.getPlayerId());
+        }
     }
 
     public void upgradePlayerStats(){
@@ -84,6 +124,7 @@ public class Game {
         }
         Main.db.addChatMessage("You feel the energy from this battle, you are now more powerful!", true);
     }
+
 
     public void addNewMonstersToLobby(int levelId, int playerAmount){
         ArrayList<Integer> creatureIds = Main.db.fetchMonstersFromLevel(levelId, playerAmount);
@@ -250,9 +291,6 @@ public class Game {
         for (Character c : this.getCharacters()){
             c.setReadyForNewLevel(false);
         }
-        if (this.level.getLevelId() == this.amountOfLevels){
-            //Update rank for user
-        }
     }
 
     public void monsterAction() {
@@ -261,11 +299,13 @@ public class Game {
                 @Override
                 public void run() {
                     Monster monster = ((Monster) creatures.get(playerTurn % creatures.size()));
+                    System.out.println(monster.getCreatureName());
                     if (monster.isDead()) {
                         if(db != null) {
                             endTurn();
                         }
                     } else {
+                        System.out.println("heihei");
                         monster.monsterMove(creatures);
                         monster.monsterAttack(creatures);
                         if(db != null) {
@@ -336,5 +376,9 @@ public class Game {
         }
         string.append("\n");
         return string.toString();
+    }
+
+    public void setPlayerCharacter(Character i){
+        playerCharacter = i;
     }
 }

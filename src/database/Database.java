@@ -749,7 +749,7 @@ public class Database {
         try {
             con = this.bds.getConnection();
             con.setAutoCommit(false);
-            String prepString = "INSERT INTO creature SELECT ?, ?, creature_name, hp, ac, movement, damage_bonus, attack_bonus, attacks_per_turn, backstory, ?, ?, image_url FROM creatureTemplate WHERE creature_id = ?";
+            String prepString = "INSERT INTO creature SELECT ?, ?, creature_name, hp, ac, movement, damage_bonus, attack_bonus, backstory, ?, ?, image_url FROM creatureTemplate WHERE creature_id = ?";
             prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
             prepStmt.setInt(1, playerId);
             prepStmt.setInt(2, creatureId);

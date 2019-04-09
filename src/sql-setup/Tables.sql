@@ -50,7 +50,6 @@ create table creatureTemplate(
     movement INTEGER,
     damage_bonus INTEGER,
     attack_bonus INTEGER,
-    attacks_per_turn INTEGER,
     backstory TEXT,
     image_url VARCHAR(30),
     playable BOOLEAN,
@@ -65,7 +64,6 @@ create table creature(
     movement integer,
     damage_bonus integer,
     attack_bonus integer,
-    attacks_per_turn integer,
     backstory TEXT,
     pos_x integer,
     pos_y integer,
@@ -157,6 +155,7 @@ INSERT INTO level VALUES(4, 15, "Lava-map.png");
 INSERT INTO level VALUES(5, 11, "Mountain-map.png");
 
 
+<<<<<<< HEAD
 INSERT INTO creatureTemplate VALUES(DEFAULT, "Warrior", 36, 18, 3, 5, 8, 2, "He be legendary warior. Yeet that goblin", "warrior.jpg", true);
 INSERT INTO creatureTemplate VALUES(DEFAULT, "Rogue", 23, 16, 3, 7, 7, 2, "she be the sneaky girl. not the one from Rogue One", "rogue.jpg", true);
 INSERT INTO creatureTemplate VALUES(DEFAULT, "Wizard", 22, 15, 3, 0, 8, 1, "Penny for your thoughts. Nothing that a little music can't help. Seagulls stop it now.", "wizard.jpg", true);
@@ -203,6 +202,24 @@ INSERT INTO creatureTemplate VALUES(DEFAULT, "Dragon", 178, 18, 4, 6, 10, 3, NUL
 INSERT INTO creatureTemplate VALUES(DEFAULT, "Dragon", 267, 18, 4, 6, 10, 3, NULL, "dragon.png", false);
 INSERT INTO creatureTemplate VALUES(DEFAULT, "Dragon", 320, 18, 4, 6, 10, 3, NULL, "dragon.png", false);
 INSERT INTO creatureTemplate VALUES(DEFAULT, "Dragon", 380, 18, 4, 6, 10, 3, NULL, "dragon.png", false);
+=======
+INSERT INTO creatureTemplate VALUES(DEFAULT, "Warrior", 36, 18, 3, 5, 8, "He be legendary warior. Yeet that goblin", "warrior.jpg", true);
+INSERT INTO creatureTemplate VALUES(DEFAULT, "Rogue", 23, 16, 3, 7, 7, "she be the sneaky girl. not the one from Rogue One", "rogue.jpg", true);
+INSERT INTO creatureTemplate VALUES(DEFAULT, "Wizard", 22, 15, 3, 0, 8, "Penny for your thoughts. Nothing that a little music can't help. Seagulls stop it now.", "wizard.jpg", true);
+INSERT INTO creatureTemplate VALUES(DEFAULT, "Ranger", 32, 16, 3, 5, 9, "Think LOtR. pointy ears, just as sexy", "ranger.jpg", true);
+INSERT INTO creatureTemplate VALUES(DEFAULT, "Bear", 45, 15, 5, 3, 5, NULL, "bear.png", false);
+INSERT INTO creatureTemplate VALUES(DEFAULT, "Ent", 50, 11, 3, 4, 1, NULL, "Ent.png", false);
+INSERT INTO creatureTemplate VALUES(DEFAULT, "Mummy", 20, 15, 3, 3, 5, NULL, "Mummi.png", false);
+INSERT INTO creatureTemplate VALUES(DEFAULT, "Ushabti", 20, 15, 3, 3, 5, NULL, "Ushabti2.png", false);
+INSERT INTO creatureTemplate VALUES(DEFAULT, "Snow Wolf", 20, 15, 3, 3, 5, NULL, "wolf.png", false);
+INSERT INTO creatureTemplate VALUES(DEFAULT, "Yeti", 20, 15, 3, 3, 5, NULL, "yeti.png", false);
+INSERT INTO creatureTemplate VALUES(DEFAULT, "Lizard", 20, 15, 3, 3, 5, NULL, "lizard.png", false);
+INSERT INTO creatureTemplate VALUES(DEFAULT, "Demon", 20, 15, 3, 3, 5, NULL, "demon.png", false);
+INSERT INTO creatureTemplate VALUES(DEFAULT, "Dragon", 178, 18, 4, 6, 10, NULL, "dragon.png", false);
+INSERT INTO creatureTemplate VALUES(DEFAULT, "Dragon", 267, 18, 4, 6, 10, NULL, "dragon.png", false);
+INSERT INTO creatureTemplate VALUES(DEFAULT, "Dragon", 320, 18, 4, 6, 10, NULL, "dragon.png", false);
+INSERT INTO creatureTemplate VALUES(DEFAULT, "Dragon", 380, 18, 4, 6, 10, NULL, "dragon.png", false);
+>>>>>>> 790ec16f791dfc29d0d4651ca6de190e545d4f15
 
 -- Forest
 INSERT INTO level_monster VALUES(DEFAULT, 1, 1, 5);
