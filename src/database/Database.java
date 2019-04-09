@@ -146,6 +146,7 @@ public class Database {
         Connection con = null;
         PreparedStatement prepStmt = null;
         boolean status = true;
+        System.out.println(this.isJoinable(lobbyKey));
         if (this.gameLobbyExists(lobbyKey) && Main.user.getUser_id() != -1 && this.isJoinable(lobbyKey)){
             try {
                 con = this.bds.getConnection();
@@ -1187,7 +1188,7 @@ public class Database {
         }
         catch (SQLException sq){
             sq.printStackTrace();
-            return joinable;
+            joinable = false;
         }
         finally {
             this.manager.closeRes(res);
