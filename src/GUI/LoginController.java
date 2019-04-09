@@ -29,7 +29,7 @@ public class LoginController {
     public LoginController() {
         sceneSwitcher = new SceneSwitcher();
     }
-
+ // This method checking the username if it exists in database by call method findUsername() from database.java
     public boolean checkUsername() {
         if (db.findUsername(username.getText())) {
             return true;
