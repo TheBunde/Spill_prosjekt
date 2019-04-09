@@ -91,24 +91,24 @@ public class BattlefieldController{
             mapGrid.add(c.getPawn(), c.getxPos(), c.getyPos());
             if (c instanceof Monster){
                 ((Monster) c).initAttackPane(cellWidth, cellHeight);
-                mapGrid.add(((Monster) c).attackPane, c.getxPos(), c.getyPos());
+                mapGrid.add(((Monster) c).getAttackPane(), c.getxPos(), c.getyPos());
             }
         }
 
-        weaponOne.setImage(new Image("GUI/images/" + game.playerCharacter.getWeapons().get(0).getImageUrl()));
-        weaponTwo.setImage(new Image("GUI/images/" + game.playerCharacter.getWeapons().get(1).getImageUrl()));
+        weaponOne.setImage(new Image("GUI/images/" + game.getPlayerCharacter().getWeapons().get(0).getImageUrl()));
+        weaponTwo.setImage(new Image("GUI/images/" + game.getPlayerCharacter().getWeapons().get(1).getImageUrl()));
         weaponOne.setEffect(light);
         weaponTwo.setEffect(shadow);
         player.setEquippedWeapon(0);
-        Weapon weapon1 = game.playerCharacter.getWeapons().get(0);
-        Weapon weapon2 = game.playerCharacter.getWeapons().get(1);
-        weaponOneLabel.setText(weapon1.getName() + "\n" + "Avg. damage: " + (((((double)weapon1.getDamageDice()/2)+0.5)*weapon1.getDiceAmount()) + game.playerCharacter.getDamageBonus()) + "\n" + (weapon1.isRanged() ? "Ranged" : "Melee"));
-        weaponTwoLabel.setText(weapon2.getName() + "\n" + "Avg. damage: " + (((((double)weapon2.getDamageDice()/2)+0.5)*weapon2.getDiceAmount()) + game.playerCharacter.getDamageBonus()) + "\n" + (weapon2.isRanged() ? "Ranged" : "Melee"));
+        Weapon weapon1 = game.getPlayerCharacter().getWeapons().get(0);
+        Weapon weapon2 = game.getPlayerCharacter().getWeapons().get(1);
+        weaponOneLabel.setText(weapon1.getName() + "\n" + "Avg. damage: " + (((((double)weapon1.getDamageDice()/2)+0.5)*weapon1.getDiceAmount()) + game.getPlayerCharacter().getDamageBonus()) + "\n" + (weapon1.isRanged() ? "Ranged" : "Melee"));
+        weaponTwoLabel.setText(weapon2.getName() + "\n" + "Avg. damage: " + (((((double)weapon2.getDamageDice()/2)+0.5)*weapon2.getDiceAmount()) + game.getPlayerCharacter().getDamageBonus()) + "\n" + (weapon2.isRanged() ? "Ranged" : "Melee"));
 
         mapContainer.getChildren().add(game.getLevel().backgroundImage);
         game.getLevel().backgroundImage.toBack();
 
-        acLabel.setText("AC: " + game.playerCharacter.getAc());
+        acLabel.setText("AC: " + game.getPlayerCharacter().getAc());
 
         initLevelTransitionVBox();
         initMovementPane();
@@ -138,24 +138,24 @@ public class BattlefieldController{
                 public void run() {
                     for (Monster m : game.getMonsters()) {
                         if (!m.isDead()) {
-                            if (m.attackPane == null){
+                            if (m.getAttackPane() == null){
                                 m.initAttackPane(cellWidth, cellHeight);
                                 Platform.runLater(new Runnable() {
                                     @Override
                                     public void run() {
-                                        mapGrid.add(m.attackPane, m.getxPos(), m.getyPos());
+                                        mapGrid.add(m.getAttackPane(), m.getxPos(), m.getyPos());
                                     }
                                 });
                             }
-                            if(game.playerCharacter.getWeapons().get(player.getEquippedWeapon()).isRanged()){
+                            if(game.getPlayerCharacter().getWeapons().get(player.getEquippedWeapon()).isRanged()){
                                 if(game.attackRange(m, false)) {
                                     m.showAttackPane();
-                                    m.attackPane.addEventFilter(MouseEvent.MOUSE_CLICKED, attackEventHandler);
+                                    m.getAttackPane().addEventFilter(MouseEvent.MOUSE_CLICKED, attackEventHandler);
                                 }
-                            }else if(!game.playerCharacter.getWeapons().get(player.getEquippedWeapon()).isRanged()){
+                            }else if(!game.getPlayerCharacter().getWeapons().get(player.getEquippedWeapon()).isRanged()){
                                 if(game.attackRange(m, true)) {
                                     m.showAttackPane();
-                                    m.attackPane.addEventFilter(MouseEvent.MOUSE_CLICKED, attackEventHandler);
+                                    m.getAttackPane().addEventFilter(MouseEvent.MOUSE_CLICKED, attackEventHandler);
                                 }
                             }
                         }
@@ -174,11 +174,11 @@ public class BattlefieldController{
         public void handle(MouseEvent e){
             Monster clickedMonster = null;
             for (Monster m : game.getMonsters()){
-                if (e.getSource() == m.attackPane){
+                if (e.getSource() == m.getAttackPane()){
                     clickedMonster = m;
                 }
             }
-            game.playerCharacter.attackCreature(clickedMonster, player.getEquippedWeapon());
+            game.getPlayerCharacter().attackCreature(clickedMonster, player.getEquippedWeapon());
             player.setAttackUsed(true);
             attackFinished();
         }
@@ -194,7 +194,7 @@ public class BattlefieldController{
 
         for (Monster m : game.getMonsters()){
             m.hideAttackPane();
-            m.attackPane.removeEventFilter(MouseEvent.MOUSE_CLICKED, attackEventHandler);
+            m.getAttackPane().removeEventFilter(MouseEvent.MOUSE_CLICKED, attackEventHandler);
         }
         refreshViewFromGame();
         checkForPlayerTurn();
@@ -230,7 +230,7 @@ public class BattlefieldController{
         for(Creature i: game.getCreatures()){
             System.out.println("\n" + i.getCreatureName() + "\nxpos: " + i.getxPos() + "\nypos: " + i.getyPos() + "\n");
         }
-        if (game.playerCharacter.moveCreature(toGrid(mapGrid.getWidth(), mouseX), toGrid(mapGrid.getHeight(), mouseY), game.getCreatures())){
+        if (game.getPlayerCharacter().moveCreature(toGrid(mapGrid.getWidth(), mouseX), toGrid(mapGrid.getHeight(), mouseY), game.getCreatures())){
             player.setMoveUsed(true);
         }
         updateGame();
@@ -308,19 +308,19 @@ public class BattlefieldController{
                 }
             }
         }
-        Weapon weapon1 = game.playerCharacter.getWeapons().get(0);
-        Weapon weapon2 = game.playerCharacter.getWeapons().get(1);
-        weaponOneLabel.setText(weapon1.getName() + "\n" + "Avg. damage: " + (((((double)weapon1.getDamageDice()/2)+0.5)*weapon1.getDiceAmount()) + game.playerCharacter.getDamageBonus()) + "\n" + (weapon1.isRanged() ? "Ranged" : "Melee"));
-        weaponTwoLabel.setText(weapon2.getName() + "\n" + "Avg. damage: " + (((((double)weapon2.getDamageDice()/2)+0.5)*weapon2.getDiceAmount()) + game.playerCharacter.getDamageBonus()) + "\n" + (weapon2.isRanged() ? "Ranged" : "Melee"));
+        Weapon weapon1 = game.getPlayerCharacter().getWeapons().get(0);
+        Weapon weapon2 = game.getPlayerCharacter().getWeapons().get(1);
+        weaponOneLabel.setText(weapon1.getName() + "\n" + "Avg. damage: " + (((((double)weapon1.getDamageDice()/2)+0.5)*weapon1.getDiceAmount()) + game.getPlayerCharacter().getDamageBonus()) + "\n" + (weapon1.isRanged() ? "Ranged" : "Melee"));
+        weaponTwoLabel.setText(weapon2.getName() + "\n" + "Avg. damage: " + (((((double)weapon2.getDamageDice()/2)+0.5)*weapon2.getDiceAmount()) + game.getPlayerCharacter().getDamageBonus()) + "\n" + (weapon2.isRanged() ? "Ranged" : "Melee"));
 
-        hpLabel.setText("HP: " + Math.max(0, game.playerCharacter.getHp()) + "/" + game.playerCharacter.getInitialHp());
+        hpLabel.setText("HP: " + Math.max(0, game.getPlayerCharacter().getHp()) + "/" + game.getPlayerCharacter().getInitialHp());
         updateImage();
     }
 
 
     public boolean update(){
         if (game.isLevelCleared()) {
-            if (!game.playerCharacter.isReadyForNewLevel()){
+            if (!game.getPlayerCharacter().isReadyForNewLevel()){
                 if (Main.user.isHost()){
                     game.pushNewLevel();
                 }
@@ -350,7 +350,7 @@ public class BattlefieldController{
     }
 
     public void newLevel(){
-        //game.playerCharacter.setHp(game.playerCharacter.getInitialHp());
+        //game.getPlayerCharacter().setHp(game.getPlayerCharacter().getInitialHp());
         game.changeToNewLevel();
         player.resetUsedActions();
     }
@@ -363,7 +363,7 @@ public class BattlefieldController{
             return false;
         }
         else{
-            if (game.playerCharacter.isDead() || player.isAllActionsUsed()){
+            if (game.getPlayerCharacter().isDead() || player.isAllActionsUsed()){
                 game.endTurn();
                 player.resetUsedActions();
                 return false;
@@ -389,8 +389,8 @@ public class BattlefieldController{
 
     public void initMovementPane(){
         movementPane = new Pane();
-        double moveDistanceX = cellWidth*(2*game.playerCharacter.getMovement() + 1);
-        double moveDistanceY = cellHeight*(2*game.playerCharacter.getMovement() + 1);
+        double moveDistanceX = cellWidth*(2*game.getPlayerCharacter().getMovement() + 1);
+        double moveDistanceY = cellHeight*(2*game.getPlayerCharacter().getMovement() + 1);
         movementPane.setPrefWidth(moveDistanceX);
         movementPane.setPrefHeight(moveDistanceY);
         movementPane.setMouseTransparent(true);
@@ -400,15 +400,15 @@ public class BattlefieldController{
 
 
     public void showMovementPane(){
-        int xpos = game.playerCharacter.getxPos();
-        int ypos = game.playerCharacter.getyPos();
-        int movement = game.playerCharacter.getMovement();
+        int xpos = game.getPlayerCharacter().getxPos();
+        int ypos = game.getPlayerCharacter().getyPos();
+        int movement = game.getPlayerCharacter().getMovement();
         mapGrid.getChildren().remove(movementPane);
         mapGrid.add(movementPane, xpos - movement + ((xpos < movement) ? movement-xpos : 0), ypos - movement + ((ypos < movement) ? movement-ypos : 0));
         movementPane.toBack();
         movementPane.setVisible(true);
-        GridPane.setColumnSpan(movementPane, 2*(game.playerCharacter.getMovement()) + 1 - ((xpos < movement) ? movement-xpos : 0));
-        GridPane.setRowSpan(movementPane, 2*(game.playerCharacter.getMovement()) + 1 - ((ypos < movement) ? movement-ypos : 0));
+        GridPane.setColumnSpan(movementPane, 2*(game.getPlayerCharacter().getMovement()) + 1 - ((xpos < movement) ? movement-xpos : 0));
+        GridPane.setRowSpan(movementPane, 2*(game.getPlayerCharacter().getMovement()) + 1 - ((ypos < movement) ? movement-ypos : 0));
     }
 
     public void hideMovementPane(){
@@ -419,14 +419,12 @@ public class BattlefieldController{
         weaponOne.setEffect(light);
         weaponTwo.setEffect(shadow);
         player.setEquippedWeapon(0);
-        System.out.println("Equiped weapon: " + game.playerCharacter.getWeapons().get(player.getEquippedWeapon()). getName() + "\nRanged: " + game.playerCharacter.getWeapons().get(player.getEquippedWeapon()).isRanged());
     }
 
     public void weaponTwoSelected(){
         weaponOne.setEffect(shadow);
         weaponTwo.setEffect(light);
         player.setEquippedWeapon(1);
-        System.out.println("Equiped weapon: " + game.playerCharacter.getWeapons().get(player.getEquippedWeapon()). getName() + "\nRanged: " + game.playerCharacter.getWeapons().get(player.getEquippedWeapon()).isRanged());
     }
 
     public void updateImage() {

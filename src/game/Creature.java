@@ -214,16 +214,6 @@ public abstract class Creature {
         return isDead;
     }
 
-
-    public String toString() {
-        String weaponNames = "";
-        for(int i = 0; i < this.weapons.size(); i++){
-            weaponNames += this.weapons.get(i).getName() + ((i < this.weapons.size() - 1) ? ", " : "");
-        }
-        return "Character: " + this.getCreatureName() + "\nHP: " + this.getHp() + "\nAC: " + this.getAc() + "\nMovement: " + this.getMovement() +
-                "\nWeapon: " + weaponNames + "\nAttack bonus: " + this.getAttackBonus() + "\nBackstory: " + this.getBackstory();
-    }
-
     public String getImageUrl(){
         return this.imageUrl;
     }
@@ -249,5 +239,14 @@ public abstract class Creature {
 
     public void setReadyForNewLevel(boolean readyForNewLevel){
         this.readyForNewLevel = readyForNewLevel;
+    }
+
+    public String toString() {
+        String weaponNames = "";
+        for(int i = 0; i < this.weapons.size(); i++){
+            weaponNames += this.weapons.get(i).getName() + ((i < this.weapons.size() - 1) ? ", " : "");
+        }
+        return "Character: " + this.getCreatureName() + "\nHP: " + this.getHp() + "\nAC: " + this.getAc() + "\nMovement: " + this.getMovement() +
+                "\nWeapon: " + weaponNames + "\nAttack bonus: " + this.getAttackBonus() + "\nBackstory: " + this.getBackstory();
     }
 }

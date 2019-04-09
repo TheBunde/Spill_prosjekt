@@ -44,7 +44,7 @@ public class chatController implements Initializable {
     public static Timer timer = new Timer();
 
     public chatController(){
-        chatMessageObservableList = db.chat.messages;
+        chatMessageObservableList = db.chat.getMessages();
     }
 
     @Override

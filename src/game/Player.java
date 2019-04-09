@@ -67,9 +67,9 @@ public class Player {
     }
 
     public void imageUpdate(){
-        int chrID = BattlefieldController.game.playerCharacter.getCreatureId();
-        int chrHP = BattlefieldController.game.playerCharacter.getHp();
-        int chrInHP = BattlefieldController.game.playerCharacter.getInitialHp();
+        int chrID = BattlefieldController.game.getPlayerCharacter().getCreatureId();
+        int chrHP = BattlefieldController.game.getPlayerCharacter().getHp();
+        int chrInHP = BattlefieldController.game.getPlayerCharacter().getInitialHp();
 
 
 
@@ -79,7 +79,7 @@ public class Player {
         //Warrior
         if(chrID == 1){
             if(chrHP > dmgOne){
-                playerImage.setImage(new Image("GUI/images/" + BattlefieldController.game.playerCharacter.getImageUrl()));
+                playerImage.setImage(new Image("GUI/images/" + BattlefieldController.game.getPlayerCharacter().getImageUrl()));
             }
             else if(chrHP >= dmgTwo && chrHP <= dmgOne){
                 playerImage.setImage(new Image("GUI/images/warriordamaged.jpg"));
@@ -91,7 +91,7 @@ public class Player {
         //Rogue
         if(chrID == 2){
             if(chrHP > dmgOne){
-                playerImage.setImage(new Image("GUI/images/" + BattlefieldController.game.playerCharacter.getImageUrl()));
+                playerImage.setImage(new Image("GUI/images/" + BattlefieldController.game.getPlayerCharacter().getImageUrl()));
             }
             else if(chrHP >= dmgTwo && chrHP <= dmgOne){
                 playerImage.setImage(new Image("GUI/images/roguedamaged.jpg"));
@@ -103,7 +103,7 @@ public class Player {
         //Wizard
         if(chrID == 3){
             if(chrHP > dmgOne){
-                playerImage.setImage(new Image("GUI/images/" + BattlefieldController.game.playerCharacter.getImageUrl()));
+                playerImage.setImage(new Image("GUI/images/" + BattlefieldController.game.getPlayerCharacter().getImageUrl()));
             }
             else if(chrHP >= dmgTwo && chrHP <= dmgOne){
                 playerImage.setImage(new Image("GUI/images/wizarddamaged.jpg"));
@@ -115,7 +115,7 @@ public class Player {
         //Ranger
         if(chrID == 4){
             if(chrHP > dmgOne){
-                playerImage.setImage(new Image("GUI/images/" + BattlefieldController.game.playerCharacter.getImageUrl()));
+                playerImage.setImage(new Image("GUI/images/" + BattlefieldController.game.getPlayerCharacter().getImageUrl()));
             }
             else if(chrHP >= dmgTwo && chrHP <= dmgOne){
                 playerImage.setImage(new Image("GUI/images/rangerdamaged.jpg"));

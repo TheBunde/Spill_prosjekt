@@ -28,14 +28,14 @@ public class TeamMatesController implements Initializable {
         charactersInListView = BattlefieldController.game.getCharacters();
         int you = 0;
         for(Character i: charactersInListView){
-            if(i == game.playerCharacter){
+            if(i == game.getPlayerCharacter()){
                 you = charactersInListView.indexOf(i);
             }
         }
         charactersInListView.remove(you);
         characterObservableList = FXCollections.observableArrayList();
         for (Character c : charactersInListView){
-            if (c != BattlefieldController.game.playerCharacter) {
+            if (c != BattlefieldController.game.getPlayerCharacter()) {
                 characterObservableList.add(c);
             }
         }
@@ -60,7 +60,7 @@ public class TeamMatesController implements Initializable {
         charactersInListView = BattlefieldController.game.getCharacters();
         int you = 0;
         for(Character i: charactersInListView){
-            if(i == game.playerCharacter){
+            if(i == game.getPlayerCharacter()){
                 you = charactersInListView.indexOf(i);
             }
         }

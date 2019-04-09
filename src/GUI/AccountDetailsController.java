@@ -30,7 +30,7 @@ public class AccountDetailsController {
 
     public void getInfo() throws Exception {
         usernameOutput.setText(db.fetchUsername());
-        rankOutput.setText(Integer.toString(db.fetchRank(Main.user.getUser_id())));
+        rankOutput.setText("Rank: " + (db.fetchRank(Main.user.getUser_id())));
     }
 
     public void changeUsernameButtonPressed() throws Exception {
