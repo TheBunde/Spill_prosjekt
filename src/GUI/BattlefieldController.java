@@ -464,12 +464,13 @@ public class BattlefieldController{
         else if(game.isGameOver()){
             SFXPlayer.getInstance().setSFX(14);
             ((Label)transitionVbox.getChildren().get(0)).setText("Defeat");
-            ((Label)transitionVbox.getChildren().get(1)).setText("git gud");
+            ((Label)transitionVbox.getChildren().get(1)).setText("Better luck next time");
         }
         else{
             SFXPlayer.getInstance().setSFX(16);
             ((Label)transitionVbox.getChildren().get(0)).setText("Victory!");
-            ((Label)transitionVbox.getChildren().get(1)).setText("Credits");
+            ((Label)transitionVbox.getChildren().get(1)).setAlignment(Pos.CENTER);
+            ((Label)transitionVbox.getChildren().get(1)).setText("Made by:\nTeam 3");
             db.setRank(db.fetchRank(Main.user.getUser_id()) + 1);
         }
         transitionVbox.setVisible(true);
@@ -500,10 +501,6 @@ public class BattlefieldController{
     public void nextLevelTransition() {
             if (!transitioning) {
                 transitioning = true;
-                if (Main.user.isHost()) {
-                    game.pushNewLevel();
-                }
-                SFXPlayer.getInstance().setSFX(13);
                 MusicPlayer.getInstance().stopSong();
                 MusicPlayer.getInstance().changeSong(1);
                 showLevelTransitionVBox();
