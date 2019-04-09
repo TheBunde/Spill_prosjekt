@@ -356,7 +356,7 @@ public class BattlefieldController{
     }
 
     public boolean checkForPlayerTurn(){
-        if(!game.isPlayerTurn()){
+        if(!game.isPlayerCharacterTurn()){
             moveButton.setDisable(true);
             attackButton.setDisable(true);
             endTurnButton.setDisable(true);
