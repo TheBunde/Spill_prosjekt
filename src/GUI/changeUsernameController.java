@@ -1,5 +1,5 @@
 package GUI;
-import Main.Main;
+import main.Main;
 import database.Database;
 import audio.MusicPlayer;
 import audio.SFXPlayer;

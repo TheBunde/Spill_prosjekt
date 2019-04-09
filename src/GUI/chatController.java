@@ -1,9 +1,9 @@
 package GUI;
 
-import Main.*;
 import database.*;
 
 
+import main.*;
 import chat.ChatMessage;
 import javafx.application.Platform;
 import javafx.fxml.FXML;

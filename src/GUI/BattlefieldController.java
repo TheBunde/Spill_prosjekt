@@ -1,8 +1,8 @@
 package GUI;
 
 
+import main.*;
 import database.*;
-import Main.*;
 import audio.MusicPlayer;
 import audio.SFXPlayer;
 import game.*;

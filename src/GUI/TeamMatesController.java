@@ -1,7 +1,7 @@
 package GUI;
 
 import database.Database;
-import Main.Main;
+import main.Main;
 import game.Character;
 import game.Game;
 import javafx.collections.FXCollections;

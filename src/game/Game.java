@@ -2,9 +2,9 @@ package game;
 
 import java.util.ArrayList;
 
-import Main.*;
-import Database.*;
+import database.*;
 import javafx.scene.layout.GridPane;
+import main.*;
 
 public class Game {
     private ArrayList<Creature> creatures = new ArrayList<>();

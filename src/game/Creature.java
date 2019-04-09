@@ -2,8 +2,8 @@ package game;
 
 import java.util.ArrayList;
 
+import main.*;
 import database.Database;
-import Main.*;
 import audio.SFXPlayer;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

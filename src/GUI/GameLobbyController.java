@@ -1,6 +1,5 @@
 package GUI;
 
-import Main.*;
 import database.*;
 import audio.MusicPlayer;
 import javafx.application.Platform;
@@ -12,6 +11,7 @@ import user.User;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+import main.*;
 
 public class GameLobbyController {
     @FXML

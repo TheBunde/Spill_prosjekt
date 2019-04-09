@@ -1,8 +1,8 @@
 package GUI;
 
-import Main.*;
 import database.*;
 
+import main.*;
 import audio.SFXPlayer;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
