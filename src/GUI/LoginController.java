@@ -29,7 +29,10 @@ public class LoginController {
     public LoginController() {
         sceneSwitcher = new SceneSwitcher();
     }
- // This method checking the username if it exists in database by call method findUsername() from database.java
+  /**
+     * This method checking the username if it exists in database by call method findUsername() from database.java
+     * @return
+     */
     public boolean checkUsername() {
         if (db.findUsername(username.getText())) {
             return true;
@@ -38,17 +41,22 @@ public class LoginController {
     }
 
     
- // This method checking if the password entered by user is identical with the one which is registered in database
+  /**
+     * This method checking if the password entered by user is identical with the one which is registered in database
+     * @return
+     */
     public boolean checkPassword() {
-        /* checking if the hashed password that associated with a specific username is equal with the hashed password and fetching
-        the salted password that associated with the specific username
-         */
+        
         if (db.fetchHash(username.getText()).equals(pw.getHash(password.getText(), db.fetchSalt(username.getText())))) {
             return true;
         }
         return false;
     }
-  // This method performes when login button is pressed
+   /**
+     * This method performes when login button is pressed
+     * @return
+     * @throws Exception
+     */
     public boolean loginButtonPressed() throws Exception {
        // checks if usernamer or password field is empty, and if it is display a warning message
         if(username.getText().isEmpty() || password.getText().isEmpty()) {
@@ -81,7 +89,10 @@ public class LoginController {
         return false;
     }
 
-    // This method performs when the cancel button is pressed and switch the scene to start page of the application
+     /**
+     * This method performs when the cancel button is pressed and switch the scene to start page of the application
+     * @throws Exception
+     */
     public void cancelButtonPressed() throws Exception {
         SFXPlayer.getInstance().setSFX(0);
         sceneSwitcher.switchScene(cancelButton, "start.fxml");
