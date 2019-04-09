@@ -17,7 +17,9 @@ public class Level {
         this.levelId = levelId;
         this.music = music;
         this.backgroundUrl = backgroundUrl;
-        this.backgroundImage = new ImageView(new Image("GUI/images/" + backgroundUrl));
+        if (backgroundUrl != null) {
+            this.backgroundImage = new ImageView(new Image("GUI/images/" + backgroundUrl));
+        }
     }
 
     public Level(int levelId){
