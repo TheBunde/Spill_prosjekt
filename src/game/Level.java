@@ -1,6 +1,6 @@
 package game;
 
-import Main.*;
+import main.*;
 import audio.MusicPlayer;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

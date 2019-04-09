@@ -2,7 +2,7 @@ package game;
 
 import java.util.ArrayList;
 
-import Main.*;
+import main.*;
 import database.*;
 import javafx.scene.layout.GridPane;
 

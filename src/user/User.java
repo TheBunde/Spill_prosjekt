@@ -1,6 +1,6 @@
 package user;
 import database.Database;
-import Main.*;
+import main.*;
 
 public class User {
     private Database db = Main.db;

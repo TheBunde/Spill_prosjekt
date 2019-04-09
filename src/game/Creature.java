@@ -3,7 +3,7 @@ package game;
 import java.util.ArrayList;
 
 import database.Database;
-import Main.*;
+import main.*;
 import audio.SFXPlayer;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

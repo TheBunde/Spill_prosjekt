@@ -1,6 +1,6 @@
 package GUI;
 
-import Main.*;
+import main.*;
 import audio.MusicPlayer;
 import audio.SFXPlayer;
 import javafx.fxml.FXML;

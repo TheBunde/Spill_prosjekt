@@ -1,4 +1,4 @@
-package Main;
+package main;
 
 import GUI.InterfaceMain;
 import audio.MusicPlayer;

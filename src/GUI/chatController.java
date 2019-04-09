@@ -1,6 +1,6 @@
 package GUI;
 
-import Main.*;
+import main.*;
 import database.*;
 
 

@@ -2,7 +2,7 @@ package GUI;
 
 
 import database.*;
-import Main.*;
+import main.*;
 import audio.MusicPlayer;
 import audio.SFXPlayer;
 import game.*;

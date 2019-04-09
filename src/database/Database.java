@@ -1,7 +1,7 @@
 package database;
 
 
-import Main.*;
+import main.*;
 import chat.Chat;
 import game.Creature;
 import game.Level;
