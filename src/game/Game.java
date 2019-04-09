@@ -16,13 +16,12 @@ import main.*;
 public class Game {
     private ArrayList<Creature> creatures = new ArrayList<>();
     public game.Character playerCharacter;
-    private Database db = Main.db;
     private int playerTurn = 0;
     private int amountOfLevels;
     public Level level;
 
     public Game(){
-        if(db != null) {
+        if(Main.db != null) {
             amountOfLevels = Main.db.fetchAmountOfLevels();
             level = new Level(1);
             if (Main.user.isHost()) {
@@ -38,7 +37,7 @@ public class Game {
                     }
                 }
             }
-            this.creatures = db.fetchCreaturesFromLobby();
+            this.creatures =Main.db.fetchCreaturesFromLobby();
 
             for (int i = 0; i < this.creatures.size(); i++) {
                 if (this.creatures.get(i).getPlayerId() == Main.user.getPlayerId()) {
@@ -129,7 +128,7 @@ public class Game {
     public void addNewMonstersToLobby(int levelId, int playerAmount){
         ArrayList<Integer> creatureIds = Main.db.fetchMonstersFromLevel(levelId, playerAmount);
         for (int i = 0; i < creatureIds.size(); i++){
-            int playerId = Main.db.createPlayer(creatureIds.get(i), false);
+            int playerId = Main.db.createPlayer(false);
             int posX = (int)Math.floor(Math.random()*16);
             int posY = (int)Math.floor(Math.random()*16);
             if (creatureIds.get(i) >= 13){
@@ -146,8 +145,8 @@ public class Game {
         for (int i = 0; i < creatures.size(); i++) {
             Creature c = creatures.get(i);
             int playerId = c.getPlayerId();
-            ArrayList<Integer> newPos = db.fetchPlayerPos(playerId);
-            int newHp = db.fetchPlayerHp(playerId);
+            ArrayList<Integer> newPos =Main.db.fetchPlayerPos(playerId);
+            int newHp =Main.db.fetchPlayerHp(playerId);
             if (playerId != Main.user.getPlayerId()) {
                 c.setNewPos(newPos.get(0), newPos.get(1));
             }
@@ -160,9 +159,9 @@ public class Game {
             int playerId = c.getPlayerId();
             int posX = c.getxPos();
             int posY = c.getyPos();
-            db.setPos(posX, posY, playerId);
+           Main.db.setPos(posX, posY, playerId);
             int hp = c.getHp();
-            db.setHp(hp, playerId);
+           Main.db.setHp(hp, playerId);
         }
     }
 
@@ -176,7 +175,7 @@ public class Game {
     }
 
     public void updatePlayerTurn(){
-        this.setPlayerTurn(db.fetchPlayerTurn());
+        this.setPlayerTurn(Main.db.fetchPlayerTurn());
     }
 
     public ArrayList<Creature> getCreatures(){
@@ -217,7 +216,7 @@ public class Game {
     }
 
     public boolean allPlayersReadyForNewLevel(){
-        if(db != null) {
+        if(Main.db != null) {
             this.updatePlayersReadyForNewLevel();
         }
         boolean ready = true;
@@ -273,8 +272,8 @@ public class Game {
 
     public void changeToNewLevel() {
         this.setPlayerReadyForNewLevel(false);
-        int dbLevelId = Main.db.fetchLevelId(Main.user.getLobbyKey());
-        this.level.setLevelId(dbLevelId);
+        int LevelId = Main.db.fetchLevelId(Main.user.getLobbyKey());
+        this.level.setLevelId(LevelId);
         this.level.updateLevel();
         GridPane mapGrid = (GridPane) this.creatures.get(0).getPawn().getParent();
         for (Creature c : this.creatures) {
@@ -301,14 +300,14 @@ public class Game {
                     Monster monster = ((Monster) creatures.get(playerTurn % creatures.size()));
                     System.out.println(monster.getCreatureName());
                     if (monster.isDead()) {
-                        if(db != null) {
+                        if(Main.db != null) {
                             endTurn();
                         }
                     } else {
                         System.out.println("heihei");
                         monster.monsterMove(creatures);
                         monster.monsterAttack(creatures);
-                        if(db != null) {
+                        if(Main.db != null) {
                             pushCreatureData();
                             endTurn();
                         }
@@ -320,7 +319,7 @@ public class Game {
 
     public void endTurn(){
         this.incrementPlayerTurn();
-        db.incrementPlayerTurn(playerTurn);
+       Main.db.incrementPlayerTurn(playerTurn);
     }
 
     public Level getLevel(){
@@ -378,7 +377,7 @@ public class Game {
         return string.toString();
     }
 
-    public void setPlayerCharacter(Character i){
-        playerCharacter = i;
+    public void setPlayerCharacter(Character charcter){
+        playerCharacter = charcter;
     }
 }

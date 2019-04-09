@@ -202,40 +202,6 @@ public class Database {
         }
     }
 
-    public boolean addUser(User user){
-        Connection con = null;
-        PreparedStatement prepStmt = null;
-        ResultSet res = null;
-        int user_id = -1;
-        boolean status = true;
-        try{
-            con = this.bds.getConnection();
-            con.setAutoCommit(false);
-            String prepString = "INSERT INTO usr VALUES(DEFAULT, ?, 0, DEFAULT, DEFAULT)";
-            prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
-            prepStmt.setString(1, Main.user.getUsername());
-            System.out.println("done");
-            prepStmt.executeUpdate();
-            res = prepStmt.getGeneratedKeys();
-            res.next();
-            user_id = res.getInt(1);
-            Main.user.setUser_id(user_id);
-            con.commit();
-        }
-        catch (SQLException sq){
-            this.manager.rollback(con);
-            sq.printStackTrace();
-            status = false;
-        }
-        finally {
-            this.manager.turnOnAutoCommit(con);
-            this.manager.closeRes(res);
-            this.manager.closePrepStmt(prepStmt);
-            this.manager.closeConnection(con);
-            return status;
-        }
-    }
-
     public boolean createNewLobby(){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -346,7 +312,7 @@ public class Database {
         return username;
     }
 
-    public int fetchRank(int user_id){
+    public int fetchRank(int userId){
         Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
@@ -356,7 +322,7 @@ public class Database {
             con = this.bds.getConnection();
             String prepString = "select rank from usr where user_id = ?";
             prepStmt = con.prepareStatement(prepString);
-            prepStmt.setInt(1, user_id);
+            prepStmt.setInt(1, userId);
             res = prepStmt.executeQuery();
             while (res.next()) {
                 rank = res.getInt("rank");
@@ -400,31 +366,6 @@ public class Database {
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con);
             return status;
-        }
-    }
-
-
-    public boolean userExist(String username) {
-        Connection con = null;
-        PreparedStatement prepStmt = null;
-        ResultSet res = null;
-        boolean userExists = false;
-        try {
-            con = this.bds.getConnection();
-            String prepString = "SELECT user_id FROM usr WHERE username = ?";
-            prepStmt = con.prepareStatement(prepString);
-            prepStmt.setString(1, username);
-            res = prepStmt.executeQuery();
-            userExists = res.next();
-
-        } catch (SQLException sq) {
-            manager.writeMessage(sq, "userExist");
-            return false;
-        } finally {
-            manager.closeRes(res);
-            manager.closePrepStmt(prepStmt);
-            manager.closeConnection(con);
-            return userExists;
         }
     }
 
@@ -502,7 +443,7 @@ public class Database {
         }
     }
 
-    public boolean setNewUsername(String newun){
+    public boolean setNewUsername(String newUn){
         Connection con = null;
         PreparedStatement prepStmt = null;
         boolean status = true;
@@ -511,11 +452,11 @@ public class Database {
             con.setAutoCommit(false);
             String prepString = "UPDATE usr SET username = ? WHERE user_id = ?";
             prepStmt = con.prepareStatement(prepString);
-            prepStmt.setString(1, newun);
+            prepStmt.setString(1, newUn);
             prepStmt.setInt(2, Main.user.getUser_id());
             prepStmt.executeUpdate();
             con.commit();
-            Main.user.setUsername(newun);
+            Main.user.setUsername(newUn);
         }
         catch (SQLException sq){
             this.manager.rollback(con);
@@ -690,7 +631,7 @@ public class Database {
 
 
 
-    public int createPlayer(int creatureId, boolean playable) {
+    public int createPlayer(boolean playable) {
         Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
@@ -726,16 +667,6 @@ public class Database {
             this.manager.closeRes(res);
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con);
-            /*
-            if (playerId < 0) {
-                status = false;
-            } else {
-                if(creatureId != 0) {
-                    createCreature(playerId, creatureId);
-                }
-            }
-            return status;
-            */
             return playerId;
         }
     }
@@ -793,32 +724,6 @@ public class Database {
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con);
             return username;
-        }
-    }
-
-    public int fetchCreatureId(String character) {
-        Connection con = null;
-        PreparedStatement prepStmt = null;
-        ResultSet res = null;
-        int characterId = -1;
-        try {
-            con = this.bds.getConnection();
-            String prepString = "SELECT creatureTemplate.creature_id FROM creatureTemplate WHERE creature_name = ?";
-            prepStmt = con.prepareStatement(prepString);
-            prepStmt.setString(1, character);
-            res = prepStmt.executeQuery();
-            while (res.next()) {
-                characterId = res.getInt(1);
-            }
-
-        } catch (SQLException sq) {
-            sq.printStackTrace();
-            characterId = -1;
-        } finally {
-            this.manager.closeRes(res);
-            this.manager.closePrepStmt(prepStmt);
-            this.manager.closeConnection(con);
-            return characterId;
         }
     }
 
@@ -934,35 +839,6 @@ public class Database {
         }
     }
 
-
-    public ArrayList<Integer> fetchAllPlayerId(){
-        Connection con = null;
-        PreparedStatement prepStmt = null;
-        ResultSet res = null;
-        ArrayList<Integer> playerId = new ArrayList<>();
-        try{
-            con = this.bds.getConnection();
-            String prepString = "SELECT player_id FROM player WHERE lobby_key = ?";
-            prepStmt = con.prepareStatement(prepString);
-            prepStmt.setInt(1, Main.user.getLobbyKey());
-            res = prepStmt.executeQuery();
-            while (res.next()){
-                playerId.add(res.getInt(1));
-            }
-
-        }
-        catch (SQLException sq){
-            sq.printStackTrace();
-            playerId = null;
-        }
-        finally {
-            this.manager.closeRes(res);
-            this.manager.closePrepStmt(prepStmt);
-            this.manager.closeConnection(con);
-            return playerId;
-        }
-    }
-
     public ArrayList<Integer> fetchPlayerPos(int playerId){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -987,32 +863,6 @@ public class Database {
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con);
             return pos;
-        }
-    }
-
-    public int fetchPlayerCreatureId(int playerId){
-        Connection con = null;
-        PreparedStatement prepStmt = null;
-        ResultSet res = null;
-        int characterId = 0;
-        try{
-            con = this.bds.getConnection();
-            String prepString = "SELECT creature_id FROM creature WHERE player_id = ?";
-            prepStmt = con.prepareStatement(prepString);
-            prepStmt.setInt(1, playerId);
-            res = prepStmt.executeQuery();
-            res.next();
-            characterId = res.getInt(1);
-        }
-        catch (SQLException sq){
-            sq.printStackTrace();
-            characterId = -1;
-        }
-        finally {
-            this.manager.closeRes(res);
-            this.manager.closePrepStmt(prepStmt);
-            this.manager.closeConnection(con);
-            return characterId;
         }
     }
 
@@ -1347,7 +1197,7 @@ public class Database {
         }
     }
 
-    public Level fetchLevelObject(int level_id){
+    public Level fetchLevelObject(int levelId){
         Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
@@ -1356,7 +1206,7 @@ public class Database {
             con = this.bds.getConnection();
             String prepString = "SELECT level.* FROM level WHERE level_id = ?";
             prepStmt = con.prepareStatement(prepString);
-            prepStmt.setInt(1, level_id);
+            prepStmt.setInt(1, levelId);
             res = prepStmt.executeQuery();
             if (res.next()) {
                 level = new Level(res.getInt("level_id"), res.getInt("music"), res.getString("background_url"));

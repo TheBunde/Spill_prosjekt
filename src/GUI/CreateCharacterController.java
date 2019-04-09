@@ -59,7 +59,7 @@ public class CreateCharacterController implements Initializable {
         System.out.println("View is now loaded!");
         chooseClassDropdown.getItems().addAll("Warrior","Rogue","Wizard","Ranger");
         iv.setImage(defaultImage);
-        db.createPlayer(0, true);
+        db.createPlayer(true);
     }
 
     //method to display selected character

@@ -3,7 +3,7 @@ import java.sql.*;
 
 public class ManageConnection {
 
-    public static void closeRes(ResultSet res) {
+    public void closeRes(ResultSet res) {
         try {
             if (res != null) {
                 res.close();
@@ -13,7 +13,7 @@ public class ManageConnection {
         }
     }
 
-    public static void closePrepStmt(PreparedStatement prepStmt) {
+    public void closePrepStmt(PreparedStatement prepStmt) {
         try {
             if (prepStmt != null) {
                 prepStmt.close();
@@ -23,7 +23,7 @@ public class ManageConnection {
         }
     }
 
-    public static void closeConnection(Connection con) {
+    public void closeConnection(Connection con) {
         try {
             if (con != null) {
                 con.close();
@@ -33,7 +33,7 @@ public class ManageConnection {
         }
     }
 
-    public static void writeMessage(Exception e, String message) {
+    public void writeMessage(Exception e, String message) {
         System.err.println("*** Fail happened: " + message + ". ***");
         e.printStackTrace(System.err);
     }

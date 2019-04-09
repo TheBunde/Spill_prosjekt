@@ -31,8 +31,4 @@ public class DataSource {
         return bds;
     }
 
-    public Connection getConnection() throws Exception {
-        return getBds().getConnection();
-    }
-
 }

@@ -21,17 +21,6 @@ public class Monster extends Creature {
         return super.toString();
     }
 
-    public void monsterAction (ArrayList<Creature> creatures){
-        Creature target = getClosest(creatures);
-        if(inRange(target)){
-            moveTo(target, creatures);
-            attackCreature(target, 0);
-        }else{
-            moveToward(target, creatures);
-            attackCreature(target, 1);
-        }
-    }
-
     //Splitted version of monsterAction for movement
     public void monsterMove (ArrayList<Creature> creatures){
         Creature target = getClosest(creatures);
@@ -53,9 +42,9 @@ public class Monster extends Creature {
     }
 
     //Splitted version of monsterAction for attack
-    public void monsterAttack (ArrayList<Creature> players){
+    public void monsterAttack (ArrayList<Creature> creatures){
         ArrayList<Weapon> useableWeapons = new ArrayList<>();
-        Creature target = getClosest(players);
+        Creature target = getClosest(creatures);
         if(target != null) {
             if (meleeRange(target)) {
                 for (Weapon i : getWeapons()) {
@@ -79,8 +68,7 @@ public class Monster extends Creature {
         }
     }
 
-    public Creature getClosest(ArrayList<Creature> players){
-        ArrayList<Creature> creatures = players;
+    public Creature getClosest(ArrayList<Creature> creatures){
         Creature target = null;
         int xDistance = 16;
         int yDistance = 16;
