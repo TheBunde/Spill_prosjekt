@@ -13,11 +13,9 @@ import user.*;
 
 public class LoginController {
 
-    Alert alert = new Alert(Alert.AlertType.WARNING);
+    private Alert alert = new Alert(Alert.AlertType.WARNING);
     private SceneSwitcher sceneSwitcher;
     private Password pw = new Password();
-    private Database db = Main.db;
-    private User user = Main.user;
 
     @FXML
     TextField username, password;
@@ -31,7 +29,7 @@ public class LoginController {
     }
 
     public boolean checkUsername() {
-        if (db.findUsername(username.getText())) {
+        if (Main.db.findUsername(username.getText())) {
             return true;
         }
         return false;
@@ -39,7 +37,7 @@ public class LoginController {
 
 
     public boolean checkPassword() {
-        if (db.fetchHash(username.getText()).equals(pw.getHash(password.getText(), db.fetchSalt(username.getText())))) {
+        if (Main.db.fetchHash(username.getText()).equals(pw.getHash(password.getText(), Main.db.fetchSalt(username.getText())))) {
             return true;
         }
         return false;
@@ -65,7 +63,7 @@ public class LoginController {
             alert.setContentText("Your password is wrong, try again!");
             alert.showAndWait();
         }else{
-            Main.user = new User(db.fetchUser_id(username.getText().trim()), username.getText().trim(), db.fetchRank(db.fetchUser_id(username.getText().trim())));
+            Main.user = new User(Main.db.fetchUser_id(username.getText().trim()), username.getText().trim(), Main.db.fetchRank(Main.db.fetchUser_id(username.getText().trim())));
             SFXPlayer.getInstance().setSFX(0);
             audio.MusicPlayer.getInstance().stopSong();
             MusicPlayer.getInstance().changeSong(2);

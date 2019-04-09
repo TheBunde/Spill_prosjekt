@@ -10,7 +10,6 @@ import javafx.scene.control.TextField;
 public class changeUsernameController {
 
     private SceneSwitcher sceneSwitcher;
-    private Database db = Main.db;
 
     @FXML
     private TextField newUsername;
@@ -23,7 +22,7 @@ public class changeUsernameController {
     }
 
     public void setNewUsername()throws Exception{
-        db.setNewUsername(newUsername.getText().trim());
+        Main.db.setNewUsername(newUsername.getText().trim());
     }
 
     public void okButtonPressed() throws Exception{

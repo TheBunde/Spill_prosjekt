@@ -25,14 +25,12 @@ public class FindLobbyController {
     @FXML
     private Label errorLabel;
 
-    private Database db = Main.db;
-
-
+//husk å oppdater klassediagram!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     public void joinLobbyButtonPressed() throws IOException {
         String key = lobbyKeyInput.getText();
         //Checking if the input is valid
         if (key.length() > 0){
-            if (db.connectUserToGameLobby(Integer.parseInt(key))){
+            if (Main.db.connectUserToGameLobby(Integer.parseInt(key))){
                 Main.db.addChatMessage(Main.user.getUsername() + " has joined the lobby as a guest", true);
                 //Loads new scene
                 SFXPlayer.getInstance().setSFX(7);

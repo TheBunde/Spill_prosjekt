@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 
-public class TeamMatesController implements Initializable {
+public class TeamMatesController {
 
     @FXML
     private ListView<Character> listView;
@@ -45,8 +45,7 @@ public class TeamMatesController implements Initializable {
         }*/
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources){
+    public void initialize(){
        // characterObservableList.add(new Character(10000, 1, "Warrior", 20, 15, 3, 3, 4, 1, "yas", 3, 3, "warrior.jpg", null));
 
         listView.setItems(characterObservableList);
