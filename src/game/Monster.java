@@ -16,13 +16,9 @@ import java.util.Random;
 
 public class Monster extends Creature {
 
-    public Pane attackPane;
+    private Pane attackPane;
     public Monster(int playerId, int creatureId, String creatureName, int hp, int ac, int movement, int damageBonus, int attackBonus, String backstory, int xPos, int yPos, String imageUrl, ArrayList weapons){
         super(playerId, creatureId, creatureName, hp, ac, movement, damageBonus, attackBonus, backstory, xPos, yPos, imageUrl, weapons);
-    }
-
-    public String toString() {
-        return super.toString();
     }
 
     //Splitted version of monsterAction for movement
@@ -237,6 +233,10 @@ public class Monster extends Creature {
         parent.add(this.attackPane, this.getxPos(), this.getyPos());
     }
 
+    public Pane getAttackPane(){
+        return attackPane;
+    }
+
     public void initAttackPane(double cellWidth, double cellHeight){
         this.attackPane = new Pane();
         this.attackPane.setPrefWidth(cellWidth);
@@ -252,5 +252,9 @@ public class Monster extends Creature {
 
     public void hideAttackPane(){
         this.attackPane.setVisible(false);
+    }
+
+    public String toString() {
+        return super.toString();
     }
 }

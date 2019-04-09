@@ -15,10 +15,10 @@ import main.*;
 
 public class Game {
     private ArrayList<Creature> creatures = new ArrayList<>();
-    public game.Character playerCharacter;
+    private Character playerCharacter;
     private int playerTurn = 0;
     private int amountOfLevels;
-    public Level level;
+    private Level level;
 
     public Game(){
         if(Main.db != null) {
@@ -364,6 +364,14 @@ public class Game {
         this.playerTurn = playerTurn;
     }
 
+    public Character getPlayerCharacter(){
+        return this.playerCharacter;
+    }
+
+    public void setPlayerCharacter(Character i){
+        playerCharacter = i;
+    }
+
     public String toString(){
         StringBuilder string = new StringBuilder("");
         string.append("User host: " + Main.user.isHost() + "\n");
@@ -377,7 +385,4 @@ public class Game {
         return string.toString();
     }
 
-    public void setPlayerCharacter(Character charcter){
-        playerCharacter = charcter;
-    }
 }

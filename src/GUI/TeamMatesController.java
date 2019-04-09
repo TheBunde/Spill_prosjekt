@@ -22,20 +22,20 @@ public class TeamMatesController {
 
     public static ObservableList<Character> characterObservableList;
     public static ArrayList<Character> charactersInListView;
-   // public static Game game = BattlefieldController.game;
+    public static Game game = BattlefieldController.game;
 
     public TeamMatesController(){
         charactersInListView = BattlefieldController.game.getCharacters();
         int you = 0;
         for(Character i: charactersInListView){
-            if(i == BattlefieldController.getGame().getPlayerCharacter()){
+            if(i == game.getPlayerCharacter()){
                 you = charactersInListView.indexOf(i);
             }
         }
         charactersInListView.remove(you);
         characterObservableList = FXCollections.observableArrayList();
         for (Character c : charactersInListView){
-            if (c != BattlefieldController.game.playerCharacter) {
+            if (c != BattlefieldController.game.getPlayerCharacter()) {
                 characterObservableList.add(c);
             }
         }
@@ -59,7 +59,7 @@ public class TeamMatesController {
         charactersInListView = BattlefieldController.game.getCharacters();
         int you = 0;
         for(Character i: charactersInListView){
-            if(i == BattlefieldController.getGame().playerCharacter){
+            if(i == game.getPlayerCharacter()){
                 you = charactersInListView.indexOf(i);
             }
         }

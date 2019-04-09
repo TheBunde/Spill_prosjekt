@@ -48,7 +48,7 @@ public class LoginController {
         if(username.getText().isEmpty() || password.getText().isEmpty()) {
             alert.setTitle("Empty Field");
             alert.setHeaderText(null);
-            alert.setContentText("Field can not be empty.");
+            alert.setContentText("Fields can not be empty.");
             alert.showAndWait();
         }
         else if(!checkUsername()){
@@ -60,7 +60,7 @@ public class LoginController {
         else if(!checkPassword()){
             alert.setTitle("Check password");
             alert.setHeaderText(null);
-            alert.setContentText("You input wrong password, try again!");
+            alert.setContentText("Your password is wrong, try again!");
             alert.showAndWait();
         }else{
             Main.user = new User(Main.db.fetchUser_id(username.getText().trim()), username.getText().trim(), Main.db.fetchRank(Main.db.fetchUser_id(username.getText().trim())));

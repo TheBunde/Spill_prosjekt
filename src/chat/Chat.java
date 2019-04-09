@@ -6,7 +6,7 @@ import javafx.collections.ObservableList;
 import java.util.Comparator;
 
 public class Chat{
-    public ObservableList<ChatMessage> messages;
+    private ObservableList<ChatMessage> messages;
     private int lastSeenMessageId = 0;
 
     public Chat(){
@@ -35,5 +35,9 @@ public class Chat{
 
     public int getLastSeenMessageId() {
         return lastSeenMessageId;
+    }
+
+    public ObservableList<ChatMessage> getMessages(){
+        return this.messages;
     }
 }
