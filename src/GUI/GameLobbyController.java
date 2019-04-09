@@ -120,19 +120,22 @@ public class GameLobbyController {
             limitPlayerTimer.cancel();
             limitPlayerTimer.purge();
             db.setJoinable(false);
+            System.out.println("Helloofrom gamelobbu");
+            System.out.println(Main.db.isJoinable(Main.user.getLobbyKey()));
             this.sceneSwitcher.switchScene(readyButton , "Battlefield.fxml");
         }
     }
 
     public void limitPlayers(){
-        if (Main.db.everyoneIsReady().size() >= this.playerLimit){
+        ArrayList<Boolean> players = Main.db.everyoneIsReady();
+        if (players.size() >= this.playerLimit){
             Main.db.setJoinable(false);
             if (joinable) {
                 joinable = false;
                 Main.db.addChatMessage("Player limit reached", true);
             }
         }
-        else{
+        else if(playersReady != players.size()){
             Main.db.setJoinable(true);
             joinable = true;
         }
