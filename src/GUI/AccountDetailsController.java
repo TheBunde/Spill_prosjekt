@@ -14,6 +14,12 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+
+/**
+ * AccountDetailsController.java
+ * The program handles the components in AccountDetails-scene.
+ * @author saramoh
+ */
 public class AccountDetailsController {
     private Database db = Main.db;
     private SceneSwitcher sceneSwitcher;
@@ -29,15 +35,27 @@ public class AccountDetailsController {
         sceneSwitcher = new SceneSwitcher();
     }
 
+    /**
+     * The method initialize information from the method getInfo()
+     * @throws Exception
+     */
     public void initialize() throws Exception {
         getInfo();
     }
 
+    /**
+     * The method sets the Username and the Rank as a fxml-text using another methods in which the Username and the Rank are fetched from DB.
+     * @throws Exception
+     */
     public void getInfo() throws Exception {
         usernameOutput.setText(db.fetchUsername());
         rankOutput.setText(Integer.toString(db.fetchRank(Main.user.getUser_id())));
     }
 
+    /**
+     * The method switches the scene to the ChangeUsername-scene.
+     * @throws Exception
+     */
     public void changeUsernameButtonPressed() throws Exception {
         SFXPlayer.getInstance().setSFX(0);
         audio.MusicPlayer.getInstance().stopSong();
@@ -45,6 +63,10 @@ public class AccountDetailsController {
         sceneSwitcher.switchScene(changeUsernameButton, "changeUsername.fxml");
     }
 
+    /**
+     * The method switches the scene to the ChangePassword-scene.
+     * @throws Exception
+     */
     public void changePasswordButtonPressed() throws Exception {
         SFXPlayer.getInstance().setSFX(0);
         audio.MusicPlayer.getInstance().stopSong();
@@ -52,6 +74,10 @@ public class AccountDetailsController {
         sceneSwitcher.switchScene(changePasswordButton, "changePassword.fxml");
     }
 
+    /**
+     * The method switches the scene to the MainMenu-scene.
+     * @throws Exception
+     */
     public void backToMenuButtonPressed() throws Exception {
         SFXPlayer.getInstance().setSFX(0);
         audio.MusicPlayer.getInstance().stopSong();

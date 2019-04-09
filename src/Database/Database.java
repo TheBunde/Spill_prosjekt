@@ -754,7 +754,7 @@ public class Database {
             prepStmt.setString(1, newusername);
             prepStmt.setInt(2, Main.user.getUser_id());
             prepStmt.executeUpdate();
-            user.setUsername(newusername);
+            Main.user.setUsername(newusername);
         }
         catch (SQLException sq){
             sq.printStackTrace();
