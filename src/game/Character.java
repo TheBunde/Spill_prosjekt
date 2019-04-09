@@ -1,4 +1,5 @@
 /**
+ * Character are what the players can be
  * @author Helene Jonson
  */
 package game;

@@ -1,4 +1,7 @@
-
+/**
+ * The weapons and the data to the corresponding weapon
+ * @author Helene Jonson
+ */
 package game;
 
 public class Weapon {

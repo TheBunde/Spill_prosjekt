@@ -1,3 +1,7 @@
+/**
+ * Monsters are creatures where everything is programmed
+ * @author (Hvem andre?) and Helene Jonson
+ */
 package game;
 //import com.sun.java.util.jar.pack.Instruction;
 import game.Creature;

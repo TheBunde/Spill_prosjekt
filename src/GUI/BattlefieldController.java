@@ -75,18 +75,10 @@ public class BattlefieldController{
 
     public static Timer timer = new Timer();
 
-<<<<<<< HEAD
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
 
-
-        //New instance of game
-
-
-=======
     public BattlefieldController(){
         //New instance of Game
->>>>>>> 34a58621b50a6b5fad331ef100aa55cfb9b1fc5e
+
         game = new Game();
 
     }
