@@ -14,9 +14,9 @@ import javafx.scene.control.TextField;
 /**
  * RegisterController.java
  * The program will register a new user.
- * The username should not be registered in the DB before.
+ * The username must not be registered in the DB before.
  * The password will be hashed and salted.
- * @author saramoh
+ * @author shahedsa saramoh
  */
 public class RegisterController {
 
@@ -39,7 +39,7 @@ public class RegisterController {
     }
 
     /**
-     * The method register the user.
+     * Register the user
      * @throws Exception
      */
     public void register() throws Exception {
@@ -75,7 +75,9 @@ public class RegisterController {
             alert.showAndWait();
 
             /*
-            The user will be registered and the scene will switch to the MainMenu-scene
+            The user will be registered using the method registerUser() from the DB.
+            The input password will be hashed and salted and saved in DB using the method addPassword().
+            The scene will switch to the MainMenu-scene
              */
         }else{
             db.registerUser(usernameInput.getText().trim());
@@ -88,7 +90,7 @@ public class RegisterController {
     }
 
     /**
-     * The method switches the scene to the start-scene.
+     * Switches the scene to the start-scene.
      * @throws Exception
      */
     public void cancel() throws Exception {

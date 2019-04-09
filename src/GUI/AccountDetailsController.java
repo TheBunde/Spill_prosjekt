@@ -36,7 +36,7 @@ public class AccountDetailsController {
     }
 
     /**
-     * The method initialize information from the method getInfo()
+     * Initializes information from the method getInfo()
      * @throws Exception
      */
     public void initialize() throws Exception {
@@ -44,7 +44,7 @@ public class AccountDetailsController {
     }
 
     /**
-     * The method sets the Username and the Rank as a fxml-text using another methods in which the Username and the Rank are fetched from DB.
+     * Sets the Username and the Rank which is fetched from DB as a fxml-text
      * @throws Exception
      */
     public void getInfo() throws Exception {
@@ -53,7 +53,7 @@ public class AccountDetailsController {
     }
 
     /**
-     * The method switches the scene to the ChangeUsername-scene.
+     * Switches the scene to the ChangeUsername-scene.
      * @throws Exception
      */
     public void changeUsernameButtonPressed() throws Exception {
@@ -64,7 +64,7 @@ public class AccountDetailsController {
     }
 
     /**
-     * The method switches the scene to the ChangePassword-scene.
+     * Switches the scene to the ChangePassword-scene.
      * @throws Exception
      */
     public void changePasswordButtonPressed() throws Exception {
@@ -75,7 +75,7 @@ public class AccountDetailsController {
     }
 
     /**
-     * The method switches the scene to the MainMenu-scene.
+     * Switches the scene to the MainMenu-scene.
      * @throws Exception
      */
     public void backToMenuButtonPressed() throws Exception {

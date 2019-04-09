@@ -14,10 +14,10 @@ import javafx.stage.Stage;
 
 /**
  * changeUsernameController.java
- * The program handles the components in AccountDetails scene.
- * @author saramoh
+ * The program handles the components in changeUsername-scene.
+ * @author shahedsa saramoh
  */
-public class changeUsernameController {
+public class ChangeUsernameController {
 
     private SceneSwitcher sceneSwitcher;
     private Database db = Main.db;
@@ -28,12 +28,12 @@ public class changeUsernameController {
     @FXML
     private Button ok, cancel;
 
-    public changeUsernameController(){
+    public ChangeUsernameController(){
         sceneSwitcher = new SceneSwitcher();
     }
 
     /**
-     * The method sets new Username using another method which is connected to DB and sets new Username.
+     * Sets new Username using the method setNewUsername() from DB
      * @throws Exception
      */
     public void setNewUsername()throws Exception{
@@ -41,7 +41,7 @@ public class changeUsernameController {
     }
 
     /**
-     * The method confirm changing of the Username and goes back to the Account-scene.
+     * Confirms changing of the Username and goes back to the Account-scene.
      * @throws Exception
      */
     public void okButtonPressed() throws Exception{
@@ -58,7 +58,7 @@ public class changeUsernameController {
     }
 
     /**
-     * The method switches the scene to the AccountDetails-scene.
+     * Switches the scene to the AccountDetails-scene.
      * @throws Exception
      */
     public void cancelButtonPressed() throws Exception{

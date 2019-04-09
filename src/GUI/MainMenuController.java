@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 /**
  * MainMenuController.Java
  * The porgram handles the components in the MainMenu-scene.
- * @author saramoh
+ * @author williad saramoh
  */
 public class MainMenuController {
 
@@ -26,17 +26,18 @@ public class MainMenuController {
 
     private Database db = Main.db;
 
-
-
+    /**
+     * The user has no player_id, so, sets setHost() false
+     */
     public void initialize(){
         Main.user.setPlayerId(-1);
         db.setHost(false);
     }
 
     /**
-     * The method switches the scene to the CreateCharacter-scene.
-     * Creates a new lobby using the method which is connected to DB.
-     * Setter the player as host.
+     * Creates a new lobby using the method createNewLobby() from the DB.
+     * Setter the player as host using the method setHost() form the DB.
+     * Switches the scene to the createcharacter-scene.
      * @throws Exception
      */
     public void startNewGameButtonPressed() throws Exception{
@@ -53,7 +54,7 @@ public class MainMenuController {
     }
 
     /**
-     * The method switches the scene to the FindLobby-scene.
+     * Switches the scene to the FindLobby-scene.
      * @throws Exception
      */
     public void joinLobbyButtonPressed() throws Exception{
@@ -66,7 +67,7 @@ public class MainMenuController {
     }
 
     /**
-     *  The method switches the scene to the AccountDetails-scene.
+     *  Switches the scene to the AccountDetails-scene.
      * @throws Exception
      */
     public void viewAccountButtonPressed() throws Exception{
@@ -79,7 +80,7 @@ public class MainMenuController {
     }
 
     /**
-     * The method switches the scene to the settings-scene.
+     * Switches the scene to the settings-scene.
      * @throws Exception
      */
     public void settingsButtonPressed() throws Exception{
@@ -92,12 +93,12 @@ public class MainMenuController {
     }
 
     /**
-     * The method will connect the User to User-manual page in WIKI in GitLab
+     * Connects the User to User-manual page in WIKI in GitLab
      * @throws Exception
      */
     public void helpButtonPressed() throws Exception{
         new SFXPlayer("knockSFX").run();
-        Parent root = FXMLLoader.load(getClass().getResource("Here will set the url of the usermanual"));
+        Parent root = FXMLLoader.load(getClass().getResource("Here will be set the url of the user-manual"));
         Scene scene = new Scene(root);
         Stage stage = (Stage)helpButton.getScene().getWindow();
         stage.setScene(scene);
@@ -105,7 +106,7 @@ public class MainMenuController {
     }
 
     /**
-     * The method switches the scene to the start-scene.
+     * Switches the scene to the start-scene.
      * @throws Exception
      */
     public void signOutButtonPressed() throws Exception{
