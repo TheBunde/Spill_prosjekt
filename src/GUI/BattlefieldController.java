@@ -36,7 +36,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class BattlefieldController implements Initializable {
+public class BattlefieldController{
 
     // https://stackoverflow.com/questions/41081905/javafx-getting-the-location-of-a-click-on-a-gridpane
     @FXML
@@ -81,8 +81,7 @@ public class BattlefieldController implements Initializable {
 
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize() {
         player = new Player(playerImage);
         cellWidth = mapGrid.getPrefWidth()/(16.0);
         cellHeight = mapGrid.getPrefHeight()/(16.0);

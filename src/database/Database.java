@@ -834,15 +834,17 @@ public class Database {
             prepStmt.setInt(1, Main.user.getUser_id());
             prepStmt.setInt(2, Main.user.getLobbyKey());
             res = prepStmt.executeQuery();
-            res.next();
-            id = res.getInt(1);
-
+            while(res.next()) {
+                id = res.getInt(1);
+                System.out.println(id);
+            }
         }
         catch (SQLException sq){
             sq.printStackTrace();
             id = -1;
         }
         finally {
+            this.manager.closeRes(res);
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con);
             return id;
@@ -1276,6 +1278,33 @@ public class Database {
             prepStmt = con.prepareStatement(prepString);
             prepStmt.setBoolean(1, joinable);
             prepStmt.setInt(2, Main.user.getLobbyKey());
+            prepStmt.executeUpdate();
+            con.commit();
+        }
+        catch (SQLException sq){
+            this.manager.rollback(con);
+            sq.printStackTrace();
+            status = false;
+        }
+        finally {
+            this.manager.turnOnAutoCommit(con);
+            this.manager.closePrepStmt(prepStmt);
+            this.manager.closeConnection(con);
+            return status;
+        }
+    }
+
+    public boolean disconnectPlayerFromLobby(int playerId){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        boolean status = true;
+        try{
+            con = this.bds.getConnection();
+            con.setAutoCommit(false);
+            String prepString = "UPDATE player SET lobby_key = ? WHERE player_id = ?";
+            prepStmt = con.prepareStatement(prepString);
+            prepStmt.setInt(1, 1);
+            prepStmt.setInt(2, playerId);
             prepStmt.executeUpdate();
             con.commit();
         }

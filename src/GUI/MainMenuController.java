@@ -25,6 +25,9 @@ public class MainMenuController {
 
     private Database db = Main.db;
 
+    public MainMenuController(){
+        System.out.println("HELOOOO");
+    }
     public void initialize(){
         MusicPlayer.getInstance().changeSong(2);
         MusicPlayer.getInstance().keepPlaying(2);
