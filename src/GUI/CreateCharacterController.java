@@ -1,7 +1,6 @@
 package GUI;
 
-import Main.*;
-import Database.*;
+import main.*;
 import audio.MusicPlayer;
 import audio.SFXPlayer;
 import javafx.fxml.FXML;
@@ -24,14 +23,10 @@ public class CreateCharacterController implements Initializable {
     @FXML
     private ImageView iv;
     @FXML
-    private Image img;
-    @FXML
     private TextArea text;
 
     @FXML
     private SceneSwitcher sceneSwitcher;
-
-    private Database db = Main.db;
 
    // private String a = chooseClassDropdown.getValue();
 
@@ -44,17 +39,13 @@ public class CreateCharacterController implements Initializable {
     //add class to displayCharacter() method
     //images to display selected character
     @FXML
-    Image RangerImage = new Image("GUI/images/Ranger.png");
-
+    Image RangerImage = new Image("GUI/images/ranger.jpg");
     @FXML
     Image warriorImage = new Image("GUI/images/warrior.jpg");
-
     @FXML
     Image rogueImage = new Image("GUI/images/rogue.jpg");
-
     @FXML
     Image wizardImage = new Image("GUI/images/wizard.jpg");
-
     @FXML
     Image defaultImage = new Image("GUI/images/Default.jpg");
 
@@ -63,6 +54,7 @@ public class CreateCharacterController implements Initializable {
         System.out.println("View is now loaded!");
         chooseClassDropdown.getItems().addAll("Warrior","Rogue","Wizard","Ranger");
         iv.setImage(defaultImage);
+        Main.db.createPlayer(true);
     }
 
     //method to display selected character
@@ -102,25 +94,23 @@ public class CreateCharacterController implements Initializable {
                     "\nRangers are one with nature." +
                     "\nWith their longbow and short sword they are good with both ranged and melee attacks." +
                     "\nA truly versatile character.");
-            SFXPlayer.getInstance().setSFX(4);
+            SFXPlayer.getInstance().setSFX(8);
             MusicPlayer.getInstance().stopSong();
-            MusicPlayer.getInstance().changeSong(6);
+            MusicPlayer.getInstance().changeSong(13);
         }
     }
     //method to create the character
     public boolean createCharacter() throws Exception{
-        String a = chooseClassDropdown.getValue();
-        if (a == null){
+        int a = chooseClassDropdown.getSelectionModel().getSelectedIndex() + 1;
+        if (a == 0){
             return false;
         }
         SFXPlayer.getInstance().setSFX(0);
-        if(db.createPlayer(a, true)){
+        if(Main.db.createCreature(Main.user.getPlayerId(), a, (int)Math.floor(Math.random()*16), (int)Math.floor(Math.random()*16))){
+            Main.db.addChatMessage(Main.user.getUsername() + " will play as " + chooseClassDropdown.getValue(), true);
             System.out.println("character created");
         }else{
             System.out.println("character not created");
-        }
-        if (Main.user.isHost()){
-            db.createPlayer("Hell Hound", false);
         }
         sceneSwitcher.switchScene(createCharacterButton, "GameLobby.fxml");
         return true;

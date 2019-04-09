@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.GameLobbyController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.GameLobbyController">
    <children>
       <GridPane alignment="CENTER" prefHeight="500.0" prefWidth="800.0">
         <columnConstraints>
@@ -64,7 +64,7 @@
                               <Insets />
                            </VBox.margin>
                         </Label>
-                        <Button fx:id="travelButton" mnemonicParsing="false" onAction="#travelButtonPressed" prefHeight="52.0" prefWidth="276.0" style="-fx-background-color: c63d2b;" text="Travel to the battlefield">
+                        <Button fx:id="readyButton" mnemonicParsing="false" onAction="#readyButtonPressed" prefHeight="52.0" prefWidth="123.0" style="-fx-background-color: cccccc;" text="Ready">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>
@@ -78,6 +78,11 @@
                               <Insets left="-20.0" right="-20.0" />
                            </padding>
                         </Button>
+                        <Label fx:id="readyCounter" prefHeight="27.0" prefWidth="198.0" text="Players Ready: ">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
                         <Button fx:id="backToMenuButton" mnemonicParsing="false" onAction="#backToMenuButtonPressed" style="-fx-background-color: cccccc;" text="Back to main menu">
                            <VBox.margin>
                               <Insets />
@@ -96,7 +101,7 @@
                <children>
                   <ImageView fitHeight="22.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true" rotate="25.0">
                      <image>
-                        <Image url="@lobbykeyimage.png" />
+                        <Image url="@images/lobbykeyimage.png" />
                      </image>
                   </ImageView>
                   <Label alignment="CENTER" contentDisplay="CENTER" text="Lobby key">

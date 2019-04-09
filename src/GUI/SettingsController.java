@@ -3,13 +3,7 @@ package GUI;
 import audio.MusicPlayer;
 import audio.SFXPlayer;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class SettingsController {
 
@@ -38,14 +32,15 @@ public class SettingsController {
         float volumeMusic = ((float) slideValue);
         if(volumeMusic < -30.0){
             System.out.println(volumeMusic);
-            MusicPlayer.getInstance().setVolumeMusic(-80);
+            MusicPlayer.getInstance().setVolMusic(-80);
             MusicPlayer.getInstance().stopSong();
         }
         else{
             System.out.println(volumeMusic);
-            MusicPlayer.getInstance().setVolumeMusic(volumeMusic);
+            MusicPlayer.getInstance().setVolMusic(volumeMusic);
             MusicPlayer.getInstance().stopSong();
         }
+        MusicPlayer.getInstance().changeSong(2);
 
 
     }
@@ -56,12 +51,11 @@ public class SettingsController {
         float volumeSFX = ((float) slideSFXValue);
         if(volumeSFX < -30.0){
             System.out.println(volumeSFX);
-            SFXPlayer.getInstance().setVolumeSFX(-80);
-
+            SFXPlayer.getInstance().setVolSFX(-80);
         }
         else{
             System.out.println(volumeSFX);
-            SFXPlayer.getInstance().setVolumeSFX(volumeSFX);
+            SFXPlayer.getInstance().setVolSFX(volumeSFX);
         }
         SFXPlayer.getInstance().setSFX(0);
 

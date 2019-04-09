@@ -1,23 +1,20 @@
 package GUI;
 
-import Main.*;
+import main.*;
 import audio.MusicPlayer;
 import audio.SFXPlayer;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import Database.*;
-import login.*;
+import user.*;
 
 
 public class LoginController {
 
-    Alert alert = new Alert(Alert.AlertType.WARNING);
+    private Alert alert = new Alert(Alert.AlertType.WARNING);
     private SceneSwitcher sceneSwitcher;
     private Password pw = new Password();
-    private Database db = Main.db;
-    private User user = Main.user;
 
     @FXML
     TextField username, password;
@@ -34,7 +31,7 @@ public class LoginController {
      * @return
      */
     public boolean checkUsername() {
-        if (db.findUsername(username.getText())) {
+        if (Main.db.findUsername(username.getText())) {
             return true;
         }
         return false;
@@ -46,8 +43,7 @@ public class LoginController {
      * @return
      */
     public boolean checkPassword() {
-        
-        if (db.fetchHash(username.getText()).equals(pw.getHash(password.getText(), db.fetchSalt(username.getText())))) {
+        if (Main.db.fetchHash(username.getText()).equals(pw.getHash(password.getText(), Main.db.fetchSalt(username.getText())))) {
             return true;
         }
         return false;
@@ -62,7 +58,7 @@ public class LoginController {
         if(username.getText().isEmpty() || password.getText().isEmpty()) {
             alert.setTitle("Empty Field");
             alert.setHeaderText(null);
-            alert.setContentText("Field can not be empty.");
+            alert.setContentText("Fields can not be empty.");
             alert.showAndWait();
         }
          //check if username is valid(exist in database)
@@ -76,11 +72,10 @@ public class LoginController {
         else if(!checkPassword()){
             alert.setTitle("Check password");
             alert.setHeaderText(null);
-            alert.setContentText("You input wrong password, try again!");
+            alert.setContentText("Your password is wrong, try again!");
             alert.showAndWait();
         }else{
-            // if everything is ok, so switch the scene to main menu.
-            Main.user = new User(db.fetchUser_id(username.getText().trim()), username.getText().trim(), db.fetchRank(db.fetchUser_id(username.getText().trim())));
+            Main.user = new User(Main.db.fetchUser_id(username.getText().trim()), username.getText().trim(), Main.db.fetchRank(Main.db.fetchUser_id(username.getText().trim())));
             SFXPlayer.getInstance().setSFX(0);
             audio.MusicPlayer.getInstance().stopSong();
             MusicPlayer.getInstance().changeSong(2);

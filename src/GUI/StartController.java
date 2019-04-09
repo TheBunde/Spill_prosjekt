@@ -4,6 +4,11 @@ import audio.MusicPlayer;
 import audio.SFXPlayer;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class StartController {
 
@@ -13,6 +18,10 @@ public class StartController {
 
     public StartController(){
         sceneSwitcher = new SceneSwitcher();
+    }
+
+    public void initialize(){
+        loginButton.getStyleClass().add("GUI/images/startButton.png");
     }
 
     public void login() throws Exception{

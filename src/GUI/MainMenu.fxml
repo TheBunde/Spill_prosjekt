@@ -14,7 +14,7 @@
          <children>
             <AnchorPane layoutX="4.0" prefHeight="500.0" prefWidth="800.0">
                <children>
-                  <Button fx:id="startNewGameButton" contentDisplay="CENTER" layoutX="183.0" layoutY="155.0" mnemonicParsing="false" onAction="#startNewGameButtonPressed" prefHeight="56.0" prefWidth="197.0" text="Start new game" textAlignment="CENTER">
+                  <Button fx:id="startNewGameButton" contentDisplay="CENTER" layoutX="183.0" layoutY="155.0" mnemonicParsing="false" onAction="#startNewGameButtonPressed" prefHeight="56.0" prefWidth="197.0" text="Create lobby" textAlignment="CENTER">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font></Button>

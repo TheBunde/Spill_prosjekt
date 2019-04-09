@@ -1,19 +1,16 @@
 package GUI;
 
-import Database.Database;
+import main.*;
 import audio.SFXPlayer;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import Main.*;
 
 public class ChangePasswordController {
 
-    Alert alert = new Alert(Alert.AlertType.WARNING);
+    private Alert alert = new Alert(Alert.AlertType.WARNING);
     private SceneSwitcher sceneSwitcher;
-    private Database db = Main.db;
 
     @FXML
     private TextField oldPassword, newPassword, reNewPassword;
@@ -70,8 +67,8 @@ public class ChangePasswordController {
      */
 
     public void setNewPassword(){
-        db.deleteOldPassword(oldPassword.getText().trim());
-        db.addPassword(newPassword.getText().trim());
+        Main.db.deleteOldPassword(oldPassword.getText().trim());
+        Main.db.addPassword(newPassword.getText().trim());
     }
      /**
      * get back to Account Details page if you want to cancle changing the password
