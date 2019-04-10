@@ -201,7 +201,7 @@ public abstract class Creature {
 
     /**
      * get-method for the damage bonus
-     * @return damageBonus      the bonus damage you deal if you hit 
+     * @return damageBonus      the bonus damage you deal if you hit
      */
     public int getDamageBonus() {
         return damageBonus;

@@ -14,6 +14,13 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+/**
+ * MainMenuController.Java
+ * The porgram handles the components in the MainMenu-scene.
+ * @author williad saramoh
+ */
+
+
 public class MainMenuController {
 
 
@@ -34,14 +41,24 @@ public class MainMenuController {
 
     @FXML
     private Button signOutButton;
-
-    public void initialize(){
+    
+     /**
+     * The user has no player_id, so, sets setHost() false
+     */
+     public void initialize(){
 
         MusicPlayer.getInstance().changeSong(2);
         MusicPlayer.getInstance().keepPlaying(2);
         main.user.setPlayerId(-1);
         main.db.setHost(false);
     }
+    
+    /**
+     * Creates a new lobby using the method createNewLobby() from the DB.
+     * Setter the player as host using the method setHost() form the DB.
+     * Switches the scene to the createcharacter-scene.
+     * @throws Exception
+     */
 
     public void startNewGameButtonPressed() throws Exception{
         main.db.createNewLobby();
@@ -56,6 +73,10 @@ public class MainMenuController {
         stage.setScene(scene);
         stage.show();
     }
+      /**
+     * Switches the scene to the FindLobby-scene.
+     * @throws Exception
+     */
 
     public void joinLobbyButtonPressed() throws Exception{
         SFXPlayer.getInstance().setSFX(0);
@@ -65,6 +86,10 @@ public class MainMenuController {
         stage.setScene(scene);
         stage.show();
     }
+  /**
+     *  Switches the scene to the AccountDetails-scene.
+     * @throws Exception
+     */
 
     public void viewAccountButtonPressed() throws Exception{
         SFXPlayer.getInstance().setSFX(0);
@@ -74,6 +99,10 @@ public class MainMenuController {
         stage.setScene(scene);
         stage.show();
     }
+      /**
+     * Switches the scene to the settings-scene.
+     * @throws Exception
+     */
 
     public void settingsButtonPressed() throws Exception{
         SFXPlayer.getInstance().setSFX(0);
@@ -83,6 +112,10 @@ public class MainMenuController {
         stage.setScene(scene);
         stage.show();
     }
+ /**
+     * Connects the User to User-manual page in WIKI in GitLab
+     * @throws Exception
+     */
 
     public void helpButtonPressed() throws Exception {
         new SFXPlayer("knockSFX").run();
@@ -100,6 +133,12 @@ public class MainMenuController {
             }
         }
     }
+    
+     /**
+     * Switches the scene to the start-scene.
+     * @throws Exception
+     */
+
 
     public void signOutButtonPressed() throws Exception{
         SFXPlayer.getInstance().setSFX(0);
