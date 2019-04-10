@@ -4,11 +4,21 @@ import java.math.*;
 import java.security.*;
 import java.util.Random;
 
+/**
+ * The methods in this class are used to encrypt passwords
+ * and to check if a password corresponds to a encrypted one.
+ * SHA256 is the hash function used in this class.
+ */
 public class Password {
 
     private final Random rand = new SecureRandom();
 
-    // will be switched to boolean or void when connected to database
+    /**
+     * 
+     * @param password
+     * @param salt
+     * @return
+     */
     public String createPassword(String password, byte[] salt){
         String hashedPassword = getHash(password, salt);
         return hashedPassword;
