@@ -17,14 +17,26 @@ public class Game {
     private int amountOfLevels;
     private Level level;
 
+    /**
+     * A constructor for the Game class. It initializes the level.
+     * If the user is a host, it adds the monsters to the lobby.
+     * It adds all the creatures in te lobby to the ArrayList
+     * creatures. It also sets the Creature with player id equal
+     * to the users player id, to playerCharacter
+     */
     public Game(){
         if(Main.db != null) {
             amountOfLevels = Main.db.fetchAmountOfLevels();
+            /* Sets the level to level 1 */
             level = new Level(1);
+            /* Host adds monsters to lobby and makes sure they do
+            not stand on top of any other Creature
+             */
             if (Main.user.isHost()) {
                 this.addNewMonstersToLobby(1, Main.db.fetchPlayerCount());
                 this.assureNoOverlap();
                 Main.db.setBattlefieldReady(Main.user.getLobbyKey());
+                /* Waits for host to finish preparations */
             } else {
                 while (!Main.db.fetchBattlefieldReady(Main.user.getLobbyKey())) {
                     try {
@@ -36,6 +48,7 @@ public class Game {
             }
             this.creatures = Main.db.fetchCreaturesFromLobby();
 
+            /* Sets playerCharacter to correct Creature */
             for (int i = 0; i < this.creatures.size(); i++) {
                 if (this.creatures.get(i).getPlayerId() == Main.user.getPlayerId()) {
                     playerCharacter = (game.Character) this.creatures.get(i);
@@ -151,6 +164,10 @@ public class Game {
         }
     }
 
+    /**
+     * Sends Creature data from klient to database.
+     * Updates position and health points.
+     */
     public void pushCreatureData(){
         for (Creature c : creatures) {
             int playerId = c.getPlayerId();
@@ -162,6 +179,10 @@ public class Game {
         }
     }
 
+    /**
+     * sends message to chat that the user is dead, if playerCharacters
+     * hp <= 0. Sets isDead = true for all creatures with hp <= 0.
+     */
     public void handleCreatureData(){
         if (this.playerCharacter.getHp() <= 0 && !this.playerCharacter.isDead()){
             Main.db.addChatMessage(Main.user.getUsername() + " died", true);
@@ -189,6 +210,11 @@ public class Game {
         return characters;
     }
 
+    /**
+     * Checks if it is playerCharacters turn.
+     *
+     * @return      true if playerCharacters turn, false otherwise.
+     */
     public boolean isPlayerCharacterTurn(){
         if(creatures.get(playerTurn % creatures.size()).getPlayerId() == Main.user.getPlayerId()){
             return true;
@@ -196,6 +222,11 @@ public class Game {
         return false;
     }
 
+    /**
+     * Checks if it is a Monsters turn.
+     *
+     * @return      true if a Monsters turn, false otherwise.
+     */
     public boolean isMonsterTurn(){
         if(creatures.get(playerTurn % creatures.size()) instanceof Monster){
             return true;
@@ -212,12 +243,19 @@ public class Game {
         }
     }
 
+    /**
+     * Checks if all players are ready for new level.
+     *
+     * @return      true, if all players are redy for new lwvel, false otherwise.
+     */
     public boolean allPlayersReadyForNewLevel(){
         if(Main.db != null) {
+            /* Makes sure all players are ready */
             this.updatePlayersReadyForNewLevel();
         }
         boolean ready = true;
         ArrayList<Character> characters = this.getCharacters();
+        /* Checks if all players are ready */
         for (Character c : characters){
             if (!c.isReadyForNewLevel()){
                 ready = false;
@@ -231,6 +269,10 @@ public class Game {
         Main.db.setReadyForNewLevel(this.playerCharacter.getPlayerId(), ready);
     }
 
+    /**
+     *
+     * @return      ArrayList of all monsters in creatures.
+     */
     public ArrayList<Monster> getMonsters(){
         ArrayList<Monster> monsters = new ArrayList<>();
         for (Creature c : this.creatures){
@@ -254,10 +296,16 @@ public class Game {
         return cleared;
     }
 
+    /**
+     * Checks if all characters are dead. If all characters are dead
+     * it is game over.
+     * @return      true if all characters are dead, false otherwise.
+     */
     public boolean isGameOver(){
         boolean gameOver = false;
         boolean allCharactersDead = true;
         ArrayList<Character> characters = this.getCharacters();
+        /* Checks if all characters are dead */
         for (Character i: characters){
             if (!i.isDead()){
                 allCharactersDead = false;
@@ -289,19 +337,24 @@ public class Game {
         }
     }
 
+    /**
+     * Handels the turn of all monsters.
+     * Moves, attacks and ends turn.
+     */
     public void monsterAction() {
         if (isMonsterTurn()) {
+            /* Creates a new thread so that the host can interact with
+                the game, while it is running the monster logic.
+             */
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     Monster monster = ((Monster) creatures.get(playerTurn % creatures.size()));
-                    System.out.println(monster.getCreatureName());
                     if (monster.isDead()) {
                         if(Main.db != null) {
                             endTurn();
                         }
                     } else {
-                        System.out.println("heihei");
                         monster.monsterMove(creatures);
                         monster.monsterAttack(creatures);
                         if(Main.db != null) {
@@ -314,25 +367,50 @@ public class Game {
         }
     }
 
+    /**
+     * Increments the turn for both client and database.
+     */
     public void endTurn(){
         this.incrementPlayerTurn();
         Main.db.incrementPlayerTurn(playerTurn);
     }
 
+    /**
+     *
+     * @return      The level.
+     */
     public Level getLevel(){
         return this.level;
     }
 
+    /**
+     *
+     * @return      amountOfLevels
+     */
     public int getAmountOfLevels() {
         return this.amountOfLevels;
     }
 
+    /**
+     * Checks if a Monster is within the correct range to attack it.
+     * playerCharacter must be adjacent to a Monster to attack it with
+     * melee weapons.
+     * playerCharacter needs to be anywhere but adjacent to a Monster to
+     * attack with ranged weapons.
+     *
+     * @param monster       The target Monster.
+     * @param melee         boolean to tell if it is a check for melle or ranged attack.
+     * @return              true if melee = true and within melee range,
+     *                      true if melee = false and within ranged range, false otherwise.
+     */
     public boolean attackRange(Monster monster, boolean melee){
+        /* Checks if monster is within melee range */
         if(melee) {
             if ((Math.abs(playerCharacter.getxPos() - monster.getxPos()) <= 1) && (Math.abs(playerCharacter.getyPos() - monster.getyPos()) <= 1)) {
                 return true;
             }
         }
+        /* checks if monster is within ranged range */
         else if(!melee) {
             if ((Math.abs(playerCharacter.getxPos() - monster.getxPos()) > 1) || (Math.abs(playerCharacter.getyPos() - monster.getyPos())) > 1) {
                 return true;

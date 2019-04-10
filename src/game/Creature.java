@@ -1,7 +1,4 @@
-/**
- * Both monsters and playable characters are creatures
- * @authors (Hvem andre?) & heleneyj
- */
+
 package game;
 
 import java.util.ArrayList;
@@ -11,6 +8,10 @@ import audio.SFXPlayer;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * Creature is the superclass of Monster and Character
+ * @authors heleneyj, magnubau & williad
+ */
 public abstract class Creature {
     private int hp;
     private int ac;
@@ -29,6 +30,23 @@ public abstract class Creature {
     private boolean isDead;
     private boolean readyForNewLevel = false;
 
+    /**
+     * A constructor for the class Creature
+     *
+     * @param playerId      id of the player
+     * @param creatureId    id of the creature
+     * @param creatureName  name of the creature
+     * @param hp            health points
+     * @param ac            armor class
+     * @param movement      movement range
+     * @param damageBonus   damage bonus
+     * @param attackBonus   attack bonus
+     * @param backstory     backstory
+     * @param xPos          x-coordinate
+     * @param yPos          y-coordinate
+     * @param imageUrl      image url
+     * @param weapons       ArrayList of weapons
+     */
     public Creature(int playerId, int creatureId, String creatureName, int hp, int ac, int movement, int damageBonus, int attackBonus, String backstory, int xPos, int yPos, String imageUrl, ArrayList weapons){
         this.playerId = playerId;
         this.creatureId = creatureId;
@@ -99,11 +117,25 @@ public abstract class Creature {
         return true;
     }
 
+    /**
+     * Rolls 20 sided die to, adds attack bonus  of the Creature
+     * to the dies value.
+     *
+     * @return      The value of the die ? attack bonus.
+     */
     public int hit(){
         int hit = Dice.roll(20, 1) + this.attackBonus;
         return hit;
     }
 
+    /**
+     * Checks if the Creatures hit is higher than another
+     * Creatures armour class.
+     *
+     * @param hit       hit.
+     * @param target    A Creature.
+     * @return          true if hit >= target.getAc(), false otherwise.
+     */
     public boolean hitSuccess(int hit, Creature target){
         if (hit >= target.getAc()){
             return true;
@@ -111,20 +143,30 @@ public abstract class Creature {
         return false;
     }
 
+    /**
+     * Moves the Creature to a new position. Makes sure
+     * the Creature do not move on top of another Creature,
+     * and that it doeas not move outside of its movement range.
+     * @param newX          new x-position.
+     * @param newY          new y-position.
+     * @param creatures     ArrayList of all creatures in game.
+     * @return              true if the Creature moved to a valid location,
+     *                      false otherwise.
+     */
     public boolean moveCreature(int newX, int newY, ArrayList<Creature> creatures){
         for (Creature c : creatures){
             if (newX == c.getxPos() && newY == c.getyPos()){
-                System.out.println("HELLO FROM MOVECREATURE!!!!!!!!!!!!!");
+                /* Monsters move to an invalid location before moving away from it */
                 if(this instanceof Monster) {
                     this.setNewPos(newX, newY);
                 }
                 return false;
             }
         }
+        /* Checks if position is within movement. If so, moves to the position */
         if ((Math.abs(newX - this.getxPos()) <= this.movement && Math.abs(newY - this.getyPos()) <= this.movement)){
             SFXPlayer.getInstance().setSFX(15);
             this.setNewPos(newX, newY);
-            System.out.println("Moved");
             if (this instanceof Character){
                 if(Main.db != null) {
                     Main.db.addChatMessage(Main.db.fetchUsernameFromPlayerId(this.getPlayerId()) + " moved to X: " + newX + " Y: " + newY, true);
@@ -138,7 +180,6 @@ public abstract class Creature {
             return true;
         }
         else{
-            System.out.println("Did not move");
             return false;
         }
     }
