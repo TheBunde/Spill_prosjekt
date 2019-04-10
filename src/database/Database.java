@@ -289,6 +289,10 @@ public class Database {
         }
     }
 
+     /**
+     * Fetches username from the DB
+     * @return username for the user
+     */
     public String fetchUsername() {
         Connection con = null;
         String username = "";
@@ -298,7 +302,7 @@ public class Database {
             con = this.bds.getConnection();
             String prepString = "select distinct username from usr where user_id = ?";
             prepStmt = con.prepareStatement(prepString);
-            prepStmt.setInt(1, Main.user.getUser_id());
+            prepStmt.setInt(1, main.user.getUser_id());
             res = prepStmt.executeQuery();
             while (res.next()) {
                 username += res.getString("username");
@@ -313,6 +317,11 @@ public class Database {
         return username;
     }
 
+    /**
+     * Takes user_id as parameter and fetches rank from the DB
+     * @param userId id for the user
+     * @return rank
+     */
     public int fetchRank(int userId){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -370,6 +379,14 @@ public class Database {
         }
     }
 
+     /**
+     *Register a new user in the DB
+     * Takes username as parameter
+     * An id for the user is generated automatically
+     * Rank, lobbyKey and host in the user-table sets as default
+     * @param un username for the user
+     * @return 1 if the user is registered successfully
+     */
     public int registerUser(String un) {
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -377,7 +394,7 @@ public class Database {
         int user_id = -1;
         try {
             con = this.bds.getConnection();
-            con.setAutoCommit(false);
+            con.setAutoCommit(false);                    //Start transaction
             String prepString = "INSERT INTO usr VALUES(DEFAULT, ?, 0, DEFAULT, DEFAULT)";
             prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
             prepStmt.setString(1, un);
@@ -385,9 +402,9 @@ public class Database {
             res = prepStmt.getGeneratedKeys();
             res.next();
             user_id = res.getInt(1);
-            Main.user = new User(user_id, un, 0);
-            Main.user.setUser_id(user_id);
-            con.commit();
+            main.user = new User(user_id, un, 0);  //create an instance of User
+            main.user.setUser_id(user_id);              //Generated user_id is set as id for the user
+            con.commit();                              //The transaction is done
 
             if (added == 1) {
                 alert = new Alert(Alert.AlertType.INFORMATION);
@@ -398,7 +415,7 @@ public class Database {
             }
 
         } catch (SQLException sq) {
-            this.manager.rollback(con);
+            this.manager.rollback(con);              //The changes does not happen if SQLException is thrown
             sq.printStackTrace();
             alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning Dialog");
@@ -406,7 +423,7 @@ public class Database {
             alert.setContentText("adding failed");
             alert.showAndWait();
         } finally {
-            this.manager.turnOnAutoCommit(con);
+            this.manager.turnOnAutoCommit(con);      //Turn on Autocommit after the transaction is completed
             this.manager.closeRes(res);
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con);
@@ -414,6 +431,11 @@ public class Database {
         }
     }
 
+    /**
+     * Checks if the username exists in the DB
+     * @param username username for the user
+     * @return true if the username exists already in the DB, otherwise return false
+     */
     public boolean findUsername(String username){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -428,7 +450,8 @@ public class Database {
             if(res.next()){
                 ok = true;
             }else{
-                System.out.println("not found");
+                System.out.println("not found");   //If the username is not found in the DB
+                return false;
             }
         }
         catch (SQLException sq){
@@ -444,38 +467,51 @@ public class Database {
         }
     }
 
+    /**
+     * Takes new username as parameter and sets it as username
+     * @param newUn new username for the user
+     * @return true if transaction is done successfully, otherwise returns false
+     */
     public boolean setNewUsername(String newUn){
         Connection con = null;
         PreparedStatement prepStmt = null;
         boolean status = true;
         try{
             con = this.bds.getConnection();
-            con.setAutoCommit(false);
+            con.setAutoCommit(false);             //start transaction
             String prepString = "UPDATE usr SET username = ? WHERE user_id = ?";
             prepStmt = con.prepareStatement(prepString);
             prepStmt.setString(1, newUn);
-            prepStmt.setInt(2, Main.user.getUser_id());
+            prepStmt.setInt(2, main.user.getUser_id());
             prepStmt.executeUpdate();
-            con.commit();
-            Main.user.setUsername(newUn);
+            con.commit();                        //The transaction is done
+            main.user.setUsername(newUn);        //Sets new username for the main.user
         }
         catch (SQLException sq){
-            this.manager.rollback(con);
+            this.manager.rollback(con);         //The changes does not happen if SQLException is thrown
             sq.printStackTrace();
             status = false;
         }
         finally {
-            this.manager.turnOnAutoCommit(con);
+            this.manager.turnOnAutoCommit(con);    //Turn on Autocommit after the transaction is completed
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con);
             return status;
         }
     }
 
-
+    /**
+     * Takes password as parameter and creates a hashed and slated password
+     * @param pw password for the user
+     * @return true if the password is created successfully, otherwise returns false
+     */
     public boolean addPassword(String pw){
 
-        Password pass = new Password();
+        Password pass = new Password();      //create an instance of Password
+
+        /*
+        Slat is an array of the randomized bytes, it is generated using the method getSalt() from class Password.java
+         */
         byte[] salt = pass.getSalt();
 
         Connection con = null;
@@ -485,22 +521,22 @@ public class Database {
 
         try{
             con = this.bds.getConnection();
-            con.setAutoCommit(false);
+            con.setAutoCommit(false);            //Start transaction
             String prepString = "INSERT INTO password VALUES(?, ?, ?)";
             prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
-            prepStmt.setInt(1, Main.user.getUser_id());
+            prepStmt.setInt(1, main.user.getUser_id());
             prepStmt.setBytes(2, salt);
             prepStmt.setString(3, pass.createPassword(pw, salt));
             prepStmt.executeUpdate();
-            con.commit();
+            con.commit();                       //Transaction is done
         }
         catch (SQLException sq){
-            this.manager.rollback(con);
+            this.manager.rollback(con);         //The changes does not happen if SQLException is thrown
             sq.printStackTrace();
             status = false;
         }
         finally {
-            this.manager.turnOnAutoCommit(con);
+            this.manager.turnOnAutoCommit(con);  //Turn on Autocommit after the transaction is completed
             this.manager.closeRes(res);
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con);
@@ -508,20 +544,25 @@ public class Database {
         }
     }
 
-    public boolean deleteOldPassword(String newPw){
+    /**
+     * Takes the old password as parameter, and deletes it
+     * @param oldPw old password for the user
+     * @return true if the password is deleted successfully, otherwise return false
+     */
+    public boolean deleteOldPassword(String oldPw){
 
         Connection con = null;
         PreparedStatement prepStmt = null;
         boolean status = true;
         try{
             con = this.bds.getConnection();
-            con.setAutoCommit(false);
+            con.setAutoCommit(false);             //Start the transaction
             String prepString = "delete from password WHERE user_id = ?";
             prepStmt = con.prepareStatement(prepString);
-            prepStmt.setInt(1, Main.user.getUser_id());
+            prepStmt.setInt(1, main.user.getUser_id());
 
             prepStmt.executeUpdate();
-            con.commit();
+            con.commit();                        //The transaction is done
         }
         catch (SQLException sq){
             this.manager.rollback(con);
@@ -529,13 +570,18 @@ public class Database {
             status = false;
         }
         finally {
-            this.manager.turnOnAutoCommit(con);
+            this.manager.turnOnAutoCommit(con);   //Turn on Autocommit after the transaction is completed
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con);
             return status;
         }
     }
 
+    /**
+     * Fetches salt from the DB
+     * @param un username for the user
+     * @return the salted password, if SQLException is thrown returns null
+     */
     public byte[] fetchSalt(String un){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -568,7 +614,11 @@ public class Database {
         return saltPass;
     }
 
-
+    /**
+     * Fetches salt from the DB
+     * @param un username for the user
+     * @return the hashed password, if SQLException is thrown returns null
+     */
     public String fetchHash(String un){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -601,6 +651,11 @@ public class Database {
         return hashpass;
     }
 
+    /**
+     * Takes username as parameter and fetches the user_id
+     * @param un username for the user
+     * @return user_id, returns -1 if the SQLException is thrown
+     */
     public int fetchUser_id(String un){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -629,8 +684,6 @@ public class Database {
         }
         return user_id;
     }
-
-
 
     public int createPlayer(boolean playable) {
         Connection con = null;
