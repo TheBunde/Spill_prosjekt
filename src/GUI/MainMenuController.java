@@ -42,6 +42,10 @@ public class MainMenuController {
 
     @FXML
     private Button signOutButton;
+
+    private SceneSwitcher sceneSwitcher;
+
+    public MainMenuController(){sceneSwitcher = new SceneSwitcher();}
     
      /**
      * The user has no player_id, so, sets setHost() false
@@ -68,11 +72,7 @@ public class MainMenuController {
         SFXPlayer.getInstance().setSFX(0);
         MusicPlayer.getInstance().stopSong();
         MusicPlayer.getInstance().changeSong(3);
-        Parent root = FXMLLoader.load(getClass().getResource("createcharacter.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = (Stage)startNewGameButton.getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+        sceneSwitcher.switchScene(startNewGameButton, "createcharacter.fxml");
     }
       /**
      * Switches the scene to the FindLobby-scene.
@@ -81,11 +81,7 @@ public class MainMenuController {
 
     public void joinLobbyButtonPressed() throws Exception{
         SFXPlayer.getInstance().setSFX(0);
-        Parent root = FXMLLoader.load(getClass().getResource("FindLobby.fxml"));
-        Scene scene = new Scene(root, 800, 500);
-        Stage stage = (Stage)joinLobbyButton.getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+        sceneSwitcher.switchScene(joinLobbyButton, "FindLobby.fxml");
     }
   /**
      *  Switches the scene to the AccountDetails-scene.
@@ -94,11 +90,7 @@ public class MainMenuController {
 
     public void viewAccountButtonPressed() throws Exception{
         SFXPlayer.getInstance().setSFX(0);
-        Parent root = FXMLLoader.load(getClass().getResource("AccountDetails.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = (Stage)viewAccountButton.getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+        sceneSwitcher.switchScene(viewAccountButton, "AccountDetails.fxml");
     }
       /**
      * Switches the scene to the settings-scene.
@@ -107,11 +99,7 @@ public class MainMenuController {
 
     public void settingsButtonPressed() throws Exception{
         SFXPlayer.getInstance().setSFX(0);
-        Parent root = FXMLLoader.load(getClass().getResource("settings.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = (Stage)settingsButton.getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+        sceneSwitcher.switchScene(settingsButton, "settings.fxml");
     }
  /**
      * Connects the User to User-manual page in WIKI in GitLab
@@ -145,11 +133,7 @@ public class MainMenuController {
         SFXPlayer.getInstance().setSFX(0);
         audio.MusicPlayer.getInstance().stopSong();
         MusicPlayer.getInstance().changeSong(10);
-        Parent root = FXMLLoader.load(getClass().getResource("start.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = (Stage)signOutButton.getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+        sceneSwitcher.switchScene(signOutButton, "start.fxml");
     }
 
 }

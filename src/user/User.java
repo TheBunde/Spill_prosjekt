@@ -17,7 +17,12 @@ public class User {
     private int playerId = -1;
     private boolean host = false;
 
-
+    /**
+     * A constructor for the class.
+     * @param user_id       user id
+     * @param username      username
+     * @param rank          users rank
+     */
     public User(int user_id, String username, int rank){
         this.user_id = user_id;
         this.username = username;

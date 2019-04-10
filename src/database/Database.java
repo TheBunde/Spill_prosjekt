@@ -398,6 +398,13 @@ public class Database {
         return rank;
     }
 
+    /**
+     * Sets the rank a user to a given Integer
+     * in the database.
+     *
+     * @param rank      the desired rank.
+     * @return          true if the update was executed, false otherwise.
+     */
     public boolean setRank(int rank){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -732,6 +739,16 @@ public class Database {
         return user_id;
     }
 
+    /**
+     * Creates a player in the database
+     * with the users userId and lobbyKey.
+     *
+     * @param playable      boolean that is true if the player
+     *                      will be controlled by a user, and
+     *                      false if it will be controlles by
+     *                      the computer.
+     * @return              true if update is executed, false otherwise.
+     */
     public int createPlayer(boolean playable) {
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -772,7 +789,14 @@ public class Database {
         }
     }
 
-
+    /**
+     * creates a creature in the database.
+     * @param playerId      player id connected to creature.
+     * @param creatureId    creature id.
+     * @param posX          x-position.
+     * @param posY          y-position.
+     * @return              true if update is executed, false otherwise.
+     */
     public boolean createCreature(int playerId, int creatureId, int posX, int posY) {
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -803,6 +827,12 @@ public class Database {
         }
     }
 
+    /**
+     * fetches username corresponding to a playerId,
+     * from the database.
+     * @param playerId      player id.
+     * @return              The username.
+     */
     public String fetchUsernameFromPlayerId(int playerId) {
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -828,6 +858,12 @@ public class Database {
         }
     }
 
+    /**
+     * fethes a playerId corresponding to the users
+     * user id and lobbyKey.
+     *
+     * @return      A player id.
+     */
     public int fetchPlayerId(){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -857,6 +893,11 @@ public class Database {
         }
     }
 
+    /**
+     * fethes the number of players in a users lobby.
+     *
+     * @return      The number of players.
+     */
     public int fetchPlayerCount(){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -884,6 +925,13 @@ public class Database {
         }
     }
 
+    /**
+     * Updates the pos!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
+     * @param xPos
+     * @param yPos
+     * @param playerId
+     * @return
+     */
     public boolean setPos(int xPos, int yPos, int playerId){
         Connection con = null;
         PreparedStatement prepStmt = null;
