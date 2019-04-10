@@ -1,4 +1,7 @@
-
+/**
+ * The weapons and the data to the corresponding weapon
+ * @author Helene Jonson
+ */
 package game;
 
 public class Weapon {
@@ -7,14 +10,15 @@ public class Weapon {
     private int damageDice;
     private boolean ranged;
     private int diceAmount;
-    private int imageUrl;
+    private String imageUrl;
 
 
-    public Weapon(String name, int damageDice, boolean ranged, int diceAmount){
+    public Weapon(String name, int damageDice, boolean ranged, int diceAmount, String imageUrl){
         this.name = name;
         this.damageDice = damageDice;
         this.ranged = ranged;
         this.diceAmount = diceAmount;
+        this.imageUrl = imageUrl;
     }
 
     public String getName() {
@@ -31,5 +35,14 @@ public class Weapon {
 
     public int getDiceAmount() {
         return diceAmount;
+    }
+
+    public String getImageUrl(){
+        return this.imageUrl;
+    }
+
+    @Override
+    public String toString() {
+        return "Name: " + this.getName() + "\nIs ranged: " + this.isRanged() + "\nDamageDice: " + this.getDamageDice() + "\nDiceAmount: " + this.getDiceAmount();
     }
 }

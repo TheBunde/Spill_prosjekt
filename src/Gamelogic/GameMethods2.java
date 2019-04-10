@@ -1,16 +1,26 @@
+/**
+ * Unused second draft of initiative method
+ * Was not implemented because of lack of time
+ * @author Helene Jonson
+ */
 /*
 package Gamelogic;
 
 import game.Dice;
-
 import java.util.ArrayList;
 
 public class GameMethods2 {
     private Dice dice;
+    */
 
-
-    public ArrayList initiativeSort(ArrayList initiative) {
-
+    /**
+     * The method takes in an array and gives them a random number
+     * Then they are sorted in to order from highest to lowest based on the number
+     * @param initiative        an array of creatures in the game
+     * @return sort             a sorted array of the turn of creatures
+     */
+    /*
+     public ArrayList initiativeSort(ArrayList initiative) {
         int[][] initiativeOrder = new int[initiative.size()][initiative.size()];
         ArrayList<Integer> sort = new ArrayList<>();
         for (int i = 0; i < initiative.size(); i++) {

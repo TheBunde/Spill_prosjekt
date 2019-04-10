@@ -1,3 +1,225 @@
-public void play{
+First draft of how the logical game should work
+Shows first draft of all the methods used and not used in the final game
+@author Helene Jonson
+
+Starting game
+get list with monsters
+get list with players
+loop with counter = liste with monster size
+alive = true
+turn counter
+while( turn counter < list with monsters && alive = true){
+    print story del (turn counter)
+    roll initiative
+    set players in list in order of highest roll
+    set amount of players  = amount of players
+    set counter for players at 0 hp = 0
+    set monster boolean = true
+    while(counter < amount of players && monster == true){
+        for(i < initiative order){
+            if(hp <= 0){
+                break;
+            }
+            turn for list(i)
+            if(list(i) creature instance of character){
+                attack/move logic
+                if(monster hp <= 0){
+                    monster = false
+                }
+            }
+            if(list(i) creature instance of Monster){
+                monster logic
+                if(character hp <= 0){
+                 counter for players++;
+                }
+
+            }
+        }
+    }
+    if(counter = amount of players){
+        print(dead story)
+        end game
+    }
+    turn counter ++
+}
+print end story
+end game
+set right values for the user account
+
+
+
+ATTACK/MOVE LOGIC
+
+boolean turn over = false
+while(turn over = false){
+    attack counter
+    move counter
+    if(move button = pressed && move counter = 0){
+        move = false
+        chose where to move
+        while(move = false){
+            if (movement inside range){
+                move = true;
+                do the move;
+            }else{
+                print("outside range, try again")
+            }
+        }
+        move counter++
+    }
+    if(attack button = pressed && attack counter = 0){
+        roll d20 to hit
+        if(dice value > ac to target){
+            roll damage dice + damage bonus
+            hp to target = hp - roll damage
+            print(hit)
+        }else{
+            print(miss)
+        }
+        attack counter ++
+    }
+    if(attack counter = 1 && move counter = 1){
+        turn over = true
+    }
+
+    if(end turn = pressed){
+        turn over = true
+    }
+}
+
+
+MONSTER LOGIC
+end turn = false
+while(end turn = false){
+    move counter
+    attack counter
+    if(move counter = 0){
+        if(no players near){
+            move to player closest
+            if(can't reach player){
+                move as close as possible
+            }
+            move counter++
+        }
+    }
+    if(attack counter = 0){
+        roll random nr where nr = amount of players
+        random(amount of players)
+        attack against playerArray(random number)
+        if(dice roll > creature ac){
+            roll damage dice + damage bonus
+            hp to target = hp - roll damage
+            print(hit)
+        }else{
+            print(miss)
+        }
+        attack counter++
+    }
+    if(move counter = 1 && attack counter = 1){
+        end turn = true
+    }
+}
+
+
+movement per turn = 5 squers
+
+each square have a value from a-p,1-16
+
+error if value bigger than 16 or less than 0
+
+your selected value given in char value and int value
+standing value given in char value and int value
+
+new char value = false
+new int value = false
+
+if(selected char value > standing char value + movement || selected char value < standing char value - movement){
+    break
+}
+
+if(selected int value <= standing int value + movement || selected int value >= standing int value - movement){
+    break
+}
+
+if (selected values > 16 || selected values < 0){
 
 }
+
+PLAYER MOVE
+
+if(move button = pressed && move counter = 0){
+        move = false
+        chose where to move given in a char and an int
+        wanted char
+        wanted int
+        boolean movement inside range = true
+        while(move = false){
+            if((selected char value > standing char value + movement || selected char value < standing char value - movement)
+             || (selected int value <= standing int value + movement || selected int value >= standing int value - movement) ||
+             (selected values > 16 || selected values < 0){
+                movement inside range = false
+             }
+            if (movement inside range){
+                move = true;
+                do the move;
+            }else{
+                print("outside range, try again")
+            }
+        }
+        move counter++
+    }
+
+
+
+MOVEMENT FOR MONSTER
+Array list with players that are close
+Array list with all players positions
+get position for monster
+boolean empty = true
+counter = 1
+while(counter <= move && empty == true){
+     max c = pos c + counter
+     min c = pos c - counter
+     max i = pos i + counter
+     min i = pos i - counter
+     for( i = min c; i <= max c){
+        for(j = min i; j <= max i){
+            for(k = 0; k < list of players size){
+                if(ij = get(k).posistion){
+                    put player with that position in array list for players that are close
+                }
+            }
+        }
+     }
+     if(array for players that are close size != 0){
+        empty = false;
+     }
+     counter++;
+}
+if(counter = 2){
+    //someone is in the lane right next to the monster
+    attack()
+}
+else if(counter > 2 && counter <= move && empty == false){
+    move to player()
+}else{
+    move closer to a player in a way
+}
+
+
+
+MONSTER ATTACK
+    array of players that are close
+    attack index = random(array size)
+    player that are attacked = array.get(attack index)
+    roll d20
+    if(d20 > player AC){
+        roll damage dice
+        hp tp player = hp - damage
+        (set new hp to player)
+        print(hit)
+    }else{
+        print (miss)
+    }
+
+monster

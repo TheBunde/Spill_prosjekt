@@ -1,7 +1,6 @@
 package GUI;
 
-import Main.*;
-import Database.*;
+import main.*;
 import audio.MusicPlayer;
 import audio.SFXPlayer;
 import javafx.fxml.FXML;
@@ -11,24 +10,45 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+
 public class MainMenuController {
 
 
     @FXML
     private Button startNewGameButton;
 
+    @FXML
+    private Button joinLobbyButton;
 
-    private Database db = Main.db;
+    @FXML
+    private Button viewAccountButton;
+
+    @FXML
+    private Button settingsButton;
+
+    @FXML
+    private Button helpButton;
+
+    @FXML
+    private Button signOutButton;
 
     public void initialize(){
+
+        MusicPlayer.getInstance().changeSong(2);
+        MusicPlayer.getInstance().keepPlaying(2);
         Main.user.setPlayerId(-1);
-        db.setHost(false);
+        Main.db.setHost(false);
     }
 
     public void startNewGameButtonPressed() throws Exception{
-        db.createNewLobby();
-        db.setHost(true);
-        new SFXPlayer("knockSFX").run();
+        Main.db.createNewLobby();
+        Main.db.setHost(true);
+        Main.db.addChatMessage(Main.user.getUsername() + " has joined the lobby as the host", true);
+        SFXPlayer.getInstance().setSFX(0);
         MusicPlayer.getInstance().stopSong();
         MusicPlayer.getInstance().changeSong(3);
         Parent root = FXMLLoader.load(getClass().getResource("createcharacter.fxml"));
@@ -37,9 +57,6 @@ public class MainMenuController {
         stage.setScene(scene);
         stage.show();
     }
-
-    @FXML
-    private Button joinLobbyButton;
 
     public void joinLobbyButtonPressed() throws Exception{
         SFXPlayer.getInstance().setSFX(0);
@@ -50,9 +67,6 @@ public class MainMenuController {
         stage.show();
     }
 
-    @FXML
-    private Button viewAccountButton;
-
     public void viewAccountButtonPressed() throws Exception{
         SFXPlayer.getInstance().setSFX(0);
         Parent root = FXMLLoader.load(getClass().getResource("AccountDetails.fxml"));
@@ -61,9 +75,6 @@ public class MainMenuController {
         stage.setScene(scene);
         stage.show();
     }
-
-    @FXML
-    private Button settingsButton;
 
     public void settingsButtonPressed() throws Exception{
         SFXPlayer.getInstance().setSFX(0);
@@ -74,21 +85,22 @@ public class MainMenuController {
         stage.show();
     }
 
-    @FXML
-    private Button helpButton;
-
-
-    public void helpButtonPressed() throws Exception{
+    public void helpButtonPressed() throws Exception {
         new SFXPlayer("knockSFX").run();
-        Parent root = FXMLLoader.load(getClass().getResource("https://gitlab.stud.iie.ntnu.no/heleneyj/game-development-project/wikis/System/User-manual"));
-        Scene scene = new Scene(root);
-        Stage stage = (Stage)helpButton.getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+        if (Desktop.isDesktopSupported()) {
+            try {
+                Desktop.getDesktop().browse(new URI("https://gitlab.stud.iie.ntnu.no/heleneyj/game-development-project/wikis/System%20Documentation"));
+            }
+            catch (IOException ioe) {
+                System.out.println("Error with IO");
+                ioe.printStackTrace();
+            }
+            catch (URISyntaxException e) {
+                System.out.println("Error in URL");
+                e.printStackTrace();
+            }
+        }
     }
-
-    @FXML
-    private Button signOutButton;
 
     public void signOutButtonPressed() throws Exception{
         SFXPlayer.getInstance().setSFX(0);

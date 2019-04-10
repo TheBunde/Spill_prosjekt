@@ -2,17 +2,17 @@ package audio;
 
 public class IDAssigner {
 
-    private int baseID;
+    private int bID;
 
-    public IDAssigner(int baseID) {
-        this.baseID = baseID;
+    public IDAssigner(int bID) {
+        this.bID = bID;
     }
 
     public int next() {
-        return baseID++;
+        return bID++;
     }
 
-    public int getCurrentID() {
-        return baseID;
+    public int getID() {
+        return bID;
     }
 }
