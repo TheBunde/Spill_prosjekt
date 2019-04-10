@@ -1,7 +1,7 @@
 /**
  * Unused second draft of the game.
  * This code tries to use the database
- * @author Helene Jonson
+ * @author heleneyj
  */
 /*
 package Gamelogic;

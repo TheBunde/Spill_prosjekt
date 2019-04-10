@@ -17,7 +17,7 @@ public class Character extends Creature{
     }
 
     /**
-     *
+     * get-method for the standard hp
      * @return initalHp   the standard hp for the character
      */
     public int getInitialHp() {
@@ -25,7 +25,7 @@ public class Character extends Creature{
     }
 
     /**
-     *
+     * toString method that returns information
      * @return res     a string of all information
      */
     public String toString(){
