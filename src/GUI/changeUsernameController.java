@@ -1,13 +1,16 @@
 package GUI;
 
 import main.*;
-import database.Database;
 import audio.MusicPlayer;
 import audio.SFXPlayer;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-
+/**
+ * changeUsernameController.java
+ * The program handles the components in changeUsername-scene.
+ * @author saramoh, shahedsa
+ */
 public class changeUsernameController {
 
     private SceneSwitcher sceneSwitcher;
@@ -17,7 +20,7 @@ public class changeUsernameController {
 
     @FXML
     private Button ok, cancel;
-
+  
     public changeUsernameController(){
         sceneSwitcher = new SceneSwitcher();
     }

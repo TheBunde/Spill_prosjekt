@@ -61,7 +61,7 @@ public class BattlefieldController{
     private VBox transitionVbox;
 
     public static Game game;
-    private Player player;
+    private PlayerActions player;
     private Lighting light = new Lighting();
     private InnerShadow shadow = new InnerShadow();
 
@@ -77,7 +77,7 @@ public class BattlefieldController{
     }
 
     public void initialize() {
-        player = new Player(playerImage);
+        player = new PlayerActions(playerImage);
         cellWidth = mapGrid.getPrefWidth()/(16.0);
         cellHeight = mapGrid.getPrefHeight()/(16.0);
 
@@ -120,12 +120,14 @@ public class BattlefieldController{
                     TeamMatesController.updateListView();
                 });
             }
-        },0 ,1200);
+        },0 ,2200);
     }
 
     public void attackButtonPressed(){
         player.setAttackPressed(!player.isAttackPressed());
         if (player.isAttackPressed()) {
+            weaponOne.setDisable(true);
+            weaponTwo.setDisable(true);
             moveButton.setDisable(true);
             endTurnButton.setDisable(true);
             new Thread(new Runnable() {
@@ -186,6 +188,8 @@ public class BattlefieldController{
         endTurnButton.setDisable(false);
         attackButton.getStyleClass().clear();
         attackButton.getStyleClass().add("button");
+        weaponOne.setDisable(false);
+        weaponTwo.setDisable(false);
 
         for (Monster m : game.getMonsters()){
             m.hideAttackPane();
@@ -241,8 +245,9 @@ public class BattlefieldController{
     }
 
     public void endTurnButtonPressed(){
-        player.resetUsedActions();
         game.endTurn();
+        checkForPlayerTurn();
+        player.resetUsedActions();
     }
 
     public void helpButtonPressed(){

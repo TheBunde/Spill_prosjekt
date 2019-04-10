@@ -1,7 +1,7 @@
 /**
  * Unused draft of the how the game would work
  * Later it was used as a draft for the final result
- * @author Helene Jonson
+ * @author heleneyj
  */
 /*
 package Gamelogic;

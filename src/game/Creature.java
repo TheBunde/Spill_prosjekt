@@ -1,10 +1,11 @@
 /**
  * Both monsters and playable characters are creatures
- * @authors (Hvem andre?) & Helene Jonson
+ * @authors (Hvem andre?) & heleneyj
  */
 package game;
 
 import java.util.ArrayList;
+
 import main.*;
 import audio.SFXPlayer;
 import javafx.scene.image.Image;
@@ -142,34 +143,66 @@ public abstract class Creature {
         }
     }
 
+    /**
+     * get-methods for seeing hp for the creature
+     * @return hp       returns health points
+     */
     public int getHp() {
         return hp;
     }
 
+    /**
+     * set-method for setting new hp after damage is dealt
+     * @param hp      sets the new hp level
+     */
     public void setHp(int hp) {
         this.hp = hp;
     }
 
+    /**
+     * get-method for the armor class
+     * @return ac       the value of the armor class
+     */
     public int getAc() {
         return ac;
     }
 
+    /**
+     * get-method for the creatures name
+     * @return creatureName        the name of the creature
+     */
     public String getCreatureName() {
         return creatureName;
     }
 
+    /**
+     * get-method for the attack bonus
+     * @return attackBonus     bonus added to attack dice
+     */
     public int getAttackBonus() {
         return attackBonus;
     }
 
+    /**
+     * get-method for getting the movement range
+     * @return movement      the range the creature can walk
+     */
     public int getMovement() {
         return movement;
     }
 
+    /**
+     * get-method for ArrayList of weapons the player has available
+     * @return weapons       the weapons available
+     */
     public ArrayList<Weapon> getWeapons() {
         return weapons;
     }
 
+    /**
+     * get-method for the damage bonus
+     * @return damageBonus      the bonus damage you deal if you hit
+     */
     public int getDamageBonus() {
         return damageBonus;
     }

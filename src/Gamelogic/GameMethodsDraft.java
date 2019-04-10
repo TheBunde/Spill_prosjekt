@@ -1,7 +1,7 @@
 /**
  * Unused first draft of methods
  * Later changed to fit the game
- * @ author Magnus Baugerud & Helene Jonson
+ * @ author magnubau & heleneyj
  */
 /*
 package Gamelogic;
@@ -88,7 +88,7 @@ public class GameMethods {
     */
 
     /**
-    * Method to move players
+    * Method to move players in the grid
     * @param playerNow      a Creature parameter that is the player that attacks
     * @return boolean       returns true if move was legal. Return false if move was illegal
     */

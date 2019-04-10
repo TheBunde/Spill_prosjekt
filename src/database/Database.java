@@ -1,6 +1,5 @@
 package database;
 
-
 import main.*;
 import chat.Chat;
 import game.Creature;
@@ -11,9 +10,6 @@ import javafx.scene.control.Alert;
 import user.Password;
 import org.apache.commons.dbcp2.BasicDataSource;
 import user.User;
-//
-//
-// import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -24,14 +20,19 @@ public class Database {
     public Chat chat;
     private Alert alert;
 
-    //Setup for database
+    /**
+     * Constructor for Database
+     */
     public Database(){
         this.manager = new ManageConnection();
         this.bds = DataSource.getInstance().getBds();
         this.chat = new Chat();
     }
 
-    //Fetches messages from chat
+    /**
+     * Fetches messages from the gamelobby the user is part of
+     * Adds these messages to the ObservableList in the Chat class
+     */
     public void getMessagesFromChat(){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -41,10 +42,11 @@ public class Database {
             String prepString = "SELECT chat_message.message_id, chat_message.user_id, message, username, time_stamp FROM chat_message LEFT OUTER JOIN usr ON (chat_message.user_id = usr.user_id) WHERE chat_message.lobby_key = ? AND chat_message.message_id > ? ORDER BY message_id DESC LIMIT 30";
             prepStmt = con.prepareStatement(prepString);
             prepStmt.setInt(1, Main.user.getLobbyKey());
+            /* Only fetches messages that has a message id higher than the last seen message id */
             prepStmt.setInt(2, chat.getLastSeenMessageId());
-
             res = prepStmt.executeQuery();
             while (res.next()) {
+                /* If message has no user_id, it is an event message */
                 if (res.getInt("user_id") == 0){
                     chat.addMessage(res.getInt("message_id"), "Event", res.getString("message"), "", true);
                 }
@@ -68,7 +70,13 @@ public class Database {
         }
     }
 
-    //Sends new message to the chat that the user is connected to
+    /**
+     * Adds a message to the gamelobby the user is part of
+     *
+     * @param message   the text to be added
+     * @param event     boolean for eventmessage
+     * @return          true if adding was successful, false otherwise
+     */
     public boolean addChatMessage(String message, boolean event){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -78,7 +86,10 @@ public class Database {
         try {
             con = this.bds.getConnection();
             con.setAutoCommit(false);
-            //Using a prepared statement to execute an insert into the chat_message entity
+            /*
+            * Separates event and user messages
+            * Event messages has user_id = NULL in the database
+            */
             if (event){
                 String prepString = "INSERT INTO chat_message VALUES(?, DEFAULT, NULL, ?, NOW())";
                 prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
@@ -94,6 +105,7 @@ public class Database {
             }
             prepStmt.executeUpdate();
             con.commit();
+            /* Returns the generated message id */
             res = prepStmt.getGeneratedKeys();
             res.next();
             messageId = res.getInt(1);
@@ -108,6 +120,7 @@ public class Database {
             this.manager.closeRes(res);
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con);
+            /* checks for error */
             if (messageId <= 0){
                 status = false;
             }
@@ -115,15 +128,18 @@ public class Database {
         }
     }
 
-
+    /**
+     * Checks for existence of specific game lobby
+     *
+     * @param lobbyKey  the lobby key
+     * @return          true if lobby exists, false otherwise
+     */
     public boolean gameLobbyExists(int lobbyKey){
         Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
-        //Boolean variable to keep track of the existence of the specified gamelobby
         boolean lobbyExists = false;
         try{
-            //Checks if gamelobby with the specified lobbykey exists
             con = this.bds.getConnection();
             String prepString = "SELECT lobby_key FROM game_lobby WHERE lobby_key = ?";
             prepStmt = con.prepareStatement(prepString);
@@ -142,11 +158,21 @@ public class Database {
         }
     }
 
+    /**
+     * Connects the user to a lobby with the specific lobby key
+     *
+     * @param lobbyKey  the lobby key
+     * @return          true if user is connected, false otherwise
+     */
     public boolean connectUserToGameLobby(int lobbyKey){
         Connection con = null;
         PreparedStatement prepStmt = null;
         boolean status = true;
         System.out.println(this.isJoinable(lobbyKey));
+        /*
+         * The lobby must exist and be joinable
+         * The user registered in the client must have a valid user id
+         */
         if (this.gameLobbyExists(lobbyKey) && Main.user.getUser_id() != -1 && this.isJoinable(lobbyKey)){
             try {
                 con = this.bds.getConnection();
@@ -176,6 +202,11 @@ public class Database {
         return status;
     }
 
+    /**
+     * Disconnects user from the lobby it is connected to
+     *
+     * @return  true if disconnected, false otherwise
+     */
     public boolean disconnectUserFromGameLobby(){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -203,6 +234,11 @@ public class Database {
         }
     }
 
+    /**
+     * Creates a new lobby with a unique lobby key
+     *
+     * @return true if lobby is created, false otherwise
+     */
     public boolean createNewLobby(){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -230,11 +266,18 @@ public class Database {
             this.manager.closeRes(res);
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con);
+            /* Connects the user to the new lobby */
             this.connectUserToGameLobby(lobbyKey);
             return status;
         }
     }
 
+    /**
+     * Sets the gamelobby ready to travel to the battlefield
+     *
+     * @param lobbyKey  the key for the lobby
+     * @return          true if change is made, false otherwise
+     */
     public boolean setBattlefieldReady(int lobbyKey){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -244,11 +287,9 @@ public class Database {
             con = this.bds.getConnection();
             con.setAutoCommit(false);
             String prepString = "UPDATE game_lobby SET battlefield_ready = TRUE WHERE lobby_key = ?";
-            prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
+            prepStmt = con.prepareStatement(prepString);
             prepStmt.setInt(1, lobbyKey);
             prepStmt.executeUpdate();
-            res = prepStmt.getGeneratedKeys();
-            res.next();
             con.commit();
         }
         catch (SQLException sq){
@@ -265,6 +306,12 @@ public class Database {
         }
     }
 
+    /**
+     * Checks if the specific gamelobby is ready to travel to battlefield
+     *
+     * @param lobbyKey  the lobby key
+     * @return          true if ready, false otherwise
+     */
     public boolean fetchBattlefieldReady(int lobbyKey) {
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -289,6 +336,10 @@ public class Database {
         }
     }
 
+     /**
+     * Fetches username from the DB
+     * @return username for the user
+     */
     public String fetchUsername() {
         Connection con = null;
         String username = "";
@@ -313,6 +364,11 @@ public class Database {
         return username;
     }
 
+    /**
+     * Takes user_id as parameter and fetches rank from the DB
+     * @param userId id for the user
+     * @return rank
+     */
     public int fetchRank(int userId){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -370,6 +426,14 @@ public class Database {
         }
     }
 
+     /**
+     *Register a new user in the DB
+     * Takes username as parameter
+     * An id for the user is generated automatically
+     * Rank, lobbyKey and host in the user-table sets as default
+     * @param un username for the user
+     * @return 1 if the user is registered successfully
+     */
     public int registerUser(String un) {
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -377,7 +441,7 @@ public class Database {
         int user_id = -1;
         try {
             con = this.bds.getConnection();
-            con.setAutoCommit(false);
+            con.setAutoCommit(false);                    //Start transaction
             String prepString = "INSERT INTO usr VALUES(DEFAULT, ?, 0, DEFAULT, DEFAULT)";
             prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
             prepStmt.setString(1, un);
@@ -385,9 +449,9 @@ public class Database {
             res = prepStmt.getGeneratedKeys();
             res.next();
             user_id = res.getInt(1);
-            Main.user = new User(user_id, un, 0);
-            Main.user.setUser_id(user_id);
-            con.commit();
+            Main.user = new User(user_id, un, 0);  //create an instance of User
+            Main.user.setUser_id(user_id);              //Generated user_id is set as id for the user
+            con.commit();                              //The transaction is done
 
             if (added == 1) {
                 alert = new Alert(Alert.AlertType.INFORMATION);
@@ -398,7 +462,7 @@ public class Database {
             }
 
         } catch (SQLException sq) {
-            this.manager.rollback(con);
+            this.manager.rollback(con);              //The changes does not happen if SQLException is thrown
             sq.printStackTrace();
             alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning Dialog");
@@ -406,7 +470,7 @@ public class Database {
             alert.setContentText("adding failed");
             alert.showAndWait();
         } finally {
-            this.manager.turnOnAutoCommit(con);
+            this.manager.turnOnAutoCommit(con);      //Turn on Autocommit after the transaction is completed
             this.manager.closeRes(res);
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con);
@@ -414,6 +478,11 @@ public class Database {
         }
     }
 
+    /**
+     * Checks if the username exists in the DB
+     * @param username username for the user
+     * @return true if the username exists already in the DB, otherwise return false
+     */
     public boolean findUsername(String username){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -428,7 +497,8 @@ public class Database {
             if(res.next()){
                 ok = true;
             }else{
-                System.out.println("not found");
+                System.out.println("not found");   //If the username is not found in the DB
+                return false;
             }
         }
         catch (SQLException sq){
@@ -444,38 +514,51 @@ public class Database {
         }
     }
 
+    /**
+     * Takes new username as parameter and sets it as username
+     * @param newUn new username for the user
+     * @return true if transaction is done successfully, otherwise returns false
+     */
     public boolean setNewUsername(String newUn){
         Connection con = null;
         PreparedStatement prepStmt = null;
         boolean status = true;
         try{
             con = this.bds.getConnection();
-            con.setAutoCommit(false);
+            con.setAutoCommit(false);             //start transaction
             String prepString = "UPDATE usr SET username = ? WHERE user_id = ?";
             prepStmt = con.prepareStatement(prepString);
             prepStmt.setString(1, newUn);
             prepStmt.setInt(2, Main.user.getUser_id());
             prepStmt.executeUpdate();
-            con.commit();
-            Main.user.setUsername(newUn);
+            con.commit();                        //The transaction is done
+            Main.user.setUsername(newUn);        //Sets new username for the Main.user
         }
         catch (SQLException sq){
-            this.manager.rollback(con);
+            this.manager.rollback(con);         //The changes does not happen if SQLException is thrown
             sq.printStackTrace();
             status = false;
         }
         finally {
-            this.manager.turnOnAutoCommit(con);
+            this.manager.turnOnAutoCommit(con);    //Turn on Autocommit after the transaction is completed
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con);
             return status;
         }
     }
 
-
+    /**
+     * Takes password as parameter and creates a hashed and slated password
+     * @param pw password for the user
+     * @return true if the password is created successfully, otherwise returns false
+     */
     public boolean addPassword(String pw){
 
-        Password pass = new Password();
+        Password pass = new Password();      //create an instance of Password
+
+        /*
+        Slat is an array of the randomized bytes, it is generated using the method getSalt() from class Password.java
+         */
         byte[] salt = pass.getSalt();
 
         Connection con = null;
@@ -485,22 +568,22 @@ public class Database {
 
         try{
             con = this.bds.getConnection();
-            con.setAutoCommit(false);
+            con.setAutoCommit(false);            //Start transaction
             String prepString = "INSERT INTO password VALUES(?, ?, ?)";
             prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
             prepStmt.setInt(1, Main.user.getUser_id());
             prepStmt.setBytes(2, salt);
             prepStmt.setString(3, pass.createPassword(pw, salt));
             prepStmt.executeUpdate();
-            con.commit();
+            con.commit();                       //Transaction is done
         }
         catch (SQLException sq){
-            this.manager.rollback(con);
+            this.manager.rollback(con);         //The changes does not happen if SQLException is thrown
             sq.printStackTrace();
             status = false;
         }
         finally {
-            this.manager.turnOnAutoCommit(con);
+            this.manager.turnOnAutoCommit(con);  //Turn on Autocommit after the transaction is completed
             this.manager.closeRes(res);
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con);
@@ -508,20 +591,25 @@ public class Database {
         }
     }
 
-    public boolean deleteOldPassword(String newPw){
+    /**
+     * Takes the old password as parameter, and deletes it
+     * @param oldPw old password for the user
+     * @return true if the password is deleted successfully, otherwise return false
+     */
+    public boolean deleteOldPassword(String oldPw){
 
         Connection con = null;
         PreparedStatement prepStmt = null;
         boolean status = true;
         try{
             con = this.bds.getConnection();
-            con.setAutoCommit(false);
+            con.setAutoCommit(false);             //Start the transaction
             String prepString = "delete from password WHERE user_id = ?";
             prepStmt = con.prepareStatement(prepString);
             prepStmt.setInt(1, Main.user.getUser_id());
 
             prepStmt.executeUpdate();
-            con.commit();
+            con.commit();                        //The transaction is done
         }
         catch (SQLException sq){
             this.manager.rollback(con);
@@ -529,13 +617,18 @@ public class Database {
             status = false;
         }
         finally {
-            this.manager.turnOnAutoCommit(con);
+            this.manager.turnOnAutoCommit(con);   //Turn on Autocommit after the transaction is completed
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con);
             return status;
         }
     }
 
+    /**
+     * Fetches salt from the DB
+     * @param un username for the user
+     * @return the salted password, if SQLException is thrown returns null
+     */
     public byte[] fetchSalt(String un){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -568,7 +661,11 @@ public class Database {
         return saltPass;
     }
 
-
+    /**
+     * Fetches salt from the DB
+     * @param un username for the user
+     * @return the hashed password, if SQLException is thrown returns null
+     */
     public String fetchHash(String un){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -601,6 +698,11 @@ public class Database {
         return hashpass;
     }
 
+    /**
+     * Takes username as parameter and fetches the user_id
+     * @param un username for the user
+     * @return user_id, returns -1 if the SQLException is thrown
+     */
     public int fetchUser_id(String un){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -629,8 +731,6 @@ public class Database {
         }
         return user_id;
     }
-
-
 
     public int createPlayer(boolean playable) {
         Connection con = null;

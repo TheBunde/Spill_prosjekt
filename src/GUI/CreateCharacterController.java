@@ -1,6 +1,5 @@
 package GUI;
 
-import main.*;
 import audio.MusicPlayer;
 import audio.SFXPlayer;
 import javafx.fxml.FXML;
@@ -10,7 +9,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
+import main.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 

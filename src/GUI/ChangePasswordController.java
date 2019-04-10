@@ -7,6 +7,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
+/**
+ * LoginController.java
+ * The program handles the components in Login-scene.
+ * @author henrikwt, saramoh
+ */
 public class ChangePasswordController {
 
     private Alert alert = new Alert(Alert.AlertType.WARNING);

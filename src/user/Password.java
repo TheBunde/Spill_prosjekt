@@ -14,7 +14,7 @@ public class Password {
     private final Random rand = new SecureRandom();
 
     /**
-     * 
+     *
      * @param password
      * @param salt
      * @return

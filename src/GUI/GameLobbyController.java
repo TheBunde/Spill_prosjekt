@@ -1,12 +1,11 @@
 package GUI;
 
-import main.*;
 import audio.MusicPlayer;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-
+import main.*;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;

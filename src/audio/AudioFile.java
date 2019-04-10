@@ -32,6 +32,8 @@ public class AudioFile implements LineListener{
             soundClip.addLineListener(this);
             soundClip.open(ais);
             fControl = (FloatControl) soundClip.getControl(FloatControl.Type.MASTER_GAIN);
+            ais.close();
+            is.close();
 
         } catch (Exception exc) {
             exc.printStackTrace();

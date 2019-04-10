@@ -1,27 +1,27 @@
 package GUI;
 
-
 import main.*;
 import chat.ChatMessage;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.collections.ObservableList;
-
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
-
-public class chatController implements Initializable {
+/**
+ * Controller class to handle the Graphical User Interface for the Chat
+ *
+ * @author williad
+ */
+public class chatController{
 
     @FXML
     private ListView<ChatMessage> list;
@@ -36,12 +36,15 @@ public class chatController implements Initializable {
 
     public static Timer timer = new Timer();
 
+    /**
+     * Constructor for chatController
+     */
     public chatController(){
         chatMessageObservableList = Main.db.chat.getMessages();
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources){
+
+    public void initialize(){
         chatMessageObservableList.clear();
         chatMessageObservableList.add(new ChatMessage(0 ,"Event" ,"Welcome to the Chat! Here you can communicate with your teammates", "", true));
         list.setItems(chatMessageObservableList);
