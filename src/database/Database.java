@@ -30,7 +30,7 @@ public class Database {
     }
 
     /**
-     * Fetches messages from the gamelobby the user is part of
+     * Fetches messages from the gamelobby the user is part of<br>
      * Adds these messages to the ObservableList in the Chat class
      */
     public void getMessagesFromChat(){

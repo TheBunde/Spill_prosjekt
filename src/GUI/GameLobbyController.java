@@ -10,6 +10,11 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * Controller class for handling the Graphical User Interface for the game lobby-menu
+ *
+ * @author williad, magnubau, henrikwt
+ */
 public class GameLobbyController {
     @FXML
     private Button readyButton;
@@ -27,10 +32,14 @@ public class GameLobbyController {
     private int playerLimit = 4;
     private boolean joinable = true;
 
+    /**
+     * Method that runs when the corresponding FXML-file for this Controller is loaded
+     */
     public void initialize(){
         lobbyKeyLabel.setText("" + Main.user.getLobbyKey());
         MusicPlayer.getInstance().stopSong();
         MusicPlayer.getInstance().changeSong(10);
+        /* Timer-loop for checking if all players are ready to travel to battlefield */
         playerReadyTimer = new Timer();
         playerReadyTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -39,14 +48,15 @@ public class GameLobbyController {
                     try {
                         playersReady();
                     }catch (Exception e){
-                        System.out.println("travel to battlefield failed: " + e);
                         e.printStackTrace();
                     }
                 });
             }
         },0 ,1200);
 
+        /* Timer-loop for limiting the amount of players part of the lobby */
         limitPlayerTimer = new Timer();
+        /* Player limit is enforced by the host */
         if (Main.user.isHost()) {
             limitPlayerTimer.scheduleAtFixedRate(new TimerTask() {
                 @Override
@@ -64,8 +74,11 @@ public class GameLobbyController {
         }
     }
 
+    /**
+     * 
+     * @throws Exception
+     */
     public void readyButtonPressed() throws Exception{
-
         if(!ready){
             readyButton.setStyle("-fx-background-color: #2ecc71;");
             ready = true;

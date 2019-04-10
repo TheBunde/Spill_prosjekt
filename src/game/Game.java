@@ -5,11 +5,10 @@ import java.util.ArrayList;
 import javafx.scene.layout.GridPane;
 
 /**
- * Game.java
+ * Runs the game and maintains a connection to the database for pushing and updating game data.
  *
- * This class
+ * @author magnubau, williad, heleneyj
  */
-
 public class Game {
     private ArrayList<Creature> creatures = new ArrayList<>();
     private Character playerCharacter;
@@ -44,6 +43,10 @@ public class Game {
         }
     }
 
+    /**
+     * Fetches and pushes data to the database.<br>
+     * This method serves as one cycle of the game.
+     */
     public void update(){
         if (this.isPlayerCharacterTurn()){
             pushCreatureData();
@@ -57,6 +60,10 @@ public class Game {
         }
     }
 
+    /**
+     * Resets the player turn on client and in the database.<br>
+     * Used when changing to a new level.
+     */
     public void resetPlayerTurn(){
         if (Main.user.isHost()){
             Main.db.incrementPlayerTurn(0);
@@ -64,12 +71,20 @@ public class Game {
         this.setPlayerTurn(0);
     }
 
+    /**
+     * Pushes data about the next level to the database.<br>
+     */
     public void pushNewLevel(){
+        /* Adds new monsters based on amount of players */
         int playerAmount = this.getCharacters().size();
         addNewMonstersToLobby(this.level.getLevelId() + 1, playerAmount);
         Main.db.setLevelId(Main.user.getLobbyKey(), this.level.getLevelId() + 1);
         if (this.level.getLevelId() + 1 <= this.getAmountOfLevels()) {
             if (this.level.getLevelId() + 1 == this.getAmountOfLevels()){
+                /*
+                 * If next level is last level
+                 * Manually sets positions for boss battle
+                 */
                 for (int i = 0; i < playerAmount; i++){
                     Main.db.setPos(7 - (int)Math.round(playerAmount/2) + 2*i, 13, this.getCharacters().get(i).getPlayerId());
                 }
@@ -77,11 +92,15 @@ public class Game {
             else {
                 assureNoOverlap();
             }
+            /* If next level is not last level */
             upgradePlayerStats();
         }
         this.resetPlayerTurn();
     }
 
+    /**
+     * Assures that all creatures are placed in unique cells
+     */
     public void assureNoOverlap(){
         ArrayList<Creature> newCreatures = Main.db.fetchCreaturesFromLobby();
         for (int i = 0; i < newCreatures.size(); i++){
@@ -89,10 +108,12 @@ public class Game {
                 Creature c1 = newCreatures.get(i);
                 Creature c2 = newCreatures.get(j);
                 if (c1.getxPos() == c2.getxPos() && c1.getyPos() == c2.getyPos()){
+                    /* Finds new position */
                     int newX = (int)Math.floor(Math.random()*16);
                     int newY = (int)Math.floor(Math.random()*16);
                     boolean overlapsAgain = true;
                     while(overlapsAgain){
+                        /* Finds new position if new overlap */
                         overlapsAgain = false;
                         newX = (int)Math.floor(Math.random()*16);
                         newY = (int)Math.floor(Math.random()*16);
@@ -107,27 +128,39 @@ public class Game {
                 }
             }
         }
+        /* Pushes the new positions */
         for (Creature c : creatures){
             Main.db.setPos(c.getxPos(), c.getyPos(), c.getPlayerId());
         }
     }
 
+    /**
+     * Increases the hp and damagebonus for every Character
+     */
     public void upgradePlayerStats(){
         ArrayList<Character> characters = this.getCharacters();
         for (Character c : characters){
             Main.db.setHp((int)(c.getInitialHp()*1.25), c.getPlayerId());
             Main.db.setDamageBonus((int)(c.getDamageBonus()*1.25), c.getPlayerId());
         }
-        Main.db.addChatMessage("You feel the energy from this battle, you are now more powerful!", true);
+        Main.db.addChatMessage("Your body is ready for the next fight!", true);
     }
 
-
+    /**
+     * Adds new monsters from a specific level to the game lobby
+     *
+     * @param levelId       level id
+     * @param playerAmount  amount of player
+     */
     public void addNewMonstersToLobby(int levelId, int playerAmount){
+        /* Fetches the creature ids from the lobby */
         ArrayList<Integer> creatureIds = Main.db.fetchMonstersFromLevel(levelId, playerAmount);
+        /* Sets random positions to the monsters and creates a player entity for these */
         for (int i = 0; i < creatureIds.size(); i++){
             int playerId = Main.db.createPlayer(false);
             int posX = (int)Math.floor(Math.random()*16);
             int posY = (int)Math.floor(Math.random()*16);
+            /* If the creature is a dragon */
             if (creatureIds.get(i) >= 13){
                 posX = 8;
                 posY = 7;
@@ -136,14 +169,21 @@ public class Game {
         }
     }
 
-
+    /**
+     * Method fetches data from the database and updates the client data using this
+     */
     public void updateCreatureData(){
         this.updatePlayerTurn();
+        /* Iterates through all creatures to update the data */
         for (int i = 0; i < creatures.size(); i++) {
             Creature c = creatures.get(i);
             int playerId = c.getPlayerId();
             ArrayList<Integer> newPos = Main.db.fetchPlayerPos(playerId);
             int newHp = Main.db.fetchPlayerHp(playerId);
+            /*
+             * Does not update the position for the creature the player is controlling
+             * This is to avoid overwriting any moves the player does when it is its turn
+             */
             if (playerId != Main.user.getPlayerId()) {
                 c.setNewPos(newPos.get(0), newPos.get(1));
             }
@@ -171,17 +211,27 @@ public class Game {
         }
     }
 
+    /**
+     * Update the value for playerTurn from the database
+     */
     public void updatePlayerTurn(){
         this.setPlayerTurn(Main.db.fetchPlayerTurn());
     }
 
+    /**
+     * @return an ArrayList of the creatures
+     */
     public ArrayList<Creature> getCreatures(){
         return this.creatures;
     }
 
+    /**
+     * @return an ArrayList of the characters
+     */
     public ArrayList<Character> getCharacters(){
         ArrayList<Character> characters= new ArrayList<>();
         for(Creature i: creatures){
+            /* If the creature is a character */
             if(i instanceof Character){
                 characters.add((Character) i);
             }
@@ -203,10 +253,15 @@ public class Game {
         return false;
     }
 
+    /**
+     * Updates the data for players being ready to transition to the new level
+     */
     public void updatePlayersReadyForNewLevel(){
+        /* Fetches an ArrayList to update the data stored on the client */
         ArrayList<Boolean> playersReadyForNewLevel = Main.db.fetchPlayersReadyForLevel();
         for (int i = 0; i < playersReadyForNewLevel.size(); i++){
-            if (this.getCharacters().get(i) != this.playerCharacter) {
+            /* Updates only the values for the other players to avoid overwriting the value for the player */
+            if (this.getCharacters().get(i) != this.getPlayerCharacter()) {
                 this.getCharacters().get(i).setReadyForNewLevel(playersReadyForNewLevel.get(i));
             }
         }
@@ -226,6 +281,11 @@ public class Game {
         return ready;
     }
 
+    /**
+     * Sets the value in both the client and the database
+     *
+     * @param ready boolean to set
+     */
     public void setPlayerReadyForNewLevel(boolean ready){
         this.playerCharacter.setReadyForNewLevel(ready);
         Main.db.setReadyForNewLevel(this.playerCharacter.getPlayerId(), ready);
@@ -241,8 +301,12 @@ public class Game {
         return monsters;
     }
 
+    /**
+     * Checks if all monsters on the current level are dead
+     *
+     * @return  true if all monsters are dead, false otherwise
+     */
     public boolean isLevelCleared(){
-        boolean cleared = false;
         boolean allMonstersDead = true;
         ArrayList<Monster> monsters = this.getMonsters();
         for (Monster m : monsters){
@@ -250,8 +314,7 @@ public class Game {
                 allMonstersDead = false;
             }
         }
-        cleared = allMonstersDead;
-        return cleared;
+        return allMonstersDead;
     }
 
     public boolean isGameOver(){
@@ -267,15 +330,24 @@ public class Game {
         return gameOver;
     }
 
+    /**
+     * Fetches the next level from the database and changes to it
+     */
     public void changeToNewLevel() {
+        /* Resets the playerReadyForNewLevel value */
         this.setPlayerReadyForNewLevel(false);
+        /* Updates to the new level */
         int LevelId = Main.db.fetchLevelId(Main.user.getLobbyKey());
         this.level.setLevelId(LevelId);
         this.level.updateLevel();
+        /* Removes all pawns from the map */
         GridPane mapGrid = (GridPane) this.creatures.get(0).getPawn().getParent();
         for (Creature c : this.creatures) {
             mapGrid.getChildren().remove(c.getPawn());
         }
+        /*
+         * The values for player stats has been upgraded by the the host and must therefore be fetched again
+         */
         this.creatures = Main.db.fetchCreaturesFromLobby();
         for (Creature c : this.creatures) {
             if (c.getPlayerId() == Main.user.getPlayerId()) {
@@ -284,6 +356,7 @@ public class Game {
             c.setPawnSize(mapGrid.getPrefWidth() / 16, mapGrid.getPrefHeight() / 16);
             mapGrid.add(c.getPawn(), c.getxPos(), c.getyPos());
         }
+        /* Resets playerReadyForNewLevel for all characters */
         for (Character c : this.getCharacters()){
             c.setReadyForNewLevel(false);
         }
@@ -341,34 +414,60 @@ public class Game {
         return false;
     }
 
+    /**
+     * @param creatureList ArrayList to be set
+     */
     public void setCreatures(ArrayList<Creature> creatureList){
         creatures = creatureList;
     }
 
+    /**
+     * @param level level-object to be set
+     */
     public void setLevel(Level level){
         this.level = level;
     }
 
+    /**
+     * Increments the playerTurn
+     */
     public void incrementPlayerTurn(){
         this.setPlayerTurn(this.getPlayerTurn() + 1);
     }
 
+    /**
+     * @return player turn
+     */
     public int getPlayerTurn(){
         return this.playerTurn;
     }
 
+    /**
+     * @param playerTurn turn to be set
+     */
     public void setPlayerTurn(int playerTurn){
         this.playerTurn = playerTurn;
     }
 
+    /**
+     * @return the character the player is playing as
+     */
     public Character getPlayerCharacter(){
         return this.playerCharacter;
     }
 
+    /**
+     * @param i the character to be set as the playerCharacter
+     */
     public void setPlayerCharacter(Character i){
         playerCharacter = i;
     }
 
+    /**
+     * toString-method
+     *
+     * @return a string containing game status and information
+     */
     public String toString(){
         StringBuilder string = new StringBuilder("");
         string.append("User host: " + Main.user.isHost() + "\n");

@@ -2,8 +2,8 @@ package database;
 import java.sql.*;
 
 /**
- * ManageConnection.java
- * This program is inspired from the class Opprydder.java from the book "Programmering i Java", 4.version
+ * ManageConnection.java<br>
+ * This program is inspired from the class Opprydder.java from the book "Programmering i Java", 4.version<br>
  * The program manage the use of database
  * @author saramoh
  */

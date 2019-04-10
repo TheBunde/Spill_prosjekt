@@ -3,7 +3,8 @@ package database;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 /**
- * Uses the Apache Commons library to create a connection pool
+ * Uses the Apache Commons library to create a connection pool<br>
+ * @see <a href="http://commons.apache.org/">Apache Commons</a>
  *
  * @author williad
  */

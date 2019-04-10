@@ -8,6 +8,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+/**
+ * Controller class to handle the Graphical User Interface for the find lobby-menu
+ *
+ * @author williad, shahedsa
+ */
 public class FindLobbyController {
     private SceneSwitcher sceneSwitcher;
     @FXML
@@ -17,17 +22,23 @@ public class FindLobbyController {
     @FXML
     private Label errorLabel;
 
+    /**
+     * Constructor for FindLobbyController
+     */
     public FindLobbyController() {
         sceneSwitcher = new SceneSwitcher();
     }
-    
+
+    /**
+     * Connects the user to the lobby with the typed key
+     * @throws Exception
+     */
     public void joinLobbyButtonPressed() throws Exception {
         String key = lobbyKeyInput.getText();
-        //Checking if the input is valid
+        /* Checking if the input is valid */
         if (key.length() > 0){
             if (Main.db.connectUserToGameLobby(Integer.parseInt(key))){
                 Main.db.addChatMessage(Main.user.getUsername() + " has joined the lobby as a guest", true);
-                //Loads new scene
                 SFXPlayer.getInstance().setSFX(7);
                 this.sceneSwitcher.switchScene(joinLobbyButton, "createcharacter.fxml");
                 audio.MusicPlayer.getInstance().stopSong();
@@ -46,10 +57,17 @@ public class FindLobbyController {
 
     }
 
+    /**
+     * Clears the error label
+     */
     public void clearErrorLabel(){
         errorLabel.setText("");
     }
 
+    /**
+     * Switches back to main menu
+     * @throws Exception
+     */
     public void cancelButtonPressed() throws Exception {
         SFXPlayer.getInstance().setSFX(0);
         sceneSwitcher.switchScene(cancelButton, "MainMenu.fxml");

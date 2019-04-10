@@ -52,10 +52,19 @@ public abstract class Creature {
         }
     }
 
+    /**
+     * Attacks a target-creature with the specified weapon
+     *
+     * @param target        Creature to attack
+     * @param weaponIndex   weapon to be used
+     * @return              true if hit success, false otherwise
+     */
     public boolean attackCreature(Creature target, int weaponIndex){
         Weapon weapon = this.weapons.get(weaponIndex);
+        /* Rolls a dice to determine successful hit */
         int roll = hit();
         if (!hitSuccess(roll, target)){
+            /* Sends an event message based on if target is Character or not */
             String chatMessage = "";
             if (this instanceof Character){
                 SFXPlayer.getInstance().setSFX(11);
@@ -75,11 +84,12 @@ public abstract class Creature {
             return false;
         }
 
-        int damage = 0;
-        damage += Dice.roll(weapon.getDamageDice(), weapon.getDiceAmount()) + this.damageBonus;
-
+        /* Rolls dice to determine damage */
+        int damage = Dice.roll(weapon.getDamageDice(), weapon.getDiceAmount()) + this.damageBonus;
         target.setHp(target.getHp() - damage);
-        String chatMessage = " rolled " + roll + " and dealt " + damage + " on ";
+
+        /* Sends an event message based on if target is Character or not */
+        String chatMessage = " rolled " + roll + " and dealt " + damage + " damage on ";
         if (this instanceof Character){
             SFXPlayer.getInstance().setSFX(10);
             if (Main.db != null) {
@@ -207,37 +217,63 @@ public abstract class Creature {
         return damageBonus;
     }
 
+    /**
+     * @return x-coordinate
+     */
     public int getxPos() {
         return xPos;
     }
 
+    /**
+     * @return y-coordinate
+     */
     public int getyPos() {
         return yPos;
     }
 
+    /**
+     * @param xPos x-coordinate to set
+     * @param yPos y-coordinate to set
+     */
     public void setNewPos(int xPos, int yPos) {
         this.xPos = xPos;
         this.yPos = yPos;
     }
 
+    /**
+     * @return player id
+     */
     public int getPlayerId(){
         return this.playerId;
     }
 
+    /**
+     * @return creature id
+     */
     public int getCreatureId(){
         return this.creatureId;
     }
 
+    /**
+     * @return backstory
+     */
     public String getBackstory(){
         return this.backstory;
     }
 
+    /**
+     * @param weapon weapon to add
+     */
     public void addNewWeapon(Weapon weapon){
         this.weapons.add(weapon);
     }
 
+    /**
+     * @return true if hp is less than zero, false otherwise
+     */
     public boolean updateDead(){
         if(this.hp <= 0 && !isDead()){
+            /* If player updated to be dead, the pawn-image is changed */
             SFXPlayer.getInstance().setSFX(0);
             this.setPawnImage("gravestone.png");
             isDead = true;
@@ -245,37 +281,65 @@ public abstract class Creature {
         return isDead;
     }
 
+    /**
+     * @return true if dead, false otherwise
+     */
     public boolean isDead(){
         return isDead;
     }
 
+    /**
+     * @return image url
+     */
     public String getImageUrl(){
         return this.imageUrl;
     }
 
+    /**
+     * @return JavaFX-imageView for the pawn
+     */
     public ImageView getPawn(){
         return this.pawn;
     }
 
+    /**
+     * @param imageUrl image url to be set
+     */
     public void setPawnImage(String imageUrl){
         if (this.pawn != null) {
             this.pawn.setImage(new Image("GUI/images/" + imageUrl));
         }
     }
 
+    /**
+     * Changes the size of the pawn
+     *
+     * @param width     width to be set
+     * @param height    height to be set
+     */
     public void setPawnSize(double width, double height){
         this.pawn.setFitWidth(width);
         this.pawn.setFitHeight(height);
     }
 
+    /**
+     * @return true if ready for new level, false otherwise
+     */
     public boolean isReadyForNewLevel(){
         return this.readyForNewLevel;
     }
 
+    /**
+     * @param readyForNewLevel ready for new level
+     */
     public void setReadyForNewLevel(boolean readyForNewLevel){
         this.readyForNewLevel = readyForNewLevel;
     }
 
+    /**
+     * toString-method
+     * @return String containing object-information
+     */
     public String toString() {
         String weaponNames = "";
         for(int i = 0; i < this.weapons.size(); i++){
