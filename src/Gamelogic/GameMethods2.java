@@ -1,7 +1,7 @@
 /**
  * Unused second draft of initiative method
  * Was not implemented because of lack of time
- * @author Helene Jonson
+ * @author heleneyj
  */
 /*
 package Gamelogic;

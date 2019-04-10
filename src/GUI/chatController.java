@@ -1,6 +1,5 @@
 package GUI;
 
-
 import main.*;
 import chat.ChatMessage;
 import javafx.application.Platform;

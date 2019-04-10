@@ -1,7 +1,7 @@
 package game;
 
-import java.util.ArrayList;
 import main.*;
+import java.util.ArrayList;
 import javafx.scene.layout.GridPane;
 
 /**
@@ -25,7 +25,6 @@ public class Game {
                 this.addNewMonstersToLobby(1, Main.db.fetchPlayerCount());
                 this.assureNoOverlap();
                 Main.db.setBattlefieldReady(Main.user.getLobbyKey());
-
             } else {
                 while (!Main.db.fetchBattlefieldReady(Main.user.getLobbyKey())) {
                     try {
