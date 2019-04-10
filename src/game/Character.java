@@ -1,6 +1,6 @@
 /**
  * Character are what the players can be
- * @author Helene Jonson
+ * @author heleneyj
  */
 package game;
 

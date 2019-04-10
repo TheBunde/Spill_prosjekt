@@ -1,7 +1,5 @@
 package GUI;
 
-import database.Database;
-import main.*;
 import game.Character;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -44,7 +42,7 @@ public class TeamMateListCell extends ListCell<Character> {
 
             Image image = new Image("GUI/images/" + character.getImageUrl());
             characterIV.setImage(image);
-            nameLabel.setText(Main.db.fetchUsernameFromPlayerId(character.getPlayerId()));
+            nameLabel.setText(main.db.fetchUsernameFromPlayerId(character.getPlayerId()));
             hpLabel.setText("HP: " + character.getHp() + " / " + character.getInitialHp());  //bytt ut med initialhp
             acLabel.setText("AC: " + character.getAc());
             setText(null);

@@ -1,6 +1,5 @@
 package game;
 
-import main.*;
 import audio.MusicPlayer;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -21,7 +20,7 @@ public class Level {
     }
 
     public Level(int levelId){
-        Level firstLevel = Main.db.fetchLevelObject(levelId);
+        Level firstLevel = main.db.fetchLevelObject(levelId);
         this.setLevelId(firstLevel.getLevelId());
         this.setMusic(firstLevel.getMusic());
         this.setBackgroundUrl(firstLevel.getBackgroundUrl());
@@ -55,7 +54,7 @@ public class Level {
     }
 
     public void updateLevel(){
-        Level newLevel = Main.db.fetchLevelObject(Main.db.fetchLevelId(Main.user.getLobbyKey()));
+        Level newLevel = main.db.fetchLevelObject(main.db.fetchLevelId(main.user.getLobbyKey()));
         if (newLevel != null) {
             this.setMusic(newLevel.getMusic());
             this.setBackgroundUrl(newLevel.getBackgroundUrl());

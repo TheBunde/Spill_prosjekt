@@ -1,6 +1,5 @@
 package GUI;
 
-import main.*;
 import audio.MusicPlayer;
 import audio.SFXPlayer;
 import javafx.fxml.FXML;
@@ -40,14 +39,14 @@ public class MainMenuController {
 
         MusicPlayer.getInstance().changeSong(2);
         MusicPlayer.getInstance().keepPlaying(2);
-        Main.user.setPlayerId(-1);
-        Main.db.setHost(false);
+        main.user.setPlayerId(-1);
+        main.db.setHost(false);
     }
 
     public void startNewGameButtonPressed() throws Exception{
-        Main.db.createNewLobby();
-        Main.db.setHost(true);
-        Main.db.addChatMessage(Main.user.getUsername() + " has joined the lobby as the host", true);
+        main.db.createNewLobby();
+        main.db.setHost(true);
+        main.db.addChatMessage(main.user.getUsername() + " has joined the lobby as the host", true);
         SFXPlayer.getInstance().setSFX(0);
         MusicPlayer.getInstance().stopSong();
         MusicPlayer.getInstance().changeSong(3);

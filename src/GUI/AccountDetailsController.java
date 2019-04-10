@@ -1,6 +1,5 @@
 package GUI;
 
-import main.*;
 import audio.SFXPlayer;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -45,8 +44,8 @@ public class AccountDetailsController {
 
 
     public void getInfo() throws Exception {
-        usernameOutput.setText(Main.db.fetchUsername());
-        rankOutput.setText("Rank: " + Main.db.fetchRank(Main.user.getUser_id()));
+        usernameOutput.setText(main.db.fetchUsername());
+        rankOutput.setText("Rank: " + main.db.fetchRank(main.user.getUser_id()));
 
     }
    

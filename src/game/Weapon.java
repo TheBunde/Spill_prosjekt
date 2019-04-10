@@ -1,6 +1,6 @@
 /**
  * The weapons and the data to the corresponding weapon
- * @author Helene Jonson
+ * @author heleneyj
  */
 package game;
 
@@ -29,10 +29,18 @@ public class Weapon {
         return damageDice;
     }
 
+    /**
+     *
+     * @return ranged       is true if the weapon is ranged, false otherwise
+     */
     public boolean isRanged(){
         return this.ranged;
     }
 
+    /**
+     *
+     * @return diceAmount     the amount of dice thrown
+     */
     public int getDiceAmount() {
         return diceAmount;
     }
@@ -41,6 +49,11 @@ public class Weapon {
         return this.imageUrl;
     }
 
+
+    /**
+     * basic toString method
+     * @return        returns everything in this
+     */
     @Override
     public String toString() {
         return "Name: " + this.getName() + "\nIs ranged: " + this.isRanged() + "\nDamageDice: " + this.getDamageDice() + "\nDiceAmount: " + this.getDiceAmount();

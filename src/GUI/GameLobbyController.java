@@ -1,6 +1,5 @@
 package GUI;
 
-import main.*;
 import audio.MusicPlayer;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -29,7 +28,7 @@ public class GameLobbyController {
     private boolean joinable = true;
 
     public void initialize(){
-        lobbyKeyLabel.setText("" + Main.user.getLobbyKey());
+        lobbyKeyLabel.setText("" + main.user.getLobbyKey());
         MusicPlayer.getInstance().stopSong();
         MusicPlayer.getInstance().changeSong(10);
         playerReadyTimer = new Timer();
@@ -48,7 +47,7 @@ public class GameLobbyController {
         },0 ,1200);
 
         limitPlayerTimer = new Timer();
-        if (Main.user.isHost()) {
+        if (main.user.isHost()) {
             limitPlayerTimer.scheduleAtFixedRate(new TimerTask() {
                 @Override
                 public void run() {
@@ -70,24 +69,24 @@ public class GameLobbyController {
         if(!ready){
             readyButton.setStyle("-fx-background-color: #2ecc71;");
             ready = true;
-            Main.db.addChatMessage(Main.user.getUsername() + " is ready", true);
-            Main.db.isReady(true);
+            main.db.addChatMessage(main.user.getUsername() + " is ready", true);
+            main.db.isReady(true);
         }else if(ready){
             readyButton.setStyle("-fx-background-color: #cccccc;");
             ready = false;
-            Main.db.addChatMessage(Main.user.getUsername() + " is not ready", true);
-            Main.db.isReady(false);
+            main.db.addChatMessage(main.user.getUsername() + " is not ready", true);
+            main.db.isReady(false);
         }
     }
 
     public void backToMenuButtonPressed() throws Exception{
-        if (Main.db.fetchPlayerCount() == 1){
-            Main.db.setJoinable(false);
+        if (main.db.fetchPlayerCount() == 1){
+            main.db.setJoinable(false);
         }
-        Main.db.addChatMessage(Main.user.getUsername() + " has left the lobby", true);
-        Main.db.disconnectPlayerFromLobby(Main.db.fetchPlayerId());
-        Main.db.disconnectUserFromGameLobby();
-        Main.db.setHost(false);
+        main.db.addChatMessage(main.user.getUsername() + " has left the lobby", true);
+        main.db.disconnectPlayerFromLobby(main.db.fetchPlayerId());
+        main.db.disconnectUserFromGameLobby();
+        main.db.setHost(false);
         chatController.timer.cancel();
         chatController.timer.purge();
         playerReadyTimer.cancel();
@@ -100,7 +99,7 @@ public class GameLobbyController {
 
     public void playersReady() throws Exception{
         playersReady = 0;
-        ArrayList<Boolean> players = Main.db.everyoneIsReady();
+        ArrayList<Boolean> players = main.db.everyoneIsReady();
         for(int i = 0; i < players.size(); i++){
             if(players.get(i)){
                playersReady++;
@@ -115,22 +114,22 @@ public class GameLobbyController {
             playerReadyTimer.purge();
             limitPlayerTimer.cancel();
             limitPlayerTimer.purge();
-            Main.db.setJoinable(false);
+            main.db.setJoinable(false);
             this.sceneSwitcher.switchScene(readyButton , "Battlefield.fxml");
         }
     }
 
     public void limitPlayers(){
-        ArrayList<Boolean> players = Main.db.everyoneIsReady();
+        ArrayList<Boolean> players = main.db.everyoneIsReady();
         if (players.size() >= this.playerLimit){
-            Main.db.setJoinable(false);
+            main.db.setJoinable(false);
             if (joinable) {
                 joinable = false;
-                Main.db.addChatMessage("Player limit reached", true);
+                main.db.addChatMessage("Player limit reached", true);
             }
         }
         else if(playersReady != players.size()){
-            Main.db.setJoinable(true);
+            main.db.setJoinable(true);
             joinable = true;
         }
     }

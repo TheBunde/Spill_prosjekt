@@ -1,6 +1,5 @@
 package GUI;
 
-import main.*;
 import audio.MusicPlayer;
 import audio.SFXPlayer;
 import javafx.fxml.FXML;
@@ -36,7 +35,7 @@ public class RegisterController {
             alert.setContentText("Field can not be empty.");
             alert.showAndWait();
         }
-        else if (Main.db.findUsername(usernameInput.getText().trim())) {
+        else if (main.db.findUsername(usernameInput.getText().trim())) {
             alert.setTitle("Check Username");
             alert.setHeaderText(null);
             alert.setContentText("Username is taken");
@@ -50,8 +49,8 @@ public class RegisterController {
             alert.showAndWait();
 
         }else{
-            Main.db.registerUser(usernameInput.getText().trim());
-            Main.db.addPassword(passwordInput.getText().trim());
+            main.db.registerUser(usernameInput.getText().trim());
+            main.db.addPassword(passwordInput.getText().trim());
             SFXPlayer.getInstance().setSFX(0);
             audio.MusicPlayer.getInstance().stopSong();
             MusicPlayer.getInstance().changeSong(2);

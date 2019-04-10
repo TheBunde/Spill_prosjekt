@@ -1,7 +1,6 @@
 package GUI;
 
 
-import main.*;
 import chat.ChatMessage;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -37,7 +36,7 @@ public class chatController implements Initializable {
     public static Timer timer = new Timer();
 
     public chatController(){
-        chatMessageObservableList = Main.db.chat.getMessages();
+        chatMessageObservableList = main.db.chat.getMessages();
     }
 
     @Override
@@ -76,7 +75,7 @@ public class chatController implements Initializable {
             @Override public void run(){
                 disableChat();
                 messageInput.setText("Message pending...");
-                if(Main.db.addChatMessage(text, false)){
+                if(main.db.addChatMessage(text, false)){
                     System.out.println("Message sent");
                 }
                 else {
@@ -97,7 +96,7 @@ public class chatController implements Initializable {
     }
 
     public void updateChat(){
-        Main.db.getMessagesFromChat();
+        main.db.getMessagesFromChat();
     }
 
     public void disableChat(){

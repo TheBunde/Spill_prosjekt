@@ -1,7 +1,6 @@
 package GUI;
 
 
-import main.*;
 import audio.MusicPlayer;
 import audio.SFXPlayer;
 import game.*;
@@ -262,8 +261,8 @@ public class BattlefieldController{
     }
 
     public void exitButtonPressed() throws Exception {
-        System.out.println(Main.db.addChatMessage(Main.user.getUsername() + " has left the lobby", true));
-        Main.db.disconnectUserFromGameLobby();
+        System.out.println(main.db.addChatMessage(main.user.getUsername() + " has left the lobby", true));
+        main.db.disconnectUserFromGameLobby();
         chatController.timer.cancel();
         chatController.timer.purge();
         timer.cancel();
@@ -316,7 +315,7 @@ public class BattlefieldController{
     public boolean update(){
         if (game.isLevelCleared()) {
             if (!game.getPlayerCharacter().isReadyForNewLevel()){
-                if (Main.user.isHost()){
+                if (main.user.isHost()){
                     game.pushNewLevel();
                 }
                 game.setPlayerReadyForNewLevel(true);
@@ -449,7 +448,7 @@ public class BattlefieldController{
     }
 
     public void showLevelTransitionVbox(){
-        String nextLevelName = Main.db.getLevelName(game.getLevel().getLevelId() + 1);
+        String nextLevelName = main.db.getLevelName(game.getLevel().getLevelId() + 1);
         if (nextLevelName != null && !game.isGameOver()){
             SFXPlayer.getInstance().setSFX(13);
             ((Label)transitionVbox.getChildren().get(1)).setText("Travelling to " + nextLevelName + "world");
@@ -464,7 +463,7 @@ public class BattlefieldController{
             ((Label)transitionVbox.getChildren().get(0)).setText("Victory!");
             ((Label)transitionVbox.getChildren().get(1)).setAlignment(Pos.CENTER);
             ((Label)transitionVbox.getChildren().get(1)).setText("Made by:\nTeam 3");
-            Main.db.setRank(Main.db.fetchRank(Main.user.getUser_id()) + 1);
+            main.db.setRank(main.db.fetchRank(main.user.getUser_id()) + 1);
         }
         transitionVbox.setVisible(true);
         mapGrid.setGridLinesVisible(false);
@@ -528,7 +527,7 @@ public class BattlefieldController{
                                     chatController.timer.purge();
                                     timer.cancel();
                                     timer.purge();
-                                    Main.user.setHost(false);
+                                    main.user.setHost(false);
                                 }
                             }
                         });

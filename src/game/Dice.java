@@ -1,5 +1,6 @@
 /**
- * @author Helene Jonson
+ * Simulates the throwing of dice in a game
+ * @author heleneyj
  */
 package game;
 

@@ -1,6 +1,5 @@
 package GUI;
 
-import main.*;
 import audio.MusicPlayer;
 import audio.SFXPlayer;
 import javafx.fxml.FXML;
@@ -36,7 +35,7 @@ public class LoginController {
      * @return true if the username exist
      */
     public boolean checkUsername() {
-        if (Main.db.findUsername(username.getText())) {
+        if (main.db.findUsername(username.getText())) {
             return true;
         }
         return false;
@@ -48,7 +47,7 @@ public class LoginController {
      * @return true if the password identical
      */
     public boolean checkPassword() {
-        if (Main.db.fetchHash(username.getText()).equals(pw.getHash(password.getText(), Main.db.fetchSalt(username.getText())))) {
+        if (main.db.fetchHash(username.getText()).equals(pw.getHash(password.getText(), main.db.fetchSalt(username.getText())))) {
             return true;
         }
         return false;
@@ -80,7 +79,7 @@ public class LoginController {
             alert.setContentText("Your password is wrong, try again!");
             alert.showAndWait();
         }else{
-            Main.user = new User(Main.db.fetchUser_id(username.getText().trim()), username.getText().trim(), Main.db.fetchRank(Main.db.fetchUser_id(username.getText().trim())));
+            main.user = new User(main.db.fetchUser_id(username.getText().trim()), username.getText().trim(), main.db.fetchRank(main.db.fetchUser_id(username.getText().trim())));
             SFXPlayer.getInstance().setSFX(0);
             audio.MusicPlayer.getInstance().stopSong();
             MusicPlayer.getInstance().changeSong(2);

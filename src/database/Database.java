@@ -1,7 +1,6 @@
 package database;
 
 
-import main.*;
 import chat.Chat;
 import game.Creature;
 import game.Level;
@@ -40,7 +39,7 @@ public class Database {
             con = this.bds.getConnection();
             String prepString = "SELECT chat_message.message_id, chat_message.user_id, message, username, time_stamp FROM chat_message LEFT OUTER JOIN usr ON (chat_message.user_id = usr.user_id) WHERE chat_message.lobby_key = ? AND chat_message.message_id > ? ORDER BY message_id DESC LIMIT 30";
             prepStmt = con.prepareStatement(prepString);
-            prepStmt.setInt(1, Main.user.getLobbyKey());
+            prepStmt.setInt(1, main.user.getLobbyKey());
             prepStmt.setInt(2, chat.getLastSeenMessageId());
 
             res = prepStmt.executeQuery();
@@ -82,14 +81,14 @@ public class Database {
             if (event){
                 String prepString = "INSERT INTO chat_message VALUES(?, DEFAULT, NULL, ?, NOW())";
                 prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
-                prepStmt.setInt(1, Main.user.getLobbyKey());
+                prepStmt.setInt(1, main.user.getLobbyKey());
                 prepStmt.setString(2, message);
             }
             else{
                 String prepString = "INSERT INTO chat_message VALUES(?, DEFAULT, ?, ?, NOW())";
                 prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
-                prepStmt.setInt(1, Main.user.getLobbyKey());
-                prepStmt.setInt(2, Main.user.getUser_id());
+                prepStmt.setInt(1, main.user.getLobbyKey());
+                prepStmt.setInt(2, main.user.getUser_id());
                 prepStmt.setString(3, message);
             }
             prepStmt.executeUpdate();
@@ -147,17 +146,17 @@ public class Database {
         PreparedStatement prepStmt = null;
         boolean status = true;
         System.out.println(this.isJoinable(lobbyKey));
-        if (this.gameLobbyExists(lobbyKey) && Main.user.getUser_id() != -1 && this.isJoinable(lobbyKey)){
+        if (this.gameLobbyExists(lobbyKey) && main.user.getUser_id() != -1 && this.isJoinable(lobbyKey)){
             try {
                 con = this.bds.getConnection();
                 con.setAutoCommit(false);
                 String prepString = "UPDATE usr SET lobby_key = ? WHERE user_id = ?";
                 prepStmt = con.prepareStatement(prepString);
                 prepStmt.setInt(1, lobbyKey);
-                prepStmt.setInt(2, Main.user.getUser_id());
+                prepStmt.setInt(2, main.user.getUser_id());
                 prepStmt.executeUpdate();
                 con.commit();
-                Main.user.setLobbyKey(lobbyKey);
+                main.user.setLobbyKey(lobbyKey);
             }
             catch (SQLException sq){
                 this.manager.rollback(con);
@@ -185,10 +184,10 @@ public class Database {
             con.setAutoCommit(false);
             String prepString = "UPDATE usr SET lobby_key = NULL WHERE user_id = ?";
             prepStmt = con.prepareStatement(prepString);
-            prepStmt.setInt(1, Main.user.getUser_id());
+            prepStmt.setInt(1, main.user.getUser_id());
             prepStmt.executeUpdate();
             con.commit();
-            Main.user.setLobbyKey(-1);
+            main.user.setLobbyKey(-1);
         }
         catch (SQLException sq){
             this.manager.rollback(con);
@@ -361,10 +360,10 @@ public class Database {
             String prepString = "UPDATE usr SET rank = ? WHERE user_id = ?";
             prepStmt = con.prepareStatement(prepString);
             prepStmt.setInt(1, rank);
-            prepStmt.setInt(2, Main.user.getUser_id());
+            prepStmt.setInt(2, main.user.getUser_id());
             prepStmt.executeUpdate();
             con.commit();
-            Main.user.setRank(rank + 1);
+            main.user.setRank(rank + 1);
         }
         catch (SQLException sq){
             this.manager.rollback(con);
@@ -695,9 +694,9 @@ public class Database {
             con.setAutoCommit(false);
             String prepString = "INSERT INTO player VALUES(DEFAULT, ?, ?, DEFAULT, DEFAULT )";
             prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
-            prepStmt.setInt(1, Main.user.getLobbyKey());
+            prepStmt.setInt(1, main.user.getLobbyKey());
             if (playable) {
-                prepStmt.setInt(2, Main.user.getUser_id());
+                prepStmt.setInt(2, main.user.getUser_id());
             } else {
                 prepStmt.setNull(2, java.sql.Types.INTEGER);
             }
@@ -708,7 +707,7 @@ public class Database {
             res.next();
             playerId = res.getInt(1);
             if (playable) {
-                Main.user.setPlayerId(playerId);
+                main.user.setPlayerId(playerId);
             }
 
 
@@ -790,8 +789,8 @@ public class Database {
             con = this.bds.getConnection();
             String prepString = "SELECT player_id FROM player WHERE user_id = ? AND lobby_key = ?";
             prepStmt = con.prepareStatement(prepString);
-            prepStmt.setInt(1, Main.user.getUser_id());
-            prepStmt.setInt(2, Main.user.getLobbyKey());
+            prepStmt.setInt(1, main.user.getUser_id());
+            prepStmt.setInt(2, main.user.getLobbyKey());
             res = prepStmt.executeQuery();
             while(res.next()) {
                 id = res.getInt(1);
@@ -819,7 +818,7 @@ public class Database {
             con = this.bds.getConnection();
             String prepString = "SELECT COUNT(*) FROM player WHERE lobby_key = ? AND user_id IS NOT NULL";
             prepStmt = con.prepareStatement(prepString);
-            prepStmt.setInt(1, Main.user.getLobbyKey());
+            prepStmt.setInt(1, main.user.getLobbyKey());
             res = prepStmt.executeQuery();
             res.next();
             count = res.getInt(1);
@@ -875,10 +874,10 @@ public class Database {
             String prepString = "UPDATE usr SET host = ? WHERE user_id = ?";
             prepStmt = con.prepareStatement(prepString);
             prepStmt.setBoolean(1, host);
-            prepStmt.setInt(2, Main.user.getUser_id());
+            prepStmt.setInt(2, main.user.getUser_id());
             prepStmt.executeUpdate();
             con.commit();
-            Main.user.setHost(host);
+            main.user.setHost(host);
         }
         catch (SQLException sq){
             this.manager.rollback(con);
@@ -929,7 +928,7 @@ public class Database {
             con = this.bds.getConnection();
             String prepString = "SELECT creature.*, player.user_id From creature, player WHERE player.lobby_key = ? AND player.player_id = creature.player_id AND creature.hp > 0";
             prepStmt = con.prepareStatement(prepString);
-            prepStmt.setInt(1, Main.user.getLobbyKey());
+            prepStmt.setInt(1, main.user.getLobbyKey());
             res = prepStmt.executeQuery();
             while (res.next()){
                 int creatureId = res.getInt("creature_id");
@@ -1076,7 +1075,7 @@ public class Database {
             String prepString = "UPDATE game_lobby SET player_turn = ? WHERE lobby_key = ?";
             prepStmt = con.prepareStatement(prepString);
             prepStmt.setInt(1, turn);
-            prepStmt.setInt(2, Main.user.getLobbyKey());
+            prepStmt.setInt(2, main.user.getLobbyKey());
             prepStmt.executeUpdate();
             con.commit();
         }
@@ -1102,7 +1101,7 @@ public class Database {
             con = this.bds.getConnection();
             String prepString = "SELECT player_turn FROM game_lobby WHERE lobby_key = ?";
             prepStmt = con.prepareStatement(prepString);
-            prepStmt.setInt(1, Main.user.getLobbyKey());
+            prepStmt.setInt(1, main.user.getLobbyKey());
             res = prepStmt.executeQuery();
             res.next();
             turn = res.getInt(1);
@@ -1127,8 +1126,8 @@ public class Database {
             String prepString = "UPDATE player SET ready = ? WHERE lobby_key = ? AND player_id = ?";
             prepStmt = con.prepareStatement(prepString);
             prepStmt.setBoolean(1, ready);
-            prepStmt.setInt(2, Main.user.getLobbyKey());
-            prepStmt.setInt(3, Main.user.getPlayerId());
+            prepStmt.setInt(2, main.user.getLobbyKey());
+            prepStmt.setInt(3, main.user.getPlayerId());
             prepStmt.executeUpdate();
             con.commit();
         }
@@ -1154,7 +1153,7 @@ public class Database {
             con = this.bds.getConnection();
             String prepString = "SELECT ready FROM player WHERE lobby_key = ? AND user_id is not NULL";
             prepStmt = con.prepareStatement(prepString);
-            prepStmt.setInt(1, Main.user.getLobbyKey());
+            prepStmt.setInt(1, main.user.getLobbyKey());
             res = prepStmt.executeQuery();
             while (res.next()){
                 ready.add(res.getBoolean(1));
@@ -1181,7 +1180,7 @@ public class Database {
             String prepString = "UPDATE game_lobby SET joinable = ? WHERE lobby_key = ?";
             prepStmt = con.prepareStatement(prepString);
             prepStmt.setBoolean(1, joinable);
-            prepStmt.setInt(2, Main.user.getLobbyKey());
+            prepStmt.setInt(2, main.user.getLobbyKey());
             prepStmt.executeUpdate();
             con.commit();
         }
@@ -1421,7 +1420,7 @@ public class Database {
             con = this.bds.getConnection();
             String prepString = "SELECT ready_for_new_level FROM player WHERE lobby_key = ? AND user_id IS NOT NULL";
             prepStmt = con.prepareStatement(prepString);
-            prepStmt.setInt(1, Main.user.getLobbyKey());
+            prepStmt.setInt(1, main.user.getLobbyKey());
             res = prepStmt.executeQuery();
             while(res.next()){
                 playersReadyForLevel.add(res.getBoolean(1));

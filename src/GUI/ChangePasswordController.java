@@ -1,6 +1,5 @@
 package GUI;
 
-import main.*;
 import audio.SFXPlayer;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -72,8 +71,8 @@ public class ChangePasswordController {
      */
 
     public void setNewPassword(){
-        Main.db.deleteOldPassword(oldPassword.getText().trim());
-        Main.db.addPassword(newPassword.getText().trim());
+        main.db.deleteOldPassword(oldPassword.getText().trim());
+        main.db.addPassword(newPassword.getText().trim());
     }
      /**
      * get back to Account Details page if you want to cancle changing the password

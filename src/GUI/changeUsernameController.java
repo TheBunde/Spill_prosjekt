@@ -1,7 +1,5 @@
 package GUI;
 
-import main.*;
-import database.Database;
 import audio.MusicPlayer;
 import audio.SFXPlayer;
 import javafx.fxml.FXML;
@@ -32,7 +30,7 @@ public class changeUsernameController {
      */
 
     public void setNewUsername()throws Exception{
-        Main.db.setNewUsername(newUsername.getText().trim());
+        main.db.setNewUsername(newUsername.getText().trim());
     }
     
     

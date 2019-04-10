@@ -1,7 +1,5 @@
 package GUI;
 
-import main.*;
-import database.*;
 import audio.MusicPlayer;
 import audio.SFXPlayer;
 import javafx.fxml.FXML;
@@ -35,8 +33,8 @@ public class FindLobbyController {
         String key = lobbyKeyInput.getText();
         //Checking if the input is valid
         if (key.length() > 0){
-            if (Main.db.connectUserToGameLobby(Integer.parseInt(key))){
-                Main.db.addChatMessage(Main.user.getUsername() + " has joined the lobby as a guest", true);
+            if (main.db.connectUserToGameLobby(Integer.parseInt(key))){
+                main.db.addChatMessage(main.user.getUsername() + " has joined the lobby as a guest", true);
                 //Loads new scene
                 SFXPlayer.getInstance().setSFX(7);
                 Parent root = FXMLLoader.load(getClass().getResource("createcharacter.fxml"));
