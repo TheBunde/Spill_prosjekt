@@ -23,6 +23,7 @@ public class Game {
             level = new Level(1);
             if (Main.user.isHost()) {
                 this.addNewMonstersToLobby(1, Main.db.fetchPlayerCount());
+                this.assureNoOverlap();
                 Main.db.setBattlefieldReady(Main.user.getLobbyKey());
 
             } else {
@@ -316,7 +317,7 @@ public class Game {
 
     public void endTurn(){
         this.incrementPlayerTurn();
-       Main.db.incrementPlayerTurn(playerTurn);
+        Main.db.incrementPlayerTurn(playerTurn);
     }
 
     public Level getLevel(){

@@ -11,9 +11,6 @@ import javafx.scene.control.Alert;
 import user.Password;
 import org.apache.commons.dbcp2.BasicDataSource;
 import user.User;
-//
-//
-// import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -24,14 +21,19 @@ public class Database {
     public Chat chat;
     private Alert alert;
 
-    //Setup for database
+    /**
+     * Constructor for Database
+     */
     public Database(){
         this.manager = new ManageConnection();
         this.bds = DataSource.getInstance().getBds();
         this.chat = new Chat();
     }
 
-    //Fetches messages from chat
+    /**
+     * Fetches messages from the gamelobby the user is part of
+     * Adds these messages to the ObservableList in the Chat class
+     */
     public void getMessagesFromChat(){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -41,10 +43,12 @@ public class Database {
             String prepString = "SELECT chat_message.message_id, chat_message.user_id, message, username, time_stamp FROM chat_message LEFT OUTER JOIN usr ON (chat_message.user_id = usr.user_id) WHERE chat_message.lobby_key = ? AND chat_message.message_id > ? ORDER BY message_id DESC LIMIT 30";
             prepStmt = con.prepareStatement(prepString);
             prepStmt.setInt(1, Main.user.getLobbyKey());
+            /* Only fetches messages that has a message id higher than the last seen message id */
             prepStmt.setInt(2, chat.getLastSeenMessageId());
 
             res = prepStmt.executeQuery();
             while (res.next()) {
+                /* If message has no user_id, it is an event message */
                 if (res.getInt("user_id") == 0){
                     chat.addMessage(res.getInt("message_id"), "Event", res.getString("message"), "", true);
                 }
@@ -68,7 +72,13 @@ public class Database {
         }
     }
 
-    //Sends new message to the chat that the user is connected to
+    /**
+     * Adds a message to the gamelobby the user is part of
+     *
+     * @param message   the text to be added
+     * @param event     boolean for eventmessage
+     * @return          true if adding was successful, false otherwise
+     */
     public boolean addChatMessage(String message, boolean event){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -78,7 +88,10 @@ public class Database {
         try {
             con = this.bds.getConnection();
             con.setAutoCommit(false);
-            //Using a prepared statement to execute an insert into the chat_message entity
+            /*
+            * Separates event and user messages
+            * Event messages has user_id = NULL in the database
+            */
             if (event){
                 String prepString = "INSERT INTO chat_message VALUES(?, DEFAULT, NULL, ?, NOW())";
                 prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
@@ -94,6 +107,7 @@ public class Database {
             }
             prepStmt.executeUpdate();
             con.commit();
+            /* Returns the generated message id */
             res = prepStmt.getGeneratedKeys();
             res.next();
             messageId = res.getInt(1);
@@ -108,6 +122,7 @@ public class Database {
             this.manager.closeRes(res);
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con);
+            /* checks for error */
             if (messageId <= 0){
                 status = false;
             }
@@ -115,15 +130,18 @@ public class Database {
         }
     }
 
-
+    /**
+     * Checks for existence of specific game lobby
+     *
+     * @param lobbyKey  the lobby key
+     * @return          true if lobby exists, false otherwise
+     */
     public boolean gameLobbyExists(int lobbyKey){
         Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
-        //Boolean variable to keep track of the existence of the specified gamelobby
         boolean lobbyExists = false;
         try{
-            //Checks if gamelobby with the specified lobbykey exists
             con = this.bds.getConnection();
             String prepString = "SELECT lobby_key FROM game_lobby WHERE lobby_key = ?";
             prepStmt = con.prepareStatement(prepString);
@@ -142,11 +160,21 @@ public class Database {
         }
     }
 
+    /**
+     * Connects the user to a lobby with the specific lobby key
+     *
+     * @param lobbyKey  the lobby key
+     * @return          true if user is connected, false otherwise
+     */
     public boolean connectUserToGameLobby(int lobbyKey){
         Connection con = null;
         PreparedStatement prepStmt = null;
         boolean status = true;
         System.out.println(this.isJoinable(lobbyKey));
+        /*
+         * The lobby must exist and be joinable
+         * The user registered in the client must have a valid user id
+         */
         if (this.gameLobbyExists(lobbyKey) && Main.user.getUser_id() != -1 && this.isJoinable(lobbyKey)){
             try {
                 con = this.bds.getConnection();
@@ -176,6 +204,11 @@ public class Database {
         return status;
     }
 
+    /**
+     * Disconnects user from the lobby it is connected to
+     *
+     * @return  true if disconnected, false otherwise
+     */
     public boolean disconnectUserFromGameLobby(){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -203,6 +236,11 @@ public class Database {
         }
     }
 
+    /**
+     * Creates a new lobby with a unique lobby key
+     *
+     * @return true if lobby is created, false otherwise
+     */
     public boolean createNewLobby(){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -230,11 +268,18 @@ public class Database {
             this.manager.closeRes(res);
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con);
+            /* Connects the user to the new lobby */
             this.connectUserToGameLobby(lobbyKey);
             return status;
         }
     }
 
+    /**
+     * Sets the gamelobby ready to travel to the battlefield
+     *
+     * @param lobbyKey  the key for the lobby
+     * @return          true if change is made, false otherwise
+     */
     public boolean setBattlefieldReady(int lobbyKey){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -244,11 +289,9 @@ public class Database {
             con = this.bds.getConnection();
             con.setAutoCommit(false);
             String prepString = "UPDATE game_lobby SET battlefield_ready = TRUE WHERE lobby_key = ?";
-            prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
+            prepStmt = con.prepareStatement(prepString);
             prepStmt.setInt(1, lobbyKey);
             prepStmt.executeUpdate();
-            res = prepStmt.getGeneratedKeys();
-            res.next();
             con.commit();
         }
         catch (SQLException sq){
@@ -265,6 +308,12 @@ public class Database {
         }
     }
 
+    /**
+     * Checks if the specific gamelobby is ready to travel to battlefield
+     *
+     * @param lobbyKey  the lobby key
+     * @return          true if ready, false otherwise
+     */
     public boolean fetchBattlefieldReady(int lobbyKey) {
         Connection con = null;
         PreparedStatement prepStmt = null;

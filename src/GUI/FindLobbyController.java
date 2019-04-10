@@ -17,7 +17,6 @@ import java.io.IOException;
 
 public class FindLobbyController {
     private SceneSwitcher sceneSwitcher;
-
     @FXML
     private Button joinLobbyButton, cancelButton;
     @FXML
@@ -25,13 +24,11 @@ public class FindLobbyController {
     @FXML
     private Label errorLabel;
 
-
-
     public FindLobbyController() {
         sceneSwitcher = new SceneSwitcher();
     }
     
-    public void joinLobbyButtonPressed() throws IOException {
+    public void joinLobbyButtonPressed() throws Exception {
         String key = lobbyKeyInput.getText();
         //Checking if the input is valid
         if (key.length() > 0){
@@ -39,10 +36,7 @@ public class FindLobbyController {
                 Main.db.addChatMessage(Main.user.getUsername() + " has joined the lobby as a guest", true);
                 //Loads new scene
                 SFXPlayer.getInstance().setSFX(7);
-                Parent root = FXMLLoader.load(getClass().getResource("createcharacter.fxml"));
-                Scene scene = new Scene(root);
-                Stage stage = (Stage)joinLobbyButton.getScene().getWindow();
-                stage.setScene(scene);
+                this.sceneSwitcher.switchScene(joinLobbyButton, "createcharacter.fxml");
                 audio.MusicPlayer.getInstance().stopSong();
                 MusicPlayer.getInstance().changeSong(8);
             }

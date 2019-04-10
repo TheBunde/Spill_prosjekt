@@ -126,7 +126,7 @@ public class GameLobbyController {
             Main.db.setJoinable(false);
             if (joinable) {
                 joinable = false;
-                Main.db.addChatMessage("Player limit reached", true);
+                Main.db.addChatMessage("PlayerActions limit reached", true);
             }
         }
         else if(playersReady != players.size()){
