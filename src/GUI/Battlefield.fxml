@@ -127,8 +127,7 @@
             </VBox>
             <VBox prefHeight="117.0" prefWidth="98.0">
                <children>
-                  <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="100.0" />
-                  <Button fx:id="endTurnButton" mnemonicParsing="false" onAction="#endTurnButtonPressed" prefHeight="58.0" prefWidth="105.0" text="End Turn">
+                  <Button fx:id="endTurnButton" mnemonicParsing="false" onAction="#endTurnButtonPressed" prefHeight="130.0" prefWidth="100.0" text="End Turn">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -136,19 +135,11 @@
                </children>
             </VBox>
             <fx:include source="TeamMates.fxml" />
-            <VBox prefHeight="117.0" prefWidth="90.0">
+            <VBox alignment="CENTER" prefHeight="117.0" prefWidth="90.0">
                <children>
-                  <Button fx:id="helpButton" mnemonicParsing="false" onAction="#helpButtonPressed" prefHeight="45.0" prefWidth="80.0" text="Help">
+                  <Button fx:id="helpButton" alignment="CENTER" mnemonicParsing="false" onAction="#helpButtonPressed" prefHeight="39.0" prefWidth="80.0" text="Help">
                      <VBox.margin>
                         <Insets bottom="10.0" left="5.0" top="10.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exitButtonPressed" prefHeight="42.0" prefWidth="79.0" text="Exit">
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="5.0" />
                      </VBox.margin>
                      <font>
                         <Font size="18.0" />

@@ -31,6 +31,11 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
+/**
+ * Controller class to handle the Graphical User Interface for the Battlefield
+ *
+ * @author magnubau, williad
+ */
 public class BattlefieldController{
 
     // https://stackoverflow.com/questions/41081905/javafx-getting-the-location-of-a-click-on-a-gridpane
@@ -79,20 +84,26 @@ public class BattlefieldController{
 
     }
 
+    /**
+     * Method that executes when the corresponding FXML-file for this Controller is loaded
+     */
     public void initialize() {
         player = new PlayerActions(playerImage);
         cellWidth = mapGrid.getPrefWidth()/(16.0);
         cellHeight = mapGrid.getPrefHeight()/(16.0);
 
+        /* Places the pawns for the creatures on the map */
         for (Creature c : game.getCreatures()){
             c.setPawnSize(cellWidth, cellHeight);
             mapGrid.add(c.getPawn(), c.getxPos(), c.getyPos());
             if (c instanceof Monster){
+                /* If the creature is a Monster, it will also initialize it's attackpane */
                 ((Monster) c).initAttackPane(cellWidth, cellHeight);
                 mapGrid.add(((Monster) c).getAttackPane(), c.getxPos(), c.getyPos());
             }
         }
 
+        /* Sets effects and text for nodes regarding weapon */
         weaponOne.setImage(new Image("GUI/images/" + game.getPlayerCharacter().getWeapons().get(0).getImageUrl()));
         weaponTwo.setImage(new Image("GUI/images/" + game.getPlayerCharacter().getWeapons().get(1).getImageUrl()));
         weaponOne.setEffect(light);
@@ -114,13 +125,13 @@ public class BattlefieldController{
         refreshViewFromGame();
         updateGame();
 
+        /* Timer-loop to update the Battlefield frequently */
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 Platform.runLater(() -> {
                     update();
-                    TeamMatesController.updateListView();
                 });
             }
         },0 ,2200);
@@ -190,30 +201,39 @@ public class BattlefieldController{
         public void handle(MouseEvent e){
             Monster clickedMonster = null;
             for (Monster m : game.getMonsters()){
+                /* Finds which attackpane was clicked*/
                 if (e.getSource() == m.getAttackPane()){
                     clickedMonster = m;
                 }
             }
+            /* Performs the attack against the clicked monster */
             game.getPlayerCharacter().attackCreature(clickedMonster, player.getEquippedWeapon());
             player.setAttackUsed(true);
             attackFinished();
         }
     };
 
+    /**
+     * Method that runs when the player has finished attacking a monster
+     */
     public void attackFinished(){
+        /* Pushes the changes to the database immediately */
         updateGame();
         player.setAttackPressed(false);
         moveButton.setDisable(false);
         endTurnButton.setDisable(false);
+        /* Resets styling for the button */
         attackButton.getStyleClass().clear();
         attackButton.getStyleClass().add("button");
         weaponOne.setDisable(false);
         weaponTwo.setDisable(false);
 
+        /* Hides the attackpane for all monsters */
         for (Monster m : game.getMonsters()){
             m.hideAttackPane();
             m.getAttackPane().removeEventFilter(MouseEvent.MOUSE_CLICKED, attackEventHandler);
         }
+        /* Refreshes the view immediately to strengthen responsiveness */
         refreshViewFromGame();
         checkForPlayerTurn();
     }
@@ -243,19 +263,22 @@ public class BattlefieldController{
     private EventHandler<MouseEvent> mapMoveEventHandler = new EventHandler<MouseEvent>(){
         @Override
         public void handle(MouseEvent e){
+            /* Assigns new coordinate-variables for later use */
             mouseX = e.getX();
             mouseY = e.getY();
             moveFinished();
         }
     };
 
+    /**
+     * Method that runs when the player performed a move-action
+     */
     public void moveFinished(){
-        for(Creature i: game.getCreatures()){
-            System.out.println("\n" + i.getCreatureName() + "\nxpos: " + i.getxPos() + "\nypos: " + i.getyPos() + "\n");
-        }
+        /* Action is only set to used if the move is valid */
         if (game.getPlayerCharacter().moveCreature(toGrid(mapGrid.getWidth(), mouseX), toGrid(mapGrid.getHeight(), mouseY), game.getCreatures())){
             player.setMoveUsed(true);
         }
+        /* Pushes changes to the database immediately */
         updateGame();
         player.setMovePressed(false);
         hideMovementPane();
@@ -264,6 +287,7 @@ public class BattlefieldController{
         endTurnButton.setDisable(false);
         moveButton.getStyleClass().clear();
         moveButton.getStyleClass().add("button");
+        /* Refreshes the view immediately to strengten responsiveness */
         refreshViewFromGame();
         checkForPlayerTurn();
     }
@@ -278,9 +302,13 @@ public class BattlefieldController{
         player.resetUsedActions();
     }
 
+    /**
+     * Method that runs when the Help-button has been pressed
+     */
     public void helpButtonPressed(){
         if (Desktop.isDesktopSupported()){
             try {
+                /* Opens the gitlab-wiki in the user's default browser */
                 Desktop.getDesktop().browse(new URI("https://gitlab.stud.iie.ntnu.no/heleneyj/game-development-project/wikis/System%20Documentation"));
             }
             catch (IOException ioe){
@@ -294,7 +322,7 @@ public class BattlefieldController{
         }
     }
 
-    public void exitButtonPressed() throws Exception {
+    /*public void exitButtonPressed() throws Exception {
         System.out.println(Main.db.addChatMessage(Main.user.getUsername() + " has left the lobby", true));
         Main.db.disconnectUserFromGameLobby();
         chatController.timer.cancel();
@@ -303,8 +331,15 @@ public class BattlefieldController{
         timer.purge();
         MusicPlayer.getInstance().stopSong();
         this.sceneSwitcher.switchScene(exitButton, "MainMenu.fxml");
-    }
+    }*/
 
+    /**
+     * Converts screen-coordinate to grid-coordinate
+     *
+     * @param pixels screen-size
+     * @param pos    coordinate to convert
+     * @return       grid-coordinate
+     */
     private int toGrid(double pixels, double pos){
         double dPos = pos / (pixels / 16);
         int iPos = (int) (dPos);
@@ -365,17 +400,25 @@ public class BattlefieldController{
         updateImage();
     }
 
-
+    /**
+     * Method that updates the Battlefield<br>
+     * This method serves as one Battlefield-cycle
+     *
+     * @return  false if current level is cleared, otherwise true
+     */
     public boolean update(){
         if (game.isLevelCleared()) {
             if (!game.getPlayerCharacter().isReadyForNewLevel()){
+                /* This code is only run once after a level is cleared */
                 if (Main.user.isHost()){
+                    /* The host will push the data for the new level to the database */
                     game.pushNewLevel();
                 }
                 game.setPlayerReadyForNewLevel(true);
             }
+
+            /* Busy-waiting until all players are ready for change to new level */
             while(!game.allPlayersReadyForNewLevel()){
-                System.out.println("Hello");
                 try{
                     Thread.sleep(200);
                 }
@@ -383,6 +426,7 @@ public class BattlefieldController{
                     ie.printStackTrace();
                 }
             }
+            /* Transitions to the next level */
             nextLevelTransition();
             return false;
         }
@@ -390,10 +434,14 @@ public class BattlefieldController{
             gameOverTransition();
             return false;
         }
+
+        /* Pushes and updates data to and from the database */
         updateGame();
+        /* Refreshes the view */
         refreshViewFromGame();
         checkForPlayerTurn();
-        System.out.println(game.toString());
+        /* Updates the list containing teammates */
+        TeamMatesController.updateListView();
         return true;
     }
 
@@ -448,6 +496,10 @@ public class BattlefieldController{
         }
     }
 
+    /**
+     * Initializes the movementpane for the player<br>
+     * This pane is used to visualize how far the player can move on the map
+     */
     public void initMovementPane(){
         movementPane = new Pane();
         double moveDistanceX = cellWidth*(2*game.getPlayerCharacter().getMovement() + 1);
@@ -459,11 +511,17 @@ public class BattlefieldController{
         movementPane.setVisible(false);
     }
 
-
+    /**
+     * Makes the movementpane visible to the player
+     */
     public void showMovementPane(){
         int xpos = game.getPlayerCharacter().getxPos();
         int ypos = game.getPlayerCharacter().getyPos();
         int movement = game.getPlayerCharacter().getMovement();
+        /*
+         * Updates the position of the movementpane while ensuring
+         * it does not appear outside of the the map and causing an exception
+         */
         mapGrid.getChildren().remove(movementPane);
         mapGrid.add(movementPane, xpos - movement + ((xpos < movement) ? movement-xpos : 0), ypos - movement + ((ypos < movement) ? movement-ypos : 0));
         movementPane.toBack();
@@ -472,26 +530,44 @@ public class BattlefieldController{
         GridPane.setRowSpan(movementPane, 2*(game.getPlayerCharacter().getMovement()) + 1 - ((ypos < movement) ? movement-ypos : 0));
     }
 
+    /**
+     * Hides the movementpane
+     */
     public void hideMovementPane(){
         movementPane.setVisible(false);
     }
 
+    /**
+     * Method that runs when the first weapon-button is selected
+     */
     public void weaponOneSelected(){
+        /* Switches the effects */
         weaponOne.setEffect(light);
         weaponTwo.setEffect(shadow);
         player.setEquippedWeapon(0);
     }
 
+    /**
+     * Method that runs when the second weapon-button is selected
+     */
     public void weaponTwoSelected(){
+        /* Switches the effects */
         weaponOne.setEffect(shadow);
         weaponTwo.setEffect(light);
         player.setEquippedWeapon(1);
     }
 
+    /**
+     * Updates the portrait image of the player-character
+     */
     public void updateImage() {
         player.imageUpdate();
     }
 
+    /**
+     * Initializes the VBox that appears when the level is cleared<br>
+     * This VBox is also used when the game is lost
+     */
     public void initLevelTransitionVbox(){
         transitionVbox = new VBox();
         VBox vbox = transitionVbox;
@@ -544,17 +620,23 @@ public class BattlefieldController{
         this.disableAllButtons();
     }
 
+    /**
+     * Hides the VBox used for level-transition and game over
+     */
     public void hideLevelTransitionVbox(){
         transitionVbox.setVisible(false);
         mapGrid.setGridLinesVisible(true);
         this.enableAllButtons();
     }
 
+    /**
+     * Enables all buttons
+     */
     public void enableAllButtons(){
         attackButton.setDisable(false);
         moveButton.setDisable(false);
         endTurnButton.setDisable(false);
-        exitButton.setDisable(false);
+        //exitButton.setDisable(false);
     }
 
     /**
@@ -567,12 +649,21 @@ public class BattlefieldController{
         //exitButton.setDisable(true);
     }
 
+    /**
+     * Method that runs to transition to the next level.<br>
+     * This method makes the transitionVBox appear
+     */
     public void nextLevelTransition() {
             if (!transitioningToNewLevel) {
+                /* Code runs once after the level is cleared */
                 transitioningToNewLevel = true;
                 MusicPlayer.getInstance().stopSong();
                 MusicPlayer.getInstance().changeSong(1);
                 showLevelTransitionVbox();
+                /*
+                 * Creates a new thread so the user can interact with
+                 * the application while the transition happens
+                 */
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -584,14 +675,20 @@ public class BattlefieldController{
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
+                                /* Switch to the new level */
                                 newLevel();
+                                /* Immediately refreshes playerturn to
+                                 * avoid player performing actions outside of its turn
+                                 */
                                 game.updatePlayerTurn();
                                 checkForPlayerTurn();
+                                /* Hides the transitionVbox */
                                 if (game.getLevel().getLevelId() <= game.getAmountOfLevels()) {
                                     hideLevelTransitionVbox();
                                     transitioningToNewLevel = false;
                                 }
                                 else{
+                                    /* Ends the game and switches back to main-menu */
                                     try {
                                         Thread.sleep(7000);
                                         MusicPlayer.getInstance().stopSong();

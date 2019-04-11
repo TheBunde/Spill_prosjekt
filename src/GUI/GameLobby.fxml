@@ -47,15 +47,15 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0">
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="15.0">
                      <children>
                         <Label prefHeight="80.0" prefWidth="547.0" text="You and your band of adventurers have been traveling together for some time. After some exciting adventures, you have come upon an old forgotten castle in the middle of the deep forest. While rummaging through, you found an old diary lying among the rubble. Quickly scanning through, the last page catches your eye." textAlignment="JUSTIFY" wrapText="true">
                            <padding>
-                              <Insets left="50.0" right="50.0" />
+                              <Insets left="30.0" right="30.0" />
                            </padding></Label>
                         <Label prefHeight="128.0" prefWidth="547.0" text="[After all these years, I have finally found it. I have finally found the entry I have been searching for all these years. But my body is getting older and my mind is not what it used to be. Therefore, I must give up on the dream of the hidden treasure hidden deep within the mountain. I write this down so that others might be able to go on this adventure I can’t complete. About two days walk from here, you will come upon the mountain of Calbo. The entry is about 100 feet up the mountainside. Good luck adventurers. And may the blessing of the gods be with you. CR]" textAlignment="JUSTIFY" wrapText="true">
                            <padding>
-                              <Insets left="50.0" right="50.0" />
+                              <Insets left="30.0" right="30.0" />
                            </padding>
                            <font>
                               <Font size="12.0" />
@@ -64,19 +64,13 @@
                               <Insets />
                            </VBox.margin>
                         </Label>
-                        <Button fx:id="readyButton" mnemonicParsing="false" onAction="#readyButtonPressed" prefHeight="52.0" prefWidth="123.0" style="-fx-background-color: cccccc;" text="Ready">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
+                        <Button fx:id="readyButton" mnemonicParsing="false" onAction="#readyButtonPressed" prefHeight="24.0" prefWidth="123.0" style="-fx-background-color: cccccc;" text="Ready">
                            <font>
-                              <Font name="System Bold" size="24.0" />
+                              <Font name="System Bold" size="18.0" />
                            </font>
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
-                           <padding>
-                              <Insets left="-20.0" right="-20.0" />
-                           </padding>
                         </Button>
                         <Label fx:id="readyCounter" prefHeight="27.0" prefWidth="198.0" text="Players Ready: ">
                            <font>
@@ -85,7 +79,7 @@
                         </Label>
                         <Button fx:id="backToMenuButton" mnemonicParsing="false" onAction="#backToMenuButtonPressed" style="-fx-background-color: cccccc;" text="Back to main menu">
                            <VBox.margin>
-                              <Insets />
+                              <Insets bottom="10.0" />
                            </VBox.margin>
                         </Button>
                      </children>
