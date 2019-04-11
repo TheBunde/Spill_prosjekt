@@ -36,7 +36,7 @@ public class LoginController {
 
   /**
      * Checks if the username exists in database by calling the method findUsername() from database.java
-   *
+     * 
      * @return   true if the username exists, false otherwise
      */
     public boolean checkUsername() {
