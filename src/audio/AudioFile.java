@@ -42,9 +42,11 @@ public class AudioFile implements LineListener{
             soundClip.addLineListener(this);
             soundClip.open(ais);
             fControl = (FloatControl) soundClip.getControl(FloatControl.Type.MASTER_GAIN);
-
+            ais.close();
+            is.close();
         } catch (Exception exc) {
             exc.printStackTrace();
+            System.exit(1);
         }
     }
 
@@ -71,6 +73,7 @@ public class AudioFile implements LineListener{
     public void audioStop(){
         soundClip.stop();
         soundClip.flush();
+        soundClip.setFramePosition(0);
         play = false;
     }
 
