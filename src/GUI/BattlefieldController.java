@@ -38,9 +38,8 @@ import java.util.TimerTask;
  */
 public class BattlefieldController{
 
-    // https://stackoverflow.com/questions/41081905/javafx-getting-the-location-of-a-click-on-a-gridpane
     @FXML
-    private Button exitButton, moveButton, attackButton, endTurnButton;
+    private Button moveButton, attackButton, endTurnButton;
     @FXML
     private GridPane mapGrid;
     @FXML
@@ -684,7 +683,7 @@ public class BattlefieldController{
                                         Thread.sleep(7000);
                                         MusicPlayer.getInstance().stopSong();
                                         MusicPlayer.getInstance().changeSong(2);
-                                        sceneSwitcher.switchScene(exitButton, "MainMenu.fxml");
+                                        sceneSwitcher.switchScene(moveButton, "MainMenu.fxml");
                                     }catch (Exception e){
                                         e.printStackTrace();
                                     }
@@ -732,7 +731,7 @@ public class BattlefieldController{
                         public void run() {
                             try {
                                 MusicPlayer.getInstance().changeSong(2);
-                                sceneSwitcher.switchScene(exitButton, "MainMenu.fxml");
+                                sceneSwitcher.switchScene(moveButton, "MainMenu.fxml");
                             }catch (Exception e){
                                 e.printStackTrace();
                             }

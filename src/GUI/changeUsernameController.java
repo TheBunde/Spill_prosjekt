@@ -30,7 +30,7 @@ public class changeUsernameController {
     }
     
      /**
-      * Stes the new username calling the method setNewUsername from database.java
+      * Sets the new username calling the method setNewUsername from database.java
       *
       * @throws Exception
       */
