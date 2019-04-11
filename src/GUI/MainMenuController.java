@@ -53,6 +53,7 @@ public class MainMenuController {
         MusicPlayer.getInstance().changeSong(3);
         sceneSwitcher.switchScene(startNewGameButton, "createcharacter.fxml");
     }
+    
       /**
        * Switches the scene to the FindLobby-scene.
        *
