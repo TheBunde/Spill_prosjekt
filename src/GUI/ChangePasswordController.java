@@ -62,22 +62,35 @@ public class ChangePasswordController {
             /*
              * Sets the new password, and switches to the AccountDetails-scene
              */
-            setNewPassword();
-            alert.setTitle("Password changed");
-            alert.setHeaderText(null);
-            alert.setContentText("Password changed successfully.");
-            alert.showAndWait();
-            sceneSwitcher.switchScene(confirmButton, "AccountDetails.fxml");
+            if (setNewPassword()) {
+                alert.setTitle("Password changed");
+                alert.setHeaderText(null);
+                alert.setContentText("Password changed successfully.");
+                alert.showAndWait();
+                sceneSwitcher.switchScene(confirmButton, "AccountDetails.fxml");
+            }
+            else{
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Old password was wrong, please try again.");
+                alert.showAndWait();
+            }
         }
     }
 
     /**
      * Updates the password by deleting the old one by calling the method deleteOldPassword() from database.java
      * and adds the new one by calling addPassword()
+     * @return  true if password is changed, false otherwise
      */
-    public void setNewPassword(){
-        Main.db.deleteOldPassword(oldPassword.getText().trim());
-        Main.db.addPassword(newPassword.getText().trim());
+    public boolean setNewPassword(){
+        if (Main.db.deleteOldPassword(oldPassword.getText().trim())) {
+            Main.db.addPassword(newPassword.getText().trim());
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
      /**

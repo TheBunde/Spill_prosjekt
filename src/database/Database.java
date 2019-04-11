@@ -255,6 +255,7 @@ public class Database {
             String prepString = "INSERT INTO game_lobby VALUES(DEFAULT, 0, 1, DEFAULT, DEFAULT)";
             prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
             prepStmt.executeUpdate();
+            /* Returns the generated lobby key */
             res = prepStmt.getGeneratedKeys();
             res.next();
             lobbyKey = res.getInt(1);
@@ -458,6 +459,7 @@ public class Database {
             prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
             prepStmt.setString(1, un);
             int added = prepStmt.executeUpdate();
+            /* Returns the generated user id */
             res = prepStmt.getGeneratedKeys();
             res.next();
             user_id = res.getInt(1);
@@ -572,7 +574,7 @@ public class Database {
         Password pass = new Password();      //create an instance of Password
 
         /*
-        Slat is an array of the random bytes, it is generated using the method getSalt() from class Password.java
+        Salt is an array of the random bytes, it is generated using the method getSalt() from class Password.java
          */
         byte[] salt = pass.getSalt();
 
@@ -614,29 +616,34 @@ public class Database {
      */
     public boolean deleteOldPassword(String oldPw){
 
-        Connection con = null;
-        PreparedStatement prepStmt = null;
-        boolean status = true;
-        try{
-            con = this.bds.getConnection();
-            con.setAutoCommit(false);
-            String prepString = "delete from password WHERE user_id = ?";
-            prepStmt = con.prepareStatement(prepString);
-            prepStmt.setInt(1, Main.user.getUser_id());
+        Password password = new Password();
+        if (password.checkPassword(oldPw, this.fetchSalt(this.fetchUsername()), this.fetchHash(this.fetchUsername()))) {
 
-            prepStmt.executeUpdate();
-            con.commit();
+            Connection con = null;
+            PreparedStatement prepStmt = null;
+            boolean status = true;
+            try {
+                con = this.bds.getConnection();
+                con.setAutoCommit(false);
+                String prepString = "delete from password WHERE user_id = ?";
+                prepStmt = con.prepareStatement(prepString);
+                prepStmt.setInt(1, Main.user.getUser_id());
+
+                prepStmt.executeUpdate();
+                con.commit();
+            } catch (SQLException sq) {
+                this.manager.rollback(con);
+                sq.printStackTrace();
+                status = false;
+            } finally {
+                this.manager.turnOnAutoCommit(con);
+                this.manager.closePrepStmt(prepStmt);
+                this.manager.closeConnection(con);
+                return status;
+            }
         }
-        catch (SQLException sq){
-            this.manager.rollback(con);
-            sq.printStackTrace();
-            status = false;
-        }
-        finally {
-            this.manager.turnOnAutoCommit(con);
-            this.manager.closePrepStmt(prepStmt);
-            this.manager.closeConnection(con);
-            return status;
+        else{
+            return false;
         }
     }
 
