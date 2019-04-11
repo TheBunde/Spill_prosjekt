@@ -6,7 +6,6 @@ drop TABLE level;
 drop table creatureTemplate;
 drop table weapon;
 drop table usr;
-drop table initiative;
 drop table game_lobby;
 drop table chat_message;
 
@@ -155,18 +154,6 @@ INSERT INTO level VALUES(4, 15, "Lava-map.png");
 INSERT INTO level VALUES(5, 11, "Mountain-map.png");
 
 
-<<<<<<< HEAD
-INSERT INTO creatureTemplate VALUES(DEFAULT, "Warrior", 36, 18, 3, 5, 8, 2, "He be legendary warior. Yeet that goblin", "warrior.jpg", true);
-INSERT INTO creatureTemplate VALUES(DEFAULT, "Rogue", 23, 16, 3, 7, 7, 2, "she be the sneaky girl. not the one from Rogue One", "rogue.jpg", true);
-INSERT INTO creatureTemplate VALUES(DEFAULT, "Wizard", 22, 15, 3, 0, 8, 1, "Penny for your thoughts. Nothing that a little music can't help. Seagulls stop it now.", "wizard.jpg", true);
-INSERT INTO creatureTemplate VALUES(DEFAULT, "Ranger", 32, 16, 3, 5, 9, 2, "Think LOtR. pointy ears, just as sexy", "ranger.jpg", true);
-<<<<<<< HEAD
-INSERT INTO creatureTemplate(creature_id,creature_name,hp,ac,movement,damage_bonus,attack_bonus,attacks_per_turn) values(5,"Hell Hound",45,15,5,3,5,1, "judge.jpg", false)
-INSERT INTO creatureTemplate(creature_id,creature_name,hp,ac,movement,damage_bonus,attack_bonus,attacks_per_turn) values(6,"Earth elemental",126,17,3,5,8,2, false);
-INSERT INTO creatureTemplate(creature_id,creature_name,hp,ac,movement,damage_bonus,attack_bonus,attacks_per_turn) values(7,"Grick alpha",75,18,3,4,7,2, false);
-INSERT INTO creatureTemplate(creature_id,creature_name,hp,ac,movement,damage_bonus,attack_bonus,attacks_per_turn) values(8,"Green slaad",127,16,3,4,7,3, false);
-INSERT INTO creatureTemplate(creature_id,creature_name,hp,ac,movement,damage_bonus,attack_bonus,attacks_per_turn) values(9,"Dragon",178,18,4,6,10,3, false);
-
 --weapon
 INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description,weapon_url) VALUES (1,"Longsword",1,8,"Melee","Long_sword.png");
 INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description,weapon_url) VALUES (2,"Javelin",1,6,"Ranged","Javelin.png");
@@ -177,32 +164,8 @@ INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, descriptio
 INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description,weapon_url) VALUES (7,"Chromatic orb",3,8,"Ranged","Chromatic_orb.png");
 INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description,weapon_url) VALUES (8,"Fireball",2,6,"Ranged","Fireball.png");
 
-INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description) VALUES (9,"Slaad bite",2,6,"Melee");
-INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description) VALUES (10,"Slaad claw",1,6,"Melee");
-INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description) VALUES (11,"Slaad hurl flame",3,6,"Ranged");
-INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description) VALUES (12,"Elemental slam",2,8,"Melee");
-INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description) VALUES (13,"Grick tail",2,6,"Melee");
-INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description) VALUES (14,"Grick tentacles",4,8,"Melee");
-INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description) VALUES (15, "Grick break",2,8,"Melee");
-INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description) VALUES (16,"Hound bite", 1,8,"Melee");
-INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description) VALUES (17,"Dragon bite",2,10,"Melee");
-INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description) VALUES (18,"Dragon claw",2,6,"Melee");
-INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description) VALUES (19,"Dragon breath",6,10,"Ranged");
-INSERT INTO weapon (weapon_id, weapon_name, dice_amount, damage_dice, description) VALUES (20,"Hound breath",2,6,"Ranged");
-=======
-INSERT INTO creatureTemplate VALUES(DEFAULT, "Bear", 45, 15, 5, 3, 5, 1, NULL, "bear.png", false);
-INSERT INTO creatureTemplate VALUES(DEFAULT, "Ent", 50, 11, 3, 4, 1, 1, NULL, "Ent.png", false);
-INSERT INTO creatureTemplate VALUES(DEFAULT, "Mummy", 20, 15, 3, 3, 5, 1, NULL, "Mummi.png", false);
-INSERT INTO creatureTemplate VALUES(DEFAULT, "Ushabti", 20, 15, 3, 3, 5, 1, NULL, "Ushabti2.png", false);
-INSERT INTO creatureTemplate VALUES(DEFAULT, "Snow Wolf", 20, 15, 3, 3, 5, 1, NULL, "wolf.png", false);
-INSERT INTO creatureTemplate VALUES(DEFAULT, "Yeti", 20, 15, 3, 3, 5, 1, NULL, "yeti.png", false);
-INSERT INTO creatureTemplate VALUES(DEFAULT, "Lizard", 20, 15, 3, 3, 5, 1, NULL, "lizard.png", false);
-INSERT INTO creatureTemplate VALUES(DEFAULT, "Demon", 20, 15, 3, 3, 5, 1, NULL, "demon.png", false);
-INSERT INTO creatureTemplate VALUES(DEFAULT, "Dragon", 178, 18, 4, 6, 10, 3, NULL, "dragon.png", false);
-INSERT INTO creatureTemplate VALUES(DEFAULT, "Dragon", 267, 18, 4, 6, 10, 3, NULL, "dragon.png", false);
-INSERT INTO creatureTemplate VALUES(DEFAULT, "Dragon", 320, 18, 4, 6, 10, 3, NULL, "dragon.png", false);
-INSERT INTO creatureTemplate VALUES(DEFAULT, "Dragon", 380, 18, 4, 6, 10, 3, NULL, "dragon.png", false);
-=======
+
+
 INSERT INTO creatureTemplate VALUES(DEFAULT, "Warrior", 36, 18, 3, 5, 8, "He be legendary warior. Yeet that goblin", "warrior.jpg", true);
 INSERT INTO creatureTemplate VALUES(DEFAULT, "Rogue", 23, 16, 3, 7, 7, "she be the sneaky girl. not the one from Rogue One", "rogue.jpg", true);
 INSERT INTO creatureTemplate VALUES(DEFAULT, "Wizard", 22, 15, 3, 0, 8, "Penny for your thoughts. Nothing that a little music can't help. Seagulls stop it now.", "wizard.jpg", true);
@@ -219,7 +182,6 @@ INSERT INTO creatureTemplate VALUES(DEFAULT, "Dragon", 178, 18, 4, 6, 10, NULL, 
 INSERT INTO creatureTemplate VALUES(DEFAULT, "Dragon", 267, 18, 4, 6, 10, NULL, "dragon.png", false);
 INSERT INTO creatureTemplate VALUES(DEFAULT, "Dragon", 320, 18, 4, 6, 10, NULL, "dragon.png", false);
 INSERT INTO creatureTemplate VALUES(DEFAULT, "Dragon", 380, 18, 4, 6, 10, NULL, "dragon.png", false);
->>>>>>> 790ec16f791dfc29d0d4651ca6de190e545d4f15
 
 -- Forest
 INSERT INTO level_monster VALUES(DEFAULT, 1, 1, 5);
@@ -320,7 +282,7 @@ INSERT INTO weapon VALUES (DEFAULT, "Tailwhip", 2, 6, "Melee", NULL);
 INSERT INTO weapon VALUES (DEFAULT, "Tongue Snipe", 2, 6, "Ranged", NULL);
 INSERT INTO weapon VALUES (DEFAULT, "Dragon claw", 2, 6, "Melee", NULL);
 INSERT INTO weapon VALUES (DEFAULT, "Dragon fire", 6, 10, "Ranged", NULL);
->>>>>>> 34a58621b50a6b5fad331ef100aa55cfb9b1fc5e
+
 
 
 --weapon and creature

@@ -172,7 +172,6 @@ public class Database {
         Connection con = null;
         PreparedStatement prepStmt = null;
         boolean status = true;
-        System.out.println(this.isJoinable(lobbyKey));
         /*
          * The lobby must exist and be joinable
          * The user registered in the client must have a valid user id
@@ -616,9 +615,10 @@ public class Database {
      */
     public boolean deleteOldPassword(String oldPw){
 
+        /* Checks old password */
         Password password = new Password();
-        if (password.checkPassword(oldPw, this.fetchSalt(this.fetchUsername()), this.fetchHash(this.fetchUsername()))) {
-
+        String un = this.fetchUsername();
+        if (password.checkPassword(oldPw, this.fetchSalt(un), this.fetchHash(un))) {
             Connection con = null;
             PreparedStatement prepStmt = null;
             boolean status = true;
@@ -897,7 +897,6 @@ public class Database {
             res = prepStmt.executeQuery();
             while(res.next()) {
                 id = res.getInt(1);
-                System.out.println(id);
             }
         }
         catch (SQLException sq){
@@ -1068,7 +1067,6 @@ public class Database {
             res = prepStmt.executeQuery();
             while (res.next()){
                 int creatureId = res.getInt("creature_id");
-                System.out.println(creatureId);
                 ArrayList<Weapon> weapons = this.fetchWeaponsFromCreature(creatureId);
                 if(res.getInt("player.user_id") <= 0) {
                     creatures.add(new Monster(res.getInt("player_id"), creatureId, res.getString("creature_name"), res.getInt("hp"), res.getInt("ac"), res.getInt("movement"), res.getInt("damage_bonus"), res.getInt("attack_bonus"), res.getString("backstory"), res.getInt("pos_x"), res.getInt("pos_y"), res.getString("image_url"), weapons));

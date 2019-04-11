@@ -140,7 +140,6 @@ public class GameLobbyController {
             playerReadyTimer.purge();
             limitPlayerTimer.cancel();
             limitPlayerTimer.purge();
-            Main.db.setJoinable(false);
             this.sceneSwitcher.switchScene(readyButton , "Battlefield.fxml");
         }
     }

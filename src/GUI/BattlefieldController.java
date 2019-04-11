@@ -88,6 +88,10 @@ public class BattlefieldController{
      * Method that executes when the corresponding FXML-file for this Controller is loaded
      */
     public void initialize() {
+        /* Instantly sets the lobby to not joinable */
+        if (Main.user.isHost()) {
+            Main.db.setJoinable(false);
+        }
         player = new PlayerActions(playerImage);
         cellWidth = mapGrid.getPrefWidth()/(16.0);
         cellHeight = mapGrid.getPrefHeight()/(16.0);
@@ -321,17 +325,6 @@ public class BattlefieldController{
             }
         }
     }
-
-    /*public void exitButtonPressed() throws Exception {
-        System.out.println(Main.db.addChatMessage(Main.user.getUsername() + " has left the lobby", true));
-        Main.db.disconnectUserFromGameLobby();
-        chatController.timer.cancel();
-        chatController.timer.purge();
-        timer.cancel();
-        timer.purge();
-        MusicPlayer.getInstance().stopSong();
-        this.sceneSwitcher.switchScene(exitButton, "MainMenu.fxml");
-    }*/
 
     /**
      * Converts screen-coordinate to grid-coordinate
@@ -636,7 +629,6 @@ public class BattlefieldController{
         attackButton.setDisable(false);
         moveButton.setDisable(false);
         endTurnButton.setDisable(false);
-        //exitButton.setDisable(false);
     }
 
     /**
@@ -646,7 +638,6 @@ public class BattlefieldController{
         attackButton.setDisable(true);
         moveButton.setDisable(true);
         endTurnButton.setDisable(true);
-        //exitButton.setDisable(true);
     }
 
     /**

@@ -60,10 +60,8 @@ public class Monster extends Creature {
         if(target != null) {
             if (inRange(target) && melee) {
                 moveTo(target, creatures);
-                System.out.println("moveto");
             } else if (melee) {
                 moveToward(target, creatures);
-                System.out.println("movetoward");
             }
         }
     }

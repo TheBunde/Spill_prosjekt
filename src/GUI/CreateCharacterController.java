@@ -64,16 +64,16 @@ public class CreateCharacterController implements Initializable {
             SFXPlayer.getInstance().setSFX(2);
             iv.setImage(warriorImage);
             text.setText("Warrior. This mighty motherfather is one of the best classes for new players." +
-                    "\nYou like hitting things,and you like to hit it hard." +
+                    "\nYou like hitting things, and you like to hit it hard." +
                     "\nIf your enemy runs away you can always throw your javelin at it.");
             MusicPlayer.getInstance().stopSong();
             MusicPlayer.getInstance().changeSong(4);
         }
         if(a.equals("Rogue")) {
             iv.setImage(rogueImage);
-            text.setText("Roge-y stab stab." +
+            text.setText("Rooge-y stab stab." +
                     "\nSneaking and stabbing without getting hit is your speciality." +
-                    "\nOr assaulting it with your crossbow. your choice");
+                    "\nOr assaulting it with your crossbow, your choice");
             SFXPlayer.getInstance().setSFX(3);
             MusicPlayer.getInstance().stopSong();
             MusicPlayer.getInstance().changeSong(5);
@@ -81,8 +81,8 @@ public class CreateCharacterController implements Initializable {
         if(a.equals("Wizard")) {
             iv.setImage(wizardImage);
             text.setText("It's LeviOsa, not LeviosA." +
-                    "\nAs a Wizzard you like to stay an arms distance away from you enemy," +
-                    "\nwhile asulting it with your array of spells.");
+                    "\nAs a Wizard you like to stay an arms distance away from you enemy," +
+                    "\nwhile assaulting it with your array of spells.");
             SFXPlayer.getInstance().setSFX(4);
             MusicPlayer.getInstance().stopSong();
             MusicPlayer.getInstance().changeSong(6);
