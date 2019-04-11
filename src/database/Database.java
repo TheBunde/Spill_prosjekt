@@ -926,11 +926,13 @@ public class Database {
     }
 
     /**
-     * Updates the pos!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
-     * @param xPos
-     * @param yPos
-     * @param playerId
-     * @return
+     * Updates the position of a Creature with a
+     * specific player id.
+     *
+     * @param xPos      new x-position.
+     * @param yPos      new y-position.
+     * @param playerId  player id
+     * @return          true if update executed, false otherwise.
      */
     public boolean setPos(int xPos, int yPos, int playerId){
         Connection con = null;
@@ -960,6 +962,12 @@ public class Database {
         }
     }
 
+    /**
+     * Makes the user a host.
+     *
+     * @param host  boolean host.
+     * @return      true if update executed, false otherwise.
+     */
     public boolean setHost(boolean host){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -988,6 +996,13 @@ public class Database {
         }
     }
 
+    /**
+     * Fetches the position of a Creature with a
+     * specific playerId.
+     *
+     * @param playerId      player id.
+     * @return              ArrayList of x- and y-position.
+     */
     public ArrayList<Integer> fetchPlayerPos(int playerId){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -1015,6 +1030,12 @@ public class Database {
         }
     }
 
+    /**
+     * Fetches all creatures from the game lobby.
+     * with the users lobbyKey.
+     *
+     * @return      ArrayList of creatures.
+     */
     public ArrayList<Creature> fetchCreaturesFromLobby(){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -1050,6 +1071,12 @@ public class Database {
         }
     }
 
+    /**
+     * Fetches all weapons from a Creature with a given creatureId.
+     *
+     * @param creatureId        creature id.
+     * @return                  ArrayList of weapons.
+     */
     public ArrayList<Weapon> fetchWeaponsFromCreature(int creatureId){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -1081,6 +1108,13 @@ public class Database {
         }
     }
 
+    /**
+     * Fetches health points from a Creature with
+     * a specific playerId.
+     *
+     * @param playerId      player id.
+     * @return              health points.
+     */
     public int fetchPlayerHp(int playerId){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -1107,6 +1141,14 @@ public class Database {
         }
     }
 
+    /**
+     * Sets the health points of creature, with a
+     * specific playerId, to a given value.
+     *
+     * @param hp            health points.
+     * @param playerId      player id.
+     * @return              true if update executed, false otherwise.
+     */
     public boolean setHp(int hp, int playerId){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -1134,6 +1176,14 @@ public class Database {
         }
     }
 
+    /**
+     * Sets the damage bonus of creature, with a
+     * specific playerId, to a given value.
+     *
+     * @param damageBonus       damage bonus.
+     * @param playerId          player id.
+     * @return                  true if update executed, false otherwise.
+     */
     public boolean setDamageBonus(int damageBonus, int playerId){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -1161,6 +1211,13 @@ public class Database {
         }
     }
 
+    /**
+     * Increments the player turn in game lobby
+     * where lobbyKey equals users lobbyKey
+     *
+     * @param turn      turn.
+     * @return          true if update executed, false otherwise.
+     */
     public boolean incrementPlayerTurn(int turn){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -1188,6 +1245,11 @@ public class Database {
         }
     }
 
+    /**
+     * Fetches player turn from game lobby where lobbyKey
+     * equals users lobbyKey.
+     * @return      lobbyKey.
+     */
     public int fetchPlayerTurn() {
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -1211,7 +1273,13 @@ public class Database {
         }
     }
 
-
+    /**
+     * Sets a player ready where lobbyKey equals users lobbyKey
+     * and playerId equals users playerId.
+     *
+     * @param ready         ready
+     * @return              true if update executed, false otherwise.
+     */
     public boolean isReady(boolean ready){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -1240,6 +1308,11 @@ public class Database {
         }
     }
 
+    /**
+     * Fetches an ArrayList of all players ready status
+     * in the users game lobby.
+     * @return      ArrayList of booleans.
+     */
     public ArrayList<Boolean> everyoneIsReady(){
         Connection con = null;
         PreparedStatement prepStmt = null;

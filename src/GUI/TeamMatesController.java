@@ -1,20 +1,20 @@
 package GUI;
 
-import database.Database;
-import main.*;
+
 import game.Character;
 import game.Game;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
-
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 
-
+/**
+ * A controller class that handles the graphical user interface of the
+ * teamMateList.
+ *
+ * @author magnubau
+ */
 public class TeamMatesController {
 
     @FXML
@@ -24,7 +24,13 @@ public class TeamMatesController {
     public static ArrayList<Character> charactersInListView;
     public static Game game = BattlefieldController.game;
 
+    /**
+     * Constructor for the TeamMatesController class.
+     * It adds all all Characters to the Observable list,
+     * then it removes the users Character.
+     */
     public TeamMatesController(){
+        /* Adds characters */
         charactersInListView = BattlefieldController.game.getCharacters();
         int you = 0;
         for(Character i: charactersInListView){
@@ -32,6 +38,7 @@ public class TeamMatesController {
                 you = charactersInListView.indexOf(i);
             }
         }
+        /* Removes users Character */
         charactersInListView.remove(you);
         characterObservableList = FXCollections.observableArrayList();
         for (Character c : charactersInListView){
@@ -39,25 +46,28 @@ public class TeamMatesController {
                 characterObservableList.add(c);
             }
         }
-
-        /*for(Character i: characters){
-            characterObservableList.add(i);
-        }*/
     }
 
+    /**
+     * executes when the corresponding FXML file to this controller is loaded.
+     */
     public void initialize(){
-       // characterObservableList.add(new Character(10000, 1, "Warrior", 20, 15, 3, 3, 4, 1, "yas", 3, 3, "warrior.jpg", null));
-
+        /* Sets items in listView to TeamMateListCell */
         listView.setItems(characterObservableList);
         listView.setCellFactory(characterListView -> {
             return new TeamMateListCell();
         });
     }
 
+    /**
+     * Updates the listView.
+     */
     public static void updateListView(){
+        /* Adds all Characters */
         characterObservableList.removeAll(charactersInListView);
         charactersInListView = BattlefieldController.game.getCharacters();
         int you = 0;
+        /* Removes users Character */
         for(Character i: charactersInListView){
             if(i == game.getPlayerCharacter()){
                 you = charactersInListView.indexOf(i);
@@ -66,17 +76,4 @@ public class TeamMatesController {
         charactersInListView.remove(you);
         characterObservableList.addAll(charactersInListView);
     }
-
-    /*public ArrayList<Character> getCharacters(){
-        ArrayList<Creature> creatures = db.fetchCreaturesFromLobby();
-        ArrayList<Character> characters = new ArrayList<>();
-        for(int i = 0; i < creatures.size(); i++){
-            if(creatures.get(i) instanceof Character){
-                characters.add((Character) creatures.get(i));
-            }
-        }
-        return characters;
-    }*/
-
-
 }
