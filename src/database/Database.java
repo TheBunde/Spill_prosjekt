@@ -675,7 +675,7 @@ public class Database {
     }
 
     /**
-     * Fetches salt from the DB
+     * Fetches hash from the DB
      *
      * @param un     username for the user
      * @return       the hashed password, if SQLException is thrown returns null
