@@ -1,19 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="feb97fae-5a83-4ba6-8df4-6d7a8b399fb3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/BattlefieldController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/BattlefieldController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/InterfaceMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/InterfaceMain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/SceneSwitcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/SceneSwitcher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/StartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/StartController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/TeamMateListCell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/TeamMateListCell.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/TeamMatesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/TeamMatesController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/database/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Monster.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Monster.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Weapon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Weapon.java" afterDir="false" />
-    </list>
+    <list default="true" id="feb97fae-5a83-4ba6-8df4-6d7a8b399fb3" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -205,7 +193,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1554928963743" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1554933149263" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
