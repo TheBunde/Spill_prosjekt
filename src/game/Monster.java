@@ -1,12 +1,5 @@
-/**
- * This class inherits from Creature.java. The methods in
- * this class controll the AI of the monsters in the
- * game. The methods that controll the monsters are
- * only ran on the computer of the host.
- *
- * @author magnubau and heleneyj
- */
 package game;
+
 import javafx.scene.Cursor;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -15,6 +8,14 @@ import javafx.scene.layout.Pane;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * This class inherits from Creature.java. The methods in
+ * this class controll the AI of the monsters in the
+ * game. The methods that controll the monsters are
+ * only ran on the computer of the host.
+ *
+ * @author magnubau and heleneyj
+ */
 public class Monster extends Creature {
 
     private Pane attackPane;

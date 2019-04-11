@@ -1,10 +1,11 @@
+package game;
+
+import java.util.Random;
+
 /**
  * Simulates the throwing of dice in a game
  * @author heleneyj
  */
-package game;
-
-import java.util.Random;
 public class Dice {
     /**
      * Get a random number that simulates dice roll

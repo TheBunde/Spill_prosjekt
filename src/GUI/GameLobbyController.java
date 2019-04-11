@@ -75,7 +75,8 @@ public class GameLobbyController {
     }
 
     /**
-     * 
+     * Method that runs when the ready-button is pressed
+     *
      * @throws Exception
      */
     public void readyButtonPressed() throws Exception{
@@ -92,11 +93,17 @@ public class GameLobbyController {
         }
     }
 
+    /**
+     * Method that runs when the back-to-menu-button is pressed
+     * @throws Exception
+     */
     public void backToMenuButtonPressed() throws Exception{
+        /* If the player leaving is the last one, the lobby will not be joinable anymore */
         if (Main.db.fetchPlayerCount() == 1){
             Main.db.setJoinable(false);
         }
         Main.db.addChatMessage(Main.user.getUsername() + " has left the lobby", true);
+        /* Disconnects both the user and the player created for the user from the lobby */
         Main.db.disconnectPlayerFromLobby(Main.db.fetchPlayerId());
         Main.db.disconnectUserFromGameLobby();
         Main.db.setHost(false);
@@ -110,6 +117,11 @@ public class GameLobbyController {
         this.sceneSwitcher.switchScene(backToMenuButton, "MainMenu.fxml");
     }
 
+    /**
+     * Checks if all players are ready before moving to battlefield
+     *
+     * @throws Exception
+     */
     public void playersReady() throws Exception{
         playersReady = 0;
         ArrayList<Boolean> players = Main.db.everyoneIsReady();
@@ -120,6 +132,7 @@ public class GameLobbyController {
         }
         readyCounter.setText("Players Ready: " + playersReady + " / " + players.size());
 
+        /* Switches to battlefield if all players are ready */
         if(playersReady == players.size() && playersReady != 0){
             chatController.timer.cancel();
             chatController.timer.purge();
@@ -132,15 +145,20 @@ public class GameLobbyController {
         }
     }
 
+    /**
+     * Ensures that the maximum amount of players in a lobby is 4
+     */
     public void limitPlayers(){
         ArrayList<Boolean> players = Main.db.everyoneIsReady();
         if (players.size() >= this.playerLimit){
+            /* Sets the lobby to unjoinable */
             Main.db.setJoinable(false);
             if (joinable) {
                 joinable = false;
                 Main.db.addChatMessage("Player limit reached", true);
             }
         }
+        /* If a player leaves, making space for new players, the lobby is set to joinable again */
         else if(playersReady != players.size()){
             Main.db.setJoinable(true);
             joinable = true;

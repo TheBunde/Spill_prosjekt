@@ -14,6 +14,10 @@ import user.User;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * This class contains methods to push and fetch data from the database.
+ * @author magnubau, saramoh, shahedsa, williad
+ */
 public class Database {
     private ManageConnection manager;
     private BasicDataSource bds;
@@ -1266,6 +1270,11 @@ public class Database {
         }
     }
 
+    /**
+     * Sets the lobby the user is part of as joinable or not
+     * @param joinable  joinable
+     * @return          true if joinable attribute is changed, false otherwise
+     */
     public boolean setJoinable(boolean joinable){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -1293,6 +1302,12 @@ public class Database {
         }
     }
 
+    /**
+     * Disconnects a player from the lobby is it part of
+     *
+     * @param playerId player id
+     * @return         true if player is disconnected, false otherwise
+     */
     public boolean disconnectPlayerFromLobby(int playerId){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -1320,6 +1335,12 @@ public class Database {
         }
     }
 
+    /**
+     * Checks if a specific lobby is joinable
+     *
+     * @param lobbyKey  lobby key
+     * @return          true if joinable, false otherwise
+     */
     public boolean isJoinable(int lobbyKey){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -1346,6 +1367,11 @@ public class Database {
         }
     }
 
+    /**
+     * Fetches data about a specific level to create the Level-object
+     * @param levelId   level id
+     * @return          Level-object
+     */
     public Level fetchLevelObject(int levelId){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -1372,6 +1398,11 @@ public class Database {
         }
     }
 
+    /**
+     * Fetches the id of the level the lobby currently is at
+     * @param lobbyKey  lobby key
+     * @return          level id
+     */
     public int fetchLevelId(int lobbyKey){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -1398,6 +1429,11 @@ public class Database {
         }
     }
 
+    /**
+     * Fetches the name of a specific level
+     * @param levelId   level id
+     * @return          level name
+     */
     public String getLevelName(int levelId){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -1410,6 +1446,7 @@ public class Database {
             prepStmt.setInt(1, levelId);
             res = prepStmt.executeQuery();
             while(res.next()) {
+                /* The name of the level is determined from the background-url */
                 levelName = res.getString(1);
                 levelName = levelName.split("-")[0];
             }
@@ -1426,6 +1463,10 @@ public class Database {
         }
     }
 
+    /**
+     * Fetches the amount of levels available
+     * @return  amount of levels
+     */
     public int fetchAmountOfLevels(){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -1451,6 +1492,13 @@ public class Database {
         }
     }
 
+    /**
+     * Sets the current level id of a lobby
+     *
+     * @param lobbyKey lobbykey
+     * @param levelId  level id
+     * @return         true if level id is set, false otherwise
+     */
     public boolean setLevelId(int lobbyKey, int levelId){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -1479,6 +1527,13 @@ public class Database {
         }
     }
 
+    /**
+     * Fetches the monsters tied to a specific level based on the amount of players
+     *
+     * @param levelId       level id
+     * @param playerAmount  amount of players
+     * @return              ArrayList of creature ids
+     */
     public ArrayList<Integer> fetchMonstersFromLevel(int levelId, int playerAmount){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -1507,6 +1562,11 @@ public class Database {
         }
     }
 
+    /**
+     * Fetches an ArrayList containing a boolean for each player for if they are ready or not
+     *
+     * @return ArrayList with players ready for new level
+     */
     public ArrayList<Boolean> fetchPlayersReadyForLevel(){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -1534,6 +1594,13 @@ public class Database {
         }
     }
 
+    /**
+     * Sets the player ready for new level
+     *
+     * @param playerId player id
+     * @param ready    ready
+     * @return         true if ready for new level is set, false otherwise
+     */
     public boolean setReadyForNewLevel(int playerId, boolean ready){
         Connection con = null;
         PreparedStatement prepStmt = null;

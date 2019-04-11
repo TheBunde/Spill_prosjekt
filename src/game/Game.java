@@ -299,9 +299,12 @@ public class Game {
     }
 
     /**
-     * Checks if all players are ready for new level.
+     * Checks if all players are ready for new level.<br>
+     * This variable is used to ensure that no player falls behind,
+     * or that no players fetches creatures from the lobby
+     * before the host has added these
      *
-     * @return      true, if all players are redy for new lwvel, false otherwise.
+     * @return      true, if all players are ready for new level, false otherwise.
      */
     public boolean allPlayersReadyForNewLevel(){
         if(Main.db != null) {
@@ -344,7 +347,8 @@ public class Game {
     }
 
     /**
-     * Checks if all monsters on the current level are dead
+     * Checks if all monsters are dead. If all monsters are dead
+     * the level is cleared.
      *
      * @return  true if all monsters are dead, false otherwise
      */
@@ -362,6 +366,7 @@ public class Game {
     /**
      * Checks if all characters are dead. If all characters are dead
      * it is game over.
+     *
      * @return      true if all characters are dead, false otherwise.
      */
     public boolean isGameOver(){
