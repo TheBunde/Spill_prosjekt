@@ -12,7 +12,10 @@ import javafx.scene.image.ImageView;
 import main.*;
 import java.net.URL;
 import java.util.ResourceBundle;
-
+/**
+ * Controller class for the character creation menu. Allows users to create a character.
+ * @author henrikwt
+ */
 public class CreateCharacterController implements Initializable {
 
     @FXML
@@ -27,16 +30,17 @@ public class CreateCharacterController implements Initializable {
     @FXML
     private SceneSwitcher sceneSwitcher;
 
-   // private String a = chooseClassDropdown.getValue();
-
+  
+    /**
+     * Constructor.
+     */
     public CreateCharacterController(){
         sceneSwitcher = new SceneSwitcher();
     }
 
-    //To add more classes add jpg file to images package, make new Image object,
-    //add class to chooseClassDropdown.getItems().addAll(... , "class")
-    //add class to displayCharacter() method
-    //images to display selected character
+    /*
+     * Adding the images for the different characters.
+     */
     @FXML
     Image RangerImage = new Image("GUI/images/ranger.jpg");
     @FXML
@@ -47,7 +51,12 @@ public class CreateCharacterController implements Initializable {
     Image wizardImage = new Image("GUI/images/wizard.jpg");
     @FXML
     Image defaultImage = new Image("GUI/images/Default.jpg");
-
+    
+    /**
+     * Method that runs when the corresponding FXML loaded.
+     * @param location URL location
+     * @param resources Resource Bundle
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("View is now loaded!");
@@ -56,7 +65,9 @@ public class CreateCharacterController implements Initializable {
         Main.db.createPlayer(true);
     }
 
-    //method to display selected character
+    /**
+     * Displays and allows for selection of a character.
+     */
     public void displayCharacter(){
 
         String a = chooseClassDropdown.getValue();
@@ -98,7 +109,11 @@ public class CreateCharacterController implements Initializable {
             MusicPlayer.getInstance().changeSong(13);
         }
     }
-    //method to create the character
+    /**
+     * Creates the selected character for the user that chose it.
+     * @return Boolean
+     * @throws Exception
+     */
     public boolean createCharacter() throws Exception{
         int a = chooseClassDropdown.getSelectionModel().getSelectedIndex() + 1;
         if (a == 0){
