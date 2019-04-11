@@ -6,10 +6,11 @@ import audio.SFXPlayer;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+
 /**
  * changeUsernameController.java
  * The program handles the components in changeUsername-scene.
- * @author saramoh, shahedsa
+ * @author shahedsa, saramoh
  */
 public class changeUsernameController {
 
@@ -20,29 +21,32 @@ public class changeUsernameController {
 
     @FXML
     private Button ok, cancel;
-  
+
+    /**
+     * Constructor for changeUsernameController
+     */
     public changeUsernameController(){
         sceneSwitcher = new SceneSwitcher();
     }
     
      /**
-     * Update the username
-     * @throws Exception
-     */
-
+      * Stes the new username calling the method setNewUsername from database.java
+      *
+      * @throws Exception
+      */
     public void setNewUsername()throws Exception{
         Main.db.setNewUsername(newUsername.getText().trim());
     }
-    
-    
+
     /**
-     * This method performes when the ok button is pressed to change the username
+     * Confirms changing of the username, and switches the scene to the AccountDetails-scene
+     *
      * @throws Exception
      */
     public void okButtonPressed() throws Exception{
         boolean enable;
         if(newUsername.getText().isEmpty()){
-            enable = false;
+            enable = false;                      //If the newUsername-textfield is empty
         }else{
             setNewUsername();
             SFXPlayer.getInstance().setSFX(0);
@@ -53,7 +57,8 @@ public class changeUsernameController {
     }
     
     /**
-     * cancel changing and return to Account details page
+     * Cancels changing, and returns to the AccountDetails-scene
+     *
      * @throws Exception
      */
     public void cancelButtonPressed() throws Exception{
