@@ -8,8 +8,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 /**
- * LoginController.java
- * The program handles the components in Login-scene.
+ * ChangePasswordController.java
+ * The program handles the components in ChangePassword-scene.
  * @author henrikwt, saramoh
  */
 public class ChangePasswordController {
