@@ -5,10 +5,8 @@ import database.Database;
 
 /**
  * User.java
- * @author williad saramoh
+ * @author williad, saramoh
  */
-
-
 public class User {
     private int user_id;
     private String username;
@@ -30,7 +28,7 @@ public class User {
 
     }
     
- /**
+   /**
     * @return   user id
     */
     public int getUser_id(){
@@ -51,16 +49,16 @@ public class User {
         return username;
     }
 
-   /**
-    * @param new_username   The user's new username
+    /**
+     * @param new_username   The user's new username
      */
     public void setUsername(String new_username){
         username = new_username;
     }
 
     /**
-    * @return   rank
-    */
+     * @return   rank
+     */
     public int getRank(){
         return rank;
     }
