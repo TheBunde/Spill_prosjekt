@@ -5,10 +5,8 @@ import database.Database;
 
 /**
  * User.java
- * @author williad saramoh
+ * @author williad, saramoh
  */
-
-
 public class User {
     private int user_id;
     private String username;
@@ -29,106 +27,94 @@ public class User {
         this.rank = rank;
 
     }
- /**
-    * @return the user id
+    
+   /**
+    * @return   user id
     */
-
     public int getUser_id(){
         return user_id;
     }
     
     /**
-     * @param new_user_id The user's new id
+     * @param new_user_id   The user's new id
      */
      public void setUser_id(int new_user_id){
         user_id = new_user_id;
     }
  
- /**
-     * @return the username
+    /**
+     * @return   username
      */
-
     public String getUsername(){
         return username;
     }
-   /**
-    * @param new_username The user's new username
-     */
 
+    /**
+     * @param new_username   The user's new username
+     */
     public void setUsername(String new_username){
         username = new_username;
     }
- /**
-    * @return the user's rank
-    */
 
+    /**
+     * @return   rank
+     */
     public int getRank(){
         return rank;
     }
+
     /**
-     * @param newRank The user's new rank
+     * @param newRank   The user's new rank
      */
     public void setRank(int newRank){
         rank = newRank;
     }
     
     /**
-     * @return the user's lobbyKey
+     * @return   lobbyKey
      */
     public int getLobbyKey(){
         return this.lobbyKey;
     }
-    
-     
-    
+
     /**
-     * @param lobbyKey The user's lobbyKey
+     * @param lobbyKey   The user's lobbyKey
      */
-
-
     public void setLobbyKey(int lobbyKey){
         this.lobbyKey = lobbyKey;
     }
     
     /**
-     * @return the user's player_id
+     * @return   player_id for the user
      */
-
     public int getPlayerId(){
         return this.playerId;
     }
     
     /**
-     * @param playerId new user's player_id
+     * @param playerId   The user's new player_id
      */
-
     public void setPlayerId(int playerId){
         this.playerId = playerId;
     }
     
     /**
-     * @return true if the user is host otherwise returns false
+     * @return   true if the user is host, false otherwise
      */
-
-
     public boolean isHost(){
         return this.host;
     }
     
     /**
-     * @param host
+     * @param host   Sets boolean host true if the user is host, false otherwise
      */
-
-
     public void setHost(boolean host){
         this.host = host;
     }
     
     /**
-     * @return info about the user
+     * @return   info about the user
      */
-
-
     public String toString(){
         return "User info:\n" + user_id + "\n" + username + "\n" + rank ;
     }

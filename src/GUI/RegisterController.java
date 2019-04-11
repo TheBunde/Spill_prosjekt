@@ -13,7 +13,7 @@ import main.*;
 /**
  * RegisterController.java
  * The program will register a new user. The username must not be registered in the DB before.
- * @author shahedsa saramoh
+ * @author shahedsa, saramoh
  */
 public class RegisterController {
 
@@ -29,12 +29,16 @@ public class RegisterController {
     private Button registerButton, cancelButton;
 
 
+    /**
+     * Constructor for RegisterController
+     */
     public RegisterController() {
         sceneSwitcher = new SceneSwitcher();
     }
 
     /**
      * Register the user
+     *
      * @throws Exception
      */
     public void register() throws Exception {
@@ -48,7 +52,6 @@ public class RegisterController {
             alert.setContentText("Field can not be empty.");
             alert.showAndWait();
         }
-
         
          /*
         Checks the input username if it exists in DB already.
@@ -71,9 +74,8 @@ public class RegisterController {
             alert.showAndWait();
 
             /*
-            The user will be registered using the method registerUser() from the DB.
-            The input password will be hashed and salted, and saved in DB using the method addPassword().
-            The scene will switch to the MainMenu-scene
+            The user will be registered using the method registerUser() from class database.java
+            The input password will be hashed and salted, and saved in DB using the method addPassword(), and the scene will switch to the MainMenu-scene
              */
         }else{
             Main.db.registerUser(usernameInput.getText().trim());
@@ -84,9 +86,10 @@ public class RegisterController {
             sceneSwitcher.switchScene(registerButton, "MainMenu.fxml");
         }
     }
-    
-     /**
-     * Switches the scene to the start-scene.
+
+    /**
+     * Switches the scene to the start-scene
+     *
      * @throws Exception
      */
     public void cancel() throws Exception {
