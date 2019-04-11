@@ -1,17 +1,28 @@
 package audio;
 
 
-
+/**
+ * This class is utilized to run the correct thread in the thread pool.
+ * @author henrikwt
+ */
 public class PooledThread extends Thread {
 
     private static IDAssigner thrID = new IDAssigner(1);
 
     private ThreadPool thrPool;
 
+    /**
+     * Constructor
+     * @param thrPool Thread Pool
+     */
     public PooledThread(ThreadPool thrPool) {
-        super(thrPool, "Pool:" + thrID.next());
+        super(thrPool, "Pool:" + thrID.nextBID());
         this.thrPool = thrPool;
     }
+
+    /**
+     * Run method.
+     */
     @Override
     public void run() {
         while (!isInterrupted()) {
@@ -31,3 +42,4 @@ public class PooledThread extends Thread {
         }
     }
 }
+
