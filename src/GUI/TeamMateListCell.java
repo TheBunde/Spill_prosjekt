@@ -11,6 +11,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import java.io.IOException;
 
+/**
+ * Handles the content in teamMateCells before they are displayed in
+ * teamMatesList.
+ *
+ * Inspired by the blog post <i>Custom ListCell in a JavaFX ListView</i> by johannes
+ * @see <a href="https://www.turais.de/how-to-custom-listview-cell-in-javafx/">Custom ListCell in a JavaFX ListView</a>
+ *
+ * @author magnubau
+ */
 public class TeamMateListCell extends ListCell<Character> {
 
     @FXML
@@ -20,6 +29,13 @@ public class TeamMateListCell extends ListCell<Character> {
     @FXML
     private HBox hBox;
 
+    /**
+     * Updates a spesific teamMateCell corresponding to a
+     * specific Character Object.
+     *
+     * @param character         the Character to display.
+     * @param empty             true if empty cell, false otherwise.
+     */
     @Override
     protected void updateItem(Character character, boolean empty){
         super.updateItem(character, empty);
@@ -29,6 +45,7 @@ public class TeamMateListCell extends ListCell<Character> {
             setText(null);
             setGraphic(null);
 
+            /* Loads the FXML-file for a TeamMateCell */
         } else {
             FXMLLoader mLLoader;
             mLLoader = new FXMLLoader(getClass().getResource("TeamMateCell.fxml"));
@@ -39,6 +56,7 @@ public class TeamMateListCell extends ListCell<Character> {
                     e.printStackTrace();
                 }
 
+                /* Adds imageView, healthpoints and armour class to teamMateCell */
             Image image = new Image("GUI/images/" + character.getImageUrl());
             characterIV.setImage(image);
             nameLabel.setText(Main.db.fetchUsernameFromPlayerId(character.getPlayerId()));

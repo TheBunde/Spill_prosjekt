@@ -369,6 +369,8 @@ public class Monster extends Creature {
 
     /**
      * Creates the attackPane of the Monster.
+     * AttackPane is a transparent red filter over all monsters
+     * that a user can click to attack it.
      * @param cellWidth     The width of the attackPane.
      * @param cellHeight    The height of the attackPane.
      */

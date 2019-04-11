@@ -73,7 +73,10 @@ public class BattlefieldController{
 
     public static Timer timer = new Timer();
 
-
+    /**
+     * A constructor for the BattlefieldController.
+     * Creates an instance of the game class.
+     */
     public BattlefieldController(){
         //New instance of Game
 
@@ -134,13 +137,26 @@ public class BattlefieldController{
         },0 ,2200);
     }
 
+    /**
+     * handles the attackButton. When attackButton is pressed,
+     * all other buttons are diabled. All attackPanes for monsters
+     * that can be attacked are set to visible. Pressing attackButton
+     * again sets all attackPanes invisible and all other Buttons are
+     * enabled.
+     */
     public void attackButtonPressed(){
+        /* Toggles isAttackPressed*/
         player.setAttackPressed(!player.isAttackPressed());
+        /* Disables all other buttons */
         if (player.isAttackPressed()) {
             weaponOne.setDisable(true);
             weaponTwo.setDisable(true);
             moveButton.setDisable(true);
             endTurnButton.setDisable(true);
+            /* Starts a new thread so that the user
+               can interact with the game while the
+               attackPanes are created.
+             */
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -155,12 +171,15 @@ public class BattlefieldController{
                                     }
                                 });
                             }
+                            /* Shows attackPanes for all monsters within ranged range */
                             if(game.getPlayerCharacter().getWeapons().get(player.getEquippedWeapon()).isRanged()){
                                 if(game.attackRange(m, false)) {
                                     m.showAttackPane();
                                     m.getAttackPane().addEventFilter(MouseEvent.MOUSE_CLICKED, attackEventHandler);
                                 }
-                            }else if(!game.getPlayerCharacter().getWeapons().get(player.getEquippedWeapon()).isRanged()){
+                            }
+                            /* Shows attackPanes for all monsters within melee range */
+                            else if(!game.getPlayerCharacter().getWeapons().get(player.getEquippedWeapon()).isRanged()){
                                 if(game.attackRange(m, true)) {
                                     m.showAttackPane();
                                     m.getAttackPane().addEventFilter(MouseEvent.MOUSE_CLICKED, attackEventHandler);
@@ -219,10 +238,15 @@ public class BattlefieldController{
         checkForPlayerTurn();
     }
 
+    /**
+     * Handles moveButton. When moveButton is pressed,
+     * all other buttons are disabled. the movementPane
+     * is set to visible. If the moveButton is pressed again,
+     * the movementPane is set to disabled and all other buttons
+     * are enabled.
+     */
     public void moveButtonPressed(){
-        for(Creature i: game.getCreatures()){
-            System.out.println("\n" + i.getCreatureName() + "\nxpos: " + i.getxPos() + "\nypos: " + i.getyPos() + "\n");
-        }
+        /* toggles isMovePressed */
         player.setMovePressed(!player.isMovePressed());
         if (player.isMovePressed()) {
             attackButton.setDisable(true);
@@ -268,8 +292,12 @@ public class BattlefieldController{
         checkForPlayerTurn();
     }
 
+    /**
+     * Ends the turn. All buttons are disabled.
+     */
     public void endTurnButtonPressed(){
         game.endTurn();
+        /* Runs checkForPlayerTurn to reinforce responsiveness of the application */
         checkForPlayerTurn();
         player.resetUsedActions();
     }
@@ -318,36 +346,56 @@ public class BattlefieldController{
         return iPos;
     }
 
+    /**
+     * enables mapMoveEventHandler so that a user
+     * can move its Character.
+     */
     public void openMapMoveEventHandler(){
         mapGrid.setCursor(Cursor.HAND);
         mapGrid.addEventFilter(MouseEvent.MOUSE_CLICKED, mapMoveEventHandler);
     }
 
+    /**
+     * disables mapMoveEventHandler so that a user
+     * cannot move its Character when it is not supposed to.
+     */
     public void closeMapMoveEventHandler(){
         mapGrid.setCursor(Cursor.DEFAULT);
         mapGrid.removeEventFilter(MouseEvent.MOUSE_CLICKED, mapMoveEventHandler);
     }
 
+    /**
+     * Updates data from game.
+     */
     public void updateGame(){
         game.update();
     }
 
+    /**
+     * Updates the position of a pawn if it is not equal
+     * to the position to the corresponding Creature.
+     * It also updates the weapons and health points from game.
+     */
     public void refreshViewFromGame(){
+        /* Updates pawn */
         for(int i = 0; i < game.getCreatures().size(); i++){
             Creature c = game.getCreatures().get(i);
             if (GridPane.getColumnIndex(c.getPawn()) != c.getxPos() || GridPane.getRowIndex(c.getPawn()) != c.getyPos()) {
                 mapGrid.getChildren().remove(c.getPawn());
                 mapGrid.add(c.getPawn(), c.getxPos(), c.getyPos());
+                /* Updates attackPane of Monsters */
                 if (c instanceof Monster){
                     ((Monster) c).updateAttackPane();
                 }
             }
         }
+        /* Updates weapons */
         Weapon weapon1 = game.getPlayerCharacter().getWeapons().get(0);
         Weapon weapon2 = game.getPlayerCharacter().getWeapons().get(1);
         weaponOneLabel.setText(weapon1.getName() + "\n" + "Avg. damage: " + (((((double)weapon1.getDamageDice()/2)+0.5)*weapon1.getDiceAmount()) + game.getPlayerCharacter().getDamageBonus()) + "\n" + (weapon1.isRanged() ? "Ranged" : "Melee"));
         weaponTwoLabel.setText(weapon2.getName() + "\n" + "Avg. damage: " + (((((double)weapon2.getDamageDice()/2)+0.5)*weapon2.getDiceAmount()) + game.getPlayerCharacter().getDamageBonus()) + "\n" + (weapon2.isRanged() ? "Ranged" : "Melee"));
 
+        /* Updates health points */
         hpLabel.setText("HP: " + Math.max(0, game.getPlayerCharacter().getHp()) + "/" + game.getPlayerCharacter().getInitialHp());
         updateImage();
     }
@@ -397,12 +445,22 @@ public class BattlefieldController{
         return true;
     }
 
+    /**
+     * Changes to new level.
+     * Resets usead actions.
+     */
     public void newLevel(){
-        //game.getPlayerCharacter().setHp(game.getPlayerCharacter().getInitialHp());
         game.changeToNewLevel();
         player.resetUsedActions();
     }
 
+    /**
+     * Checks if it is game.playerCharacters turn.
+     * Disables all buttons if not game.playerCharacteers turn.
+     * Enables all buttons if it is. Also disables buttons when its
+     * action is used.
+     * @return
+     */
     public boolean checkForPlayerTurn(){
         if(!game.isPlayerCharacterTurn()){
             moveButton.setDisable(true);
@@ -411,11 +469,13 @@ public class BattlefieldController{
             return false;
         }
         else{
+            /* Skips turn if dead */
             if (game.getPlayerCharacter().isDead() || player.isAllActionsUsed()){
                 game.endTurn();
                 player.resetUsedActions();
                 return false;
             }
+            /* Reenables buttons after another action is used */
             if (!player.isMovePressed()){
                 attackButton.setDisable(false);
             }
@@ -425,6 +485,7 @@ public class BattlefieldController{
             if (!player.isMovePressed() && !player.isAttackPressed()){
                 endTurnButton.setDisable(false);
             }
+            /* Disables button if its action is used */
             if (player.isAttackUsed()){
                 attackButton.setDisable(true);
             }
@@ -529,17 +590,24 @@ public class BattlefieldController{
         battlefieldUI.getChildren().add(vbox);
     }
 
+    /**
+     * Showns transition screen after levels or when
+     * the game is lost
+     */
     public void showLevelTransitionVbox(){
         String nextLevelName = Main.db.getLevelName(game.getLevel().getLevelId() + 1);
+        /* Shows transition between levels */
         if (nextLevelName != null && !game.isGameOver()){
             SFXPlayer.getInstance().setSFX(13);
             ((Label)transitionVbox.getChildren().get(1)).setText("Travelling to " + nextLevelName + "world");
         }
+        /* Shows defeat screen */
         else if(game.isGameOver()){
             SFXPlayer.getInstance().setSFX(14);
             ((Label)transitionVbox.getChildren().get(0)).setText("Defeat");
             ((Label)transitionVbox.getChildren().get(1)).setText("Better luck next time");
         }
+        /* Shows victory screen */
         else{
             SFXPlayer.getInstance().setSFX(16);
             ((Label)transitionVbox.getChildren().get(0)).setText("Victory!");
@@ -571,11 +639,14 @@ public class BattlefieldController{
         //exitButton.setDisable(false);
     }
 
+    /**
+     * Disable all buttons
+     */
     public void disableAllButtons(){
         attackButton.setDisable(true);
         moveButton.setDisable(true);
         endTurnButton.setDisable(true);
-        exitButton.setDisable(true);
+        //exitButton.setDisable(true);
     }
 
     /**
@@ -639,6 +710,10 @@ public class BattlefieldController{
             }
     }
 
+    /**
+     * Shows defeat screen, closes all timers
+     * and goes to Main Menu.
+     */
     public void gameOverTransition(){
         if (!transitioningToNewLevel) {
             transitioningToNewLevel = true;
@@ -646,6 +721,9 @@ public class BattlefieldController{
             MusicPlayer.getInstance().stopSong();
             MusicPlayer.getInstance().changeSong(1);
             showLevelTransitionVbox();
+            /* Creates thread so that user may interact with game
+               during transition.
+             */
             new Thread(new Runnable() {
                 @Override
                 public void run() {

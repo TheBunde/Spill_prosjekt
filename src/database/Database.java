@@ -342,6 +342,7 @@ public class Database {
 
      /**
      * Fetches username from the DB
+     *
      * @return username for the user
      */
     public String fetchUsername() {
@@ -370,8 +371,9 @@ public class Database {
 
     /**
      * Takes user_id as parameter and fetches rank from the DB
-     * @param userId id for the user
-     * @return rank
+     *
+     * @param userId  id for the user
+     * @return        rank
      */
     public int fetchRank(int userId){
         Connection con = null;
@@ -438,12 +440,11 @@ public class Database {
     }
 
      /**
-     *Register a new user in the DB
-     * Takes username as parameter
-     * An id for the user is generated automatically
+     *Register a new user in the DB, Takes username as parameter, an id for the user is generated automatically
      * Rank, lobbyKey and host in the user-table sets as default
-     * @param un username for the user
-     * @return 1 if the user is registered successfully
+     * 
+     * @param un    username for the user
+     * @return      1 if the user is registered successfully
      */
     public int registerUser(String un) {
         Connection con = null;
@@ -452,7 +453,7 @@ public class Database {
         int user_id = -1;
         try {
             con = this.bds.getConnection();
-            con.setAutoCommit(false);                    //Start transaction
+            con.setAutoCommit(false);                    
             String prepString = "INSERT INTO usr VALUES(DEFAULT, ?, 0, DEFAULT, DEFAULT)";
             prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
             prepStmt.setString(1, un);
@@ -461,8 +462,8 @@ public class Database {
             res.next();
             user_id = res.getInt(1);
             Main.user = new User(user_id, un, 0);  //create an instance of User
-            Main.user.setUser_id(user_id);              //Generated user_id is set as id for the user
-            con.commit();                              //The transaction is done
+            Main.user.setUser_id(user_id);              
+            con.commit();                             
 
             if (added == 1) {
                 alert = new Alert(Alert.AlertType.INFORMATION);
@@ -473,7 +474,7 @@ public class Database {
             }
 
         } catch (SQLException sq) {
-            this.manager.rollback(con);              //The changes does not happen if SQLException is thrown
+            this.manager.rollback(con);              
             sq.printStackTrace();
             alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning Dialog");
@@ -481,7 +482,7 @@ public class Database {
             alert.setContentText("adding failed");
             alert.showAndWait();
         } finally {
-            this.manager.turnOnAutoCommit(con);      //Turn on Autocommit after the transaction is completed
+            this.manager.turnOnAutoCommit(con);      
             this.manager.closeRes(res);
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con);
@@ -491,8 +492,9 @@ public class Database {
 
     /**
      * Checks if the username exists in the DB
-     * @param username username for the user
-     * @return true if the username exists already in the DB, otherwise return false
+     *
+     * @param username    username for the user
+     * @return            true if the username exists already in the DB, false otherwise
      */
     public boolean findUsername(String username){
         Connection con = null;
@@ -527,8 +529,9 @@ public class Database {
 
     /**
      * Takes new username as parameter and sets it as username
-     * @param newUn new username for the user
-     * @return true if transaction is done successfully, otherwise returns false
+     *
+     * @param newUn     new username for the user
+     * @return          true if the username is set, false otherwise
      */
     public boolean setNewUsername(String newUn){
         Connection con = null;
@@ -536,22 +539,22 @@ public class Database {
         boolean status = true;
         try{
             con = this.bds.getConnection();
-            con.setAutoCommit(false);             //start transaction
+            con.setAutoCommit(false);             
             String prepString = "UPDATE usr SET username = ? WHERE user_id = ?";
             prepStmt = con.prepareStatement(prepString);
             prepStmt.setString(1, newUn);
             prepStmt.setInt(2, Main.user.getUser_id());
             prepStmt.executeUpdate();
-            con.commit();                        //The transaction is done
+            con.commit();                        
             Main.user.setUsername(newUn);        //Sets new username for the Main.user
         }
         catch (SQLException sq){
-            this.manager.rollback(con);         //The changes does not happen if SQLException is thrown
+            this.manager.rollback(con);         
             sq.printStackTrace();
             status = false;
         }
         finally {
-            this.manager.turnOnAutoCommit(con);    //Turn on Autocommit after the transaction is completed
+            this.manager.turnOnAutoCommit(con);   
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con);
             return status;
@@ -560,15 +563,16 @@ public class Database {
 
     /**
      * Takes password as parameter and creates a hashed and slated password
-     * @param pw password for the user
-     * @return true if the password is created successfully, otherwise returns false
+     *
+     * @param pw     password for the user
+     * @return       true if the password is created, false otherwise
      */
     public boolean addPassword(String pw){
 
         Password pass = new Password();      //create an instance of Password
 
         /*
-        Slat is an array of the randomized bytes, it is generated using the method getSalt() from class Password.java
+        Slat is an array of the random bytes, it is generated using the method getSalt() from class Password.java
          */
         byte[] salt = pass.getSalt();
 
@@ -579,22 +583,22 @@ public class Database {
 
         try{
             con = this.bds.getConnection();
-            con.setAutoCommit(false);            //Start transaction
+            con.setAutoCommit(false);
             String prepString = "INSERT INTO password VALUES(?, ?, ?)";
             prepStmt = con.prepareStatement(prepString, Statement.RETURN_GENERATED_KEYS);
             prepStmt.setInt(1, Main.user.getUser_id());
             prepStmt.setBytes(2, salt);
             prepStmt.setString(3, pass.createPassword(pw, salt));
             prepStmt.executeUpdate();
-            con.commit();                       //Transaction is done
+            con.commit();
         }
         catch (SQLException sq){
-            this.manager.rollback(con);         //The changes does not happen if SQLException is thrown
+            this.manager.rollback(con);
             sq.printStackTrace();
             status = false;
         }
         finally {
-            this.manager.turnOnAutoCommit(con);  //Turn on Autocommit after the transaction is completed
+            this.manager.turnOnAutoCommit(con);
             this.manager.closeRes(res);
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con);
@@ -604,8 +608,9 @@ public class Database {
 
     /**
      * Takes the old password as parameter, and deletes it
-     * @param oldPw old password for the user
-     * @return true if the password is deleted successfully, otherwise return false
+     *
+     * @param oldPw     old password for the user
+     * @return          true if the password is deleted, false otherwise
      */
     public boolean deleteOldPassword(String oldPw){
 
@@ -614,13 +619,13 @@ public class Database {
         boolean status = true;
         try{
             con = this.bds.getConnection();
-            con.setAutoCommit(false);             //Start the transaction
+            con.setAutoCommit(false);
             String prepString = "delete from password WHERE user_id = ?";
             prepStmt = con.prepareStatement(prepString);
             prepStmt.setInt(1, Main.user.getUser_id());
 
             prepStmt.executeUpdate();
-            con.commit();                        //The transaction is done
+            con.commit();
         }
         catch (SQLException sq){
             this.manager.rollback(con);
@@ -628,7 +633,7 @@ public class Database {
             status = false;
         }
         finally {
-            this.manager.turnOnAutoCommit(con);   //Turn on Autocommit after the transaction is completed
+            this.manager.turnOnAutoCommit(con);
             this.manager.closePrepStmt(prepStmt);
             this.manager.closeConnection(con);
             return status;
@@ -637,8 +642,9 @@ public class Database {
 
     /**
      * Fetches salt from the DB
-     * @param un username for the user
-     * @return the salted password, if SQLException is thrown returns null
+     *
+     * @param un     username for the user
+     * @return       the salted password, if SQLException is thrown returns null
      */
     public byte[] fetchSalt(String un){
         Connection con = null;
@@ -673,9 +679,10 @@ public class Database {
     }
 
     /**
-     * Fetches salt from the DB
-     * @param un username for the user
-     * @return the hashed password, if SQLException is thrown returns null
+     * Fetches hash from the DB
+     *
+     * @param un     username for the user
+     * @return       the hashed password, if SQLException is thrown returns null
      */
     public String fetchHash(String un){
         Connection con = null;
@@ -710,9 +717,10 @@ public class Database {
     }
 
     /**
-     * Takes username as parameter and fetches the user_id
-     * @param un username for the user
-     * @return user_id, returns -1 if the SQLException is thrown
+     * Takes username as parameter, and fetches the user_id
+     *
+     * @param un    username for the user
+     * @return      user_id, returns -1 if the SQLException is thrown
      */
     public int fetchUser_id(String un){
         Connection con = null;
@@ -930,11 +938,13 @@ public class Database {
     }
 
     /**
-     * Updates the pos!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
-     * @param xPos
-     * @param yPos
-     * @param playerId
-     * @return
+     * Updates the position of a Creature with a
+     * specific player id.
+     *
+     * @param xPos      new x-position.
+     * @param yPos      new y-position.
+     * @param playerId  player id
+     * @return          true if update executed, false otherwise.
      */
     public boolean setPos(int xPos, int yPos, int playerId){
         Connection con = null;
@@ -964,6 +974,12 @@ public class Database {
         }
     }
 
+    /**
+     * Makes the user a host.
+     *
+     * @param host  boolean host.
+     * @return      true if update executed, false otherwise.
+     */
     public boolean setHost(boolean host){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -992,6 +1008,13 @@ public class Database {
         }
     }
 
+    /**
+     * Fetches the position of a Creature with a
+     * specific playerId.
+     *
+     * @param playerId      player id.
+     * @return              ArrayList of x- and y-position.
+     */
     public ArrayList<Integer> fetchPlayerPos(int playerId){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -1019,6 +1042,12 @@ public class Database {
         }
     }
 
+    /**
+     * Fetches all creatures from the game lobby.
+     * with the users lobbyKey.
+     *
+     * @return      ArrayList of creatures.
+     */
     public ArrayList<Creature> fetchCreaturesFromLobby(){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -1054,6 +1083,12 @@ public class Database {
         }
     }
 
+    /**
+     * Fetches all weapons from a Creature with a given creatureId.
+     *
+     * @param creatureId        creature id.
+     * @return                  ArrayList of weapons.
+     */
     public ArrayList<Weapon> fetchWeaponsFromCreature(int creatureId){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -1085,6 +1120,13 @@ public class Database {
         }
     }
 
+    /**
+     * Fetches health points from a Creature with
+     * a specific playerId.
+     *
+     * @param playerId      player id.
+     * @return              health points.
+     */
     public int fetchPlayerHp(int playerId){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -1111,6 +1153,14 @@ public class Database {
         }
     }
 
+    /**
+     * Sets the health points of creature, with a
+     * specific playerId, to a given value.
+     *
+     * @param hp            health points.
+     * @param playerId      player id.
+     * @return              true if update executed, false otherwise.
+     */
     public boolean setHp(int hp, int playerId){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -1138,6 +1188,14 @@ public class Database {
         }
     }
 
+    /**
+     * Sets the damage bonus of creature, with a
+     * specific playerId, to a given value.
+     *
+     * @param damageBonus       damage bonus.
+     * @param playerId          player id.
+     * @return                  true if update executed, false otherwise.
+     */
     public boolean setDamageBonus(int damageBonus, int playerId){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -1165,6 +1223,13 @@ public class Database {
         }
     }
 
+    /**
+     * Increments the player turn in game lobby
+     * where lobbyKey equals users lobbyKey
+     *
+     * @param turn      turn.
+     * @return          true if update executed, false otherwise.
+     */
     public boolean incrementPlayerTurn(int turn){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -1192,6 +1257,11 @@ public class Database {
         }
     }
 
+    /**
+     * Fetches player turn from game lobby where lobbyKey
+     * equals users lobbyKey.
+     * @return      lobbyKey.
+     */
     public int fetchPlayerTurn() {
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -1215,7 +1285,13 @@ public class Database {
         }
     }
 
-
+    /**
+     * Sets a player ready where lobbyKey equals users lobbyKey
+     * and playerId equals users playerId.
+     *
+     * @param ready         ready
+     * @return              true if update executed, false otherwise.
+     */
     public boolean isReady(boolean ready){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -1244,6 +1320,11 @@ public class Database {
         }
     }
 
+    /**
+     * Fetches an ArrayList of all players ready status
+     * in the users game lobby.
+     * @return      ArrayList of booleans.
+     */
     public ArrayList<Boolean> everyoneIsReady(){
         Connection con = null;
         PreparedStatement prepStmt = null;

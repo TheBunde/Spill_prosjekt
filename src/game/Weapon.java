@@ -1,9 +1,10 @@
+
+package game;
+
 /**
  * The weapons and the data to the corresponding weapon
  * @author heleneyj
  */
-package game;
-
 public class Weapon {
 
     private String name;
@@ -12,7 +13,14 @@ public class Weapon {
     private int diceAmount;
     private String imageUrl;
 
-
+    /**
+     *
+     * @param name          name of weapon
+     * @param damageDice    damage dice
+     * @param ranged        is weapon ranged
+     * @param diceAmount    dice amount
+     * @param imageUrl      image url
+     */
     public Weapon(String name, int damageDice, boolean ranged, int diceAmount, String imageUrl){
         this.name = name;
         this.damageDice = damageDice;

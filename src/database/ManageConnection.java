@@ -7,16 +7,13 @@ import java.sql.*;
  * The program manage the use of database
  * @author saramoh
  */
-
-
 public class ManageConnection {
-    
-      /**
-     * Close the ResultSet, the method writeMessage() is used if SQLException is thrown
-     * @param res an instance of ResultSet
+
+
+    /**
+     * Closes the ResultSet
+     * @param res    an instance of ResultSet
      */
-
-
     public void closeRes(ResultSet res) {
         try {
             if (res != null) {
@@ -26,11 +23,12 @@ public class ManageConnection {
             writeMessage(e, "closeResSet()");
         }
     }
-    /**
-     * Close the PreparedStatement, the method writeMessage() is used if SQLException is thrown
-     * @param prepStmt an instance of PreparedStatement
-     */
 
+    /**
+     * Closes the PreparedStatement
+     *
+     * @param prepStmt    an instance of PreparedStatement
+     */
     public void closePrepStmt(PreparedStatement prepStmt) {
         try {
             if (prepStmt != null) {
@@ -40,13 +38,12 @@ public class ManageConnection {
             writeMessage(e, "closeStatement()");
         }
     }
-    
-     /**
-     * Close the Connection, the method writeMessage() is used if SQLException is thrown
-     * @param con an instance of Connection
+
+    /**
+     * Closes the Connection
+     *
+     * @param con    an instance of Connection
      */
-
-
     public void closeConnection(Connection con) {
         try {
             if (con != null) {
@@ -58,21 +55,21 @@ public class ManageConnection {
     }
     
      /**
-     * The method is an auxiliary method to other methods
-     * @param e an instance of Exception
-     * @param message is the head of the target method
-     */
-
-
+      * The method is an auxiliary method for other methods, it is used if the SQLException is thrown
+      *
+      * @param e          an instance of Exception
+      * @param message    the head of the target method
+      */
     public void writeMessage(Exception e, String message) {
         System.err.println("*** Fail happened: " + message + ". ***");
         e.printStackTrace(System.err);
     }
-  /**
-     * Turn on AutoCommit after finishing the transaction
-     * @param con an instance of Connection
-     */
 
+    /**
+     * Turns on AutoCommit after finishing the transaction
+     *
+     * @param con    an instance of Connection
+     */
     public void turnOnAutoCommit(Connection con){
         try{
             con.setAutoCommit(true);
@@ -82,11 +79,12 @@ public class ManageConnection {
             System.out.println("SQL-exception: " + sq);
         }
     }
- /**
-     * Roll back the transaction when something goes wrong
-     * @param con an instance of Connection
-     */
 
+    /**
+     * Rolls back the transaction when something goes wrong
+     *
+     * @param con    an instance of Connection
+     */
     public void rollback(Connection con){
         try{
             con.rollback();
@@ -97,4 +95,3 @@ public class ManageConnection {
         }
     }
 }
-

@@ -9,7 +9,9 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 
-
+/**
+ * This class starts the GUI. It loads the start menu.
+ */
 public class InterfaceMain extends Application implements Runnable {
     @Override
     public void run() {
@@ -17,7 +19,12 @@ public class InterfaceMain extends Application implements Runnable {
         launch();
     }
 
-
+    /**
+     * creates stage and loads start menu.
+     *
+     * @param primaryStage      primaryStage.
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("start.fxml"));
@@ -32,7 +39,11 @@ public class InterfaceMain extends Application implements Runnable {
         });
     }
 
-
+    /**
+     * Launches the GUI.
+     *
+     * @param args  args.
+     */
     public static void main(String[] args) {
         launch(args);
     }
