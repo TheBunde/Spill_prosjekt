@@ -93,7 +93,7 @@ public class MainMenuController {
         new SFXPlayer("knockSFX").run();
         if (Desktop.isDesktopSupported()) {
             try {
-                Desktop.getDesktop().browse(new URI(""));
+                Desktop.getDesktop().browse(new URI("https://gitlab.stud.iie.ntnu.no/heleneyj/game-development-project/blob/master/Documentation/User_manual.pdf"));
             }
             catch (IOException ioe) {
                 System.out.println("Error with IO");
