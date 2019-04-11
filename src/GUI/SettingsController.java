@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 /**
  * Controller class for the settings menu. Allows users to adjust the volume of the audio.
+ * @author henrikwt
  */
 public class SettingsController {
 
