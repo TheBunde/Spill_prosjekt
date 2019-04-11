@@ -24,19 +24,23 @@ public class ChangePasswordController {
     private Button backToMenuButton, confirmButton;
 
 
-
+    /**
+     * Constructor for ChangePasswordController
+     */
     public ChangePasswordController(){
         sceneSwitcher = new SceneSwitcher();
     }
+
     /**
-     *   This method performes when confirm button in changePassword page pressed
+     * Confirms changing of the password
+     *
      * @throws Exception
      */
-
     public void confirmButtonPressed()throws Exception{
         SFXPlayer.getInstance().setSFX(0);
-        /**
-         * check wether oldPassword-, newPassword or reNewPassword is empty
+
+        /*
+         * Checks whether oldPassword, newPassword or reNewPassword is empty
          */
         if(oldPassword.getText().isEmpty() || newPassword.getText().isEmpty() || reNewPassword.getText().isEmpty()) {
             alert.setTitle("Empty Field");
@@ -44,20 +48,20 @@ public class ChangePasswordController {
             alert.setContentText("Fill in all fields.");
             alert.showAndWait();
         }
-         /**
-         * check if the newPassword is equals to reNewPassword
-         */
 
+         /*
+         * Checks if the newPassword is equals to reNewPassword
+         */
         else if(!newPassword.getText().equals(reNewPassword.getText())){
             alert.setTitle("Not match Password");
             alert.setHeaderText(null);
             alert.setContentText("The passwords do not match, try again!");
             alert.showAndWait();
         } else {
-            /**
-             * if everything is ok update the password
-             */
 
+            /*
+             * Sets the new password, and switches to the AccountDetails-scene
+             */
             setNewPassword();
             alert.setTitle("Password changed");
             alert.setHeaderText(null);
@@ -66,20 +70,21 @@ public class ChangePasswordController {
             sceneSwitcher.switchScene(confirmButton, "AccountDetails.fxml");
         }
     }
-    /**
-     * updating the password by deleting the old one by calling the method deleteOldPassword() from database.java
-     * and adding the new one by calling addPassword() method
-     */
 
+    /**
+     * Updates the password by deleting the old one by calling the method deleteOldPassword() from database.java
+     * and adds the new one by calling addPassword()
+     */
     public void setNewPassword(){
         Main.db.deleteOldPassword(oldPassword.getText().trim());
         Main.db.addPassword(newPassword.getText().trim());
     }
-     /**
-     * get back to Account Details page if you want to cancle changing the password
-     * @throws Exception
-     */
 
+     /**
+      * Switches to the AccountDetails-scene
+      *
+      * @throws Exception
+      */
     public void backToMenu() throws Exception{
         SFXPlayer.getInstance().setSFX(0);
         sceneSwitcher.switchScene(backToMenuButton, "AccountDetails.fxml");
