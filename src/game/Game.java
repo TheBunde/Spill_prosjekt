@@ -117,27 +117,29 @@ public class Game {
     public void assureNoOverlap(){
         ArrayList<Creature> newCreatures = Main.db.fetchCreaturesFromLobby();
         for (int i = 0; i < newCreatures.size(); i++){
-            for (int j = i + 1; j < newCreatures.size(); j++){
-                Creature c1 = newCreatures.get(i);
-                Creature c2 = newCreatures.get(j);
-                if (c1.getxPos() == c2.getxPos() && c1.getyPos() == c2.getyPos()){
-                    /* Finds new position */
-                    int newX = (int)Math.floor(Math.random()*16);
-                    int newY = (int)Math.floor(Math.random()*16);
-                    boolean overlapsAgain = true;
-                    while(overlapsAgain){
-                        /* Finds new position if new overlap */
-                        overlapsAgain = false;
-                        newX = (int)Math.floor(Math.random()*16);
-                        newY = (int)Math.floor(Math.random()*16);
-                        for (int k = 0; k < newCreatures.size(); k++){
-                            Creature c = newCreatures.get(k);
-                            if (newX == c.getxPos() && newY == c.getyPos()){
-                                overlapsAgain = true;
+            for (int j = 0; j < newCreatures.size(); j++) {
+                if (j != i) {
+                    Creature c1 = newCreatures.get(i);
+                    Creature c2 = newCreatures.get(j);
+                    if (c1.getxPos() == c2.getxPos() && c1.getyPos() == c2.getyPos()) {
+                        /* Finds new position */
+                        int newX = (int) Math.floor(Math.random() * 16);
+                        int newY = (int) Math.floor(Math.random() * 16);
+                        boolean overlapsAgain = true;
+                        while (overlapsAgain) {
+                            /* Finds new position if new overlap */
+                            overlapsAgain = false;
+                            newX = (int) Math.floor(Math.random() * 16);
+                            newY = (int) Math.floor(Math.random() * 16);
+                            for (int k = 0; k < newCreatures.size(); k++) {
+                                Creature c = newCreatures.get(k);
+                                if (newX == c.getxPos() && newY == c.getyPos()) {
+                                    overlapsAgain = true;
+                                }
                             }
                         }
+                        c1.setNewPos(newX, newY);
                     }
-                    c1.setNewPos(newX, newY);
                 }
             }
         }
@@ -563,5 +565,4 @@ public class Game {
         string.append("\n");
         return string.toString();
     }
-
 }
