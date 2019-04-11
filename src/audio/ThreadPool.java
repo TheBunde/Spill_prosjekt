@@ -3,6 +3,12 @@ package audio;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * This class is used to create a thread pool and includes methods
+ * to utilize the pool.
+ * @author henrikwt
+ */
+
 public class ThreadPool extends ThreadGroup {
 
     private static IDAssigner thrPoolID = new IDAssigner(1);
@@ -11,13 +17,21 @@ public class ThreadPool extends ThreadGroup {
     private static ThreadPool thisInstance = new ThreadPool(11);
     private boolean living;
 
+    /**
+     * Used to access this single instance.
+     * @return Instance of the thread pool.
+     */
     public static ThreadPool getInstance(){
         return thisInstance;
     }
 
+    /**
+     * Constructor
+     * @param numberOfThreads Number of threads in the pool.
+     */
     public ThreadPool(int numberOfThreads) {
         super("Pool");
-        this.thrID = thrPoolID.getID();
+        this.thrID = thrPoolID.getBID();
         setDaemon(true);
         queue = new LinkedList<Runnable>();
         living = true;
@@ -25,6 +39,11 @@ public class ThreadPool extends ThreadGroup {
             new PooledThread(this).start();
         }
     }
+
+    /**
+     * Adds a task to the queue in the thread pool.
+     * @param threadTask Specified task.
+     */
     public synchronized void runTask(Runnable threadTask) {
         if(!living) throw new IllegalStateException("Pool:" + thrID + " done");
         if(threadTask != null) {
@@ -32,12 +51,20 @@ public class ThreadPool extends ThreadGroup {
             notify();
         }
     }
-    public synchronized void close() {
+
+    /**
+     * Closes the thread pool.
+     */
+    public synchronized void closePool() {
         if(!living) return;
         living = false;
         queue.clear();
         interrupt();
     }
+
+    /**
+     * Allows the threads to run together by waking up all threads that are waiting.
+     */
     public void join() {
         synchronized(this) {
             notifyAll();
@@ -52,6 +79,12 @@ public class ThreadPool extends ThreadGroup {
             }
         }
     }
+
+    /**
+     * Makes thread wait while queue is empty.
+     * @return Queue
+     * @throws InterruptedException
+     */
     protected synchronized Runnable getThreadTask() throws InterruptedException{
         while(queue.size() == 0) {
             if (!living) return null;
