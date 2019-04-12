@@ -312,7 +312,7 @@ public class BattlefieldController{
         if (Desktop.isDesktopSupported()){
             try {
                 /* Opens the gitlab-wiki in the user's default browser */
-                Desktop.getDesktop().browse(new URI("https://gitlab.stud.iie.ntnu.no/heleneyj/game-development-project/wikis/System%20Documentation"));
+                Desktop.getDesktop().browse(new URI("https://drive.google.com/file/d/1gkBaubA9kdMHqmKaTnfzo58hBFiEwPt7/view?usp=sharing"));
             }
             catch (IOException ioe){
                 System.out.println("Error with IO");
