@@ -6,10 +6,20 @@ import audio.ThreadPool;
 import database.*;
 import user.User;
 
+/**
+ * Main-class that runs the application with music
+ *
+ * @author shahedsa, magnubau, williad, heleneyj, saramoh, henrikwt
+ */
 public class Main {
 
     public static User user;
     public static Database db;
+
+    /**
+     * Main-method
+     * @param args
+     */
     public static void main(String[] args){
         db = new Database();
 

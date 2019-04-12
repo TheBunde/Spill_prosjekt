@@ -321,7 +321,7 @@ public class Monster extends Creature {
      *
      * @param pos           x- or y-position of Monster.
      * @param targetPos     x- or y-position of target Creature.
-     * @return              -1 if target - pos < 0, 1 otherwise.
+     * @return              -1 if target - pos less than 0, 1 otherwise.
      */
     public int direction(int pos, int targetPos){
         if(targetPos - pos< 0){
@@ -336,7 +336,7 @@ public class Monster extends Creature {
      *
      * @param pos           x- or y-position of Monster.
      * @param targetPos     x- or y-position of target Creature.
-     * @return              -1 if target - pos < 0, 0 if target - pos == 0,
+     * @return              -1 if target - pos less than 0, 0 if target - pos == 0,
      *                      1 otherwise.
      */
     public int relativePos(int pos, int targetPos){

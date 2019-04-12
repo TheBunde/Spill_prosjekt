@@ -223,7 +223,7 @@ public class Game {
 
     /**
      * sends message to chat that the user is dead, if playerCharacters
-     * hp <= 0. Sets isDead = true for all creatures with hp <= 0.
+     * hp less than or equal to 0. Sets isDead = true for all creatures with hp less than or equal to 0.
      */
     public void handleCreatureData(){
         if (this.playerCharacter.getHp() <= 0 && !this.playerCharacter.isDead()){

@@ -10,7 +10,7 @@ import javafx.scene.image.ImageView;
 
 /**
  * Creature is the superclass of Monster and Character
- * @authors heleneyj, magnubau & williad
+ * @author heleneyj, magnubau, williad
  */
 public abstract class Creature {
     private int hp;
@@ -144,7 +144,7 @@ public abstract class Creature {
      *
      * @param hit       hit.
      * @param target    A Creature.
-     * @return          true if hit >= target.getAc(), false otherwise.
+     * @return          true if hit greater than or equal to target.getAc(), false otherwise.
      */
     public boolean hitSuccess(int hit, Creature target){
         if (hit >= target.getAc()){
