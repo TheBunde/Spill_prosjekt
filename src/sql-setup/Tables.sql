@@ -151,7 +151,7 @@ INSERT INTO level VALUES(1, 16, "Forest-map.png");
 INSERT INTO level VALUES(2, 7, "Desert-map.png");
 INSERT INTO level VALUES(3, 14, "Snow-map.png");
 INSERT INTO level VALUES(4, 15, "Lava-map.png");
-INSERT INTO level VALUES(5, 11, "Mountain-map.png");
+INSERT INTO level VALUES(5, 3, "Mountain-map.png");
 
 
 --weapon
@@ -307,10 +307,10 @@ INSERT INTO creature_weapon VALUES(17, 9);
 INSERT INTO creature_weapon VALUES(18, 9);
 INSERT INTO creature_weapon VALUES(19, 10);
 INSERT INTO creature_weapon VALUES(20, 10);
-INSERT INTO creature_weapon VALUES(21, 11);
-INSERT INTO creature_weapon VALUES(22, 11);
-INSERT INTO creature_weapon VALUES(23, 12);
-INSERT INTO creature_weapon VALUES(24, 12);
+INSERT INTO creature_weapon VALUES(23, 11);
+INSERT INTO creature_weapon VALUES(24, 11);
+INSERT INTO creature_weapon VALUES(21, 12);
+INSERT INTO creature_weapon VALUES(22, 12);
 INSERT INTO creature_weapon VALUES(25, 13);
 INSERT INTO creature_weapon VALUES(26, 13);
 INSERT INTO creature_weapon VALUES(25, 14);

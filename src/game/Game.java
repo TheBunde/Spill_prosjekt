@@ -32,7 +32,7 @@ public class Game {
             not stand on top of any other Creature
              */
             if (Main.user.isHost()) {
-                this.addNewMonstersToLobby(1, Main.db.fetchPlayerCount());
+                this.addNewMonstersToLobby(this.level.getLevelId(), Main.db.fetchPlayerCount());
                 this.assureNoOverlap();
                 Main.db.setBattlefieldReady(Main.user.getLobbyKey());
                 /* Waits for host to finish preparations */
